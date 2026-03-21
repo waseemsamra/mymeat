@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Leaf } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Leaf, User, LogOut, Settings } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContextAWS';
+import { toast } from 'sonner';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +33,14 @@ const Navigation = () => {
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out', {
+      description: 'You have been successfully logged out.',
+    });
+    navigate('/');
   };
 
   return (
@@ -72,12 +84,57 @@ const Navigation = () => {
                 />
               </Link>
             ))}
-            <Link
-              to="/contact"
-              className="btn-primary text-sm"
-            >
-              Get Quote
-            </Link>
+            
+            {isAuthenticated ? (
+              <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className={`flex items-center gap-2 font-medium transition-colors duration-300 ${
+                      isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
+                    } ${isActive('/admin') ? 'text-primary' : ''}`}
+                  >
+                    <Settings className="w-4 h-4" />
+                    Admin
+                  </Link>
+                )}
+                <Link
+                  to="/dashboard"
+                  className={`flex items-center gap-2 font-medium transition-colors duration-300 ${
+                    isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
+                  } ${isActive('/dashboard') ? 'text-primary' : ''}`}
+                >
+                  <User className="w-4 h-4" />
+                  {user?.name?.split(' ')[0] || 'Dashboard'}
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className={`flex items-center gap-2 font-medium transition-colors duration-300 ${
+                    isScrolled ? 'text-dark/80 hover:text-red-600' : 'text-white/90 hover:text-red-400'
+                  }`}
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className={`font-medium transition-colors duration-300 ${
+                    isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
+                  }`}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/contact"
+                  className="btn-primary text-sm"
+                >
+                  Get Quote
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -94,7 +151,7 @@ const Navigation = () => {
         {/* Mobile Menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-500 ${
-            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+            isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
           <div className="py-4 space-y-2 bg-white rounded-xl shadow-lg mt-2">
@@ -111,11 +168,54 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
-            <div className="px-4 pt-2">
-              <Link to="/contact" className="btn-primary block text-center">
-                Get Quote
-              </Link>
-            </div>
+            
+            {isAuthenticated ? (
+              <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className={`block px-4 py-3 font-medium transition-colors duration-300 ${
+                      isActive('/admin')
+                        ? 'text-primary bg-primary/5'
+                        : 'text-dark/80 hover:text-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    <Settings className="inline w-4 h-4 mr-2" />
+                    Admin Panel
+                  </Link>
+                )}
+                <Link
+                  to="/dashboard"
+                  className={`block px-4 py-3 font-medium transition-colors duration-300 ${
+                    isActive('/dashboard')
+                      ? 'text-primary bg-primary/5'
+                      : 'text-dark/80 hover:text-primary hover:bg-primary/5'
+                  }`}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-3 font-medium text-red-600 hover:bg-red-50 transition-colors duration-300"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="block px-4 py-3 font-medium text-dark/80 hover:text-primary hover:bg-primary/5 transition-colors duration-300"
+                >
+                  Sign In
+                </Link>
+                <div className="px-4 pt-2">
+                  <Link to="/contact" className="btn-primary block text-center">
+                    Get Quote
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </nav>
