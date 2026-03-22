@@ -22,10 +22,13 @@ export interface Session {
   };
 }
 
-export default class AuthService {
+declare class AuthServiceClass {
   login(email: string, password: string): Promise<LoginResult>;
   getCurrentSession(): Promise<Session | null>;
   getCurrentUser(): Promise<User | null>;
   isAdmin(): Promise<boolean>;
   logout(): Promise<boolean>;
 }
+
+declare const authService: AuthServiceClass;
+export default authService;
