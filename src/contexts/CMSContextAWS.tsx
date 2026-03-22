@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { dynamoDBService } from '../lib/dynamoDBService';
-import { s3Service } from '../lib/s3Service';
+import DynamoDBService from '../lib/DynamoDBService';
+import S3Service from '../lib/S3Service';
 import { toast } from 'sonner';
 
 // CMS Content Interfaces
@@ -91,21 +91,9 @@ interface CMSContextType {
   updateSiteSettings: (data: SiteSettings) => void;
   uploadImage: (file: File, folder: string) => Promise<string | null>;
   isLoading: boolean;
-  useAWS: boolean;
 }
 
 const CMSContext = createContext<CMSContextType | undefined>(undefined);
-
-const CMS_STORAGE_KEY = 'agrofeed_cms_data';
-
-// Check if AWS is configured
-const isAWSConfigured = () => {
-  return !!(
-    import.meta.env.VITE_AWS_DYNAMODB_TABLE &&
-    import.meta.env.VITE_AWS_S3_BUCKET &&
-    import.meta.env.VITE_AWS_ACCESS_KEY_ID
-  );
-};
 
 // Default CMS Data
 const defaultCMSData: CMSData = {
@@ -175,105 +163,116 @@ const defaultCMSData: CMSData = {
     contactEmail: 'info@agrofeed.com',
     contactPhone: '+1 (555) 123-4567',
     address: '123 Farm Road, Agricultural District, Countryside, CA 90210',
-    socialLinks: { facebook: '#', twitter: '#', instagram: '#', linkedin: '#' },
+    socialLinks: {
+      facebook: '#',
+      twitter: '#',
+      instagram: '#',
+      linkedin: '#',
+    },
   },
 };
 
 export const CMSProvider = ({ children }: { children: ReactNode }) => {
   const [cmsData, setCmsData] = useState<CMSData>(defaultCMSData);
   const [isLoading, setIsLoading] = useState(true);
-  const [useAWS, setUseAWS] = useState(false);
 
   useEffect(() => {
-    const awsConfigured = isAWSConfigured();
-    setUseAWS(awsConfigured);
-    console.log('[CMS] AWS Configured:', awsConfigured);
-
-    if (awsConfigured) {
-      loadFromDynamoDB();
-    } else {
-      // Load from localStorage
-      try {
-        const stored = localStorage.getItem(CMS_STORAGE_KEY);
-        console.log('[CMS] localStorage data:', stored ? 'found' : 'not found');
-        if (stored) {
-          const data = JSON.parse(stored);
-          setCmsData(data);
-        }
-      } catch (error) {
-        console.error('[CMS] Error loading from localStorage:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+    loadFromDynamoDB();
   }, []);
 
   const loadFromDynamoDB = async () => {
     try {
-      const result = await dynamoDBService.getSiteContent();
-      if (result.success && result.data) {
-        setCmsData({
-          hero: result.data.hero || defaultCMSData.hero,
-          about: result.data.about || defaultCMSData.about,
-          testimonials: result.data.testimonials || defaultCMSData.testimonials,
-          enquiry: result.data.enquiry || defaultCMSData.enquiry,
-          siteSettings: result.data.siteSettings || defaultCMSData.siteSettings,
-        });
-      }
+      const [hero, about, testimonials, enquiry, siteSettings] = await Promise.all([
+        DynamoDBService.getContent('hero'),
+        DynamoDBService.getContent('about'),
+        DynamoDBService.getTestimonials(),
+        DynamoDBService.getContent('enquiry'),
+        DynamoDBService.getContent('siteSettings')
+      ]);
+
+      setCmsData({
+        hero: hero?.data || defaultCMSData.hero,
+        about: about?.data || defaultCMSData.about,
+        testimonials: testimonials || defaultCMSData.testimonials,
+        enquiry: enquiry?.data || defaultCMSData.enquiry,
+        siteSettings: siteSettings?.data || defaultCMSData.siteSettings,
+      });
     } catch (error) {
-      console.error('[CMS] Error loading from DynamoDB:', error);
+      console.error('Error loading CMS data:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const updateHero = (data: HeroContent) => {
+  const updateHero = async (data: HeroContent) => {
     const newData = { ...cmsData, hero: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
-    toast.success('Hero section saved');
+    
+    try {
+      await DynamoDBService.saveContent('hero', data);
+      toast.success('Hero section saved!');
+    } catch (error) {
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateAbout = (data: AboutContent) => {
+  const updateAbout = async (data: AboutContent) => {
     const newData = { ...cmsData, about: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
-    toast.success('About section saved');
+    
+    try {
+      await DynamoDBService.saveContent('about', data);
+      toast.success('About section saved!');
+    } catch (error) {
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateTestimonials = (data: TestimonialsContent) => {
+  const updateTestimonials = async (data: TestimonialsContent) => {
     const newData = { ...cmsData, testimonials: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
-    toast.success('Testimonials saved');
+    
+    try {
+      await DynamoDBService.saveContent('testimonials', data);
+      toast.success('Testimonials saved!');
+    } catch (error) {
+      toast.error('Failed to save testimonials');
+    }
   };
 
-  const updateEnquiry = (data: EnquiryContent) => {
+  const updateEnquiry = async (data: EnquiryContent) => {
     const newData = { ...cmsData, enquiry: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
-    toast.success('Enquiry section saved');
+    
+    try {
+      await DynamoDBService.saveContent('enquiry', data);
+      toast.success('Enquiry section saved!');
+    } catch (error) {
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateSiteSettings = (data: SiteSettings) => {
+  const updateSiteSettings = async (data: SiteSettings) => {
     const newData = { ...cmsData, siteSettings: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
-    toast.success('Site settings saved');
+    
+    try {
+      await DynamoDBService.saveContent('siteSettings', data);
+      toast.success('Site settings saved!');
+    } catch (error) {
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
   const uploadImage = async (file: File, folder: string): Promise<string | null> => {
-    if (useAWS) {
-      const result = await s3Service.uploadImage(file, folder);
-      if (result.success && result.imageUrl) {
-        toast.success('Image uploaded to S3');
-        return result.imageUrl;
-      }
+    try {
+      const result = await S3Service.uploadImage(file, folder);
+      toast.success('Image uploaded to S3!');
+      return result.url;
+    } catch (error) {
       toast.error('Failed to upload image');
       return null;
     }
-    toast.info('S3 not configured');
-    return URL.createObjectURL(file);
   };
 
   return (
@@ -287,7 +286,6 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
         updateSiteSettings,
         uploadImage,
         isLoading,
-        useAWS,
       }}
     >
       {children}

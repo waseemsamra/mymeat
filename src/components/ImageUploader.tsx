@@ -1,21 +1,33 @@
 import React, { useState, useRef } from 'react';
+import type { ChangeEvent, DragEvent } from 'react';
 import S3Service from '../lib/S3Service';
 import './ImageUploader.css';
 
-const ImageUploader = ({ onUploadSuccess, folder = 'admin-uploads' }) => {
+interface UploadResult {
+  success: boolean;
+  url: string;
+  key: string;
+}
+
+interface ImageUploaderProps {
+  onUploadSuccess?: (result: UploadResult) => void;
+  folder?: string;
+}
+
+const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadSuccess, folder = 'admin-uploads' }) => {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [error, setError] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const fileInputRef = useRef(null);
+  const [error, setError] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
+  const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result);
+        setPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
       
@@ -24,7 +36,7 @@ const ImageUploader = ({ onUploadSuccess, folder = 'admin-uploads' }) => {
     }
   };
 
-  const uploadFile = async (file) => {
+  const uploadFile = async (file: File) => {
     setUploading(true);
     setError(null);
     setProgress(0);
@@ -54,24 +66,24 @@ const ImageUploader = ({ onUploadSuccess, folder = 'admin-uploads' }) => {
         }
       }, 2000);
       
-    } catch (err) {
-      setError(err.message);
+    } catch (err: any) {
+      setError(err.message || 'Upload failed');
       setPreview(null);
     } finally {
       setUploading(false);
     }
   };
 
-  const handleDragOver = (event) => {
+  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
   };
 
-  const handleDrop = (event) => {
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     
-    const file = event.dataTransfer.files[0];
+    const file = event.dataTransfer.files?.[0];
     if (file && file.type.startsWith('image/')) {
       uploadFile(file);
     } else {

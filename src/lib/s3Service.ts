@@ -1,47 +1,44 @@
-import { Storage } from 'aws-amplify';
+import { uploadData, remove, list, getUrl } from 'aws-amplify/storage';
 import { v4 as uuidv4 } from 'uuid';
 
 class S3Service {
   // Upload image to S3
-  async uploadImage(file, folder = 'images') {
+  async uploadImage(file: File, folder: string = 'images') {
     try {
-      // Validate file
       if (!file) throw new Error('No file provided');
       
-      // Check file type
       const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
       if (!allowedTypes.includes(file.type)) {
-        throw new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.');
+        throw new Error('Invalid file type.');
       }
       
-      // Check file size (max 5MB)
       const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
         throw new Error('File too large. Maximum size is 5MB.');
       }
       
-      // Generate unique filename
       const fileExtension = file.name.split('.').pop();
       const fileName = `${folder}/${uuidv4()}-${Date.now()}.${fileExtension}`;
       
-      // Upload to S3
-      const result = await Storage.put(fileName, file, {
-        contentType: file.type,
-        level: 'private',
-        metadata: {
-          originalName: file.name,
-          uploadedAt: new Date().toISOString(),
-          size: file.size.toString()
+      await uploadData({
+        key: fileName,
+        data: file,
+        options: {
+          contentType: file.type,
+          metadata: {
+            originalName: file.name,
+            uploadedAt: new Date().toISOString(),
+            size: file.size.toString()
+          }
         }
-      });
+      }).result;
       
-      // Get the URL
-      const url = await Storage.get(fileName, { level: 'private' });
+      const urlResult = await getUrl({ key: fileName });
       
       return {
         success: true,
         key: fileName,
-        url: url,
+        url: urlResult.url.toString(),
         originalName: file.name,
         size: file.size,
         type: file.type
@@ -53,9 +50,9 @@ class S3Service {
   }
   
   // Delete image from S3
-  async deleteImage(key) {
+  async deleteImage(key: string) {
     try {
-      await Storage.remove(key, { level: 'private' });
+      await remove({ key });
       return { success: true };
     } catch (error) {
       console.error('Delete error:', error);
@@ -64,10 +61,10 @@ class S3Service {
   }
   
   // Get image URL
-  async getImageUrl(key) {
+  async getImageUrl(key: string) {
     try {
-      const url = await Storage.get(key, { level: 'private' });
-      return url;
+      const result = await getUrl({ key });
+      return result.url.toString();
     } catch (error) {
       console.error('Get URL error:', error);
       return null;
@@ -75,9 +72,9 @@ class S3Service {
   }
   
   // List all images in a folder
-  async listImages(folder = 'images') {
+  async listImages(folder: string = 'images') {
     try {
-      const result = await Storage.list(`${folder}/`, { level: 'private' });
+      const result = await list({ prefix: `${folder}/` });
       return result;
     } catch (error) {
       console.error('List error:', error);
@@ -86,16 +83,16 @@ class S3Service {
   }
   
   // Upload multiple images
-  async uploadMultipleImages(files, folder = 'images') {
+  async uploadMultipleImages(files: File[], folder: string = 'images') {
     const uploadPromises = files.map(file => this.uploadImage(file, folder));
     const results = await Promise.allSettled(uploadPromises);
     
     const successful = results
-      .filter(r => r.status === 'fulfilled')
+      .filter((r): r is PromiseFulfilledResult<any> => r.status === 'fulfilled')
       .map(r => r.value);
     
     const failed = results
-      .filter(r => r.status === 'rejected')
+      .filter((r): r is PromiseRejectedResult => r.status === 'rejected')
       .map(r => r.reason);
     
     return {

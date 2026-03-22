@@ -1,9 +1,9 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { dynamoDBService } from '../lib/dynamoDBService';
-import { s3Service } from '../lib/s3Service';
+import DynamoDBService from '../lib/DynamoDBService';
+import S3Service from '../lib/S3Service';
 import { toast } from 'sonner';
 
-// CMS Content Interfaces
+// CMS Content Interfaces (keep your existing interfaces)
 interface HeroContent {
   badge: string;
   title: string;
@@ -17,37 +17,14 @@ interface AboutContent {
   badge: string;
   title: string;
   subtitle: string;
-  features: AboutFeature[];
-  stats: AboutStat[];
-}
-
-interface AboutFeature {
-  id: string;
-  icon: string;
-  title: string;
-  description: string;
-  image: string;
-}
-
-interface AboutStat {
-  id: string;
-  value: string;
-  label: string;
-}
-
-interface Testimonial {
-  id: number;
-  name: string;
-  role: string;
-  content: string;
-  rating: number;
-  avatar: string;
+  features: any[];
+  stats: any[];
 }
 
 interface TestimonialsContent {
   badge: string;
   title: string;
-  testimonials: Testimonial[];
+  testimonials: any[];
   clientLogos: string[];
 }
 
@@ -95,7 +72,6 @@ interface CMSContextType {
 
 const CMSContext = createContext<CMSContextType | undefined>(undefined);
 
-// Default CMS Data (fallback if DynamoDB is not available)
 const defaultCMSData: CMSData = {
   hero: {
     badge: 'Premium Quality Feed',
@@ -109,45 +85,14 @@ const defaultCMSData: CMSData = {
     badge: 'About Us',
     title: 'Why Choose Our Products?',
     subtitle: 'We provide the highest quality animal feed products sourced from sustainable farms.',
-    features: [
-      {
-        id: '1',
-        icon: 'Sprout',
-        title: 'Sustainable Farming',
-        description: 'Eco-friendly practices that protect the environment.',
-        image: '/about-sustainable.jpg',
-      },
-      {
-        id: '2',
-        icon: 'Award',
-        title: 'Premium Quality',
-        description: 'Rigorous quality control ensures highest grade nutrients.',
-        image: '/about-quality.jpg',
-      },
-      {
-        id: '3',
-        icon: 'Leaf',
-        title: 'Wide Variety',
-        description: 'Complete range of feed products for all livestock.',
-        image: '/about-variety.jpg',
-      },
-    ],
-    stats: [
-      { id: '1', value: '15+', label: 'Years Experience' },
-      { id: '2', value: '5000+', label: 'Happy Customers' },
-      { id: '3', value: '50+', label: 'Products' },
-      { id: '4', value: '99%', label: 'Satisfaction Rate' },
-    ],
+    features: [],
+    stats: [],
   },
   testimonials: {
     badge: 'Testimonials',
     title: 'What Our Clients Say',
-    testimonials: [
-      { id: 1, name: 'John Smith', role: 'Dairy Farm Owner', content: 'Best quality hay we have ever purchased.', rating: 5, avatar: 'JS' },
-      { id: 2, name: 'Sarah Johnson', role: 'Horse Trainer', content: 'Reliable delivery and excellent service.', rating: 5, avatar: 'SJ' },
-      { id: 3, name: 'Mike Williams', role: 'Livestock Rancher', content: 'Our livestock loves their products.', rating: 5, avatar: 'MW' },
-    ],
-    clientLogos: ['FarmCo', 'AgriTech', 'GreenFields', 'LiveStock Pro', 'DairyBest'],
+    testimonials: [],
+    clientLogos: [],
   },
   enquiry: {
     badge: 'Send Enquiry',
@@ -156,7 +101,7 @@ const defaultCMSData: CMSData = {
     backgroundImage: '/form-farmer.jpg',
     contactPhone: '+1 (555) 123-4567',
     contactEmail: 'info@agrofeed.com',
-    productOptions: ['Hay Products', 'Alfalfa Products', 'Straw Products', 'Grain & Silage', 'Pellets & Capsules'],
+    productOptions: [],
   },
   siteSettings: {
     siteName: 'AgroFeed',
@@ -177,28 +122,28 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Load CMS data from DynamoDB
     loadFromDynamoDB();
   }, []);
 
   const loadFromDynamoDB = async () => {
     try {
-      const result = await dynamoDBService.getSiteContent();
-      if (result.success && result.data) {
-        setCmsData({
-          hero: result.data.hero || defaultCMSData.hero,
-          about: result.data.about || defaultCMSData.about,
-          testimonials: result.data.testimonials || defaultCMSData.testimonials,
-          enquiry: result.data.enquiry || defaultCMSData.enquiry,
-          siteSettings: result.data.siteSettings || defaultCMSData.siteSettings,
-        });
-        console.log('[CMS] Loaded from DynamoDB');
-      } else {
-        console.log('[CMS] Using default data (DynamoDB not available or empty)');
-      }
+      const [hero, about, testimonials, enquiry, siteSettings] = await Promise.all([
+        DynamoDBService.getContent('hero'),
+        DynamoDBService.getContent('about'),
+        DynamoDBService.getTestimonials(),
+        DynamoDBService.getContent('enquiry'),
+        DynamoDBService.getContent('siteSettings')
+      ]);
+
+      setCmsData({
+        hero: hero?.data || defaultCMSData.hero,
+        about: about?.data || defaultCMSData.about,
+        testimonials: testimonials || defaultCMSData.testimonials,
+        enquiry: enquiry?.data || defaultCMSData.enquiry,
+        siteSettings: siteSettings?.data || defaultCMSData.siteSettings,
+      });
     } catch (error) {
-      console.error('[CMS] Error loading from DynamoDB:', error);
-      // Use default data if DynamoDB fails
+      console.error('Error loading CMS data:', error);
     } finally {
       setIsLoading(false);
     }
@@ -208,12 +153,10 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
     const newData = { ...cmsData, hero: data };
     setCmsData(newData);
     
-    // Save to DynamoDB
     try {
-      await dynamoDBService.saveContent('hero', data, 'default');
-      toast.success('Hero section saved to DynamoDB!');
+      await DynamoDBService.saveContent('hero', data);
+      toast.success('Hero section saved!');
     } catch (error) {
-      console.error('Error saving to DynamoDB:', error);
       toast.error('Failed to save to DynamoDB');
     }
   };
@@ -222,12 +165,10 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
     const newData = { ...cmsData, about: data };
     setCmsData(newData);
     
-    // Save to DynamoDB
     try {
-      await dynamoDBService.saveContent('about', data, 'default');
-      toast.success('About section saved to DynamoDB!');
+      await DynamoDBService.saveContent('about', data);
+      toast.success('About section saved!');
     } catch (error) {
-      console.error('Error saving to DynamoDB:', error);
       toast.error('Failed to save to DynamoDB');
     }
   };
@@ -236,13 +177,11 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
     const newData = { ...cmsData, testimonials: data };
     setCmsData(newData);
     
-    // Save to DynamoDB
     try {
-      await dynamoDBService.saveContent('testimonials', data, 'default');
-      toast.success('Testimonials saved to DynamoDB!');
+      await DynamoDBService.saveContent('testimonials', data);
+      toast.success('Testimonials saved!');
     } catch (error) {
-      console.error('Error saving to DynamoDB:', error);
-      toast.error('Failed to save to DynamoDB');
+      toast.error('Failed to save testimonials');
     }
   };
 
@@ -250,12 +189,10 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
     const newData = { ...cmsData, enquiry: data };
     setCmsData(newData);
     
-    // Save to DynamoDB
     try {
-      await dynamoDBService.saveContent('enquiry', data, 'default');
-      toast.success('Enquiry section saved to DynamoDB!');
+      await DynamoDBService.saveContent('enquiry', data);
+      toast.success('Enquiry section saved!');
     } catch (error) {
-      console.error('Error saving to DynamoDB:', error);
       toast.error('Failed to save to DynamoDB');
     }
   };
@@ -264,29 +201,20 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
     const newData = { ...cmsData, siteSettings: data };
     setCmsData(newData);
     
-    // Save to DynamoDB
     try {
-      await dynamoDBService.saveContent('siteSettings', data, 'default');
-      toast.success('Site settings saved to DynamoDB!');
+      await DynamoDBService.saveContent('siteSettings', data);
+      toast.success('Site settings saved!');
     } catch (error) {
-      console.error('Error saving to DynamoDB:', error);
       toast.error('Failed to save to DynamoDB');
     }
   };
 
   const uploadImage = async (file: File, folder: string): Promise<string | null> => {
     try {
-      // Upload to S3
-      const result = await s3Service.uploadImage(file, folder);
-      if (result.success && result.imageUrl) {
-        toast.success('Image uploaded to S3!');
-        return result.imageUrl;
-      } else {
-        toast.error('Failed to upload to S3');
-        return null;
-      }
+      const result = await S3Service.uploadImage(file, folder);
+      toast.success('Image uploaded to S3!');
+      return result.url;
     } catch (error) {
-      console.error('Error uploading to S3:', error);
       toast.error('Failed to upload image');
       return null;
     }
