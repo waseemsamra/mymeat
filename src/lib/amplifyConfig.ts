@@ -1,31 +1,26 @@
-import { Amplify, type ResourcesConfig } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 
-export const awsConfig: ResourcesConfig = {
+// Direct configuration (fallback if env vars don't work)
+const config = {
   Auth: {
     Cognito: {
-      userPoolId: import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID,
-      userPoolClientId: import.meta.env.VITE_AWS_COGNITO_CLIENT_ID,
-      identityPoolId: import.meta.env.VITE_AWS_COGNITO_IDENTITY_POOL_ID
+      userPoolId: 'us-east-1_JxtucAU3s',
+      userPoolClientId: '4bp3ron4t3v2n1q8qvu2j795ov',
+      identityPoolId: 'us-east-1:7d4e0b0c-2a44-4be1-94c6-1c73af02e000'
     }
   },
   Storage: {
     S3: {
-      bucket: import.meta.env.VITE_AWS_S3_BUCKET,
-      region: import.meta.env.VITE_AWS_S3_REGION || 'us-east-1'
+      bucket: 'agrofeed-content-agrofeed-536217686312',
+      region: 'us-east-1'
     }
   }
 };
 
 // Initialize Amplify
 if (typeof window !== 'undefined') {
-  Amplify.configure(awsConfig);
-  
-  // Debug logging
-  console.log('Amplify configured with:', {
-    userPoolId: import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID,
-    userPoolClientId: import.meta.env.VITE_AWS_COGNITO_CLIENT_ID ? 'SET' : 'MISSING',
-    identityPoolId: import.meta.env.VITE_AWS_COGNITO_IDENTITY_POOL_ID
-  });
+  Amplify.configure(config);
+  console.log('✅ Amplify configured with hardcoded values');
 }
 
-export default awsConfig;
+export default config;
