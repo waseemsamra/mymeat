@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/auth';
 
@@ -9,7 +9,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -32,7 +32,7 @@ const Login = () => {
         navigate('/dashboard');
       }
       
-    } catch (err) {
+    } catch (err: any) {
       console.error('❌ [Login] Error:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
@@ -58,7 +58,7 @@ const Login = () => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               required
               placeholder="Enter your email"
             />
@@ -69,7 +69,7 @@ const Login = () => {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               required
               placeholder="Enter your password"
             />
