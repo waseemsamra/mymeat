@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { signIn } from 'aws-amplify/auth';
+import { fetchUserAttributes } from 'aws-amplify/auth';
 import './Login.css';
 
 const Login = () => {
@@ -18,8 +19,20 @@ const Login = () => {
       console.log('✅ Login successful:', result);
       
       if (result.isSignedIn) {
-        // Redirect to admin page
-        window.location.href = '/admin';
+        // Get user attributes to check role
+        const attributes = await fetchUserAttributes();
+        const userRole = attributes.custom_role || 'user';
+        
+        console.log('👤 User role:', userRole);
+        
+        // Redirect based on role
+        if (userRole === 'admin') {
+          console.log('🔑 Redirecting to admin dashboard');
+          window.location.href = '/admin';
+        } else {
+          console.log('👤 Redirecting to user dashboard');
+          window.location.href = '/dashboard';
+        }
       }
       
     } catch (err: any) {
