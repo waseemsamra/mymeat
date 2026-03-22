@@ -1,5 +1,4 @@
-import { Amplify } from 'aws-amplify';
-import type { ResourcesConfig } from 'aws-amplify';
+import { Amplify, type ResourcesConfig } from 'aws-amplify';
 
 export const awsConfig: ResourcesConfig = {
   Auth: {
@@ -20,6 +19,13 @@ export const awsConfig: ResourcesConfig = {
 // Initialize Amplify
 if (typeof window !== 'undefined') {
   Amplify.configure(awsConfig);
+  
+  // Debug logging
+  console.log('Amplify configured with:', {
+    userPoolId: import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID,
+    userPoolClientId: import.meta.env.VITE_AWS_COGNITO_CLIENT_ID ? 'SET' : 'MISSING',
+    identityPoolId: import.meta.env.VITE_AWS_COGNITO_IDENTITY_POOL_ID
+  });
 }
 
 export default awsConfig;
