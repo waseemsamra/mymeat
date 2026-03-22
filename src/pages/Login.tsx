@@ -21,24 +21,30 @@ const Login = () => {
         // Get ALL user attributes
         const attributes = await fetchUserAttributes();
         console.log('📋 ALL user attributes:', attributes);
+        console.log('📋 Attribute keys:', Object.keys(attributes));
         
-        // Check multiple possible role attribute names
-        const userRole = 
-          attributes.custom_role || 
-          attributes['custom:role'] || 
-          attributes.role || 
+        // Log all attributes to see exact format
+        Object.entries(attributes).forEach(([key, value]) => {
+          console.log(`  ${key}: ${value}`);
+        });
+        
+        // Check ALL possible formats
+        const role = 
+          (attributes as any)['custom:role'] ||  // With colon (Cognito format)
+          (attributes as any).custom_role ||     // With underscore
+          (attributes as any).role ||            // Plain
           'user';
         
-        console.log('👤 Detected role:', userRole);
-        console.log('🔍 custom_role:', attributes.custom_role);
-        console.log('🔍 custom:role:', attributes['custom:role']);
+        console.log('👤 Detected role:', role);
+        console.log('🔍 custom:role value:', (attributes as any)['custom:role']);
+        console.log('🔍 custom_role value:', (attributes as any).custom_role);
         
         // Redirect based on role
-        if (userRole === 'admin') {
+        if (role === 'admin') {
           console.log('🔑 Redirecting to ADMIN dashboard');
           window.location.href = '/admin';
         } else {
-          console.log('👤 Redirecting to USER dashboard');
+          console.log('👤 Redirecting to USER dashboard (role:', role, ')');
           window.location.href = '/dashboard';
         }
       }
