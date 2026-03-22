@@ -7,6 +7,7 @@ import { CMSProvider } from './contexts/CMSContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import FloatingAdminButton from './components/FloatingAdminButton';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
@@ -90,6 +91,8 @@ function App() {
                 </ProtectedRoute>
               } />
             </Routes>
+            {/* Floating Admin Button for Testing */}
+            <FloatingAdminButton />
           </div>
         </Router>
       </AuthProvider>
