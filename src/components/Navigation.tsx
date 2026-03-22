@@ -30,6 +30,9 @@ const Navigation = () => {
     { path: '/contact', label: 'Contact' },
   ];
 
+  // Temporary admin link for testing (remove after testing)
+  const showAdminLink = true; // Set to false to hide after testing
+
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
@@ -203,6 +206,15 @@ const Navigation = () => {
               </>
             ) : (
               <>
+                {/* Temporary Admin Link for Testing */}
+                {showAdminLink && (
+                  <Link
+                    to="/admin"
+                    className="block px-4 py-3 font-medium text-primary bg-primary/5 transition-colors duration-300"
+                  >
+                    🔑 Admin (Test)
+                  </Link>
+                )}
                 <Link
                   to="/login"
                   className="block px-4 py-3 font-medium text-dark/80 hover:text-primary hover:bg-primary/5 transition-colors duration-300"
