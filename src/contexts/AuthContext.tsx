@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import AuthService from '../lib/AuthService';
 import { toast } from 'sonner';
 
 interface User {
@@ -21,86 +22,95 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USERS_STORAGE_KEY = 'agrofeed_users';
 const CURRENT_USER_KEY = 'agrofeed_current_user';
-
-const getStoredUsers = (): Array<User & { password: string }> => {
-  const stored = localStorage.getItem(USERS_STORAGE_KEY);
-  if (stored) {
-    return JSON.parse(stored);
-  }
-  const adminUser: User & { password: string } = {
-    id: 'admin-001',
-    name: 'Admin User',
-    email: 'admin@agrofeed.com',
-    company: 'AgroFeed Inc.',
-    password: 'admin123',
-    role: 'admin',
-  };
-  localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify([adminUser]));
-  return [adminUser];
-};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem(CURRENT_USER_KEY);
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      try {
+        const currentUser = await AuthService.getCurrentUser();
+        if (currentUser) {
+          const userWithoutPassword = {
+            id: currentUser.user?.sub || currentUser.user?.id || '',
+            email: currentUser.attributes?.email || '',
+            name: currentUser.attributes?.name || '',
+            company: currentUser.attributes?.custom_company || '',
+            role: currentUser.attributes?.custom_role || 'user',
+          };
+          setUser(userWithoutPassword);
+        }
+      } catch (error) {
+        console.error('Error checking auth:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    checkAuth();
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 600));
-
-    const foundUser = getStoredUsers().find(u => u.email === email && u.password === password);
-
-    if (foundUser) {
-      const { password: _, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
+    try {
+      const result = await AuthService.login(email, password);
+      
+      if (result.success) {
+        const userWithoutPassword = {
+          id: result.user?.id || '',
+          email: email,
+          name: result.attributes?.name || '',
+          company: result.attributes?.custom_company || '',
+          role: result.attributes?.custom_role || 'user',
+        };
+        setUser(userWithoutPassword);
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
+        toast.success('Welcome back!', {
+          description: 'You have successfully logged in.',
+        });
+        setIsLoading(false);
+        return true;
+      }
+      
       setIsLoading(false);
-      return true;
+      return false;
+    } catch (error: any) {
+      toast.error('Login failed', {
+        description: error.message || 'Invalid email or password',
+      });
+      setIsLoading(false);
+      return false;
     }
-
-    setIsLoading(false);
-    return false;
   };
 
   const register = async (name: string, email: string, password: string, company?: string): Promise<boolean> => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 600));
-
-    const users = getStoredUsers();
-    if (users.some(u => u.email === email)) {
+    try {
+      // For now, use Cognito sign up (not implemented in AuthService yet)
+      // This is a placeholder - you'll need to implement signUp in AuthService
+      toast.error('Registration not available', {
+        description: 'Please contact admin to create an account',
+      });
+      setIsLoading(false);
+      return false;
+    } catch (error: any) {
+      toast.error('Registration failed', {
+        description: error.message || 'Could not create account',
+      });
       setIsLoading(false);
       return false;
     }
-
-    const newUser: User & { password: string } = {
-      id: Date.now().toString(),
-      name,
-      email,
-      company: company || '',
-      password,
-      role: users.length === 0 ? 'admin' : 'user',
-    };
-
-    users.push(newUser);
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-
-    const { password: _, ...userWithoutPassword } = newUser;
-    setUser(userWithoutPassword);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
-    setIsLoading(false);
-    return true;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await AuthService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+    
     setUser(null);
     localStorage.removeItem(CURRENT_USER_KEY);
     toast.success('Logged out', {
