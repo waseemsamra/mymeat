@@ -1,5 +1,5 @@
 class DynamoDBService {
-  private API_URL = import.meta.env.VITE_API_URL || 'https://g15n8ubqn8.execute-api.us-east-1.amazonaws.com/prod';
+  private API_URL = import.meta.env.VITE_API_URL || 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 
   // Get content by type
   async getContent(type: string) {
