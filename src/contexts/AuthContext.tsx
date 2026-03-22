@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import AuthService from '../lib/AuthService';
+import { signIn, signOut, fetchUserAttributes, fetchAuthSession } from 'aws-amplify/auth';
 import { toast } from 'sonner';
 
 interface User {
@@ -31,14 +31,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const currentUser = await AuthService.getCurrentUser();
-        if (currentUser) {
+        const session = await fetchAuthSession();
+        if (session.tokens) {
+          const attributes = await fetchUserAttributes();
           const userWithoutPassword: User = {
-            id: currentUser.user?.sub || currentUser.user?.id?.toString() || '',
-            email: currentUser.attributes?.email || '',
-            name: currentUser.attributes?.name || '',
-            company: currentUser.attributes?.custom_company || '',
-            role: (currentUser.attributes?.custom_role as 'user' | 'admin') || 'user',
+            id: session.tokens.accessToken.payload.sub || '',
+            email: attributes.email || '',
+            name: attributes.name || '',
+            company: attributes.custom_company || '',
+            role: (attributes.custom_role as 'user' | 'admin') || 'user',
           };
           setUser(userWithoutPassword);
         }
@@ -54,15 +55,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const result = await AuthService.login(email, password);
+      const result = await signIn({ username: email, password });
       
-      if (result.success) {
+      if (result.isSignedIn) {
+        const attributes = await fetchUserAttributes();
         const userWithoutPassword: User = {
-          id: result.user?.id?.toString() || '',
-          email: email,
-          name: result.attributes?.name || '',
-          company: result.attributes?.custom_company || '',
-          role: (result.attributes?.custom_role as 'user' | 'admin') || 'user',
+          id: attributes.sub || '',
+          email: attributes.email || '',
+          name: attributes.name || '',
+          company: attributes.custom_company || '',
+          role: (attributes.custom_role as 'user' | 'admin') || 'user',
         };
         setUser(userWithoutPassword);
         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
@@ -103,7 +105,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     try {
-      await AuthService.logout();
+      await signOut();
     } catch (error) {
       console.error('Logout error:', error);
     }
