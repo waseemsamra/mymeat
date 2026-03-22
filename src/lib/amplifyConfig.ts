@@ -1,7 +1,5 @@
-// AWS Amplify Configuration
-// This file configures AWS services for your AgroFeed CMS
+import { Amplify } from 'aws-amplify';
 
-// AWS Configuration Object
 export const awsConfig = {
   Auth: {
     region: import.meta.env.VITE_AWS_REGION || 'us-east-1',
@@ -25,21 +23,17 @@ export const awsConfig = {
   API: {
     endpoints: [
       {
-        name: 'AgroFeedAPI',
-        endpoint: import.meta.env.VITE_API_URL || ''
+        name: 'cmsApi',
+        endpoint: import.meta.env.VITE_API_URL || 'https://g15n8ubqn8.execute-api.us-east-1.amazonaws.com/prod',
+        region: import.meta.env.VITE_AWS_REGION || 'us-east-1'
       }
     ]
   }
 };
 
-// Initialize Amplify (if using aws-amplify package)
-// Uncomment these lines if you install aws-amplify:
-/*
-import { Amplify } from 'aws-amplify';
-
+// Initialize Amplify
 if (typeof window !== 'undefined') {
   Amplify.configure(awsConfig);
 }
-*/
 
 export default awsConfig;
