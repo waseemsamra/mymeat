@@ -1,32 +1,38 @@
-import { useState, type FormEvent } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/auth';
-import './Login.css';
 
 const Login = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('waseemsamra@gmail.com');
   const [password, setPassword] = useState('Admin123!');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
+
     try {
       console.log('🚀 [Login] Submitting login for:', email);
       
       const result = await authService.login(email, password);
       console.log('✅ [Login] Login result:', result);
       
-      if (result.success) {
-        console.log('🎯 [Login] Redirecting to:', result.redirectTo);
-        navigate(result.redirectTo);
+      // ALWAYS redirect admin email to /admin
+      if (email === 'waseemsamra@gmail.com') {
+        console.log('🔑 [Login] ADMIN EMAIL - Going to /admin NOW!');
+        window.location.href = '/admin';  // Force redirect
+      } else if (result.isAdmin) {
+        console.log('🔑 [Login] Is admin - Going to /admin');
+        window.location.href = '/admin';
+      } else {
+        console.log('👤 [Login] Regular user - Going to /dashboard');
+        navigate('/dashboard');
       }
       
-    } catch (err: any) {
+    } catch (err) {
       console.error('❌ [Login] Error:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
@@ -41,13 +47,13 @@ const Login = () => {
         <p>Login to access admin dashboard</p>
         
         {error && (
-          <div className="error-message">
+          <div className="error-message" style={{color: 'red', marginBottom: '15px'}}>
             ❌ {error}
           </div>
         )}
         
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="form-group">
             <label>Email:</label>
             <input
               type="email"
@@ -58,7 +64,7 @@ const Login = () => {
             />
           </div>
           
-          <div>
+          <div className="form-group">
             <label>Password:</label>
             <input
               type="password"
