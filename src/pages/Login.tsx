@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { signIn } from 'aws-amplify/auth';
 
 const Login = () => {
@@ -7,7 +7,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -21,7 +21,7 @@ const Login = () => {
         window.location.href = '/admin';
       }
       
-    } catch (err) {
+    } catch (err: any) {
       console.error('❌ Login error:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
