@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { signIn } from 'aws-amplify/auth';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('waseemsamra@gmail.com');
@@ -36,7 +37,7 @@ const Login = () => {
         <p>Login to access admin dashboard</p>
         
         {error && (
-          <div className="error-message" style={{color: 'red', marginBottom: '15px'}}>
+          <div className="error-message">
             ❌ {error}
           </div>
         )}
