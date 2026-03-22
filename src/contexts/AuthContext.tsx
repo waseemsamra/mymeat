@@ -14,7 +14,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (name: string, email: string, password: string, company?: string) => Promise<boolean>;
+  register: (_name: string, _email: string, _password: string, _company?: string) => Promise<boolean>;
   logout: () => void;
   isAuthenticated: boolean;
   isAdmin: boolean;
@@ -29,17 +29,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
     const checkAuth = async () => {
       try {
         const currentUser = await AuthService.getCurrentUser();
         if (currentUser) {
-          const userWithoutPassword = {
-            id: currentUser.user?.sub || currentUser.user?.id || '',
+          const userWithoutPassword: User = {
+            id: currentUser.user?.sub || currentUser.user?.id?.toString() || '',
             email: currentUser.attributes?.email || '',
             name: currentUser.attributes?.name || '',
             company: currentUser.attributes?.custom_company || '',
-            role: currentUser.attributes?.custom_role || 'user',
+            role: (currentUser.attributes?.custom_role as 'user' | 'admin') || 'user',
           };
           setUser(userWithoutPassword);
         }
@@ -58,12 +57,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const result = await AuthService.login(email, password);
       
       if (result.success) {
-        const userWithoutPassword = {
-          id: result.user?.id || '',
+        const userWithoutPassword: User = {
+          id: result.user?.id?.toString() || '',
           email: email,
           name: result.attributes?.name || '',
           company: result.attributes?.custom_company || '',
-          role: result.attributes?.custom_role || 'user',
+          role: (result.attributes?.custom_role as 'user' | 'admin') || 'user',
         };
         setUser(userWithoutPassword);
         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
@@ -85,11 +84,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const register = async (name: string, email: string, password: string, company?: string): Promise<boolean> => {
+  const register = async (_name: string, _email: string, _password: string, _company?: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // For now, use Cognito sign up (not implemented in AuthService yet)
-      // This is a placeholder - you'll need to implement signUp in AuthService
       toast.error('Registration not available', {
         description: 'Please contact admin to create an account',
       });
