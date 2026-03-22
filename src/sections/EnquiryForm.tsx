@@ -12,9 +12,9 @@ const EnquiryForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 2000));

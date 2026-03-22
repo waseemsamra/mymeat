@@ -1,133 +1,110 @@
-// S3 Service for Image Storage
-import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { s3Client, awsConfig } from '../lib/aws';
-
-export interface UploadImageResult {
-  success: boolean;
-  imageUrl?: string;
-  error?: string;
-}
+import { Storage } from 'aws-amplify';
+import { v4 as uuidv4 } from 'uuid';
 
 class S3Service {
-  private bucketName: string;
-
-  constructor() {
-    this.bucketName = awsConfig.s3.bucket;
-  }
-
-  /**
-   * Upload an image to S3
-   * @param file - The image file to upload
-   * @param folder - The folder in S3 (e.g., 'hero', 'products', 'about')
-   * @returns The public URL of the uploaded image
-   */
-  async uploadImage(file: File, folder: string): Promise<UploadImageResult> {
+  // Upload image to S3
+  async uploadImage(file, folder = 'images') {
     try {
+      // Validate file
+      if (!file) throw new Error('No file provided');
+      
+      // Check file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        throw new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.');
+      }
+      
+      // Check file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        throw new Error('File too large. Maximum size is 5MB.');
+      }
+      
+      // Generate unique filename
       const fileExtension = file.name.split('.').pop();
-      const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`;
-
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = new Uint8Array(arrayBuffer);
-
-      const command = new PutObjectCommand({
-        Bucket: this.bucketName,
-        Key: fileName,
-        Body: buffer,
-        ContentType: file.type,
-        ACL: 'public-read',
+      const fileName = `${folder}/${uuidv4()}-${Date.now()}.${fileExtension}`;
+      
+      // Upload to S3
+      const result = await Storage.put(fileName, file, {
+        contentType: file.type,
+        level: 'private',
+        metadata: {
+          originalName: file.name,
+          uploadedAt: new Date().toISOString(),
+          size: file.size.toString()
+        }
       });
-
-      await s3Client.send(command);
-
-      const imageUrl = `https://${this.bucketName}.s3.${awsConfig.s3.region}.amazonaws.com/${fileName}`;
-
+      
+      // Get the URL
+      const url = await Storage.get(fileName, { level: 'private' });
+      
       return {
         success: true,
-        imageUrl,
+        key: fileName,
+        url: url,
+        originalName: file.name,
+        size: file.size,
+        type: file.type
       };
     } catch (error) {
-      console.error('Error uploading image:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to upload image',
-      };
-    }
-  }
-
-  /**
-   * Get a signed URL for temporary access to a private image
-   * @param key - The S3 key of the image
-   * @param expiresIn - Expiration time in seconds (default: 1 hour)
-   * @returns Signed URL
-   */
-  async getSignedUrl(key: string, expiresIn: number = 3600): Promise<string> {
-    try {
-      const command = new GetObjectCommand({
-        Bucket: this.bucketName,
-        Key: key,
-      });
-
-      return await getSignedUrl(s3Client, command, { expiresIn });
-    } catch (error) {
-      console.error('Error generating signed URL:', error);
+      console.error('Upload error:', error);
       throw error;
     }
   }
-
-  /**
-   * Delete an image from S3
-   * @param imageUrl - The full URL of the image to delete
-   */
-  async deleteImage(imageUrl: string): Promise<{ success: boolean; error?: string }> {
+  
+  // Delete image from S3
+  async deleteImage(key) {
     try {
-      // Extract key from URL
-      const url = new URL(imageUrl);
-      const key = url.pathname.substring(1); // Remove leading '/'
-
-      const command = new DeleteObjectCommand({
-        Bucket: this.bucketName,
-        Key: key,
-      });
-
-      await s3Client.send(command);
-
+      await Storage.remove(key, { level: 'private' });
       return { success: true };
     } catch (error) {
-      console.error('Error deleting image:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to delete image',
-      };
+      console.error('Delete error:', error);
+      throw error;
     }
   }
-
-  /**
-   * List all images in a folder
-   * @param folder - The folder to list (e.g., 'hero', 'products')
-   */
-  async listImages(folder: string): Promise<{ success: boolean; images?: string[]; error?: string }> {
+  
+  // Get image URL
+  async getImageUrl(key) {
     try {
-      const command = new ListObjectsV2Command({
-        Bucket: this.bucketName,
-        Prefix: folder,
-      });
-
-      const response = await s3Client.send(command);
-      const images = response.Contents?.map((obj) => `https://${this.bucketName}.s3.${awsConfig.s3.region}.amazonaws.com/${obj.Key}`) || [];
-
-      return {
-        success: true,
-        images,
-      };
+      const url = await Storage.get(key, { level: 'private' });
+      return url;
     } catch (error) {
-      console.error('Error listing images:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to list images',
-      };
+      console.error('Get URL error:', error);
+      return null;
     }
+  }
+  
+  // List all images in a folder
+  async listImages(folder = 'images') {
+    try {
+      const result = await Storage.list(`${folder}/`, { level: 'private' });
+      return result;
+    } catch (error) {
+      console.error('List error:', error);
+      return [];
+    }
+  }
+  
+  // Upload multiple images
+  async uploadMultipleImages(files, folder = 'images') {
+    const uploadPromises = files.map(file => this.uploadImage(file, folder));
+    const results = await Promise.allSettled(uploadPromises);
+    
+    const successful = results
+      .filter(r => r.status === 'fulfilled')
+      .map(r => r.value);
+    
+    const failed = results
+      .filter(r => r.status === 'rejected')
+      .map(r => r.reason);
+    
+    return {
+      success: successful,
+      failed: failed,
+      total: files.length,
+      uploaded: successful.length
+    };
   }
 }
 
-export const s3Service = new S3Service();
+export default new S3Service();

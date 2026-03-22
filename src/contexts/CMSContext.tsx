@@ -1,4 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { dynamoDBService } from '../lib/dynamoDBService';
+import { s3Service } from '../lib/s3Service';
+import { toast } from 'sonner';
 
 // CMS Content Interfaces
 interface HeroContent {
@@ -86,19 +89,18 @@ interface CMSContextType {
   updateTestimonials: (data: TestimonialsContent) => void;
   updateEnquiry: (data: EnquiryContent) => void;
   updateSiteSettings: (data: SiteSettings) => void;
+  uploadImage: (file: File, folder: string) => Promise<string | null>;
   isLoading: boolean;
 }
 
 const CMSContext = createContext<CMSContextType | undefined>(undefined);
 
-const CMS_STORAGE_KEY = 'agrofeed_cms_data';
-
-// Default CMS Data
+// Default CMS Data (fallback if DynamoDB is not available)
 const defaultCMSData: CMSData = {
   hero: {
     badge: 'Premium Quality Feed',
     title: 'Premium Animal Feed Products',
-    subtitle: 'High-quality hay, alfalfa, straw, and grain products for your livestock needs. Sourced from sustainable farms with a commitment to excellence.',
+    subtitle: 'High-quality hay, alfalfa, straw, and grain products for your livestock needs.',
     primaryButtonText: 'Explore Products',
     secondaryButtonText: 'Contact Us',
     backgroundImage: '/hero-hay.jpg',
@@ -106,27 +108,27 @@ const defaultCMSData: CMSData = {
   about: {
     badge: 'About Us',
     title: 'Why Choose Our Products?',
-    subtitle: 'We provide the highest quality animal feed products sourced from sustainable farms. Our commitment to excellence ensures your livestock receives the best nutrition possible.',
+    subtitle: 'We provide the highest quality animal feed products sourced from sustainable farms.',
     features: [
       {
         id: '1',
         icon: 'Sprout',
         title: 'Sustainable Farming',
-        description: 'Eco-friendly practices that protect the environment while producing premium feed.',
+        description: 'Eco-friendly practices that protect the environment.',
         image: '/about-sustainable.jpg',
       },
       {
         id: '2',
         icon: 'Award',
         title: 'Premium Quality',
-        description: 'Rigorous quality control ensures only the highest grade nutrients for your livestock.',
+        description: 'Rigorous quality control ensures highest grade nutrients.',
         image: '/about-quality.jpg',
       },
       {
         id: '3',
         icon: 'Leaf',
         title: 'Wide Variety',
-        description: 'Complete range of feed products for all types of livestock and animals.',
+        description: 'Complete range of feed products for all livestock.',
         image: '/about-variety.jpg',
       },
     ],
@@ -141,27 +143,20 @@ const defaultCMSData: CMSData = {
     badge: 'Testimonials',
     title: 'What Our Clients Say',
     testimonials: [
-      { id: 1, name: 'John Smith', role: 'Dairy Farm Owner', content: 'Best quality hay we have ever purchased. Our cattle production has increased significantly since switching to AgroFeed products.', rating: 5, avatar: 'JS' },
-      { id: 2, name: 'Sarah Johnson', role: 'Horse Trainer', content: 'Reliable delivery and excellent service. The Timothy hay is always fresh and my horses love it.', rating: 5, avatar: 'SJ' },
-      { id: 3, name: 'Mike Williams', role: 'Livestock Rancher', content: 'Our livestock loves their products. The alfalfa pellets are a game-changer for winter feeding.', rating: 5, avatar: 'MW' },
-      { id: 4, name: 'Emily Davis', role: 'Organic Farmer', content: 'Finally found a supplier that understands sustainable farming. Their eco-friendly practices align perfectly with our values.', rating: 5, avatar: 'ED' },
+      { id: 1, name: 'John Smith', role: 'Dairy Farm Owner', content: 'Best quality hay we have ever purchased.', rating: 5, avatar: 'JS' },
+      { id: 2, name: 'Sarah Johnson', role: 'Horse Trainer', content: 'Reliable delivery and excellent service.', rating: 5, avatar: 'SJ' },
+      { id: 3, name: 'Mike Williams', role: 'Livestock Rancher', content: 'Our livestock loves their products.', rating: 5, avatar: 'MW' },
     ],
     clientLogos: ['FarmCo', 'AgriTech', 'GreenFields', 'LiveStock Pro', 'DairyBest'],
   },
   enquiry: {
     badge: 'Send Enquiry',
     title: 'Request a Quote',
-    subtitle: 'Fill out the form below and our team will get back to you within 24 hours with a customized quote for your needs.',
+    subtitle: 'Fill out the form and our team will get back to you within 24 hours.',
     backgroundImage: '/form-farmer.jpg',
     contactPhone: '+1 (555) 123-4567',
     contactEmail: 'info@agrofeed.com',
-    productOptions: [
-      'Hay Products',
-      'Alfalfa Products',
-      'Straw Products',
-      'Grain & Silage',
-      'Pellets & Capsules',
-    ],
+    productOptions: ['Hay Products', 'Alfalfa Products', 'Straw Products', 'Grain & Silage', 'Pellets & Capsules'],
   },
   siteSettings: {
     siteName: 'AgroFeed',
@@ -177,54 +172,124 @@ const defaultCMSData: CMSData = {
   },
 };
 
-const loadCMSData = (): CMSData => {
-  const stored = localStorage.getItem(CMS_STORAGE_KEY);
-  if (stored) {
-    return JSON.parse(stored);
-  }
-  // Save default data
-  localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(defaultCMSData));
-  return defaultCMSData;
-};
-
 export const CMSProvider = ({ children }: { children: ReactNode }) => {
   const [cmsData, setCmsData] = useState<CMSData>(defaultCMSData);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const data = loadCMSData();
-    setCmsData(data);
-    setIsLoading(false);
+    // Load CMS data from DynamoDB
+    loadFromDynamoDB();
   }, []);
 
-  const updateHero = (data: HeroContent) => {
+  const loadFromDynamoDB = async () => {
+    try {
+      const result = await dynamoDBService.getSiteContent();
+      if (result.success && result.data) {
+        setCmsData({
+          hero: result.data.hero || defaultCMSData.hero,
+          about: result.data.about || defaultCMSData.about,
+          testimonials: result.data.testimonials || defaultCMSData.testimonials,
+          enquiry: result.data.enquiry || defaultCMSData.enquiry,
+          siteSettings: result.data.siteSettings || defaultCMSData.siteSettings,
+        });
+        console.log('[CMS] Loaded from DynamoDB');
+      } else {
+        console.log('[CMS] Using default data (DynamoDB not available or empty)');
+      }
+    } catch (error) {
+      console.error('[CMS] Error loading from DynamoDB:', error);
+      // Use default data if DynamoDB fails
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateHero = async (data: HeroContent) => {
     const newData = { ...cmsData, hero: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
+    
+    // Save to DynamoDB
+    try {
+      await dynamoDBService.saveContent('hero', data, 'default');
+      toast.success('Hero section saved to DynamoDB!');
+    } catch (error) {
+      console.error('Error saving to DynamoDB:', error);
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateAbout = (data: AboutContent) => {
+  const updateAbout = async (data: AboutContent) => {
     const newData = { ...cmsData, about: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
+    
+    // Save to DynamoDB
+    try {
+      await dynamoDBService.saveContent('about', data, 'default');
+      toast.success('About section saved to DynamoDB!');
+    } catch (error) {
+      console.error('Error saving to DynamoDB:', error);
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateTestimonials = (data: TestimonialsContent) => {
+  const updateTestimonials = async (data: TestimonialsContent) => {
     const newData = { ...cmsData, testimonials: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
+    
+    // Save to DynamoDB
+    try {
+      await dynamoDBService.saveContent('testimonials', data, 'default');
+      toast.success('Testimonials saved to DynamoDB!');
+    } catch (error) {
+      console.error('Error saving to DynamoDB:', error);
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateEnquiry = (data: EnquiryContent) => {
+  const updateEnquiry = async (data: EnquiryContent) => {
     const newData = { ...cmsData, enquiry: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
+    
+    // Save to DynamoDB
+    try {
+      await dynamoDBService.saveContent('enquiry', data, 'default');
+      toast.success('Enquiry section saved to DynamoDB!');
+    } catch (error) {
+      console.error('Error saving to DynamoDB:', error);
+      toast.error('Failed to save to DynamoDB');
+    }
   };
 
-  const updateSiteSettings = (data: SiteSettings) => {
+  const updateSiteSettings = async (data: SiteSettings) => {
     const newData = { ...cmsData, siteSettings: data };
     setCmsData(newData);
-    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(newData));
+    
+    // Save to DynamoDB
+    try {
+      await dynamoDBService.saveContent('siteSettings', data, 'default');
+      toast.success('Site settings saved to DynamoDB!');
+    } catch (error) {
+      console.error('Error saving to DynamoDB:', error);
+      toast.error('Failed to save to DynamoDB');
+    }
+  };
+
+  const uploadImage = async (file: File, folder: string): Promise<string | null> => {
+    try {
+      // Upload to S3
+      const result = await s3Service.uploadImage(file, folder);
+      if (result.success && result.imageUrl) {
+        toast.success('Image uploaded to S3!');
+        return result.imageUrl;
+      } else {
+        toast.error('Failed to upload to S3');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error uploading to S3:', error);
+      toast.error('Failed to upload image');
+      return null;
+    }
   };
 
   return (
@@ -236,6 +301,7 @@ export const CMSProvider = ({ children }: { children: ReactNode }) => {
         updateTestimonials,
         updateEnquiry,
         updateSiteSettings,
+        uploadImage,
         isLoading,
       }}
     >

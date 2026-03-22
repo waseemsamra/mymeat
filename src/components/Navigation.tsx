@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Leaf, User, LogOut, Settings } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContextAWS';
+import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'sonner';
 
 const Navigation = () => {
