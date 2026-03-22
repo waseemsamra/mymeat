@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react';
-import { signIn } from 'aws-amplify/auth';
+import { useNavigate } from 'react-router-dom';
+import authService from '../services/auth';
 import './Login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('waseemsamra@gmail.com');
   const [password, setPassword] = useState('Admin123!');
   const [loading, setLoading] = useState(false);
@@ -14,23 +16,18 @@ const Login = () => {
     setError('');
     
     try {
-      console.log('🚀 [LOGIN v3] Attempting login for:', email);
-      const result = await signIn({ username: email, password });
-      console.log('✅ [LOGIN v3] Login successful:', result);
+      console.log('🚀 [Login] Submitting login for:', email);
       
-      if (result.isSignedIn) {
-        // SIMPLE: Admin email ALWAYS goes to /admin
-        if (email === 'waseemsamra@gmail.com') {
-          console.log('🔑 [LOGIN v3] ADMIN DETECTED - Going to /admin NOW!');
-          window.location.href = '/admin';
-        } else {
-          console.log('👤 [LOGIN v3] Regular user - Going to /dashboard');
-          window.location.href = '/dashboard';
-        }
+      const result = await authService.login(email, password);
+      console.log('✅ [Login] Login result:', result);
+      
+      if (result.success) {
+        console.log('🎯 [Login] Redirecting to:', result.redirectTo);
+        navigate(result.redirectTo);
       }
       
     } catch (err: any) {
-      console.error('❌ [LOGIN v3] Login error:', err);
+      console.error('❌ [Login] Error:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
@@ -40,7 +37,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>🌾 AgroFeed CMS v3</h1>
+        <h1>🌾 AgroFeed CMS</h1>
         <p>Login to access admin dashboard</p>
         
         {error && (
