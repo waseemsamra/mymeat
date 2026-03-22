@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
   const location = useLocation();
 
   // Show loading state while checking authentication
@@ -25,6 +25,19 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Check if accessing admin route
+  if (location.pathname === '/admin' || location.pathname.startsWith('/admin/')) {
+    // Allow admin access if:
+    // 1. User has admin role, OR
+    // 2. User email is the admin email (fallback)
+    const isAdmin = user?.role === 'admin' || user?.email === 'waseemsamra@gmail.com';
+    
+    if (!isAdmin) {
+      // Not admin - redirect to user dashboard
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return <>{children}</>;
