@@ -18,33 +18,25 @@ const Login = () => {
       console.log('✅ Login successful:', result);
       
       if (result.isSignedIn) {
-        // Get ALL user attributes
+        // Get user attributes
         const attributes = await fetchUserAttributes();
         console.log('📋 ALL user attributes:', attributes);
-        console.log('📋 Attribute keys:', Object.keys(attributes));
         
-        // Log all attributes to see exact format
-        Object.entries(attributes).forEach(([key, value]) => {
-          console.log(`  ${key}: ${value}`);
-        });
-        
-        // Check ALL possible formats
+        // Check role from attributes OR use admin email as fallback
         const role = 
-          (attributes as any)['custom:role'] ||  // With colon (Cognito format)
-          (attributes as any).custom_role ||     // With underscore
-          (attributes as any).role ||            // Plain
-          'user';
+          attributes['custom:role'] || 
+          attributes.custom_role || 
+          (email === 'waseemsamra@gmail.com' ? 'admin' : 'user');
         
         console.log('👤 Detected role:', role);
-        console.log('🔍 custom:role value:', (attributes as any)['custom:role']);
-        console.log('🔍 custom_role value:', (attributes as any).custom_role);
+        console.log('📧 User email:', email);
         
         // Redirect based on role
         if (role === 'admin') {
           console.log('🔑 Redirecting to ADMIN dashboard');
           window.location.href = '/admin';
         } else {
-          console.log('👤 Redirecting to USER dashboard (role:', role, ')');
+          console.log('👤 Redirecting to USER dashboard');
           window.location.href = '/dashboard';
         }
       }
