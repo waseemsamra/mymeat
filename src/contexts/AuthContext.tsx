@@ -33,18 +33,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const session = await fetchAuthSession();
         if (session.tokens) {
+          // User is authenticated, get attributes
           const attributes = await fetchUserAttributes();
           const userWithoutPassword: User = {
-            id: session.tokens.accessToken.payload.sub || '',
+            id: attributes.sub || '',
             email: attributes.email || '',
             name: attributes.name || '',
             company: attributes.custom_company || '',
             role: (attributes.custom_role as 'user' | 'admin') || 'user',
           };
           setUser(userWithoutPassword);
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
+        } else {
+          // Check localStorage for cached user
+          const storedUser = localStorage.getItem(CURRENT_USER_KEY);
+          if (storedUser) {
+            setUser(JSON.parse(storedUser));
+          }
         }
       } catch (error) {
         console.error('Error checking auth:', error);
+        // Check localStorage as fallback
+        const storedUser = localStorage.getItem(CURRENT_USER_KEY);
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
       } finally {
         setIsLoading(false);
       }
