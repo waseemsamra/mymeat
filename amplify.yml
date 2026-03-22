@@ -25,3 +25,9 @@ frontend:
           value: 'DENY'
         - key: 'X-XSS-Protection'
           value: '1; mode=block'
+        - key: 'Cache-Control'
+          value: 'max-age=0, must-revalidate'
+rewrites:
+  - source: /<*>
+    target: /index.html
+    status: 200
