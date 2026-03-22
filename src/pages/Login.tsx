@@ -14,22 +14,23 @@ const Login = () => {
     setError('');
     
     try {
+      console.log('🚀 [LOGIN v3] Attempting login for:', email);
       const result = await signIn({ username: email, password });
-      console.log('✅ Login successful:', result);
+      console.log('✅ [LOGIN v3] Login successful:', result);
       
       if (result.isSignedIn) {
-        // ALWAYS redirect admin email to admin dashboard
+        // SIMPLE: Admin email ALWAYS goes to /admin
         if (email === 'waseemsamra@gmail.com') {
-          console.log('🔑 Admin user detected - redirecting to /admin');
+          console.log('🔑 [LOGIN v3] ADMIN DETECTED - Going to /admin NOW!');
           window.location.href = '/admin';
         } else {
-          console.log('👤 Regular user - redirecting to /dashboard');
+          console.log('👤 [LOGIN v3] Regular user - Going to /dashboard');
           window.location.href = '/dashboard';
         }
       }
       
     } catch (err: any) {
-      console.error('❌ Login error:', err);
+      console.error('❌ [LOGIN v3] Login error:', err);
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
@@ -39,7 +40,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>🌾 AgroFeed CMS</h1>
+        <h1>🌾 AgroFeed CMS v3</h1>
         <p>Login to access admin dashboard</p>
         
         {error && (

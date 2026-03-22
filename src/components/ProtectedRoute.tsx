@@ -10,7 +10,15 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, isLoading, user } = useAuth();
   const location = useLocation();
 
-  // Show loading state while checking authentication
+  console.log('🔒 [ProtectedRoute]', {
+    path: location.pathname,
+    isAuthenticated,
+    isLoading,
+    userEmail: user?.email,
+    userRole: user?.role
+  });
+
+  // Show loading
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -22,22 +30,22 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  // Redirect to login if not authenticated
+  // Not authenticated - redirect to login
   if (!isAuthenticated) {
+    console.log('❌ [ProtectedRoute] Not authenticated - redirecting to login');
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Check if accessing admin route
-  if (location.pathname === '/admin' || location.pathname.startsWith('/admin/')) {
-    // Allow admin access if:
-    // 1. User has admin role, OR
-    // 2. User email is the admin email (fallback)
-    const isAdmin = user?.role === 'admin' || user?.email === 'waseemsamra@gmail.com';
+  // Admin route - check if user is admin
+  if (location.pathname.startsWith('/admin')) {
+    const isAdmin = user?.email === 'waseemsamra@gmail.com';
+    console.log('🔐 [ProtectedRoute] Admin route check:', { isAdmin, email: user?.email });
     
     if (!isAdmin) {
-      // Not admin - redirect to user dashboard
+      console.log('❌ [ProtectedRoute] Not admin - redirecting to dashboard');
       return <Navigate to="/dashboard" replace />;
     }
+    console.log('✅ [ProtectedRoute] Admin access granted');
   }
 
   return <>{children}</>;
