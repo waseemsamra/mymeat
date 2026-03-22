@@ -6,16 +6,15 @@ import './index.css'
 import App from './App.tsx'
 
 // Initialize Amplify
+Amplify.configure(awsConfig)
+
+// Expose Amplify globally for debugging
 if (typeof window !== 'undefined') {
-  Amplify.configure(awsConfig)
-  
-  // Expose Amplify globally for debugging
   (window as any).Amplify = Amplify
   
   // Debug logging
   console.log('✅ Amplify initialized')
   console.log('📋 Configuration:', awsConfig)
-  console.log('🔍 Auth config:', awsConfig.Auth?.Cognito || awsConfig.Auth)
 }
 
 createRoot(document.getElementById('root')!).render(
