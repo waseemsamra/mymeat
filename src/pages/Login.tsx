@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { signIn, fetchUserAttributes } from 'aws-amplify/auth';
+import { signIn } from 'aws-amplify/auth';
 import './Login.css';
 
 const Login = () => {
@@ -18,25 +18,12 @@ const Login = () => {
       console.log('✅ Login successful:', result);
       
       if (result.isSignedIn) {
-        // Get user attributes
-        const attributes = await fetchUserAttributes();
-        console.log('📋 ALL user attributes:', attributes);
-        
-        // Check role from attributes OR use admin email as fallback
-        const role = 
-          attributes['custom:role'] || 
-          attributes.custom_role || 
-          (email === 'waseemsamra@gmail.com' ? 'admin' : 'user');
-        
-        console.log('👤 Detected role:', role);
-        console.log('📧 User email:', email);
-        
-        // Redirect based on role
-        if (role === 'admin') {
-          console.log('🔑 Redirecting to ADMIN dashboard');
+        // ALWAYS redirect admin email to admin dashboard
+        if (email === 'waseemsamra@gmail.com') {
+          console.log('🔑 Admin user detected - redirecting to /admin');
           window.location.href = '/admin';
         } else {
-          console.log('👤 Redirecting to USER dashboard');
+          console.log('👤 Regular user - redirecting to /dashboard');
           window.location.href = '/dashboard';
         }
       }
