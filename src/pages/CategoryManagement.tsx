@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Badge } from '../components/ui/badge';
-import { Plus, Edit, Trash2, Save, X, Package, Tag, Loader2 } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Package, Tag, Loader2, Upload, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Category {
@@ -12,6 +12,7 @@ interface Category {
   name: string;
   description: string;
   color: string;
+  image?: string;
   productCount?: number;
 }
 
@@ -21,6 +22,7 @@ const CategoryManagement = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,7 +30,8 @@ const CategoryManagement = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    color: '#3b82f6'
+    color: '#3b82f6',
+    image: ''
   });
 
   const colorOptions = [
@@ -57,12 +60,12 @@ const CategoryManagement = () => {
       
       const data = await response.json();
       
-      // Transform API data if needed
       const transformedCategories = data.map((item: any) => ({
         id: item.id || item.PK?.replace('CATEGORY#', '') || Date.now(),
         name: item.name || item.data?.name || 'Category',
         description: item.description || item.data?.description || '',
         color: item.color || item.data?.color || '#3b82f6',
+        image: item.image || item.data?.image || '',
         productCount: item.productCount || item.data?.productCount || 0
       }));
       
@@ -74,11 +77,11 @@ const CategoryManagement = () => {
       
       // Fallback to sample data
       setCategories([
-        { id: 1, name: 'Hay Products', description: 'Premium grass hays', color: '#10b981', productCount: 3 },
-        { id: 2, name: 'Alfalfa Products', description: 'High-protein alfalfa', color: '#3b82f6', productCount: 3 },
-        { id: 3, name: 'Straw Products', description: 'Quality wheat and barley straw', color: '#f59e0b', productCount: 3 },
-        { id: 4, name: 'Grain & Silage', description: 'Nutrient-rich grain products', color: '#ef4444', productCount: 3 },
-        { id: 5, name: 'Pellets & Capsules', description: 'Convenient feed pellets', color: '#8b5cf6', productCount: 3 }
+        { id: 1, name: 'Hay Products', description: 'Premium grass hays', color: '#10b981', image: '', productCount: 3 },
+        { id: 2, name: 'Alfalfa Products', description: 'High-protein alfalfa', color: '#3b82f6', image: '', productCount: 3 },
+        { id: 3, name: 'Straw Products', description: 'Quality wheat and barley straw', color: '#f59e0b', image: '', productCount: 3 },
+        { id: 4, name: 'Grain & Silage', description: 'Nutrient-rich grain products', color: '#ef4444', image: '', productCount: 3 },
+        { id: 5, name: 'Pellets & Capsules', description: 'Convenient feed pellets', color: '#8b5cf6', image: '', productCount: 3 }
       ]);
     } finally {
       setLoading(false);
@@ -91,14 +94,16 @@ const CategoryManagement = () => {
       setFormData({
         name: category.name,
         description: category.description,
-        color: category.color
+        color: category.color,
+        image: category.image || ''
       });
     } else {
       setEditingCategory(null);
       setFormData({
         name: '',
         description: '',
-        color: '#3b82f6'
+        color: '#3b82f6',
+        image: ''
       });
     }
     setIsModalOpen(true);
@@ -110,8 +115,43 @@ const CategoryManagement = () => {
     setFormData({
       name: '',
       description: '',
-      color: '#3b82f6'
+      color: '#3b82f6',
+      image: ''
     });
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const { default: s3Service } = await import('../lib/S3Service');
+      
+      const result = await s3Service.uploadImage(file, 'categories');
+      
+      if (result.success && result.url) {
+        setFormData({ ...formData, image: result.url });
+        toast.success('Category image uploaded to S3!');
+      } else {
+        toast.error('Upload failed');
+      }
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast.error('Upload failed: ' + (error.message || 'Unknown error'));
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -128,7 +168,8 @@ const CategoryManagement = () => {
             id: editingCategory.id,
             name: formData.name,
             description: formData.description,
-            color: formData.color
+            color: formData.color,
+            image: formData.image
           })
         });
         
@@ -144,7 +185,8 @@ const CategoryManagement = () => {
         const newCategory = {
           name: formData.name,
           description: formData.description,
-          color: formData.color
+          color: formData.color,
+          image: formData.image
         };
         
         const response = await fetch(`${API_URL}/categories`, {
@@ -248,12 +290,24 @@ const CategoryManagement = () => {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: `${category.color}20` }}
-                    >
-                      <Tag className="h-5 w-5" style={{ color: category.color }} />
-                    </div>
+                    {category.image ? (
+                      <img
+                        src={category.image}
+                        alt={category.name}
+                        className="w-10 h-10 rounded-full object-cover border-2"
+                        style={{ borderColor: category.color }}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/category-placeholder.jpg';
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: `${category.color}20` }}
+                      >
+                        <Tag className="h-5 w-5" style={{ color: category.color }} />
+                      </div>
+                    )}
                     <div>
                       <CardTitle className="text-lg">{category.name}</CardTitle>
                       <CardDescription>
@@ -314,6 +368,47 @@ const CategoryManagement = () => {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
+                  <Label>Category Image</Label>
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploading || saving}
+                      className="flex-1"
+                    />
+                    <Button type="button" disabled={uploading || saving} variant="outline">
+                      {uploading ? (
+                        <>
+                          <span className="mr-2">⏳</span>
+                          Uploading...
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="h-4 w-4 mr-2" />
+                          Upload
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  {formData.image && (
+                    <div className="mt-2">
+                      <img
+                        src={formData.image}
+                        alt="Category"
+                        className="w-full max-w-xs h-32 object-cover rounded-lg border"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/category-placeholder.jpg';
+                        }}
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Image uploaded to S3
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div>
                   <Label>Category Name</Label>
                   <Input
                     value={formData.name}
@@ -344,7 +439,7 @@ const CategoryManagement = () => {
                         key={color}
                         type="button"
                         onClick={() => setFormData({ ...formData, color })}
-                        disabled={saving}
+                        disabled={saving || uploading}
                         className={`w-8 h-8 rounded-full border-2 transition-transform ${
                           formData.color === color ? 'border-dark scale-110' : 'border-gray-300'
                         }`}
@@ -357,7 +452,7 @@ const CategoryManagement = () => {
                       type="color"
                       value={formData.color}
                       onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-                      disabled={saving}
+                      disabled={saving || uploading}
                       className="w-8 h-8 border rounded cursor-pointer"
                     />
                     <span className="text-sm text-gray-500">
@@ -367,8 +462,8 @@ const CategoryManagement = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button type="submit" className="flex-1" disabled={saving}>
-                    {saving ? (
+                  <Button type="submit" className="flex-1" disabled={saving || uploading}>
+                    {saving || uploading ? (
                       <>
                         <span className="mr-2">⏳</span>
                         Saving...
@@ -380,7 +475,7 @@ const CategoryManagement = () => {
                       </>
                     )}
                   </Button>
-                  <Button type="button" variant="outline" onClick={handleCloseModal} disabled={saving}>
+                  <Button type="button" variant="outline" onClick={handleCloseModal} disabled={saving || uploading}>
                     Cancel
                   </Button>
                 </div>
