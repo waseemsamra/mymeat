@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -90,6 +91,8 @@ function App() {
                   <AdminDashboard />
                 </ProtectedRoute>
               } />
+              {/* NEW Admin Dashboard (bypasses ProtectedRoute) */}
+              <Route path="/new-admin" element={<NewAdminDashboard />} />
             </Routes>
             {/* Floating Admin Button for Testing */}
             <FloatingAdminButton />

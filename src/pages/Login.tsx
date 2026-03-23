@@ -27,12 +27,12 @@ const Login = () => {
       
       // FORCE admin redirect for admin email
       if (email === 'waseemsamra@gmail.com') {
-        console.log('🔑 [Login] ADMIN - Forcing redirect to /admin');
-        // Force reload to ensure ProtectedRoute sees fresh data
-        window.location.replace('/admin');
+        console.log('🔑 [Login] ADMIN - Forcing redirect to /new-admin');
+        // Force reload to new admin dashboard
+        window.location.replace('/new-admin');
       } else if (result.isAdmin) {
-        console.log('🔑 [Login] Is admin - Going to /admin');
-        window.location.replace('/admin');
+        console.log('🔑 [Login] Is admin - Going to /new-admin');
+        window.location.replace('/new-admin');
       } else {
         console.log('👤 [Login] Regular user - Going to /dashboard');
         navigate('/dashboard');
