@@ -5,6 +5,7 @@ import CMSManagement from './CMSManagement';
 import ProductManagement from './ProductManagement';
 import TestimonialManagement from './TestimonialManagement';
 import EnquiryManagement from './EnquiryManagement';
+import SiteSettingsEditor from './SiteSettingsEditor';
 
 interface User {
   email: string;
@@ -202,9 +203,7 @@ const NewAdminDashboard = () => {
                 <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
                   Site Settings
                 </h2>
-                <div style={{ padding: '2rem', textAlign: 'center', color: '#6b7280' }}>
-                  Site settings coming soon...
-                </div>
+                <SiteSettingsEditor />
               </div>
             )}
           </div>
