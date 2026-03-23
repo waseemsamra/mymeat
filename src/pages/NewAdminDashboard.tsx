@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'aws-amplify/auth';
 import CMSManagement from './CMSManagement';
+import ProductManagement from './ProductManagement';
 
 interface User {
   email: string;
@@ -172,9 +173,7 @@ const NewAdminDashboard = () => {
                 <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
                   Product Management
                 </h2>
-                <div style={{ padding: '2rem', textAlign: 'center', color: '#6b7280' }}>
-                  Product management coming soon...
-                </div>
+                <ProductManagement />
               </div>
             )}
             
