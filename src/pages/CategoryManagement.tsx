@@ -4,20 +4,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Badge } from '../components/ui/badge';
-import { Plus, Edit, Trash2, Save, X, Package, Tag } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Package, Tag, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Category {
-  id: number;
+  id: number | string;
   name: string;
   description: string;
   color: string;
   productCount?: number;
 }
 
+const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
+
 const CategoryManagement = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,8 +32,8 @@ const CategoryManagement = () => {
   });
 
   const colorOptions = [
-    '#3b82f6', // Blue
     '#10b981', // Green
+    '#3b82f6', // Blue
     '#f59e0b', // Amber
     '#ef4444', // Red
     '#8b5cf6', // Purple
@@ -46,50 +49,37 @@ const CategoryManagement = () => {
   const loadCategories = async () => {
     setLoading(true);
     try {
-      // For now, use sample data (you can connect to API later)
-      const sampleCategories: Category[] = [
-        {
-          id: 1,
-          name: 'Hay Products',
-          description: 'Premium grass hays including Rhodes Grass, Timothy Hay, and Rye Grass',
-          color: '#10b981',
-          productCount: 3
-        },
-        {
-          id: 2,
-          name: 'Alfalfa Products',
-          description: 'High-protein alfalfa hay and pellets',
-          color: '#3b82f6',
-          productCount: 3
-        },
-        {
-          id: 3,
-          name: 'Straw Products',
-          description: 'Quality wheat and barley straw for bedding and feed',
-          color: '#f59e0b',
-          productCount: 3
-        },
-        {
-          id: 4,
-          name: 'Grain & Silage',
-          description: 'Nutrient-rich grain products and fermented silage',
-          color: '#ef4444',
-          productCount: 3
-        },
-        {
-          id: 5,
-          name: 'Pellets & Capsules',
-          description: 'Convenient compressed feed pellets and nutritional capsules',
-          color: '#8b5cf6',
-          productCount: 3
-        }
-      ];
+      const response = await fetch(`${API_URL}/categories`);
       
-      setCategories(sampleCategories);
-      toast.success('Categories loaded!');
+      if (!response.ok) {
+        throw new Error('Failed to load categories');
+      }
+      
+      const data = await response.json();
+      
+      // Transform API data if needed
+      const transformedCategories = data.map((item: any) => ({
+        id: item.id || item.PK?.replace('CATEGORY#', '') || Date.now(),
+        name: item.name || item.data?.name || 'Category',
+        description: item.description || item.data?.description || '',
+        color: item.color || item.data?.color || '#3b82f6',
+        productCount: item.productCount || item.data?.productCount || 0
+      }));
+      
+      setCategories(transformedCategories);
+      toast.success('Categories loaded from API!');
     } catch (error: any) {
       console.error('Error loading categories:', error);
       toast.error('Failed to load categories');
+      
+      // Fallback to sample data
+      setCategories([
+        { id: 1, name: 'Hay Products', description: 'Premium grass hays', color: '#10b981', productCount: 3 },
+        { id: 2, name: 'Alfalfa Products', description: 'High-protein alfalfa', color: '#3b82f6', productCount: 3 },
+        { id: 3, name: 'Straw Products', description: 'Quality wheat and barley straw', color: '#f59e0b', productCount: 3 },
+        { id: 4, name: 'Grain & Silage', description: 'Nutrient-rich grain products', color: '#ef4444', productCount: 3 },
+        { id: 5, name: 'Pellets & Capsules', description: 'Convenient feed pellets', color: '#8b5cf6', productCount: 3 }
+      ]);
     } finally {
       setLoading(false);
     }
@@ -126,46 +116,80 @@ const CategoryManagement = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaving(true);
     
     try {
       if (editingCategory) {
-        // Update existing category
-        setCategories(categories.map(cat =>
-          cat.id === editingCategory.id
-            ? { ...cat, name: formData.name, description: formData.description, color: formData.color }
-            : cat
-        ));
-        toast.success('Category updated successfully!');
+        // Update existing category via API
+        const response = await fetch(`${API_URL}/categories/${editingCategory.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: editingCategory.id,
+            name: formData.name,
+            description: formData.description,
+            color: formData.color
+          })
+        });
+        
+        if (response.ok) {
+          toast.success('Category updated successfully!');
+          loadCategories();
+          handleCloseModal();
+        } else {
+          toast.error('Failed to update category');
+        }
       } else {
-        // Create new category
-        const newCategory: Category = {
-          id: Date.now(),
+        // Create new category via API
+        const newCategory = {
           name: formData.name,
           description: formData.description,
-          color: formData.color,
-          productCount: 0
+          color: formData.color
         };
-        setCategories([...categories, newCategory]);
-        toast.success('Category created successfully!');
+        
+        const response = await fetch(`${API_URL}/categories`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newCategory)
+        });
+        
+        if (response.ok) {
+          toast.success('Category created successfully!');
+          loadCategories();
+          handleCloseModal();
+        } else {
+          toast.error('Failed to create category');
+        }
       }
-      handleCloseModal();
     } catch (error: any) {
       console.error('Error saving category:', error);
-      toast.error('Failed to save category');
+      toast.error('Failed to save category: ' + (error.message || 'Unknown error'));
+    } finally {
+      setSaving(false);
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number | string) => {
     if (!confirm('Are you sure you want to delete this category? This will affect all products in this category.')) return;
     
     try {
-      setCategories(categories.filter(cat => cat.id !== id));
-      toast.success('Category deleted successfully!');
+      const response = await fetch(`${API_URL}/categories/${id}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        toast.success('Category deleted successfully!');
+        loadCategories();
+      } else {
+        toast.error('Failed to delete category');
+      }
     } catch (error: any) {
       console.error('Error deleting category:', error);
       toast.error('Failed to delete category');
     }
   };
+
+  const totalProducts = categories.reduce((sum, cat) => sum + (cat.productCount || 0), 0);
 
   return (
     <div className="space-y-4">
@@ -175,7 +199,7 @@ const CategoryManagement = () => {
           <h2 className="text-2xl font-bold">Category Management</h2>
           <p className="text-gray-500">Organize your products into categories</p>
         </div>
-        <Button onClick={() => handleOpenModal()}>
+        <Button onClick={() => handleOpenModal()} disabled={loading}>
           <Plus className="h-4 w-4 mr-2" />
           Add Category
         </Button>
@@ -203,9 +227,7 @@ const CategoryManagement = () => {
                 <Package className="h-5 w-5 text-green-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold">
-                  {categories.reduce((sum, cat) => sum + (cat.productCount || 0), 0)}
-                </div>
+                <div className="text-2xl font-bold">{totalProducts}</div>
                 <p className="text-sm text-gray-500">Total Products</p>
               </div>
             </div>
@@ -216,7 +238,8 @@ const CategoryManagement = () => {
       {/* Categories Grid */}
       {loading ? (
         <div className="text-center py-8">
-          <p>Loading categories...</p>
+          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
+          <p className="mt-4 text-gray-600">Loading categories...</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -297,6 +320,7 @@ const CategoryManagement = () => {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g., Hay Products"
                     required
+                    disabled={saving}
                   />
                 </div>
 
@@ -308,6 +332,7 @@ const CategoryManagement = () => {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Describe this category..."
                     required
+                    disabled={saving}
                   />
                 </div>
 
@@ -319,6 +344,7 @@ const CategoryManagement = () => {
                         key={color}
                         type="button"
                         onClick={() => setFormData({ ...formData, color })}
+                        disabled={saving}
                         className={`w-8 h-8 rounded-full border-2 transition-transform ${
                           formData.color === color ? 'border-dark scale-110' : 'border-gray-300'
                         }`}
@@ -331,6 +357,7 @@ const CategoryManagement = () => {
                       type="color"
                       value={formData.color}
                       onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                      disabled={saving}
                       className="w-8 h-8 border rounded cursor-pointer"
                     />
                     <span className="text-sm text-gray-500">
@@ -340,11 +367,20 @@ const CategoryManagement = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button type="submit" className="flex-1">
-                    <Save className="h-4 w-4 mr-2" />
-                    {editingCategory ? 'Update' : 'Create'} Category
+                  <Button type="submit" className="flex-1" disabled={saving}>
+                    {saving ? (
+                      <>
+                        <span className="mr-2">⏳</span>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4 mr-2" />
+                        {editingCategory ? 'Update' : 'Create'} Category
+                      </>
+                    )}
                   </Button>
-                  <Button type="button" variant="outline" onClick={handleCloseModal}>
+                  <Button type="button" variant="outline" onClick={handleCloseModal} disabled={saving}>
                     Cancel
                   </Button>
                 </div>
