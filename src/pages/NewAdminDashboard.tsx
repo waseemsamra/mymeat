@@ -6,6 +6,7 @@ import ProductManagement from './ProductManagement';
 import TestimonialManagement from './TestimonialManagement';
 import EnquiryManagement from './EnquiryManagement';
 import SiteSettingsEditor from './SiteSettingsEditor';
+import CategoryManagement from './CategoryManagement';
 
 interface User {
   email: string;
@@ -137,8 +138,9 @@ const NewAdminDashboard = () => {
             {[
               { id: 'cms', label: '📝 CMS', icon: '📝' },
               { id: 'products', label: '📦 Products', icon: '📦' },
+              { id: 'categories', label: '🏷️ Categories', icon: '🏷️' },
               { id: 'testimonials', label: '⭐ Testimonials', icon: '⭐' },
-              { id: 'orders', label: '📊 Orders', icon: '📊' },
+              { id: 'orders', label: '📊 Enquiries', icon: '📊' },
               { id: 'settings', label: '⚙️ Settings', icon: '⚙️' }
             ].map(tab => (
               <button
@@ -177,6 +179,15 @@ const NewAdminDashboard = () => {
                   Product Management
                 </h2>
                 <ProductManagement />
+              </div>
+            )}
+
+            {activeTab === 'categories' && (
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
+                  Category Management
+                </h2>
+                <CategoryManagement />
               </div>
             )}
             

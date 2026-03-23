@@ -12,12 +12,14 @@ interface Product {
   name: string;
   price: number;
   category: string;
+  categoryId?: number;
   description: string;
   image: string;
 }
 
 const ProductManagement = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,13 +31,27 @@ const ProductManagement = () => {
     name: '',
     price: 0,
     category: '',
+    categoryId: 0,
     description: '',
     image: ''
   });
 
   useEffect(() => {
     loadProducts();
+    loadCategories();
   }, []);
+
+  const loadCategories = async () => {
+    // Load categories (sample data for now)
+    const sampleCategories = [
+      { id: 1, name: 'Hay Products' },
+      { id: 2, name: 'Alfalfa Products' },
+      { id: 3, name: 'Straw Products' },
+      { id: 4, name: 'Grain & Silage' },
+      { id: 5, name: 'Pellets & Capsules' }
+    ];
+    setCategories(sampleCategories);
+  };
 
   const loadProducts = async () => {
     setLoading(true);
@@ -305,11 +321,26 @@ const ProductManagement = () => {
                   </div>
                   <div>
                     <Label>Category</Label>
-                    <Input
+                    <select
                       value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                      onChange={(e) => {
+                        const selectedCat = categories.find(c => c.name === e.target.value);
+                        setFormData({ 
+                          ...formData, 
+                          category: e.target.value,
+                          categoryId: selectedCat?.id || 0
+                        });
+                      }}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       required
-                    />
+                    >
+                      <option value="">Select Category</option>
+                      {categories.map((cat) => (
+                        <option key={cat.id} value={cat.name}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
