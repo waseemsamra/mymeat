@@ -4,6 +4,7 @@ import { signOut } from 'aws-amplify/auth';
 import CMSManagement from './CMSManagement';
 import ProductManagement from './ProductManagement';
 import TestimonialManagement from './TestimonialManagement';
+import EnquiryManagement from './EnquiryManagement';
 
 interface User {
   email: string;
@@ -190,11 +191,9 @@ const NewAdminDashboard = () => {
             {activeTab === 'orders' && (
               <div>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Order Management
+                  Enquiry Management
                 </h2>
-                <div style={{ padding: '2rem', textAlign: 'center', color: '#6b7280' }}>
-                  Order management coming soon...
-                </div>
+                <EnquiryManagement />
               </div>
             )}
             
