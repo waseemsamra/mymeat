@@ -12,6 +12,19 @@ class AuthService {
     try {
       console.log('🔐 [AuthService] Login attempt for:', email);
       
+      // First, sign out any existing user
+      try {
+        await signOut({ global: true });
+        console.log('🗑️ [AuthService] Cleared existing session');
+      } catch (signOutError) {
+        console.log('ℹ️ [AuthService] No existing session to clear');
+      }
+      
+      // Wait a moment for sign out to complete
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      console.log('✅ [AuthService] Attempting sign in...');
+      
       const { isSignedIn, nextStep } = await signIn({
         username: email,
         password: password,
@@ -65,18 +78,37 @@ class AuthService {
 
     } catch (error: any) {
       console.error('❌ [AuthService] Login error:', error);
+      
+      // If it's the "already signed in" error, try to force sign out and retry
+      if (error.message && error.message.includes('already a signed in user')) {
+        console.log('🔄 [AuthService] Clearing session and retrying...');
+        try {
+          localStorage.clear();
+          await signOut({ global: true });
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          // Retry login
+          return await this.login(email, password);
+        } catch (retryError: any) {
+          console.error('❌ [AuthService] Retry failed:', retryError);
+          throw new Error(retryError.message || 'Login failed');
+        }
+      }
+      
       throw new Error(error.message || 'Login failed');
     }
   }
 
   async logout(): Promise<void> {
     try {
-      await signOut();
+      await signOut({ global: true });
       localStorage.removeItem('user');
       localStorage.removeItem('idToken');
       console.log('✅ [AuthService] Logged out');
     } catch (error: any) {
       console.error('❌ [AuthService] Logout error:', error);
+      // Clear localStorage anyway
+      localStorage.removeItem('user');
+      localStorage.removeItem('idToken');
     }
   }
 
