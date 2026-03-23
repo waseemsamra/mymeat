@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/auth';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('waseemsamra@gmail.com');
@@ -49,41 +50,76 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <h1>🌾 AgroFeed CMS</h1>
-        <p>Login to access admin dashboard</p>
+        <p>Admin Login Portal</p>
         
         {error && (
-          <div className="error-message" style={{color: 'red', marginBottom: '15px'}}>
+          <div className="error-message">
             ❌ {error}
           </div>
         )}
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email Address</label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               required
-              placeholder="Enter your email"
+              placeholder="admin@agrofeed.com"
+              disabled={loading}
             />
           </div>
           
           <div className="form-group">
-            <label>Password:</label>
+            <label htmlFor="password">Password</label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               required
               placeholder="Enter your password"
+              disabled={loading}
             />
           </div>
           
           <button type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (
+              <>
+                <span style={{ marginRight: '8px' }}>⏳</span>
+                Signing in...
+              </>
+            ) : (
+              'Sign In'
+            )}
           </button>
         </form>
+        
+        <div style={{ 
+          marginTop: '24px', 
+          padding: '16px', 
+          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+          borderRadius: '12px',
+          border: '1px solid #bfdbfe'
+        }}>
+          <p style={{ 
+            margin: '0 0 8px 0', 
+            fontSize: '13px', 
+            color: '#1e40af',
+            fontWeight: '600'
+          }}>
+            🔐 Admin Access Only
+          </p>
+          <p style={{ 
+            margin: 0, 
+            fontSize: '12px', 
+            color: '#3b82f6'
+          }}>
+            This system is restricted to authorized administrators only.
+          </p>
+        </div>
       </div>
     </div>
   );
