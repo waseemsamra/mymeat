@@ -15,7 +15,6 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import AdminDashboard from './pages/AdminDashboard';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
@@ -86,16 +85,9 @@ function App() {
                   <Dashboard />
                 </ProtectedRoute>
               } />
-              <Route path="/admin" element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
-              {/* NEW Admin Dashboard (bypasses ProtectedRoute) */}
-              <Route path="/new-admin" element={<NewAdminDashboard />} />
+              {/* Admin Dashboard - Main dashboard for admin only */}
+              <Route path="/admin" element={<NewAdminDashboard />} />
             </Routes>
-            {/* Floating Admin Button for Testing */}
-            <FloatingAdminButton />
           </div>
         </Router>
       </AuthProvider>

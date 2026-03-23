@@ -80,7 +80,7 @@ const NewAdminDashboard = () => {
         }}>
           <div>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-              🌾 AgroFeed Admin
+              🌾 AgroFeed CMS - Admin Dashboard
             </h1>
             <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
               Welcome, {user.name} ({user.email})
