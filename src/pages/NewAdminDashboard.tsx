@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { signOut } from 'aws-amplify/auth';
 import CMSManagement from './CMSManagement';
 import ProductManagement from './ProductManagement';
+import TestimonialManagement from './TestimonialManagement';
 
 interface User {
   email: string;
@@ -182,9 +183,7 @@ const NewAdminDashboard = () => {
                 <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
                   Testimonial Management
                 </h2>
-                <div style={{ padding: '2rem', textAlign: 'center', color: '#6b7280' }}>
-                  Testimonial management coming soon...
-                </div>
+                <TestimonialManagement />
               </div>
             )}
             
