@@ -199,7 +199,7 @@ const CategoriesSection = () => {
           </button>
           
           <div className="flex gap-2">
-            {Math.ceil(categories.length / itemsPerPage).map((_, index) => (
+            {Array.from({ length: Math.ceil(categories.length / itemsPerPage) }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index * itemsPerPage)}

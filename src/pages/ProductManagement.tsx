@@ -76,6 +76,7 @@ const ProductManagement = () => {
         name: product.name,
         price: product.price,
         category: product.category,
+        categoryId: product.categoryId || 0,
         description: product.description,
         image: product.image
       });
@@ -85,6 +86,7 @@ const ProductManagement = () => {
         name: '',
         price: 0,
         category: '',
+        categoryId: 0,
         description: '',
         image: ''
       });
