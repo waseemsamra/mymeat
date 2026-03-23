@@ -12,21 +12,20 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
 
   const checkAuth = async () => {
     try {
-      // Check localStorage FIRST (immediate, no async call)
+      // Check localStorage FIRST
       const storedUser = localStorage.getItem('user');
       const storedToken = localStorage.getItem('idToken');
       
       console.log('🔍 [ProtectedRoute] Checking auth...', {
         hasStoredUser: !!storedUser,
-        hasToken: !!storedToken,
-        storedUser: storedUser ? JSON.parse(storedUser) : null
+        hasToken: !!storedToken
       });
       
       if (storedUser && storedToken) {
         const user = JSON.parse(storedUser);
         const userIsAdmin = user.role === 'admin';
         
-        console.log('✅ [ProtectedRoute] User authenticated from localStorage:', {
+        console.log('✅ [ProtectedRoute] User found:', {
           email: user.email,
           role: user.role,
           isAdmin: userIsAdmin
@@ -35,11 +34,11 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
         setIsAuthenticated(true);
         setIsAdmin(userIsAdmin);
       } else {
-        console.log('⚠️ [ProtectedRoute] No stored user/token');
+        console.log('⚠️ [ProtectedRoute] No stored credentials');
         setIsAuthenticated(false);
         setIsAdmin(false);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ [ProtectedRoute] Auth check error:', error);
       setIsAuthenticated(false);
       setIsAdmin(false);
@@ -62,12 +61,12 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   }
 
   if (!isAuthenticated) {
-    console.log('❌ [ProtectedRoute] Not authenticated - redirecting to login');
+    console.log('❌ [ProtectedRoute] Not authenticated');
     return <Navigate to="/login" replace />;
   }
 
   if (requireAdmin && !isAdmin) {
-    console.log('⚠️ [ProtectedRoute] Not admin - redirecting to dashboard');
+    console.log('⚠️ [ProtectedRoute] Not admin');
     return <Navigate to="/dashboard" replace />;
   }
 

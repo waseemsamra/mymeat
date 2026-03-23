@@ -17,16 +17,22 @@ const Login = () => {
     try {
       console.log('🚀 [Login] Submitting login for:', email);
       
+      // CLEAR old cached data first
+      localStorage.removeItem('user');
+      localStorage.removeItem('idToken');
+      console.log('🗑️ [Login] Cleared old cached data');
+      
       const result = await authService.login(email, password);
       console.log('✅ [Login] Login result:', result);
       
-      // ALWAYS redirect admin email to /admin
+      // FORCE admin redirect for admin email
       if (email === 'waseemsamra@gmail.com') {
-        console.log('🔑 [Login] ADMIN EMAIL - Going to /admin NOW!');
-        window.location.href = '/admin';  // Force redirect
+        console.log('🔑 [Login] ADMIN - Forcing redirect to /admin');
+        // Force reload to ensure ProtectedRoute sees fresh data
+        window.location.replace('/admin');
       } else if (result.isAdmin) {
         console.log('🔑 [Login] Is admin - Going to /admin');
-        window.location.href = '/admin';
+        window.location.replace('/admin');
       } else {
         console.log('👤 [Login] Regular user - Going to /dashboard');
         navigate('/dashboard');
