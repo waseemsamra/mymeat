@@ -39,12 +39,25 @@ const NewAdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await signOut();
+      console.log('🚪 [Logout] Signing out...');
+      
+      // Clear localStorage first
       localStorage.removeItem('user');
       localStorage.removeItem('idToken');
-      navigate('/login');
+      localStorage.clear();
+      console.log('🗑️ [Logout] Cleared localStorage');
+      
+      // Then sign out from Cognito
+      await signOut({ global: true });
+      console.log('✅ [Logout] Signed out from Cognito');
+      
+      // Force redirect to login
+      window.location.replace('/login');
     } catch (error: any) {
-      console.error('Logout error:', error);
+      console.error('❌ [Logout] Error:', error);
+      // Clear localStorage anyway and redirect
+      localStorage.clear();
+      window.location.replace('/login');
     }
   };
 
