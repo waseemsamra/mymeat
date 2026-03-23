@@ -63,7 +63,7 @@ class AuthService {
         redirectTo: isAdmin ? '/admin' : '/dashboard'
       };
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ [AuthService] Login error:', error);
       throw new Error(error.message || 'Login failed');
     }
@@ -101,7 +101,7 @@ class AuthService {
       };
       console.log('📋 [AuthService] User from Cognito:', userData);
       return userData;
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ [AuthService] Get user error:', error);
       return null;
     }
@@ -124,7 +124,7 @@ class AuthService {
       const userIsAdmin = role === 'admin';
       console.log('🔑 [AuthService] Is admin (Cognito):', userIsAdmin);
       return userIsAdmin;
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ [AuthService] Is admin error:', error);
       return false;
     }
