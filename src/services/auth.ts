@@ -75,7 +75,7 @@ class AuthService {
       localStorage.removeItem('user');
       localStorage.removeItem('idToken');
       console.log('✅ [AuthService] Logged out');
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ [AuthService] Logout error:', error);
     }
   }
