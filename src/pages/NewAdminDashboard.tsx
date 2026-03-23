@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'aws-amplify/auth';
 import CMSManagement from './CMSManagement';
 
+interface User {
+  email: string;
+  role: string;
+  name: string;
+}
+
 const NewAdminDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('cms');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     // Check if user is admin
@@ -19,7 +25,7 @@ const NewAdminDashboard = () => {
       return;
     }
     
-    const userData = JSON.parse(storedUser);
+    const userData: User = JSON.parse(storedUser);
     
     // Check if admin (by email or role)
     if (userData.email !== 'waseemsamra@gmail.com' && userData.role !== 'admin') {
@@ -37,7 +43,7 @@ const NewAdminDashboard = () => {
       localStorage.removeItem('user');
       localStorage.removeItem('idToken');
       navigate('/login');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Logout error:', error);
     }
   };
