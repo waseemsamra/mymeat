@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Save } from 'lucide-react';
+import { Save, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CMSManagement = () => {
@@ -48,9 +48,10 @@ const CMSManagement = () => {
   );
 };
 
-// Hero Editor Component
+// Hero Editor Component with Image Upload
 const HeroEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: any; saving: boolean; setSaving: any }) => {
   const [formData, setFormData] = useState(data);
+  const [uploading, setUploading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +66,45 @@ const HeroEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: an
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      // Import S3Service dynamically
+      const { default: s3Service } = await import('../lib/S3Service');
+      
+      // Upload to S3
+      const result = await s3Service.uploadImage(file, 'hero');
+      
+      if (result.success && result.url) {
+        setFormData({ ...formData, backgroundImage: result.url });
+        toast.success('Image uploaded to S3!');
+        console.log('✅ Image uploaded:', result.url);
+      } else {
+        toast.error('Upload failed');
+      }
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast.error('Upload failed: ' + (error.message || 'Unknown error'));
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -73,14 +113,63 @@ const HeroEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: an
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Image Upload Section */}
+          <div className="space-y-2">
+            <Label>Background Image</Label>
+            <div className="flex items-center gap-4">
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="flex-1"
+              />
+              <Button type="button" disabled={uploading} variant="outline">
+                {uploading ? (
+                  <>
+                    <span className="mr-2">⏳</span>
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload
+                  </>
+                )}
+              </Button>
+            </div>
+            {formData.backgroundImage && (
+              <div className="mt-2">
+                <Label>Current Image:</Label>
+                <div className="mt-2 relative">
+                  <img
+                    src={formData.backgroundImage}
+                    alt="Hero background"
+                    className="w-full max-w-md h-32 object-cover rounded-lg border"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Image+Not+Found';
+                    }}
+                  />
+                  <a
+                    href={formData.backgroundImage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-xs hover:bg-gray-100"
+                  >
+                    Open in new tab ↗
+                  </a>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Image URL: {formData.backgroundImage}
+                </p>
+              </div>
+            )}
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Badge Text</Label>
               <Input value={formData.badge} onChange={(e) => setFormData({ ...formData, badge: e.target.value })} />
-            </div>
-            <div>
-              <Label>Background Image</Label>
-              <Input value={formData.backgroundImage} onChange={(e) => setFormData({ ...formData, backgroundImage: e.target.value })} />
             </div>
           </div>
           <div>
@@ -105,7 +194,7 @@ const HeroEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: an
               <Input value={formData.secondaryButtonText} onChange={(e) => setFormData({ ...formData, secondaryButtonText: e.target.value })} />
             </div>
           </div>
-          <Button type="submit" disabled={saving}>
+          <Button type="submit" disabled={saving || uploading}>
             {saving ? (
               <>
                 <span className="mr-2">⏳</span>
