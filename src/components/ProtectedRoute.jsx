@@ -15,22 +15,22 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
       // Check localStorage FIRST
       const storedUser = localStorage.getItem('user');
       const storedToken = localStorage.getItem('idToken');
-      
+
       console.log('🔍 [ProtectedRoute] Checking auth...', {
         hasStoredUser: !!storedUser,
         hasToken: !!storedToken
       });
-      
+
       if (storedUser && storedToken) {
         const user = JSON.parse(storedUser);
         const userIsAdmin = user.role === 'admin';
-        
+
         console.log('✅ [ProtectedRoute] User found:', {
           email: user.email,
           role: user.role,
           isAdmin: userIsAdmin
         });
-        
+
         setIsAuthenticated(true);
         setIsAdmin(userIsAdmin);
       } else {
@@ -38,7 +38,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
         setIsAuthenticated(false);
         setIsAdmin(false);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('❌ [ProtectedRoute] Auth check error:', error);
       setIsAuthenticated(false);
       setIsAdmin(false);
@@ -49,11 +49,11 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
       }}>
         Loading...
       </div>
