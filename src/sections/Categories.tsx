@@ -175,14 +175,14 @@ const CategoriesSection = () => {
           <span className="categories-badge inline-flex items-center gap-2 px-4 py-2
                          bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
             <Tag className="w-4 h-4" />
-            Our Categories
+            Product Categories
           </span>
           <h2 className="categories-title text-3xl sm:text-4xl lg:text-5xl font-bold text-dark mb-4">
-            Browse by <span className="text-gradient">Category</span>
+            Shop by <span className="text-gradient">Category</span>
           </h2>
           <p className="categories-subtitle text-gray-600 text-lg">
-            Explore our comprehensive range of premium animal feed products,
-            organized by category for easy navigation.
+            Browse our premium animal feed products organized by category
+            for easy navigation and selection.
           </p>
         </div>
 
