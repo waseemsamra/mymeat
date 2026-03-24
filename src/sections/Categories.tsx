@@ -242,7 +242,7 @@ const CategoriesSection = () => {
                     className="w-full h-full object-cover transition-transform
                              duration-700 group-hover:scale-110"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/category-placeholder.jpg';
+                      (e.target as HTMLImageElement).style.display = 'none';
                     }}
                   />
                 ) : (
