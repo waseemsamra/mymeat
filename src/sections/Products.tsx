@@ -32,6 +32,7 @@ const Products = () => {
 
   const loadProducts = async () => {
     setLoading(true);
+    console.log('📦 Loading products...');
     try {
       const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
       const response = await fetch(`${API_URL}/products`);
@@ -41,77 +42,78 @@ const Products = () => {
       }
 
       const data = await response.json();
-      
-      // Transform API data to match component structure
+      console.log('✅ API returned:', data.length, 'products');
+
+      // Transform API data
       const transformedProducts = data.map((item: any) => ({
-        id: item.id || item.PK?.replace('PRODUCT#', '') || `product-${Date.now()}`,
-        name: item.name || item.data?.name,
-        title: item.title || item.data?.title || item.name || item.data?.name || 'Product',
-        subtitle: item.subtitle || item.data?.subtitle || item.category || item.data?.category || '',
-        description: item.description || item.data?.description || '',
-        image: item.image || item.data?.image || '/product-placeholder.jpg',
-        detailImage: item.detailImage || item.data?.detailImage || item.image || item.data?.image || '/product-placeholder.jpg',
-        items: item.items || item.data?.items || [],
-        features: item.features || item.data?.features || [],
-        price: item.price || item.data?.price,
-        category: item.category || item.data?.category
+        id: item.id || `product-${Date.now()}`,
+        name: item.name || 'Product',
+        title: item.title || item.name || 'Product',
+        subtitle: item.subtitle || item.category || '',
+        description: item.description || '',
+        image: item.image || '/product-placeholder.jpg',
+        detailImage: item.detailImage || item.image || '/product-placeholder.jpg',
+        items: item.items || [],
+        features: item.features || [],
+        price: item.price,
+        category: item.category
       }));
       
+      console.log('📦 Transformed:', transformedProducts);
       setProducts(transformedProducts);
     } catch (err: any) {
-      console.error('Error loading products:', err);
-
-      // Fallback to default products if API fails
+      console.error('❌ Error loading products:', err);
+      // Fallback products matching your API
       setProducts([
         {
-          id: 'hay',
-          title: 'Hay Products',
-          subtitle: 'Premium Grass Hays',
-          description: 'Premium Rhodes Grass, Timothy Hay, and Rye Grass for optimal livestock nutrition.',
-          image: '/product-hay.jpg',
-          detailImage: '/detail-timothy.jpg',
-          items: ['Rhodes Grass', 'Timothy Hay', 'Rye Grass'],
-          features: ['High Fiber Content', 'Low NSC', 'Excellent Palatability'],
+          id: 'beef',
+          title: 'Beef',
+          subtitle: 'Premium Quality',
+          description: 'Premium quality beef for optimal nutrition.',
+          image: '/product-beef.jpg',
+          detailImage: '/detail-beef.jpg',
+          items: ['Steak', 'Ground Beef'],
+          features: ['High Protein', 'Grass Fed'],
         },
         {
-          id: 'alfalfa',
-          title: 'Alfalfa Products',
-          subtitle: 'Protein-Rich Feed',
-          description: 'High-protein alfalfa hay and pellets, perfect for dairy cattle and horses.',
-          image: '/product-alfalfa.jpg',
-          detailImage: '/product-alfalfa.jpg',
-          items: ['Alfalfa Hay', 'Alfalfa Pellets', 'Alfalfa Meal'],
-          features: ['18-22% Protein', 'High Calcium', 'Rich in Vitamins'],
+          id: 'chicken',
+          title: 'Chicken',
+          subtitle: 'Free Range',
+          description: 'Free range chicken with excellent taste.',
+          image: '/product-chicken.jpg',
+          detailImage: '/product-chicken.jpg',
+          items: ['Whole Chicken', 'Breasts'],
+          features: ['Free Range', 'Hormone Free'],
         },
         {
-          id: 'straw',
-          title: 'Straw Products',
-          subtitle: 'Quality Bedding & Feed',
-          description: 'Quality wheat and barley straw for bedding and feed supplementation.',
-          image: '/product-straw.jpg',
-          detailImage: '/product-straw.jpg',
-          items: ['Wheat Straw', 'Barley Straw', 'Oat Straw'],
-          features: ['Excellent Bedding', 'High Absorption', 'Low Dust'],
+          id: 'eggs',
+          title: 'Eggs',
+          subtitle: 'Farm Fresh',
+          description: 'Fresh farm eggs daily.',
+          image: '/product-eggs.jpg',
+          detailImage: '/product-eggs.jpg',
+          items: ['Dozen'],
+          features: ['Fresh', 'Organic'],
         },
         {
-          id: 'grain',
-          title: 'Grain & Silage',
-          subtitle: 'High-Energy Feed',
-          description: 'Nutrient-rich grain products and fermented silage for maximum energy.',
-          image: '/product-grain.jpg',
-          detailImage: '/detail-silage.jpg',
-          items: ['Corn Silage', 'Grain Mix', 'Fermented Feed'],
-          features: ['High Energy', 'Fermented', 'Year-Round Available'],
+          id: 'vegetables',
+          title: 'Vegetables',
+          subtitle: 'Organic',
+          description: 'Fresh organic vegetables.',
+          image: '/product-vegetables.jpg',
+          detailImage: '/detail-vegetables.jpg',
+          items: ['Mixed'],
+          features: ['Organic', 'Fresh'],
         },
         {
-          id: 'pellets',
-          title: 'Pellets & Capsules',
-          subtitle: 'Convenient Nutrition',
-          description: 'Convenient compressed feed pellets and nutritional capsules.',
-          image: '/product-pellets.jpg',
-          detailImage: '/product-pellets.jpg',
-          items: ['Feed Pellets', 'Nutritional Capsules', 'Supplement Pellets'],
-          features: ['Minimal Waste', 'Easy Storage', 'Consistent Nutrition'],
+          id: 'honey',
+          title: 'Honey',
+          subtitle: 'Pure & Natural',
+          description: 'Pure natural honey from local bees.',
+          image: '/product-honey.jpg',
+          detailImage: '/product-honey.jpg',
+          items: ['500g', '1kg'],
+          features: ['Pure', 'Raw'],
         },
       ]);
     } finally {
@@ -122,11 +124,8 @@ const Products = () => {
   useEffect(() => {
     if (!loading && products.length > 0) {
       const ctx = gsap.context(() => {
-        // Title animation
         gsap.from('.products-badge', {
-          y: 30,
-          opacity: 0,
-          duration: 0.6,
+          y: 30, opacity: 0, duration: 0.6,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
@@ -135,10 +134,7 @@ const Products = () => {
         });
 
         gsap.from('.products-title', {
-          y: 50,
-          opacity: 0,
-          duration: 0.8,
-          delay: 0.1,
+          y: 50, opacity: 0, duration: 0.8, delay: 0.1,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
@@ -147,10 +143,7 @@ const Products = () => {
         });
 
         gsap.from('.products-subtitle', {
-          y: 30,
-          opacity: 0,
-          duration: 0.6,
-          delay: 0.2,
+          y: 30, opacity: 0, duration: 0.6, delay: 0.2,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
@@ -158,13 +151,8 @@ const Products = () => {
           },
         });
 
-        // Cards stagger animation
         gsap.from('.product-card', {
-          y: 100,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: 'power3.out',
+          y: 100, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
           scrollTrigger: {
             trigger: trackRef.current,
             start: 'top 80%',
@@ -227,7 +215,7 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Featured Product - Large Card (First Product) */}
+        {/* Featured Product - Large Card */}
         {products.length > 0 && (
           <div className="mb-12">
             <Link
