@@ -93,16 +93,20 @@ const ProductManagement = () => {
   };
 
   const handleOpenModal = (product?: Product) => {
+    console.log('📝 Opening modal...', { product, categoriesCount: categories.length });
+    
     if (product) {
       setEditingProduct(product);
       setFormData({
         name: product.name,
         price: product.price,
-        category: product.category,
+        category: product.category || '',
         categoryId: product.categoryId || 0,
-        description: product.description,
-        image: product.image
+        description: product.description || '',
+        image: product.image || ''
       });
+      console.log('✏️ Editing product:', product);
+      console.log('📂 Categories available:', categories);
     } else {
       setEditingProduct(null);
       setFormData({
@@ -113,6 +117,8 @@ const ProductManagement = () => {
         description: '',
         image: ''
       });
+      console.log('➕ Adding new product');
+      console.log('📂 Categories available:', categories);
     }
     setIsModalOpen(true);
   };
@@ -385,12 +391,19 @@ const ProductManagement = () => {
                       required
                     >
                       <option value="">Select Category</option>
-                      {categories.map((cat) => (
-                        <option key={cat.id} value={cat.name}>
-                          {cat.name}
-                        </option>
-                      ))}
+                      {categories.length === 0 ? (
+                        <option disabled>Loading categories...</option>
+                      ) : (
+                        categories.map((cat) => (
+                          <option key={cat.id} value={cat.name}>
+                            {cat.name}
+                          </option>
+                        ))
+                      )}
                     </select>
+                    {categories.length === 0 && (
+                      <p className="text-xs text-gray-500 mt-1">Loading categories from API...</p>
+                    )}
                   </div>
                 </div>
 
