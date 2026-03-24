@@ -110,6 +110,7 @@ const ProductManagement = () => {
       });
       console.log('✏️ Editing product:', product);
       console.log('📂 Categories available:', categories);
+      console.log('🖼️ Product image:', product.image);
     } else {
       setEditingProduct(null);
       setFormData({
@@ -143,6 +144,12 @@ const ProductManagement = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    console.log('📷 Uploading image...', {
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type
+    });
+
     if (!file.type.startsWith('image/')) {
       toast.error('Please select an image file');
       return;
@@ -155,17 +162,23 @@ const ProductManagement = () => {
 
     setUploading(true);
     try {
+      console.log('📦 Importing S3Service...');
       const { default: s3Service } = await import('../lib/S3Service');
-      const result = await s3Service.uploadImage(file, 'products');
+      console.log('📦 S3Service loaded, uploading to S3...');
       
+      const result = await s3Service.uploadImage(file, 'products');
+      console.log('📦 S3 Upload result:', result);
+
       if (result.success && result.url) {
+        console.log('✅ Image uploaded successfully:', result.url);
         setFormData({ ...formData, image: result.url });
         toast.success('Image uploaded to S3!');
       } else {
+        console.error('❌ Upload failed:', result);
         toast.error('Upload failed');
       }
     } catch (error: any) {
-      console.error('Upload error:', error);
+      console.error('💥 Upload error:', error);
       toast.error('Upload failed: ' + (error.message || 'Unknown error'));
     } finally {
       setUploading(false);
@@ -445,13 +458,27 @@ const ProductManagement = () => {
                     </Button>
                   </div>
                   {formData.image && (
-                    <div className="mt-2">
-                      <img
-                        src={formData.image}
-                        alt="Product"
-                        className="w-full max-w-xs h-32 object-cover rounded-lg border"
-                      />
+                    <div className="mt-3">
+                      <div className="relative">
+                        <img
+                          src={formData.image}
+                          alt="Product preview"
+                          className="w-full max-w-xs h-32 object-cover rounded-lg border"
+                          onError={(e) => {
+                            console.error('❌ Image failed to load:', formData.image);
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2 break-all">
+                        📷 {formData.image}
+                      </p>
                     </div>
+                  )}
+                  {!formData.image && (
+                    <p className="text-xs text-gray-500 mt-2">
+                      No image uploaded yet
+                    </p>
                   )}
                 </div>
 
