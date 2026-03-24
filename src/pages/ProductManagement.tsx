@@ -53,7 +53,10 @@ const ProductManagement = () => {
           name: cat.name || cat.data?.name || 'Category'
         }));
         setCategories(transformedCategories);
+        // Debug: expose to window for testing
+        (window as any).categoriesDebug = transformedCategories;
         console.log('✅ Categories loaded:', transformedCategories.length);
+        console.log('📂 Categories:', transformedCategories);
       } else {
         console.error('Failed to load categories');
         // Fallback categories
