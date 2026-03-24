@@ -1,328 +1,240 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Package, ChevronRight, Check } from 'lucide-react';
+import { ArrowLeft, Package, Check, ArrowRight, Loader2, Search } from 'lucide-react';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
-gsap.registerPlugin(ScrollTrigger);
+interface Product {
+  id: number | string;
+  name: string;
+  title?: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  detailImage?: string;
+  items?: string[];
+  features?: string[];
+  price?: number;
+  category?: string;
+  categoryId?: number | string;
+}
 
-const products = [
-  {
-    id: 'hay',
-    title: 'Hay Products',
-    subtitle: 'Premium Grass Hays',
-    description: 'Our hay products are carefully harvested and cured to preserve maximum nutritional value. We offer a variety of grass hays suitable for different livestock needs.',
-    image: '/product-hay.jpg',
-    items: [
-      {
-        name: 'Rhodes Grass',
-        description: 'High-fiber, low-protein grass ideal for maintenance diets.',
-        benefits: ['Excellent for horses', 'Low NSC content', 'Great for weight management'],
-      },
-      {
-        name: 'Timothy Hay',
-        description: 'Premium quality hay perfect for horses and small animals.',
-        benefits: ['High palatability', 'Balanced nutrition', 'Easy digestion'],
-      },
-      {
-        name: 'Rye Grass',
-        description: 'Nutritious grass hay with excellent energy content.',
-        benefits: ['High energy', 'Good protein levels', 'Versatile usage'],
-      },
-    ],
-  },
-  {
-    id: 'alfalfa',
-    title: 'Alfalfa Products',
-    subtitle: 'Protein-Rich Feed',
-    description: 'Alfalfa is known as the "queen of forages" due to its high protein content and digestibility. Our alfalfa products are perfect for growing and lactating animals.',
-    image: '/product-alfalfa.jpg',
-    items: [
-      {
-        name: 'Alfalfa Hay',
-        description: 'Leafy, green hay with high protein and calcium content.',
-        benefits: ['18-22% protein', 'Rich in calcium', 'Excellent for dairy'],
-      },
-      {
-        name: 'Alfalfa Pellets',
-        description: 'Convenient compressed alfalfa for easy feeding.',
-        benefits: ['Less waste', 'Easy storage', 'Consistent nutrition'],
-      },
-      {
-        name: 'Alfalfa Meal',
-        description: 'Ground alfalfa perfect for mixing with other feeds.',
-        benefits: ['Easy to mix', 'Uniform texture', 'High digestibility'],
-      },
-    ],
-  },
-  {
-    id: 'straw',
-    title: 'Straw Products',
-    subtitle: 'Quality Bedding & Feed',
-    description: 'Our straw products serve dual purposes - as bedding material and low-nutrient feed supplement. Sourced from premium grain crops.',
-    image: '/product-straw.jpg',
-    items: [
-      {
-        name: 'Wheat Straw',
-        description: 'Golden straw excellent for bedding and fiber supplement.',
-        benefits: ['Soft bedding', 'Low dust', 'Good absorption'],
-      },
-      {
-        name: 'Barley Straw',
-        description: 'Durable straw with slightly higher nutritional value.',
-        benefits: ['Long lasting', 'Better nutrition', 'Versatile use'],
-      },
-      {
-        name: 'Oat Straw',
-        description: 'Soft, sweet-smelling straw preferred by many animals.',
-        benefits: ['Highly palatable', 'Sweet aroma', 'Easy to handle'],
-      },
-    ],
-  },
-  {
-    id: 'grain',
-    title: 'Grain & Silage',
-    subtitle: 'High-Energy Feed',
-    description: 'Energy-dense grain products and fermented silage for maximum livestock performance. Perfect for finishing animals and high-production livestock.',
-    image: '/product-grain.jpg',
-    items: [
-      {
-        name: 'Corn Silage',
-        description: 'Fermented corn providing excellent energy and fiber.',
-        benefits: ['High energy', 'Good fiber content', 'Year-round availability'],
-      },
-      {
-        name: 'Grain Mix',
-        description: 'Balanced blend of grains for optimal nutrition.',
-        benefits: ['Complete nutrition', 'Consistent quality', 'Customizable blends'],
-      },
-      {
-        name: 'Fermented Feed',
-        description: 'Probiotics-rich fermented feed for gut health.',
-        benefits: ['Improved digestion', 'Probiotic benefits', 'Enhanced palatability'],
-      },
-    ],
-  },
-  {
-    id: 'pellets',
-    title: 'Pellets & Capsules',
-    subtitle: 'Convenient Nutrition',
-    description: 'Compressed feed products offering convenience without compromising nutrition. Easy to store, measure, and feed.',
-    image: '/product-pellets.jpg',
-    items: [
-      {
-        name: 'Feed Pellets',
-        description: 'Complete nutrition in convenient pellet form.',
-        benefits: ['No sorting', 'Easy measurement', 'Minimal waste'],
-      },
-      {
-        name: 'Nutritional Capsules',
-        description: 'Targeted nutrition supplements in capsule form.',
-        benefits: ['Precise dosing', 'Easy administration', 'Targeted nutrition'],
-      },
-      {
-        name: 'Supplement Pellets',
-        description: 'Vitamin and mineral supplements for balanced diets.',
-        benefits: ['Complete minerals', 'Vitamin enriched', 'Health support'],
-      },
-    ],
-  },
-];
+interface Category {
+  id: number | string;
+  name: string;
+  description: string;
+  color: string;
+  image?: string;
+}
 
-const ProductsPage = () => {
-  const pageRef = useRef<HTMLDivElement>(null);
+const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
+
+const Products = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Page header animation
-      gsap.from('.page-header-content', {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-      });
-
-      // Product cards animation
-      gsap.from('.product-category-card', {
-        y: 80,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.products-grid',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-    }, pageRef);
-
-    return () => ctx.revert();
+    loadProductsAndCategories();
   }, []);
 
+  const loadProductsAndCategories = async () => {
+    setLoading(true);
+    try {
+      // Load products
+      const productsResponse = await fetch(`${API_URL}/products`);
+      if (productsResponse.ok) {
+        const productsData = await productsResponse.json();
+        setProducts(productsData);
+      }
+
+      // Load categories
+      const categoriesResponse = await fetch(`${API_URL}/categories`);
+      if (categoriesResponse.ok) {
+        const categoriesData = await categoriesResponse.json();
+        setCategories(categoriesData);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         product.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = !selectedCategory || product.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary mb-4" />
+          <p className="text-gray-600">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div ref={pageRef} className="pt-20">
-      {/* Page Header */}
-      <section className="relative py-20 lg:py-28 bg-dark overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src="/about-variety.jpg"
-            alt="Products background"
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/70" />
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5">
+      <Navigation />
+      
+      {/* Header */}
+      <div className="bg-white shadow-sm">
+        <div className="section-padding py-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Link>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <div className="section-padding py-16">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-dark mb-4">
+            Our Products
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Discover our premium range of animal feed products, carefully crafted for optimal nutrition.
+          </p>
         </div>
 
-        <div className="section-padding relative z-10">
-          <div className="page-header-content max-w-3xl">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-white/60 text-sm mb-6">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-white">Products</span>
+        {/* Filters */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Search */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
+              />
             </div>
 
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 
-                           text-primary-light rounded-full text-sm font-medium mb-4">
-              <Package className="w-4 h-4" />
-              Our Products
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Premium Animal <span className="text-primary-light">Feed Products</span>
-            </h1>
-            <p className="text-lg text-white/70 leading-relaxed">
-              Discover our comprehensive range of high-quality animal feed products. 
-              From premium hays to specialized supplements, we have everything your livestock needs.
-            </p>
+            {/* Category Filter */}
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary bg-white"
+            >
+              <option value="">All Categories</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.name}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      </section>
 
-      {/* Products Grid */}
-      <section className="py-20 lg:py-28 bg-white">
-        <div className="section-padding">
-          <div className="products-grid space-y-20">
-            {products.map((product, index) => (
-              <div
+        {/* Products Grid */}
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-16">
+            <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+            <h3 className="text-2xl font-bold text-gray-600 mb-2">No Products Found</h3>
+            <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProducts.map((product) => (
+              <Link
                 key={product.id}
-                className={`product-category-card grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center
-                          ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
+                to={`/products/${product.id}`}
+                className="group relative bg-white rounded-2xl overflow-hidden
+                         shadow-card hover:shadow-card-hover transition-all duration-500
+                         hover:-translate-y-2"
               >
                 {/* Image */}
-                <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-[400px] lg:h-[500px] object-cover transition-transform 
-                               duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    
-                    {/* Category Badge */}
-                    <div className="absolute top-6 left-6">
-                      <span className="px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full 
-                                     text-primary font-semibold text-sm">
-                        {product.subtitle}
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={product.image || '/product-placeholder.jpg'}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform
+                             duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/product-placeholder.jpg';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+                  {/* Category Badge */}
+                  {product.category && (
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-dark">
+                        {product.category}
                       </span>
                     </div>
+                  )}
 
-                    {/* Title Overlay */}
-                    <div className="absolute bottom-6 left-6 right-6">
-                      <h2 className="text-3xl font-bold text-white mb-2">
-                        {product.title}
-                      </h2>
+                  {/* Price Badge */}
+                  {product.price && (
+                    <div className="absolute top-4 right-4">
+                      <span className="px-3 py-1 bg-primary text-white rounded-full text-sm font-bold">
+                        ${product.price.toFixed(2)}
+                      </span>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Decorative Element */}
-                  <div className={`absolute -z-10 w-full h-full bg-primary/10 rounded-3xl 
-                                ${index % 2 === 0 ? '-bottom-4 -left-4' : '-bottom-4 -right-4'}`} />
+                  {/* Subtitle */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <span className="text-white/70 text-xs font-medium uppercase tracking-wider">
+                      {product.subtitle}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Content */}
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-dark mb-3 group-hover:text-primary
+                               transition-colors duration-300">
+                    {product.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
                     {product.description}
                   </p>
 
-                  {/* Items List */}
-                  <div className="space-y-6">
-                    {product.items.map((item, itemIndex) => (
-                      <div
-                        key={itemIndex}
-                        className="bg-green-50 rounded-xl p-5 hover:bg-green-100 
-                                 transition-colors duration-300"
-                      >
-                        <h3 className="text-lg font-bold text-dark mb-2">
-                          {item.name}
-                        </h3>
-                        <p className="text-gray-600 text-sm mb-3">
-                          {item.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {item.benefits.map((benefit, bIndex) => (
-                            <span
-                              key={bIndex}
-                              className="inline-flex items-center gap-1 px-2 py-1 
-                                       bg-white rounded-md text-xs text-primary"
-                            >
-                              <Check className="w-3 h-3" />
-                              {benefit}
-                            </span>
-                          ))}
+                  {/* Features */}
+                  {product.features && product.features.length > 0 && (
+                    <div className="space-y-2 mb-4">
+                      {product.features.slice(0, 2).map((feature, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span className="text-gray-600 text-xs">{feature}</span>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
 
-                  {/* CTA Button */}
-                  <Link
-                    to={`/products/${product.id}`}
-                    className="inline-flex items-center gap-2 mt-8 bg-primary text-white 
-                             px-6 py-3.5 rounded-xl font-semibold transition-all duration-300
-                             hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30
-                             hover:-translate-y-0.5 group"
-                  >
+                  {/* View Details */}
+                  <div className="flex items-center gap-2 text-primary text-sm font-medium
+                                opacity-0 group-hover:opacity-100 transition-all duration-300
+                                transform translate-y-2 group-hover:translate-y-0">
                     View Details
-                    <ArrowRight className="w-5 h-5 transition-transform duration-300 
-                                         group-hover:translate-x-1" />
-                  </Link>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
-        </div>
-      </section>
+        )}
+      </div>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 grain-texture opacity-10" />
-        <div className="section-padding relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-              Need Help Choosing the Right Product?
-            </h2>
-            <p className="text-white/80 text-lg mb-8">
-              Our experts are here to help you find the perfect feed solution for your livestock.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-white text-primary 
-                       px-8 py-4 rounded-xl font-semibold transition-all duration-300
-                       hover:bg-accent hover:text-dark hover:shadow-xl
-                       hover:-translate-y-0.5 group"
-            >
-              Contact Our Experts
-              <ArrowRight className="w-5 h-5 transition-transform duration-300 
-                                   group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <Footer />
     </div>
   );
 };
 
-export default ProductsPage;
+export default Products;
