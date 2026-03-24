@@ -142,49 +142,73 @@ const ProductManagement = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
-      
+      console.log('💾 Saving product...', { editingProduct, formData });
+
       if (editingProduct) {
         // Update existing product
+        console.log('🔄 Updating product:', editingProduct.id);
+        
+        const updateData = {
+          ...formData,
+          id: editingProduct.id,
+          updatedAt: new Date().toISOString()
+        };
+        
+        console.log('📦 Update data:', updateData);
+        
         const response = await fetch(`${API_URL}/products/${editingProduct.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(updateData)
         });
-        
+
+        console.log('📥 Response status:', response.status);
+        const responseData = await response.json();
+        console.log('📥 Response data:', responseData);
+
         if (response.ok) {
           toast.success('Product updated successfully!');
           loadProducts();
           handleCloseModal();
         } else {
-          toast.error('Failed to update product');
+          console.error('❌ Update failed:', responseData);
+          toast.error('Failed to update product: ' + (responseData.message || 'Unknown error'));
         }
       } else {
         // Create new product
+        console.log('➕ Creating new product');
+        
         const newProduct = {
           ...formData,
-          id: Date.now()
+          id: Date.now().toString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         };
-        
+
         const response = await fetch(`${API_URL}/products`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newProduct)
         });
-        
+
+        const responseData = await response.json();
+        console.log('📥 Create response:', responseData);
+
         if (response.ok) {
           toast.success('Product created successfully!');
           loadProducts();
           handleCloseModal();
         } else {
-          toast.error('Failed to create product');
+          console.error('❌ Create failed:', responseData);
+          toast.error('Failed to create product: ' + (responseData.message || 'Unknown error'));
         }
       }
     } catch (error: any) {
-      console.error('Error saving product:', error);
-      toast.error('Failed to save product');
+      console.error('💥 Error saving product:', error);
+      toast.error('Failed to save product: ' + (error.message || 'Unknown error'));
     }
   };
 
