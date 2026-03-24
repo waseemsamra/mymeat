@@ -55,40 +55,38 @@ const CategoryDetail = () => {
           color: categoryData.color || categoryData.data?.color || '#3b82f6',
           image: categoryData.image || categoryData.data?.image || ''
         });
-      } else {
-        console.error('❌ Failed to load category');
-      }
 
-      // Load all products and filter by category
-      console.log('📦 Fetching all products...');
-      const productsResponse = await fetch(`${API_URL}/products`);
-      if (productsResponse.ok) {
-        const productsData = await productsResponse.json();
-        console.log('✅ Products loaded:', productsData.length);
+        // Load all products and filter by category
+        console.log('📦 Fetching all products...');
+        const productsResponse = await fetch(`${API_URL}/products`);
+        if (productsResponse.ok) {
+          const productsData = await productsResponse.json();
+          console.log('✅ Products loaded:', productsData.length);
+
+          // Filter products by category name
+          const categoryProducts = productsData.filter((p: any) =>
+            p.category === categoryData.name ||
+            p.data?.category === categoryData.name
+          );
         
-        // Filter products by category name
-        const categoryProducts = productsData.filter((p: any) => 
-          p.category === categoryData.name || 
-          p.data?.category === categoryData.name
-        );
+          console.log('📂 Filtered to category:', categoryProducts.length, 'products');
         
-        console.log('📂 Filtered to category:', categoryProducts.length, 'products');
+          const transformedProducts = categoryProducts.map((item: any) => ({
+            id: item.id || item.PK?.replace('PRODUCT#', ''),
+            name: item.name || item.data?.name || 'Product',
+            title: item.title || item.data?.title || item.name || 'Product',
+            subtitle: item.subtitle || item.data?.subtitle || '',
+            description: item.description || item.data?.description || '',
+            image: item.image || item.data?.image || '/product-placeholder.jpg',
+            detailImage: item.detailImage || item.data?.detailImage || item.image || '/product-placeholder.jpg',
+            items: item.items || item.data?.items || [],
+            features: item.features || item.data?.features || [],
+            price: item.price || item.data?.price,
+            category: item.category || item.data?.category
+          }));
         
-        const transformedProducts = categoryProducts.map((item: any) => ({
-          id: item.id || item.PK?.replace('PRODUCT#', ''),
-          name: item.name || item.data?.name || 'Product',
-          title: item.title || item.data?.title || item.name || 'Product',
-          subtitle: item.subtitle || item.data?.subtitle || '',
-          description: item.description || item.data?.description || '',
-          image: item.image || item.data?.image || '/product-placeholder.jpg',
-          detailImage: item.detailImage || item.data?.detailImage || item.image || '/product-placeholder.jpg',
-          items: item.items || item.data?.items || [],
-          features: item.features || item.data?.features || [],
-          price: item.price || item.data?.price,
-          category: item.category || item.data?.category
-        }));
-        
-        setProducts(transformedProducts);
+          setProducts(transformedProducts);
+        }
       }
     } catch (error: any) {
       console.error('❌ Error loading category data:', error);

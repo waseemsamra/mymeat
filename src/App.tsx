@@ -16,7 +16,6 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import CategoryDetail from './pages/CategoryDetail';
-import Products from './pages/Products';
 import Categories from './pages/Categories';
 import './App.css';
 

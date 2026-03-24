@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Tag, ArrowRight, Loader2, Package } from 'lucide-react';
+import { ArrowLeft, Tag, ArrowRight, Loader2 } from 'lucide-react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
