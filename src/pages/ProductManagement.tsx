@@ -101,6 +101,7 @@ const ProductManagement = () => {
       name: '',
       price: 0,
       category: '',
+      categoryId: 0,
       description: '',
       image: ''
     });

@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Badge } from '../components/ui/badge';
-import { Plus, Edit, Trash2, Save, X, Package, Tag, Loader2, Upload, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Package, Tag, Loader2, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Category {

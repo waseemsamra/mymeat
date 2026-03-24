@@ -25,21 +25,21 @@ const Products = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadProducts();
   }, []);
 
   const loadProducts = async () => {
+    setLoading(true);
     try {
       const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
       const response = await fetch(`${API_URL}/products`);
-      
+
       if (!response.ok) {
         throw new Error('Failed to load products');
       }
-      
+
       const data = await response.json();
       
       // Transform API data to match component structure
@@ -60,8 +60,7 @@ const Products = () => {
       setProducts(transformedProducts);
     } catch (err: any) {
       console.error('Error loading products:', err);
-      setError(err.message);
-      
+
       // Fallback to default products if API fails
       setProducts([
         {
