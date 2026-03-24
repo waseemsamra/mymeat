@@ -42,15 +42,38 @@ const ProductManagement = () => {
   }, []);
 
   const loadCategories = async () => {
-    // Load categories (sample data for now)
-    const sampleCategories = [
-      { id: 1, name: 'Hay Products' },
-      { id: 2, name: 'Alfalfa Products' },
-      { id: 3, name: 'Straw Products' },
-      { id: 4, name: 'Grain & Silage' },
-      { id: 5, name: 'Pellets & Capsules' }
-    ];
-    setCategories(sampleCategories);
+    try {
+      const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
+      const response = await fetch(`${API_URL}/categories`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        const transformedCategories = data.map((cat: any) => ({
+          id: cat.id || cat.PK?.replace('CATEGORY#', ''),
+          name: cat.name || cat.data?.name || 'Category'
+        }));
+        setCategories(transformedCategories);
+        console.log('✅ Categories loaded:', transformedCategories.length);
+      } else {
+        console.error('Failed to load categories');
+        // Fallback categories
+        setCategories([
+          { id: 1, name: 'Meat & Poultry' },
+          { id: 2, name: 'Dairy & Eggs' },
+          { id: 3, name: 'Vegetables' },
+          { id: 4, name: 'Other' }
+        ]);
+      }
+    } catch (error: any) {
+      console.error('Error loading categories:', error);
+      // Fallback categories
+      setCategories([
+        { id: 1, name: 'Meat & Poultry' },
+        { id: 2, name: 'Dairy & Eggs' },
+        { id: 3, name: 'Vegetables' },
+        { id: 4, name: 'Other' }
+      ]);
+    }
   };
 
   const loadProducts = async () => {
@@ -358,7 +381,7 @@ const ProductManagement = () => {
                           categoryId: selectedCat?.id || 0
                         });
                       }}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
                       required
                     >
                       <option value="">Select Category</option>
