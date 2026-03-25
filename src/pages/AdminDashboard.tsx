@@ -25,7 +25,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { toast } from 'sonner';
-import { Eye, EyeOff } from 'lucide-react';
+import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
 import CMSManagement from './CMSManagement';
 
 // Product interface

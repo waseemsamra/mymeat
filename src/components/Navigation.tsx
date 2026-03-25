@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, Globe } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -23,7 +21,7 @@ const Navigation = () => {
               Products
               <span className="material-symbols-outlined text-sm">expand_more</span>
             </button>
-            
+
             {/* Dropdown Menu */}
             <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
               <div className="py-2">

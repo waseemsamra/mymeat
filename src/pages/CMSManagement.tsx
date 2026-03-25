@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Save, Upload } from 'lucide-react';
+import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CMSManagement = () => {

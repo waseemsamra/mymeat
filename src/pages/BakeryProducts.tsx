@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { AcUnit, HumidityPercentage, VerifiedUser, SetMeal, Eco, Cookie, Download, Description } from 'lucide-react';
+import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
 
 const BakeryProducts = () => {
   return (
@@ -186,21 +186,21 @@ const BakeryProducts = () => {
                   </div>
                   <div className="grid grid-cols-1 gap-6">
                     <div className="flex items-start gap-6 p-6 bg-[#eeeee9] rounded-xl">
-                      <SetMeal className="text-[#503600] w-8 h-8" />
+                      <span className="material-symbols-outlined text-[#503600] w-8 h-8">set_meal</span>
                       <div>
                         <h4 className="font-headline font-bold text-lg text-[#00450d]">Sea Salt Flatbreads</h4>
                         <p className="text-[#41493e] text-sm">Ultra-thin, flame-baked crisps with hand-harvested Atlantic salt.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-6 p-6 bg-[#eeeee9] rounded-xl">
-                      <Eco className="text-[#503600] w-8 h-8" />
+                      <span className="material-symbols-outlined text-[#503600] w-8 h-8">eco</span>
                       <div>
                         <h4 className="font-headline font-bold text-lg text-[#00450d]">Rosemary Crackers</h4>
                         <p className="text-[#41493e] text-sm">Infused with aromatic Mediterranean rosemary and extra virgin olive oil.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-6 p-6 bg-[#eeeee9] rounded-xl">
-                      <Cookie className="text-[#503600] w-8 h-8" />
+                      <span className="material-symbols-outlined text-[#503600] w-8 h-8">cookie</span>
                       <div>
                         <h4 className="font-headline font-bold text-lg text-[#00450d]">Artisanal Shortbreads</h4>
                         <p className="text-[#41493e] text-sm">Pure butter biscuits with a crumbly, melt-in-mouth texture for retail gifting.</p>
@@ -233,19 +233,19 @@ const BakeryProducts = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <div className="text-center p-8 bg-stone-800/50 rounded-2xl border border-stone-700">
-                <AcUnit className="text-[#ffba38] w-12 h-12 mb-6" />
+                <span className="material-symbols-outlined text-[#ffba38] w-12 h-12 mb-6">ac_unit</span>
                 <h3 className="text-xl font-headline font-bold mb-4">Nitrogen Flash-Freeze</h3>
                 <p className="text-stone-400 text-sm">Rapid temperature drop to -40°C prevents large ice crystals from forming, preserving the dough's elasticity.</p>
               </div>
 
               <div className="text-center p-8 bg-stone-800/50 rounded-2xl border border-stone-700">
-                <HumidityPercentage className="text-[#ffba38] w-12 h-12 mb-6" />
+                <span className="material-symbols-outlined text-[#ffba38] w-12 h-12 mb-6">humidity_percentage</span>
                 <h3 className="text-xl font-headline font-bold mb-4">Controlled Hydration</h3>
                 <p className="text-stone-400 text-sm">Hermetically sealed export packaging maintains optimal 12-14% humidity throughout maritime transit.</p>
               </div>
 
               <div className="text-center p-8 bg-stone-800/50 rounded-2xl border border-stone-700">
-                <VerifiedUser className="text-[#ffba38] w-12 h-12 mb-6" />
+                <span className="material-symbols-outlined text-[#ffba38] w-12 h-12 mb-6">verified_user</span>
                 <h3 className="text-xl font-headline font-bold mb-4">Final Bake Protocols</h3>
                 <p className="text-stone-400 text-sm">Detailed finishing specifications provided for various industrial oven types to ensure consistent global results.</p>
               </div>
