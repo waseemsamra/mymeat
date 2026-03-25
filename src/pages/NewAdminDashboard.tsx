@@ -42,14 +42,14 @@ const NewAdminDashboard = () => {
     const token = localStorage.getItem('idToken');
 
     if (!storedUser || !token) {
-      navigate('/login');
+      navigate('/admin-login');
       return;
     }
 
     const userData: User = JSON.parse(storedUser);
 
     if (userData.email !== 'waseemsamra@gmail.com' && userData.role !== 'admin') {
-      navigate('/dashboard');
+      navigate('/admin-login');
       return;
     }
 

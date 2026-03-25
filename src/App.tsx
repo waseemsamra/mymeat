@@ -11,6 +11,7 @@ import ProductDetail from './pages/ProductDetail';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AdminLogin from './pages/AdminLogin';
 import CategoryDetail from './pages/CategoryDetail';
 import ProductsPage from './pages/Products';
 import Categories from './pages/Categories';
@@ -57,6 +58,7 @@ function App() {
             <Routes>
               {/* Public routes with full layout */}
               <Route path="/login" element={<Login />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/register" element={<Register />} />
 
               {/* Public routes with navigation and footer */}
