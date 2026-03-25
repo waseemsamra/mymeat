@@ -25,6 +25,7 @@ import FruitsVegetables from './pages/FruitsVegetables';
 import CannedGoods from './pages/CannedGoods';
 import NutsFlavors from './pages/NutsFlavors';
 import BakeryProducts from './pages/BakeryProducts';
+import ServicesPage from './pages/ServicesPage';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -172,6 +173,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><BakeryProducts /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Services Page */}
+              <Route path="/services" element={
+                <>
+                  <Navigation />
+                  <main><ServicesPage /></main>
                   <Footer />
                 </>
               } />
