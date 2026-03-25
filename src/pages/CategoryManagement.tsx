@@ -304,7 +304,7 @@ const CategoryManagement = () => {
                         className="w-10 h-10 rounded-full flex items-center justify-center"
                         style={{ backgroundColor: `${category.color}20` }}
                       >
-                        <Tag className="h-5 w-5" style={{ color: category.color }} />
+                        <span className="material-symbols-outlined h-5 w-5" style={{ color: category.color }}>label</span>
                       </div>
                     )}
                     <div>
