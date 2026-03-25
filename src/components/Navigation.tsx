@@ -73,6 +73,9 @@ const Navigation = () => {
           <Link to="/quality" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/quality') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
             Quality
           </Link>
+          <Link to="/sourcing" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/sourcing') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
+            Sourcing
+          </Link>
           <Link to="/about" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/about') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
             About
           </Link>
