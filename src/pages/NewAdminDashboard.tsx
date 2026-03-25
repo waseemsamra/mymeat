@@ -61,8 +61,8 @@ const NewAdminDashboard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#fafaf5]">
         <div className="text-center">
-          <span className="material-symbols-outlined text-4xl text-[#00450d] animate-spin">progress_activity</span>
-          <h2 className="text-xl font-semibold mt-4 text-[#1a1c19]">Loading...</h2>
+          <span className="material-symbols-outlined text-2xl text-[#00450d] animate-spin">progress_activity</span>
+          <h2 className="text-sm font-medium mt-4 text-[#1a1c19]">Loading...</h2>
         </div>
       </div>
     );
@@ -87,8 +87,8 @@ const NewAdminDashboard = () => {
         return (
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-[#1a1c19]">Content Management System</h2>
-              <p className="text-[#41493e]">Manage your website content including hero, about, testimonials, and more</p>
+              <h2 className="text-lg font-bold text-[#1a1c19]">Content Management System</h2>
+              <p className="text-[#41493e] text-sm">Manage your website content including hero, about, testimonials, and more</p>
             </div>
             <CMSManagement />
           </div>
@@ -97,7 +97,7 @@ const NewAdminDashboard = () => {
         return (
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-[#1a1c19]">Product Management</h2>
+              <h2 className="text-lg font-bold text-[#1a1c19]">Product Management</h2>
               <p className="text-[#41493e]">Add, edit, and manage your product catalog</p>
             </div>
             <ProductManagement />
@@ -107,8 +107,8 @@ const NewAdminDashboard = () => {
         return (
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-[#1a1c19]">Category Management</h2>
-              <p className="text-[#41493e]">Organize products into categories</p>
+              <h2 className="text-lg font-bold text-[#1a1c19]">Category Management</h2>
+              <p className="text-[#41493e] text-sm">Organize products into categories</p>
             </div>
             <CategoryManagement />
           </div>
@@ -117,8 +117,8 @@ const NewAdminDashboard = () => {
         return (
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-[#1a1c19]">User Management</h2>
-              <p className="text-[#41493e]">Manage platform users and permissions</p>
+              <h2 className="text-lg font-bold text-[#1a1c19]">User Management</h2>
+              <p className="text-[#41493e] text-sm">Manage platform users and permissions</p>
             </div>
             <div className="bg-[#eeeee9] p-8 rounded-2xl">
               <p className="text-[#41493e]">User management module coming soon...</p>
@@ -129,8 +129,8 @@ const NewAdminDashboard = () => {
         return (
           <div>
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-[#1a1c19]">Site Settings</h2>
-              <p className="text-[#41493e]">Configure your website settings</p>
+              <h2 className="text-lg font-bold text-[#1a1c19]">Site Settings</h2>
+              <p className="text-[#41493e] text-sm">Configure your website settings</p>
             </div>
             <SiteSettingsEditor />
           </div>
@@ -154,7 +154,7 @@ const NewAdminDashboard = () => {
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-[#00450d] leading-none">Agrarian Admin</h1>
+              <h1 className="text-base font-bold text-[#00450d] leading-none">Agrarian Admin</h1>
               <p className="text-[10px] text-[#41493e] uppercase tracking-widest mt-1">Super Admin Console</p>
             </div>
           </div>
@@ -245,11 +245,11 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
       {/* Welcome Header */}
       <div className="flex items-end justify-between">
         <div>
-          <h2 className="text-3xl font-extrabold text-[#1a1c19] tracking-tight">Overview</h2>
-          <p className="text-[#41493e] mt-1">Operational analytics and marketplace performance.</p>
+          <h2 className="text-2xl font-extrabold text-[#1a1c19] tracking-tight">Overview</h2>
+          <p className="text-[#41493e] text-sm mt-1">Operational analytics and marketplace performance.</p>
         </div>
         <div className="flex gap-3">
-          <div className="bg-white px-4 py-2 rounded-lg text-xs font-medium text-[#7a5649]">
+          <div className="bg-white px-4 py-2 rounded-lg text-[10px] font-medium text-[#7a5649]">
             MARKET STATUS: <span className="text-[#00450d] font-bold">ACTIVE</span>
           </div>
         </div>
@@ -266,7 +266,7 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
             <span className="text-[10px] font-bold text-[#00450d] bg-[#dcfce7] px-2 py-1 rounded">+2 This Month</span>
           </div>
           <p className="text-[#41493e] text-xs font-medium uppercase tracking-widest">Total Categories</p>
-          <h3 className="text-3xl font-extrabold mt-1">{stats.categories}</h3>
+          <h3 className="text-2xl font-extrabold mt-1">{stats.categories}</h3>
         </div>
 
         {/* Stat 2 */}
@@ -278,7 +278,7 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
             <span className="text-[10px] font-bold text-[#41493e] bg-[#f5f5f0] px-2 py-1 rounded">Global Reach</span>
           </div>
           <p className="text-[#41493e] text-xs font-medium uppercase tracking-widest">Total Active Products</p>
-          <h3 className="text-3xl font-extrabold mt-1">{stats.products}</h3>
+          <h3 className="text-2xl font-extrabold mt-1">{stats.products}</h3>
         </div>
 
         {/* Stat 3 */}
@@ -290,7 +290,7 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
             <span className="text-[10px] font-bold text-red-700 bg-red-50 px-2 py-1 rounded">Urgent</span>
           </div>
           <p className="text-[#41493e] text-xs font-medium uppercase tracking-widest">Pending Inquiries</p>
-          <h3 className="text-3xl font-extrabold mt-1">{stats.inquiries}</h3>
+          <h3 className="text-2xl font-extrabold mt-1">{stats.inquiries}</h3>
         </div>
 
         {/* Stat 4 */}
@@ -302,20 +302,20 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
             <span className="text-[10px] font-bold text-[#00450d] bg-[#dcfce7] px-2 py-1 rounded">YTD</span>
           </div>
           <p className="text-[#41493e] text-xs font-medium uppercase tracking-widest">Marketplace Volume (MT)</p>
-          <h3 className="text-3xl font-extrabold mt-1">{stats.volume.toLocaleString()}</h3>
+          <h3 className="text-2xl font-extrabold mt-1">{stats.volume.toLocaleString()}</h3>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Category Performance */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-[#eeeee9] p-8 rounded-2xl relative overflow-hidden">
+          <div className="bg-[#eeeee9] p-6 rounded-2xl relative overflow-hidden">
             <div className="relative z-10 flex justify-between items-start">
               <div>
-                <h3 className="text-xl font-bold tracking-tight">Category Performance</h3>
-                <p className="text-[#41493e] text-sm">Monthly export volume by produce type</p>
+                <h3 className="text-base font-bold tracking-tight">Category Performance</h3>
+                <p className="text-[#41493e] text-xs">Monthly export volume by produce type</p>
               </div>
-              <button className="text-[#00450d] font-bold text-xs uppercase tracking-widest flex items-center gap-1">
+              <button className="text-[#00450d] font-bold text-[10px] uppercase tracking-widest flex items-center gap-1">
                 Full Analysis <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
             </div>
@@ -340,7 +340,7 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
 
           {/* Featured Cards */}
           <div className="grid grid-cols-2 gap-6">
-            <div className="bg-[#00450d] p-8 rounded-2xl text-white flex flex-col justify-between aspect-video relative overflow-hidden group">
+            <div className="bg-[#00450d] p-6 rounded-2xl text-white flex flex-col justify-between aspect-video relative overflow-hidden group">
               <img
                 alt="Fresh Produce"
                 className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-700"
@@ -348,20 +348,20 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
               />
               <div className="relative z-10">
                 <span className="bg-[#503600] text-white text-[10px] font-bold px-2 py-1 rounded">PREMIUM ASSET</span>
-                <h4 className="text-2xl font-extrabold mt-4 leading-tight">Artisan Root<br/>Vegetables</h4>
+                <h4 className="text-lg font-extrabold mt-3 leading-tight">Artisan Root<br/>Vegetables</h4>
               </div>
               <div className="relative z-10">
                 <p className="text-xs opacity-80">Inventory Status: High Demand</p>
-                <button className="mt-4 flex items-center gap-2 text-sm font-bold">
+                <button className="mt-3 flex items-center gap-2 text-xs font-bold">
                   Manage Catalog <span className="material-symbols-outlined text-sm">open_in_new</span>
                 </button>
               </div>
             </div>
 
-            <div className="bg-[#e8e8e3] p-8 rounded-2xl flex flex-col justify-between aspect-video border border-[#e3e3de]/50">
+            <div className="bg-[#e8e8e3] p-6 rounded-2xl flex flex-col justify-between aspect-video border border-[#e3e3de]/50">
               <div>
-                <h4 className="text-xl font-bold text-[#00450d] tracking-tight">Logistics Update</h4>
-                <p className="text-[#41493e] text-sm mt-2">
+                <h4 className="text-base font-bold text-[#00450d] tracking-tight">Logistics Update</h4>
+                <p className="text-[#41493e] text-xs mt-2">
                   All export lanes to EU are currently performing with <span className="text-[#047852] font-bold">98% efficiency</span>.
                 </p>
               </div>
@@ -378,13 +378,13 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white p-8 rounded-2xl border border-[#e3e3de] flex flex-col shadow-sm">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-bold tracking-tight">Recent Activity</h3>
+        <div className="bg-white p-6 rounded-2xl border border-[#e3e3de] flex flex-col shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-base font-bold tracking-tight">Recent Activity</h3>
             <span className="material-symbols-outlined text-[#717a6d]">history</span>
           </div>
 
-          <div className="space-y-6 flex-1">
+          <div className="space-y-4 flex-1">
             {/* Activity Item 1 */}
             <div className="flex gap-4 relative">
               <div className="absolute left-[15px] top-8 bottom-[-24px] w-[2px] bg-[#f5f5f0]"></div>
@@ -437,39 +437,39 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
             </div>
           </div>
 
-          <button className="w-full mt-10 py-3 text-xs font-bold text-[#717a6d] border border-dashed border-[#e3e3de] rounded-lg hover:border-[#86efac] hover:text-[#047852] transition-all">
+          <button className="w-full mt-6 py-2 text-[10px] font-bold text-[#717a6d] border border-dashed border-[#e3e3de] rounded-lg hover:border-[#86efac] hover:text-[#047852] transition-all uppercase tracking-widest">
             VIEW ALL SYSTEM LOGS
           </button>
         </div>
       </div>
 
       {/* Global Logistics Status */}
-      <div className="bg-[#2f312e] rounded-2xl p-8 text-[#f1f1ec]">
+      <div className="bg-[#2f312e] rounded-2xl p-6 text-[#f1f1ec]">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-[#00450d] flex items-center justify-center">
               <span className="material-symbols-outlined text-[#ffdeac]">globe_uk</span>
             </div>
             <div>
-              <h4 className="font-bold text-lg tracking-tight">Global Logistics Status</h4>
+              <h4 className="font-bold text-base tracking-tight">Global Logistics Status</h4>
               <p className="text-[#717a6d] text-sm">Real-time supply chain monitoring active.</p>
             </div>
           </div>
           <div className="flex gap-8">
             <div className="text-center">
               <p className="text-[10px] font-bold text-[#717a6d] uppercase tracking-widest">Active Ships</p>
-              <p className="text-xl font-bold">24</p>
+              <p className="text-lg font-bold">24</p>
             </div>
             <div className="text-center">
               <p className="text-[10px] font-bold text-[#717a6d] uppercase tracking-widest">Port Clearance</p>
-              <p className="text-xl font-bold">94%</p>
+              <p className="text-lg font-bold">94%</p>
             </div>
             <div className="text-center">
               <p className="text-[10px] font-bold text-[#717a6d] uppercase tracking-widest">Avg Transit</p>
-              <p className="text-xl font-bold">12d</p>
+              <p className="text-lg font-bold">12d</p>
             </div>
           </div>
-          <button className="bg-[#eeeee9] text-[#1a1c19] px-6 py-3 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-white transition-colors">
+          <button className="bg-[#eeeee9] text-[#1a1c19] px-6 py-2 rounded-md font-bold text-[10px] uppercase tracking-widest hover:bg-white transition-colors">
             Network Map
           </button>
         </div>
