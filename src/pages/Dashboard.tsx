@@ -7,7 +7,6 @@ import {
   Settings, 
   User, 
   Building2, 
-  Mail, 
   LogOut,
   TrendingUp,
   DollarSign,

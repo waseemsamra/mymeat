@@ -251,7 +251,7 @@ const EnquiryManagement = () => {
                       variant="outline"
                       onClick={() => handleViewDetails(enquiry)}
                     >
-                      <Eye className="h-3 w-3 mr-1" />
+                      <span className="material-symbols-outlined">visibility</span>
                       View
                     </Button>
                     <Button
