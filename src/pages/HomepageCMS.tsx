@@ -1,0 +1,419 @@
+import { useState } from 'react';
+import { toast } from 'sonner';
+
+const HomepageCMS = () => {
+  const [loading, setLoading] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [slideData, setSlideData] = useState({
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPvjVcMcAPnUfgGQ6dtsyNqw6gsKo1Kyjc1tv6pOo1v41mUmsE0QOEbN-xywroLKjD_JexyTES-l1AncWpiQqRrHAhdMRB6H170qmWK1emVCzUouJ4SZHUX20XIeLN6enbVbPjhZQZMNnV3W8gh42Cw5XqE4Mn1t8qRcBDLjs3c0M3tYyXuWNGN5OalU0WIv30ZEuvYAPsnM14PFad2-pB2GEt86eigx8D37_aKqdf79M_oWUAkkWjQnlcxp5EozTSryYooMixAcq_',
+    headline: 'Curating Earth\'s Finest Harvest',
+    description: 'Premium agricultural exports delivered with logistical precision and botanical care.',
+    ctaText: 'Explore Produce',
+    ctaLink: '/collections/seasonal-harvest',
+    visible: true,
+    order: 1
+  });
+
+  const handleSave = () => {
+    setLoading(true);
+    setTimeout(() => {
+      toast.success('Homepage changes saved!');
+      setLoading(false);
+    }, 1000);
+  };
+
+  const handleEditSlide = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveSlide = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success('Slide updated successfully!');
+    setIsEditModalOpen(false);
+  };
+
+  return (
+    <div className="w-full space-y-12">
+      {/* Hero Slider Configuration */}
+      <section className="space-y-6">
+        <div className="flex justify-between items-end">
+          <div className="max-w-xl">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#7a5649] uppercase mb-2 block">Visual Core</span>
+            <h3 className="text-3xl font-bold tracking-tight text-[#00450d]">Hero Header Management</h3>
+          </div>
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className="flex items-center gap-2 px-6 py-2 bg-[#1b5e20] text-white font-semibold rounded-lg hover:bg-[#00450d] transition-all active:scale-95 disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-sm">save</span>
+            <span>{loading ? 'Saving...' : 'Publish Changes'}</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-12 gap-8 items-start">
+          {/* Preview Card */}
+          <div className="col-span-12 lg:col-span-7 relative group rounded-2xl overflow-hidden shadow-lg aspect-[16/8] bg-[#eeeee9]">
+            <img
+              alt="Fresh organic produce preview"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPvjVcMcAPnUfgGQ6dtsyNqw6gsKo1Kyjc1tv6pOo1v41mUmsE0QOEbN-xywroLKjD_JexyTES-l1AncWpiQqRrHAhdMRB6H170qmWK1emVCzUouJ4SZHUX20XIeLN6enbVbPjhZQZMNnV3W8gh42Cw5XqE4Mn1t8qRcBDLjs3c0M3tYyXuWNGN5OalU0WIv30ZEuvYAPsnM14PFad2-pB2GEt86eigx8D37_aKqdf79M_oWUAkkWjQnlcxp5EozTSryYooMixAcq_"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
+              <h4 className="text-white text-4xl font-bold mb-2">Curating Earth's Finest Harvest</h4>
+              <p className="text-white/80 max-w-md">Premium agricultural exports delivered with logistical precision and botanical care.</p>
+            </div>
+            <div className="absolute top-4 right-4 flex gap-2">
+              <button
+                onClick={handleEditSlide}
+                className="p-2 bg-white/90 backdrop-blur rounded-lg text-[#00450d] hover:bg-white transition-all shadow-sm"
+              >
+                <span className="material-symbols-outlined">edit</span>
+              </button>
+              <button className="p-2 bg-white/90 backdrop-blur rounded-lg text-[#7a5649] hover:bg-white transition-all shadow-sm">
+                <span className="material-symbols-outlined">collections</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Hero Controls */}
+          <div className="col-span-12 lg:col-span-5 space-y-4">
+            <div className="p-6 bg-white rounded-2xl shadow-lg border-b-2 border-[#00450d]/5">
+              <label className="block text-xs font-bold text-[#7a5649] uppercase tracking-widest mb-4">Headline Settings</label>
+              <input
+                className="w-full px-0 py-2 bg-transparent border-0 border-b border-[#717a6d] focus:ring-0 focus:border-[#00450d] text-lg font-bold text-[#1a1c19] transition-all mb-6"
+                type="text"
+                defaultValue="Curating Earth's Finest Harvest"
+              />
+              <label className="block text-xs font-bold text-[#7a5649] uppercase tracking-widest mb-4">Call to Action Link</label>
+              <div className="flex items-center gap-3 p-3 bg-[#f4f4ef] rounded-xl border border-[#c0c9bb]/20">
+                <span className="material-symbols-outlined text-[#717a6d]">link</span>
+                <input
+                  className="flex-1 bg-transparent border-0 focus:ring-0 text-sm font-medium"
+                  type="text"
+                  defaultValue="/collections/seasonal-harvest"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="flex-1 p-4 bg-[#f4f4ef] rounded-xl text-center cursor-pointer hover:bg-[#e8e8e3] transition-all">
+                <span className="material-symbols-outlined text-[#00450d] mb-1">speed</span>
+                <p className="text-[10px] font-bold text-[#717a6d] uppercase">Slide Duration</p>
+                <p className="text-sm font-bold">5000ms</p>
+              </div>
+              <div className="flex-1 p-4 bg-[#f4f4ef] rounded-xl text-center cursor-pointer hover:bg-[#e8e8e3] transition-all">
+                <span className="material-symbols-outlined text-[#00450d] mb-1">animation</span>
+                <p className="text-[10px] font-bold text-[#717a6d] uppercase">Transition</p>
+                <p className="text-sm font-bold">Ken Burns</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Reordering & Management */}
+      <section className="space-y-6 pt-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-3xl font-bold tracking-tight text-[#00450d]">Content Sequence</h3>
+            <p className="text-sm text-[#717a6d]">Drag handles to reorder sections on the homepage</p>
+          </div>
+          <div className="flex gap-2">
+            <button className="p-2 rounded-lg border border-[#c0c9bb] text-[#717a6d] hover:text-[#00450d] transition-all">
+              <span className="material-symbols-outlined">grid_view</span>
+            </button>
+            <button className="p-2 rounded-lg border border-[#00450d] text-[#00450d] transition-all bg-[#00450d]/10">
+              <span className="material-symbols-outlined">view_stream</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {/* Section Card: About */}
+          <div className="group flex items-center gap-6 p-6 bg-white rounded-2xl shadow-lg hover:translate-x-1 transition-all duration-300">
+            <div className="cursor-grab active:cursor-grabbing text-[#717a6d] group-hover:text-[#00450d] transition-colors">
+              <span className="material-symbols-outlined">drag_indicator</span>
+            </div>
+            <div className="w-24 h-16 rounded-lg overflow-hidden bg-[#eeeee9]">
+              <img
+                alt="About section thumbnail"
+                className="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkxR15eHWyRLx8HudNm8nAgZ-1ujwX8wMW9fYl-qJw6u56ORkTnsgXP_1mi5S4B5dvFj6mVVPtsFgkcO94vrZLSuVFLVwhEj3lxAHHUjih4fhmGvkAmhnOmr_8x0YUgEgBvQi0vkedEjFmTK1DCTTda1342WJmsPPdPzZjdOdt5Rc2fqhYymFACDP_CGwsWlcn8E-u3CDeJqWsVmWgSXON8JIyNsVtQgCdCEDczPZKpdobdc6eevmWDoZPJDjWzqdy1UhgS7v_0Zzs"
+              />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-0.5">
+                <h5 className="text-lg font-bold text-[#1a1c19]">The Editorial Story</h5>
+                <span className="px-2 py-0.5 bg-[#dcfce7] text-[#047852] text-[10px] font-bold rounded uppercase">Active</span>
+              </div>
+              <p className="text-sm text-[#717a6d]">Corporate About section featuring logistics narrative and history.</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="flex items-center gap-1.5 text-sm font-bold text-[#00450d] hover:bg-[#00450d]/10 px-3 py-2 rounded-lg transition-all">
+                <span className="material-symbols-outlined text-base">edit</span>
+                <span>Edit</span>
+              </button>
+              <button className="flex items-center gap-1.5 text-sm font-bold text-[#7a5649] hover:bg-[#7a5649]/10 px-3 py-2 rounded-lg transition-all">
+                <span className="material-symbols-outlined text-base">visibility_off</span>
+                <span>Hide</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Section Card: Featured Categories */}
+          <div className="group flex items-center gap-6 p-6 bg-white rounded-2xl shadow-lg hover:translate-x-1 transition-all duration-300">
+            <div className="cursor-grab active:cursor-grabbing text-[#717a6d] group-hover:text-[#00450d] transition-colors">
+              <span className="material-symbols-outlined">drag_indicator</span>
+            </div>
+            <div className="w-24 h-16 rounded-lg overflow-hidden bg-[#eeeee9]">
+              <img
+                alt="Categories thumbnail"
+                className="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfDHez3G4K6rY3hB5m-ZC_0xpoX6i63PujfTe3mj3iO4D4cBkqSSyl4JhbpYrhIDPxdOshJJpi5KCYvCUNIocuL4Baws2CqnjCE-8CX5yMKCAP8Tn-jeSItPVI10kwQ1LnPfg7bLAtzyZpyeCzqpsxNFlR9yt8EQ7ddJRcEX3KnhBnNdfbguxi6rZz6KcFnXh9p5knwzszS9Z50Pny6u9wat_xvSqb4B77zYOr007bhXilPjT_QIw93Bydm8HEFUigDn2xlNguggGi"
+              />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-0.5">
+                <h5 className="text-lg font-bold text-[#1a1c19]">Featured Categories</h5>
+                <span className="px-2 py-0.5 bg-[#dcfce7] text-[#047852] text-[10px] font-bold rounded uppercase">Active</span>
+              </div>
+              <p className="text-sm text-[#717a6d]">Bento grid layout showing Citrus, Root Vegetables, and Exotic Fruits.</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="flex items-center gap-1.5 text-sm font-bold text-[#00450d] hover:bg-[#00450d]/10 px-3 py-2 rounded-lg transition-all">
+                <span className="material-symbols-outlined text-base">edit</span>
+                <span>Edit</span>
+              </button>
+              <button className="flex items-center gap-1.5 text-sm font-bold text-[#7a5649] hover:bg-[#7a5649]/10 px-3 py-2 rounded-lg transition-all">
+                <span className="material-symbols-outlined text-base">visibility_off</span>
+                <span>Hide</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Section Card: Logistics Status */}
+          <div className="group flex items-center gap-6 p-6 bg-white rounded-2xl shadow-lg hover:translate-x-1 transition-all duration-300 border-l-4 border-[#503600]">
+            <div className="cursor-grab active:cursor-grabbing text-[#717a6d] group-hover:text-[#503600] transition-colors">
+              <span className="material-symbols-outlined">drag_indicator</span>
+            </div>
+            <div className="w-24 h-16 rounded-lg overflow-hidden bg-[#eeeee9] flex items-center justify-center text-[#503600]">
+              <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>public</span>
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-0.5">
+                <h5 className="text-lg font-bold text-[#1a1c19]">Global Logistics Status</h5>
+                <span className="px-2 py-0.5 bg-[#6e4b00] text-white text-[10px] font-bold rounded uppercase">Draft</span>
+              </div>
+              <p className="text-sm text-[#717a6d]">Real-time data visualization of export routes and harvest updates.</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="flex items-center gap-1.5 text-sm font-bold text-[#00450d] hover:bg-[#00450d]/10 px-3 py-2 rounded-lg transition-all">
+                <span className="material-symbols-outlined text-base">edit</span>
+                <span>Edit</span>
+              </button>
+              <button className="flex items-center gap-1.5 text-sm font-bold text-[#503600] hover:bg-[#ffdeac]/30 px-3 py-2 rounded-lg transition-all">
+                <span className="material-symbols-outlined text-base">publish</span>
+                <span>Publish</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Add New Section Trigger */}
+          <button className="w-full py-8 border-2 border-dashed border-[#c0c9bb]/40 rounded-2xl flex flex-col items-center justify-center text-[#717a6d] hover:border-[#00450d] hover:text-[#00450d] transition-all bg-transparent group">
+            <span className="material-symbols-outlined text-3xl mb-2 group-hover:scale-110 transition-transform">add_circle</span>
+            <span className="font-bold text-sm uppercase tracking-widest">Add New Section</span>
+          </button>
+        </div>
+      </section>
+
+      {/* Bottom Action Bar */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-4 bg-[#2f312e] text-white rounded-full shadow-2xl z-50">
+        <p className="text-sm font-medium mr-4 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+          Unsaved changes in Hero Slider
+        </p>
+        <div className="h-6 w-px bg-white/20"></div>
+        <button className="text-sm font-bold hover:text-white transition-colors">Discard</button>
+        <button
+          onClick={handleSave}
+          disabled={loading}
+          className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-6 py-2 rounded-full font-bold text-sm transition-all active:scale-95 disabled:opacity-50"
+        >
+          {loading ? 'Saving...' : 'Save & Refresh Dashboard'}
+        </button>
+      </div>
+
+      {/* Edit Slide Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-8 bg-[#1a1c19]/10 backdrop-blur-sm">
+          <div className="bg-white w-full max-w-5xl max-h-[92vh] overflow-hidden rounded-xl shadow-2xl flex flex-col md:flex-row border border-[#c0c9bb]/20">
+            {/* Left: Preview & Status */}
+            <div className="w-full md:w-5/12 bg-[#f4f4ef] p-8 border-r border-[#c0c9bb]/10 flex flex-col">
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-[10px] font-bold tracking-widest uppercase text-[#41493e]">Live Preview</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00450d] animate-pulse"></span>
+                  <span className="text-xs font-semibold text-[#00450d]">Slide 02 Preview</span>
+                </div>
+              </div>
+
+              {/* Card Preview Container */}
+              <div className="relative flex-1 rounded-lg overflow-hidden group aspect-[4/5] md:aspect-auto shadow-sm">
+                <img
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src={slideData.image}
+                  alt="Hero preview"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 p-6 w-full">
+                  <span className="inline-block px-2 py-1 bg-[#ffdeac] text-[#503600] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">Seasonal Selection</span>
+                  <h3 className="text-white font-bold text-2xl leading-tight mb-2">{slideData.headline}</h3>
+                  <p className="text-white/80 text-sm line-clamp-2 mb-4">{slideData.description}</p>
+                  <button className="px-5 py-2 bg-[#00450d] text-white text-xs font-bold rounded-sm inline-flex items-center gap-2">
+                    {slideData.ctaText}
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-[#e3e3de]/30 rounded-lg space-y-4">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-semibold text-[#1a1c19]">Visibility Status</label>
+                  <label className="relative inline-flex h-6 w-11 items-center rounded-full bg-[#00450d] cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={slideData.visible}
+                      onChange={(e) => setSlideData({ ...slideData, visible: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6 transition peer-checked:translate-x-1"></span>
+                  </label>
+                </div>
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-semibold text-[#1a1c19]">Slide Priority</label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-[#41493e]">Order #</span>
+                    <input
+                      className="w-12 h-8 text-center bg-white border-none rounded-md text-sm font-bold focus:ring-2 focus:ring-[#00450d]/20"
+                      type="number"
+                      value={slideData.order}
+                      onChange={(e) => setSlideData({ ...slideData, order: parseInt(e.target.value) || 1 })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Editor Form */}
+            <div className="flex-1 p-8 overflow-y-auto bg-white">
+              <div className="flex justify-between items-start mb-8">
+                <div>
+                  <h2 className="text-2xl font-bold text-[#1a1c19] tracking-tight">Edit Slide Content</h2>
+                  <p className="text-sm text-[#41493e] mt-1 font-medium">Update messaging and media for the hero carousel.</p>
+                </div>
+                <button
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="p-2 hover:bg-[#f4f4ef] rounded-full transition-colors text-[#41493e]"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveSlide} className="space-y-8">
+                {/* Image Upload */}
+                <div className="space-y-3">
+                  <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Slide Background Media</label>
+                  <div className="border-2 border-dashed border-[#c0c9bb]/30 rounded-xl p-8 flex flex-col items-center justify-center bg-[#f4f4ef]/50 hover:bg-[#f4f4ef] transition-colors group cursor-pointer">
+                    <div className="w-12 h-12 rounded-full bg-[#00450d]/10 flex items-center justify-center text-[#00450d] mb-4 group-hover:scale-110 transition-transform">
+                      <span className="material-symbols-outlined">cloud_upload</span>
+                    </div>
+                    <p className="text-sm font-semibold text-[#1a1c19]">Drop your harvest photography here</p>
+                    <p className="text-xs text-[#41493e] mt-1">PNG, JPG up to 10MB. Recommended 2400x1200px</p>
+                    <button className="mt-4 px-4 py-2 text-xs font-bold text-[#00450d] bg-white border border-[#c0c9bb]/30 rounded-md shadow-sm" type="button">Choose File</button>
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Main Headline</label>
+                    <input
+                      className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-lg font-bold text-[#1a1c19] placeholder:text-[#717a6d] transition-all"
+                      type="text"
+                      value={slideData.headline}
+                      onChange={(e) => setSlideData({ ...slideData, headline: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Sub-headline / Description</label>
+                    <textarea
+                      className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-sm text-[#41493e] resize-none"
+                      rows={3}
+                      value={slideData.description}
+                      onChange={(e) => setSlideData({ ...slideData, description: e.target.value })}
+                    />
+                  </div>
+                </div>
+
+                {/* CTA Configuration */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Button Text</label>
+                    <input
+                      className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-sm font-semibold text-[#1a1c19] transition-all"
+                      type="text"
+                      value={slideData.ctaText}
+                      onChange={(e) => setSlideData({ ...slideData, ctaText: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">CTA Destination</label>
+                    <div className="relative">
+                      <input
+                        className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 pl-4 pr-10 py-3 text-sm text-[#41493e] transition-all"
+                        type="text"
+                        value={slideData.ctaLink}
+                        onChange={(e) => setSlideData({ ...slideData, ctaLink: e.target.value })}
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#717a6d] text-sm">link</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="pt-8 border-t border-[#c0c9bb]/10 flex items-center justify-between gap-4">
+                  <button
+                    className="flex items-center gap-2 text-[#ba1a1a] text-xs font-bold uppercase tracking-widest px-4 py-2 hover:bg-[#ffdad6]/20 rounded-md transition-colors"
+                    type="button"
+                  >
+                    <span className="material-symbols-outlined text-sm">delete</span>
+                    Remove Slide
+                  </button>
+                  <div className="flex items-center gap-3">
+                    <button
+                      className="px-6 py-2.5 text-sm font-bold text-[#41493e] hover:text-[#1a1c19] transition-colors"
+                      type="button"
+                      onClick={() => setIsEditModalOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-8 py-2.5 bg-[#00450d] text-white text-sm font-bold rounded-md shadow-lg shadow-[#00450d]/20 flex items-center gap-2 hover:opacity-90 transition-opacity"
+                    >
+                      Save Changes
+                      <span className="material-symbols-outlined text-sm">done_all</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HomepageCMS;

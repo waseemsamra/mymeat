@@ -22,7 +22,7 @@ const SiteSettingsEditor = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="w-full">
       {/* Header Section */}
       <div className="mb-10">
         <h2 className="text-3xl font-extrabold text-[#1a1c19] tracking-tight">System Settings</h2>

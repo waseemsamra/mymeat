@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../components/AdminLayout';
-import CMSManagement from './CMSManagement';
 import ProductManagement from './ProductManagement';
 import CategoryManagement from './CategoryManagement';
 import SiteSettingsEditor from './SiteSettingsEditor';
+import HomepageCMS from './HomepageCMS';
+import NavigationMgmt from './NavigationMgmt';
+import FooterMgmt from './FooterMgmt';
 
 interface User {
   email: string;
@@ -58,7 +60,12 @@ const NewAdminDashboard = () => {
       case 'overview':
         return <OverviewDashboard stats={stats} />;
       case 'cms':
-        return <CMSManagement />;
+      case 'homepage':
+        return <HomepageCMS />;
+      case 'navigation':
+        return <NavigationMgmt />;
+      case 'footer':
+        return <FooterMgmt />;
       case 'products':
         return <ProductManagement />;
       case 'categories':
@@ -81,7 +88,7 @@ const NewAdminDashboard = () => {
       activeTab={activeTab}
       onTabChange={setActiveTab}
       user={user}
-      title={activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+      title={activeTab === 'homepage' ? 'Homepage CMS' : activeTab === 'navigation' ? 'Navigation Mgmt' : activeTab === 'footer' ? 'Footer Mgmt' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
     >
       {renderContent()}
     </AdminLayout>

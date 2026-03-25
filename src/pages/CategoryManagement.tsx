@@ -300,7 +300,7 @@ const CategoryManagement = () => {
   const totalSubcategories = categories.reduce((sum, cat) => sum + (cat.subcategories?.length || 0), 0);
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="w-full">
       {/* Breadcrumbs & Title Area */}
       <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>

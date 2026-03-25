@@ -5,7 +5,6 @@ interface AdminLayoutProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   title?: string;
-  description?: string;
   user?: { name: string; email: string } | null;
 }
 
@@ -13,6 +12,7 @@ interface MenuItem {
   id: string;
   label: string;
   icon: string;
+  subItems?: { id: string; label: string }[];
 }
 
 const menuItems: MenuItem[] = [
@@ -20,18 +20,32 @@ const menuItems: MenuItem[] = [
   { id: 'categories', label: 'Categories', icon: 'category' },
   { id: 'products', label: 'Products', icon: 'inventory_2' },
   { id: 'users', label: 'Users', icon: 'group' },
-  { id: 'cms', label: 'CMS', icon: 'edit' },
+  { 
+    id: 'cms', 
+    label: 'CMS', 
+    icon: 'auto_awesome_motion',
+    subItems: [
+      { id: 'homepage', label: 'Homepage CMS' },
+      { id: 'navigation', label: 'Navigation Mgmt' },
+      { id: 'footer', label: 'Footer Mgmt' }
+    ]
+  },
   { id: 'settings', label: 'Settings', icon: 'settings' },
 ];
 
-const AdminLayout = ({ 
-  children, 
-  activeTab, 
-  onTabChange, 
+const AdminLayout = ({
+  children,
+  activeTab,
+  onTabChange,
   title,
-  user 
+  user
 }: AdminLayoutProps) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandedMenu, setExpandedMenu] = useState<string | null>('cms');
+
+  const toggleMenu = (menuId: string) => {
+    setExpandedMenu(expandedMenu === menuId ? null : menuId);
+  };
 
   return (
     <div className="min-h-screen bg-[#fafaf5] flex">
@@ -55,19 +69,53 @@ const AdminLayout = ({
 
         <nav className="flex-1 px-4 space-y-1">
           {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => onTabChange(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 transition-colors duration-200 group ${
-                activeTab === item.id
-                  ? 'text-[#00450d] font-bold border-r-4 border-[#00450d] bg-[#e8e8e3]'
-                  : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]'
-              }`}
-              style={{ fontSize: '12px' }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
+            <div key={item.id}>
+              <button
+                onClick={() => {
+                  if (item.subItems) {
+                    toggleMenu(item.id);
+                  } else {
+                    onTabChange(item.id);
+                  }
+                }}
+                className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 transition-colors duration-200 group ${
+                  activeTab === item.id && !item.subItems
+                    ? 'text-[#00450d] font-bold border-r-4 border-[#00450d] bg-[#e8e8e3]'
+                    : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]'
+                }`}
+                style={{ fontSize: '12px' }}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>{item.icon}</span>
+                  <span>{item.label}</span>
+                </div>
+                {item.subItems && (
+                  <span className={`material-symbols-outlined transition-transform ${expandedMenu === item.id ? 'rotate-90' : ''}`}>
+                    chevron_right
+                  </span>
+                )}
+              </button>
+              
+              {/* Submenu Items */}
+              {item.subItems && expandedMenu === item.id && (
+                <div className="ml-4 mt-1 space-y-1 border-l-2 border-[#e3e3de] pl-2">
+                  {item.subItems.map((subItem) => (
+                    <button
+                      key={subItem.id}
+                      onClick={() => onTabChange(subItem.id)}
+                      className={`w-full text-left px-4 py-2 transition-colors duration-200 ${
+                        activeTab === subItem.id
+                          ? 'text-[#00450d] font-bold bg-[#e8e8e3]'
+                          : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]/50'
+                      }`}
+                      style={{ fontSize: '12px' }}
+                    >
+                      {subItem.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
@@ -134,7 +182,7 @@ const AdminLayout = ({
         </header>
 
         {/* Page Content */}
-        <div className="p-10">
+        <div className="p-10 w-full">
           {title && title !== 'Overview' && (
             <div className="mb-8">
               <div className="flex items-center gap-2 text-[#717a6d] mb-2 tracking-widest uppercase font-semibold" style={{ fontSize: '10px' }}>
