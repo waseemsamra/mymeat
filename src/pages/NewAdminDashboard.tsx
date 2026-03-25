@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signOut } from 'aws-amplify/auth';
+import AdminLayout from '../components/AdminLayout';
 import CMSManagement from './CMSManagement';
 import ProductManagement from './ProductManagement';
 import CategoryManagement from './CategoryManagement';
@@ -11,21 +11,6 @@ interface User {
   role: string;
   name: string;
 }
-
-interface MenuItem {
-  id: string;
-  label: string;
-  icon: string;
-}
-
-const menuItems: MenuItem[] = [
-  { id: 'overview', label: 'Overview', icon: 'dashboard' },
-  { id: 'categories', label: 'Categories', icon: 'category' },
-  { id: 'products', label: 'Products', icon: 'inventory_2' },
-  { id: 'users', label: 'Users', icon: 'group' },
-  { id: 'cms', label: 'CMS', icon: 'edit' },
-  { id: 'settings', label: 'Settings', icon: 'settings' },
-];
 
 const NewAdminDashboard = () => {
   const navigate = useNavigate();
@@ -68,184 +53,49 @@ const NewAdminDashboard = () => {
     );
   }
 
-  const handleLogout = async () => {
-    try {
-      localStorage.clear();
-      await signOut({ global: true });
-      window.location.replace('/');
-    } catch (error) {
-      localStorage.clear();
-      window.location.replace('/');
-    }
-  };
-
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <OverviewDashboard stats={stats} user={user} />;
+        return <OverviewDashboard stats={stats} />;
       case 'cms':
-        return (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#1a1c19]">Content Management System</h2>
-              <p className="text-[#41493e] text-sm">Manage your website content including hero, about, testimonials, and more</p>
-            </div>
-            <CMSManagement />
-          </div>
-        );
+        return <CMSManagement />;
       case 'products':
-        return (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#1a1c19]">Product Management</h2>
-              <p className="text-[#41493e]">Add, edit, and manage your product catalog</p>
-            </div>
-            <ProductManagement />
-          </div>
-        );
+        return <ProductManagement />;
       case 'categories':
-        return (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#1a1c19]">Category Management</h2>
-              <p className="text-[#41493e] text-sm">Organize products into categories</p>
-            </div>
-            <CategoryManagement />
-          </div>
-        );
+        return <CategoryManagement />;
       case 'users':
         return (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#1a1c19]">User Management</h2>
-              <p className="text-[#41493e] text-sm">Manage platform users and permissions</p>
-            </div>
-            <div className="bg-[#eeeee9] p-8 rounded-2xl">
-              <p className="text-[#41493e]">User management module coming soon...</p>
-            </div>
+          <div className="bg-[#eeeee9] p-8 rounded-2xl">
+            <p className="text-[#41493e] text-sm">User management module coming soon...</p>
           </div>
         );
       case 'settings':
-        return (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#1a1c19]">Site Settings</h2>
-              <p className="text-[#41493e] text-sm">Configure your website settings</p>
-            </div>
-            <SiteSettingsEditor />
-          </div>
-        );
+        return <SiteSettingsEditor />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf5] flex">
-      {/* Sidebar */}
-      <aside className="flex flex-col fixed left-0 top-0 h-full py-6 bg-[#f5f5f0] w-64 border-r border-[#e3e3de] font-manrope z-50">
-        <div className="px-6 mb-10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#1b5e20] rounded-lg flex items-center justify-center overflow-hidden">
-              <img
-                alt="Global Agrarian Logo"
-                className="w-8 h-8 object-contain"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRpHzleH93N_pzlBHi4dsYdTa6XKsuzsqehWodH_7xLi43wg221Pe3g1CF3cGhDEte0L_VdshLM0MobzJwNU6L-CKrWLlb9LniuQAGhaZEzN88XBOo2CErWYfizMmcYp98MSgiVKS56JLYcBmioX8zeQ-L1Xh55oW1bTQBKDmYkZ2DzJu1bFwb4gMk4wn82Hpv2_GjKOmNpEo3DzTrEgXFH4r4DFwLLFEI1ccKCVlCwfQeMP_v0RsMXR_d-XYRdFTUapeQHm6ABrYy"
-              />
-            </div>
-            <div>
-              <h1 className="text-base font-bold text-[#00450d] leading-none">Agrarian Admin</h1>
-              <p className="text-[10px] text-[#41493e] uppercase tracking-widest mt-1">Super Admin Console</p>
-            </div>
-          </div>
-        </div>
-
-        <nav className="flex-1 px-4 space-y-1">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 transition-colors duration-200 group ${
-                activeTab === item.id
-                  ? 'text-[#00450d] font-bold border-r-4 border-[#00450d] bg-[#e8e8e3]'
-                  : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[22px]">{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
-
-        <div className="px-4 mt-auto">
-          <button className="w-full flex items-center justify-center gap-2 bg-[#00450d] text-white py-3 rounded-md font-medium text-sm transition-transform scale-95 active:opacity-80">
-            <span className="material-symbols-outlined text-sm">download</span>
-            Export Report
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="ml-64 min-h-screen">
-        {/* Top Header */}
-        <header className="w-full h-16 sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-[#e3e3de] flex justify-between items-center px-8">
-          <div className="flex items-center flex-1 max-w-xl">
-            <div className="relative w-full">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#717a6d]">search</span>
-              <input
-                className="w-full bg-[#f5f5f0] border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#00450d]/20"
-                placeholder="Search marketplace assets..."
-                type="text"
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-4">
-              <button className="text-[#41493e] hover:text-[#00450d] transition-colors relative">
-                <span className="material-symbols-outlined">notifications</span>
-                <span className="absolute top-0 right-0 w-2 h-2 bg-[#503600] rounded-full"></span>
-              </button>
-              <button className="text-[#41493e] hover:text-[#00450d] transition-colors">
-                <span className="material-symbols-outlined">help_outline</span>
-              </button>
-            </div>
-            <div className="h-8 w-[1px] bg-[#e3e3de]"></div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handleLogout}
-                className="text-[#41493e] hover:text-red-600 transition-colors flex items-center gap-1"
-                title="Logout"
-              >
-                <span className="material-symbols-outlined">logout</span>
-              </button>
-              <div className="text-right">
-                <p className="text-xs font-bold text-[#1a1c19]">{user.name}</p>
-                <p className="text-[10px] text-[#41493e]">Super Admin</p>
-              </div>
-              <div className="w-10 h-10 rounded-full border border-[#e3e3de] bg-[#00450d] flex items-center justify-center text-white font-bold">
-                {user.name.charAt(0)}
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Page Content */}
-        <div className="p-10 space-y-10">
-          {renderContent()}
-        </div>
-      </main>
-    </div>
+    <AdminLayout
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      user={user}
+      title={activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+    >
+      {renderContent()}
+    </AdminLayout>
   );
 };
 
 // Overview Dashboard Component
-const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
+const OverviewDashboard = ({ stats }: { stats: any }) => {
   return (
-    <>
+    <div className="space-y-10">
       {/* Welcome Header */}
       <div className="flex items-end justify-between">
         <div>
-          <h2 className="text-2xl font-extrabold text-[#1a1c19] tracking-tight">Overview</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight text-[#1a1c19]">Overview</h2>
           <p className="text-[#41493e] text-sm mt-1">Operational analytics and marketplace performance.</p>
         </div>
         <div className="flex gap-3">
@@ -474,7 +324,7 @@ const OverviewDashboard = ({ stats }: { stats: any; user: User }) => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
