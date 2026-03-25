@@ -87,7 +87,7 @@ const Quality = () => {
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
               {[
                 {
-                  icon: FileCheck,
+                  icon: "fact_check",
                   step: '01',
                   title: 'Pre-Harvest',
                   description: 'Soil analysis, crop health assessment, and maturity testing at origin farms.'
@@ -221,7 +221,7 @@ const Quality = () => {
                 }
               ].map((stat) => (
                 <div key={stat.label} className="bg-stone-800/50 p-8 rounded-2xl border border-stone-700 text-center">
-                  <stat.icon className="text-[#ffba38] w-12 h-12 mb-6 mx-auto" />
+                  <span className="material-symbols-outlined text-[#ffba38] w-12 h-12 mb-6 mx-auto">{stat.icon}</span>
                   <div className="text-4xl font-black text-white mb-2">{stat.metric}</div>
                   <div className="text-[#91d78a] font-bold text-sm uppercase tracking-widest mb-2">{stat.label}</div>
                   <p className="text-stone-400 text-sm">{stat.description}</p>
