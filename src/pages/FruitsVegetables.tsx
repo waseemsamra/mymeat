@@ -264,10 +264,10 @@ const FruitsVegetables = () => {
 
                 <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {[
-                    { period: 'MAR-MAY', icon: Sprout, name: 'Asparagus' },
-                    { period: 'JUN-AUG', icon: Sprout, name: 'Stone Fruits' },
-                    { period: 'SEP-NOV', icon: Sprout, name: 'Apples' },
-                    { period: 'DEC-FEB', icon: Sprout, name: 'Citrus' }
+                    { period: 'MAR-MAY', icon: "eco", name: 'Asparagus' },
+                    { period: 'JUN-AUG', icon: "eco", name: 'Stone Fruits' },
+                    { period: 'SEP-NOV', icon: "eco", name: 'Apples' },
+                    { period: 'DEC-FEB', icon: "eco", name: 'Citrus' }
                   ].map((item) => (
                     <div key={item.period} className="bg-white p-6 flex flex-col items-center justify-center text-center group hover:bg-[#00450d] transition-all cursor-default">
                       <p className="text-xs font-sans font-bold text-[#00450d] group-hover:text-white/70 uppercase mb-4">{item.period}</p>

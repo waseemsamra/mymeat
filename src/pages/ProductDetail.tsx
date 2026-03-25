@@ -1,8 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
   ArrowLeft, ArrowRight, Check, Leaf, Package, 
   Truck, Shield, Clock, ChevronRight, Star,
   Phone
