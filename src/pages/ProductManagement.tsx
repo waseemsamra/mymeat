@@ -1,11 +1,3 @@
-import { useState, useEffect } from 'react';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Badge } from '../components/ui/badge';
-import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface Product {
   id: number;
@@ -451,7 +443,7 @@ const ProductManagement = () => {
                         </>
                       ) : (
                         <>
-                          <Upload className="h-4 w-4 mr-2" />
+                          <span className="material-symbols-outlined mr-2">upload</span>
                           Upload
                         </>
                       )}
@@ -484,7 +476,7 @@ const ProductManagement = () => {
 
                 <div className="flex gap-2">
                   <Button type="submit" className="flex-1">
-                    <Save className="h-4 w-4 mr-2" />
+                    <span className="material-symbols-outlined mr-2">save</span>
                     {editingProduct ? 'Update' : 'Create'} Product
                   </Button>
                   <Button type="button" variant="outline" onClick={handleCloseModal}>

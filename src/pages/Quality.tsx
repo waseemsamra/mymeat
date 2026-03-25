@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Download, Description } from 'lucide-react';
 
 const Quality = () => {
   return (
@@ -54,7 +52,7 @@ const Quality = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-[#ffffff] p-8 rounded-xl editorial-shadow">
-                <Verified className="text-[#00450d] w-12 h-12 mb-6" />
+                <span className="material-symbols-outlined w-6 h-6">verified_user</span>
                 <h3 className="font-headline font-bold text-xl mb-4">100% Traceability</h3>
                 <p className="text-[#41493e] text-sm leading-relaxed">Every batch is tracked from origin farm through final delivery with complete documentation and chain of custody records.</p>
               </div>
@@ -122,7 +120,7 @@ const Quality = () => {
                   <div className="text-[6rem] font-black text-[#1a1c19]/5 absolute -top-8 -left-4 pointer-events-none">{stage.step}</div>
                   <div className="relative z-10">
                     <div className="bg-[#00450d]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#00450d] transition-colors">
-                      <stage.icon className="w-8 h-8 text-[#00450d] group-hover:text-white transition-colors" />
+                      <span className="material-symbols-outlined w-8 h-8">{stage.icon}</span>
                     </div>
                     <h3 className="font-headline font-bold text-lg mb-2">{stage.title}</h3>
                     <p className="text-[#41493e] text-sm leading-relaxed">{stage.description}</p>
