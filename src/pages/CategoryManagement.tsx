@@ -51,7 +51,13 @@ const CategoryManagement = () => {
   const loadCategories = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/categories`);
+      const token = localStorage.getItem('idToken');
+      const response = await fetch(`${API_URL}/categories`, {
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json'
+        }
+      });
 
       if (!response.ok) {
         throw new Error('Failed to load categories');
@@ -167,6 +173,12 @@ const CategoryManagement = () => {
     setSaving(true);
 
     try {
+      const token = localStorage.getItem('idToken');
+      const headers = {
+        'Authorization': token ? `Bearer ${token}` : '',
+        'Content-Type': 'application/json'
+      };
+
       if (editingCategory) {
         // Update existing category via API
         const updateData = {
@@ -182,7 +194,7 @@ const CategoryManagement = () => {
 
         const response = await fetch(`${API_URL}/categories/${editingCategory.id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: headers,
           body: JSON.stringify(updateData)
         });
 
@@ -209,7 +221,7 @@ const CategoryManagement = () => {
 
         const response = await fetch(`${API_URL}/categories`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: headers,
           body: JSON.stringify(newCategory)
         });
 
@@ -234,17 +246,24 @@ const CategoryManagement = () => {
 
   const handleDelete = async (id: number | string) => {
     if (!confirm('Are you sure you want to delete this category? This will affect all products in this category.')) return;
-    
+
     try {
+      const token = localStorage.getItem('idToken');
       const response = await fetch(`${API_URL}/categories/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : ''
+        }
       });
-      
+
+      const result = await response.json();
+      console.log('Delete response:', result);
+
       if (response.ok) {
         toast.success('Category deleted successfully!');
         loadCategories();
       } else {
-        toast.error('Failed to delete category');
+        toast.error(`Failed to delete: ${result.message || 'Unknown error'}`);
       }
     } catch (error: any) {
       console.error('Error deleting category:', error);
