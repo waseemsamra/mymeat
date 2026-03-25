@@ -52,28 +52,37 @@ const CategoryManagement = () => {
     setLoading(true);
     try {
       const response = await fetch(`${API_URL}/categories`);
-      
+
       if (!response.ok) {
         throw new Error('Failed to load categories');
       }
-      
+
       const data = await response.json();
-      
-      const transformedCategories = data.map((item: any) => ({
-        id: item.id || item.PK?.replace('CATEGORY#', '') || Date.now(),
-        name: item.name || item.data?.name || 'Category',
-        description: item.description || item.data?.description || '',
-        color: item.color || item.data?.color || '#3b82f6',
-        image: item.image || item.data?.image || '',
-        productCount: item.productCount || item.data?.productCount || 0
-      }));
-      
+      console.log('Loaded categories from API:', data);
+
+      const transformedCategories = (Array.isArray(data) ? data : (data.categories || [])).map((item: any) => {
+        // Handle different API response formats
+        const id = item.id || item.categoryId || item.PK?.replace('CATEGORY#', '') || Date.now();
+        const dataField = item.data || item;
+        
+        return {
+          id: id,
+          name: dataField.name || item.name || 'Category',
+          description: dataField.description || item.description || '',
+          color: dataField.color || item.color || '#3b82f6',
+          image: dataField.image || item.image || '',
+          productCount: dataField.productCount || item.productCount || 0
+        };
+      });
+
       setCategories(transformedCategories);
-      toast.success('Categories loaded from API!');
+      if (transformedCategories.length > 0) {
+        toast.success(`Loaded ${transformedCategories.length} categories from API!`);
+      }
     } catch (error: any) {
       console.error('Error loading categories:', error);
       toast.error('Failed to load categories');
-      
+
       // Fallback to sample data
       setCategories([
         { id: 1, name: 'Hay Products', description: 'Premium grass hays', color: '#10b981', image: '', productCount: 3 },
@@ -156,28 +165,36 @@ const CategoryManagement = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    
+
     try {
       if (editingCategory) {
         // Update existing category via API
+        const updateData = {
+          id: editingCategory.id,
+          name: formData.name,
+          description: formData.description,
+          color: formData.color,
+          image: formData.image,
+          updatedAt: new Date().toISOString()
+        };
+
+        console.log('Updating category:', updateData);
+
         const response = await fetch(`${API_URL}/categories/${editingCategory.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: editingCategory.id,
-            name: formData.name,
-            description: formData.description,
-            color: formData.color,
-            image: formData.image
-          })
+          body: JSON.stringify(updateData)
         });
-        
+
+        const result = await response.json();
+        console.log('Update response:', result);
+
         if (response.ok) {
           toast.success('Category updated successfully!');
           loadCategories();
           handleCloseModal();
         } else {
-          toast.error('Failed to update category');
+          toast.error(`Failed to update: ${result.message || 'Unknown error'}`);
         }
       } else {
         // Create new category via API
@@ -187,19 +204,24 @@ const CategoryManagement = () => {
           color: formData.color,
           image: formData.image
         };
-        
+
+        console.log('Creating category:', newCategory);
+
         const response = await fetch(`${API_URL}/categories`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newCategory)
         });
-        
+
+        const result = await response.json();
+        console.log('Create response:', result);
+
         if (response.ok) {
           toast.success('Category created successfully!');
           loadCategories();
           handleCloseModal();
         } else {
-          toast.error('Failed to create category');
+          toast.error(`Failed to create: ${result.message || 'Unknown error'}`);
         }
       }
     } catch (error: any) {
