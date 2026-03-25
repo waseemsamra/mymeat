@@ -19,8 +19,12 @@ const UserManagement = () => {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [resetMethod, setResetMethod] = useState<'link' | 'password'>('password');
+  const [tempPassword] = useState('GR-92X-LQ71-V');
+  const [requireChange, setRequireChange] = useState(true);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -72,6 +76,13 @@ const UserManagement = () => {
     setIsDeleteModalOpen(true);
   };
 
+  const handleResetPassword = (user: User) => {
+    setSelectedUser(user);
+    setResetMethod('password');
+    setRequireChange(true);
+    setIsResetPasswordModalOpen(true);
+  };
+
   const confirmDeleteUser = () => {
     if (deleteConfirmText === 'DELETE') {
       toast.success('User deleted successfully!');
@@ -79,6 +90,14 @@ const UserManagement = () => {
       setSelectedUser(null);
       setDeleteConfirmText('');
     }
+  };
+
+  const handleConfirmReset = () => {
+    toast.success(resetMethod === 'link' 
+      ? 'Password reset link sent!' 
+      : 'Temporary password generated!');
+    setIsResetPasswordModalOpen(false);
+    setSelectedUser(null);
   };
 
   const handleSaveChanges = (e: React.FormEvent) => {
@@ -467,25 +486,35 @@ const UserManagement = () => {
             </form>
 
             {/* Modal Footer */}
-            <div className="p-8 bg-[#f4f4ef] flex justify-end items-center gap-4">
+            <div className="p-8 bg-[#f4f4ef] flex justify-between items-center">
               <button
                 type="button"
-                onClick={() => setIsEditUserModalOpen(false)}
-                className="px-6 py-2.5 rounded-md font-bold text-sm text-[#41493e] hover:text-[#1a1c19] transition-colors"
+                onClick={() => handleResetPassword(selectedUser)}
+                className="text-[#00450d] font-bold text-sm px-4 py-2 hover:bg-[#00450d]/10 rounded-md transition-colors flex items-center gap-2"
               >
-                Cancel
+                <span className="material-symbols-outlined text-sm">lock_reset</span>
+                Reset Password
               </button>
-              <button
-                type="submit"
-                onClick={(e) => {
-                  const form = e.currentTarget.closest('form');
-                  if (form) form.requestSubmit();
-                }}
-                className="bg-[#00450d] text-white px-8 py-2.5 rounded-md font-bold text-sm shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-2"
-              >
-                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>save</span>
-                Save Changes
-              </button>
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => setIsEditUserModalOpen(false)}
+                  className="px-6 py-2.5 rounded-md font-bold text-sm text-[#41493e] hover:text-[#1a1c19] transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  onClick={(e) => {
+                    const form = e.currentTarget.closest('form');
+                    if (form) form.requestSubmit();
+                  }}
+                  className="bg-[#00450d] text-white px-8 py-2.5 rounded-md font-bold text-sm shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>save</span>
+                  Save Changes
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -702,6 +731,131 @@ const UserManagement = () => {
                 className="flex-1 bg-[#e3e3de] hover:bg-[#d6d3cd] text-[#1a1c19] font-semibold py-3.5 px-6 rounded-xl transition-all active:scale-95"
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Password Modal */}
+      {isResetPasswordModalOpen && selectedUser && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#2f312e]/40 backdrop-blur-sm p-4">
+          {/* Modal Container */}
+          <div className="bg-white w-full max-w-lg rounded-lg shadow-2xl border border-[#c0c9bb]/20 overflow-hidden">
+            {/* Modal Header */}
+            <div className="px-8 py-6 border-b border-[#e8e8e3]">
+              <div className="flex items-center gap-3 mb-1">
+                <div className="p-2 bg-[#00450d]/10 rounded-lg text-[#00450d]">
+                  <span className="material-symbols-outlined">lock_reset</span>
+                </div>
+                <h2 className="text-xl font-bold tracking-tight text-[#1a1c19]">Reset User Password</h2>
+              </div>
+              <p className="text-sm text-[#41493e] leading-relaxed">
+                Generate new credentials for <span className="font-bold text-[#1a1c19]">{selectedUser.name}</span> ({selectedUser.email})
+              </p>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-8 space-y-8">
+              {/* Reset Options */}
+              <div className="grid grid-cols-1 gap-4">
+                {/* Option 1: Link */}
+                <button
+                  onClick={() => setResetMethod('link')}
+                  className={`flex items-center justify-between p-4 bg-[#f4f4ef] rounded-lg border ${resetMethod === 'link' ? 'border-[#00450d] bg-[#00450d]/5' : 'border-[#c0c9bb]/30'} hover:border-[#00450d] hover:bg-[#00450d]/5 group transition-all text-left`}
+                >
+                  <div className="flex gap-4 items-start">
+                    <span className={`material-symbols-outlined mt-1 ${resetMethod === 'link' ? 'text-[#00450d]' : 'text-[#717a6d]'} group-hover:text-[#00450d] transition-colors`}>alternate_email</span>
+                    <div>
+                      <span className="block font-bold text-sm text-[#1a1c19] mb-0.5">Send Password Reset Link</span>
+                      <span className="block text-xs text-[#41493e] leading-relaxed">Sends a secure, time-sensitive link via email for the user to manage their own reset.</span>
+                    </div>
+                  </div>
+                  <span className={`material-symbols-outlined ${resetMethod === 'link' ? 'text-[#00450d]' : 'text-[#717a6d]'} group-hover:text-[#00450d]`}>chevron_right</span>
+                </button>
+
+                {/* Option 2: Temporary Password */}
+                <div className={`flex flex-col p-4 bg-[#f4f4ef] rounded-lg border-2 ${resetMethod === 'password' ? 'border-[#00450d] ring-4 ring-[#00450d]/5' : 'border-[#c0c9bb]/30'} text-left relative overflow-hidden`}>
+                  <button
+                    onClick={() => setResetMethod('password')}
+                    className="flex items-center justify-between w-full mb-3"
+                  >
+                    <div className="flex gap-4 items-start">
+                      <span className={`material-symbols-outlined mt-1 ${resetMethod === 'password' ? 'text-[#00450d]' : 'text-[#717a6d]'}`}>key</span>
+                      <div>
+                        <span className="block font-bold text-sm text-[#1a1c19] mb-0.5">Generate Temporary Password</span>
+                        <span className="block text-xs text-[#41493e] leading-relaxed">Instantly creates a one-time use password for immediate access.</span>
+                      </div>
+                    </div>
+                    {resetMethod === 'password' && (
+                      <span className="material-symbols-outlined text-[#00450d]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    )}
+                  </button>
+
+                  {/* Generated Password Field */}
+                  {resetMethod === 'password' && (
+                    <>
+                      <div className="bg-[#e3e3de] rounded p-3 flex items-center justify-between border border-[#00450d]/20">
+                        <code className="text-lg font-mono font-bold tracking-widest text-[#00450d]">{tempPassword}</code>
+                      </div>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(tempPassword);
+                          toast.success('Password copied to clipboard!');
+                        }}
+                        className="flex items-center gap-1 px-3 py-1.5 bg-[#1b5e20] text-white rounded text-[10px] font-bold uppercase tracking-wider hover:bg-[#00450d] transition-colors mt-2 w-fit"
+                      >
+                        <span className="material-symbols-outlined text-sm">content_copy</span>
+                        Copy
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Forced Change Checkbox */}
+              <div className="flex items-start gap-3">
+                <div className="flex items-center h-5">
+                  <input
+                    checked={requireChange}
+                    onChange={(e) => setRequireChange(e.target.checked)}
+                    className="w-4 h-4 rounded text-[#00450d] focus:ring-[#00450d] border-[#717a6d]"
+                    id="require-change"
+                    type="checkbox"
+                  />
+                </div>
+                <label className="text-sm font-medium text-[#41493e] select-none cursor-pointer" htmlFor="require-change">
+                  Require password change on next login
+                </label>
+              </div>
+
+              {/* Security Warning */}
+              <div className="bg-[#ffdad6]/20 border-l-4 border-[#ba1a1a] p-4 rounded-r-lg">
+                <div className="flex gap-3">
+                  <span className="material-symbols-outlined text-[#ba1a1a] text-lg">warning</span>
+                  <p className="text-xs text-[#93000a] font-medium leading-relaxed">
+                    <span className="font-bold">Critical Action:</span> This will revoke the user's current password and any active sessions immediately.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer Actions */}
+            <div className="px-8 py-6 bg-[#f4f4ef] flex items-center justify-end gap-3">
+              <button
+                onClick={() => {
+                  setIsResetPasswordModalOpen(false);
+                  setSelectedUser(null);
+                }}
+                className="px-6 py-2.5 text-sm font-bold text-[#41493e] hover:text-[#1a1c19] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmReset}
+                className="px-8 py-2.5 bg-[#00450d] text-white rounded-lg text-sm font-bold shadow-lg hover:bg-[#1b5e20] transition-all active:scale-95"
+              >
+                Confirm Reset
               </button>
             </div>
           </div>
