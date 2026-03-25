@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Badge } from '../components/ui/badge';
 import { CardDescription } from '../components/ui/card';
@@ -48,7 +49,7 @@ const ProductManagement = () => {
       
       if (response.ok) {
         const data = await response.json();
-        const transformedCategories = data.map((cat: any) => ({
+        const transformedCategories = data.map((cat) => ({
           id: cat.id || cat.PK?.replace('CATEGORY#', ''),
           name: cat.name || cat.data?.name || 'Category'
         }));
@@ -67,7 +68,7 @@ const ProductManagement = () => {
           { id: 4, name: 'Other' }
         ]);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error loading categories:', error);
       // Fallback categories
       setCategories([
@@ -87,7 +88,7 @@ const ProductManagement = () => {
       const data = await response.json();
       setProducts(data);
       toast.success('Products loaded!');
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error loading products:', error);
       toast.error('Failed to load products');
     } finally {
@@ -177,7 +178,7 @@ const ProductManagement = () => {
         console.error('❌ Upload failed:', result);
         toast.error('Upload failed');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('💥 Upload error:', error);
       toast.error('Upload failed: ' + (error.message || 'Unknown error'));
     } finally {
@@ -251,7 +252,7 @@ const ProductManagement = () => {
           toast.error('Failed to create product: ' + (responseData.message || 'Unknown error'));
         }
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('💥 Error saving product:', error);
       toast.error('Failed to save product: ' + (error.message || 'Unknown error'));
     }
@@ -272,7 +273,7 @@ const ProductManagement = () => {
       } else {
         toast.error('Failed to delete product');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error deleting product:', error);
       toast.error('Failed to delete product');
     }
