@@ -94,25 +94,25 @@ const Quality = () => {
                   description: 'Soil analysis, crop health assessment, and maturity testing at origin farms.'
                 },
                 {
-                  icon: Microscope,
+                  icon: "microscope",
                   step: '02',
                   title: 'Laboratory Testing',
                   description: 'Comprehensive lab analysis for pesticides, heavy metals, and microbial content.'
                 },
                 {
-                  icon: CheckCircle,
+                  icon: "check_circle",
                   step: '03',
                   title: 'Pre-Shipment',
                   description: 'Final visual inspection, packaging integrity check, and temperature verification.'
                 },
                 {
-                  icon: Truck,
+                  icon: "local_shipping",
                   step: '04',
                   title: 'In-Transit',
                   description: 'Real-time monitoring of temperature, humidity, and ethylene levels during transit.'
                 },
                 {
-                  icon: Award,
+                  icon: "workspace_premium",
                   step: '05',
                   title: 'Destination Audit',
                   description: 'Final quality verification upon arrival with comprehensive documentation handover.'
@@ -197,25 +197,25 @@ const Quality = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {[
                 {
-                  icon: TrendingUp,
+                  icon: "trending_up",
                   metric: '99.7%',
                   label: 'Quality Acceptance Rate',
                   description: 'Shipments meeting all quality specifications'
                 },
                 {
-                  icon: Clock,
+                  icon: "schedule",
                   metric: '<24h',
                   label: 'Lab Testing Turnaround',
                   description: 'Average time from sample to results'
                 },
                 {
-                  icon: CheckCircle,
+                  icon: "check_circle",
                   metric: '100%',
                   label: 'Traceability Coverage',
                   description: 'Complete farm-to-port documentation'
                 },
                 {
-                  icon: Award,
+                  icon: "workspace_premium",
                   metric: '15+',
                   label: 'Years Excellence',
                   description: 'Continuous quality improvement journey'
