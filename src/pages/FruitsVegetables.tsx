@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Eye, EyeOff } from 'lucide-react';
 
 const FruitsVegetables = () => {
   return (
@@ -154,7 +153,7 @@ const FruitsVegetables = () => {
                 <ul className="space-y-6 mb-12">
                   <li className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-[#acf4a4] flex items-center justify-center shrink-0">
-                      <Check className="w-5 h-5 text-[#002203]" />
+                      <span className="material-symbols-outlined w-4 h-4">check</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg">Organic & Soil-Free</h4>
@@ -163,7 +162,7 @@ const FruitsVegetables = () => {
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-[#acf4a4] flex items-center justify-center shrink-0">
-                      <Check className="w-5 h-5 text-[#002203]" />
+                      <span className="material-symbols-outlined w-4 h-4">check</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg">Extended Shelf Life</h4>
@@ -287,7 +286,7 @@ const FruitsVegetables = () => {
           <div className="max-w-7xl mx-auto px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
               <div className="text-center">
-                <Check className="text-[#00450d] w-16 h-16 mb-6" />
+                <span className="material-symbols-outlined w-4 h-4">check</span>
                 <h3 className="text-xl font-headline font-bold mb-4">Global GAP Certified</h3>
                 <p className="text-[#41493e] leading-relaxed">Rigorous adherence to international standards for safe, sustainable agriculture practices.</p>
               </div>

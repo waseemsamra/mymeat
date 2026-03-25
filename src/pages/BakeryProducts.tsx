@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Eye, EyeOff } from 'lucide-react';
 
 const BakeryProducts = () => {
   return (
@@ -35,7 +34,7 @@ const BakeryProducts = () => {
                   Enquire for Bulk
                 </Link>
                 <Link to="/contact" className="bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded font-headline font-bold text-lg hover:bg-white/20 transition-all flex items-center gap-2">
-                  <Download className="w-5 h-5" />
+                  <span className="material-symbols-outlined mr-2">download</span>
                   Specifications Sheet
                 </Link>
               </div>
@@ -53,7 +52,7 @@ const BakeryProducts = () => {
               </div>
               <div className="hidden md:block">
                 <div className="flex items-center gap-2 text-[#00450d] font-bold">
-                  <VerifiedUser className="w-6 h-6" />
+                  <span className="material-symbols-outlined w-6 h-6">verified_user</span>
                   <span className="font-sans tracking-widest text-sm uppercase">Heritage Quality</span>
                 </div>
               </div>

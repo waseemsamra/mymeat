@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Eye, EyeOff } from 'lucide-react';
 
 const NutsFlavors = () => {
   return (
@@ -33,7 +32,7 @@ const NutsFlavors = () => {
               <div className="flex flex-wrap gap-4">
                 <Link to="/contact" className="bg-[#00450d] text-white px-8 py-4 rounded font-headline font-bold flex items-center gap-3 hover:bg-[#1b5e20] transition-all group">
                   Download Inventory List
-                  <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+                  <span className="material-symbols-outlined mr-2">download</span>
                 </Link>
                 <Link to="/contact" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded font-headline font-bold hover:bg-white/20 transition-all">
                   Contact Sourcing Desk
@@ -301,7 +300,7 @@ const NutsFlavors = () => {
                 </p>
                 <div className="flex flex-wrap gap-8 grayscale opacity-60 hover:grayscale-0 transition-all">
                   <div className="flex flex-col items-center gap-2">
-                    <VerifiedUser className="w-10 h-10" />
+                    <span className="material-symbols-outlined w-6 h-6">verified_user</span>
                     <span className="text-[0.65rem] font-bold uppercase tracking-widest">Global GAP</span>
                   </div>
                   <div className="flex flex-col items-center gap-2">
@@ -317,7 +316,7 @@ const NutsFlavors = () => {
 
               <div className="bg-stone-800 p-12 rounded-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-10">
-                  <Thermostat className="w-24 h-24" />
+                  <span className="material-symbols-outlined w-10 h-10">thermostat</span>
                 </div>
                 <h3 className="font-headline text-xl font-bold mb-4">Moisture Control Protocol</h3>
                 <p className="text-stone-400 mb-8">Advanced desiccant management in containers prevents aflatoxin development and maintains kernel snap.</p>

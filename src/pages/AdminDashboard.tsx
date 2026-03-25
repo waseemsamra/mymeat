@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { toast } from 'sonner';
-import { Eye, EyeOff } from 'lucide-react';
 import CMSManagement from './CMSManagement';
 
 // Product interface

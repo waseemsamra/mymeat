@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
 
 interface Product {
   id: number | string;
@@ -236,7 +235,7 @@ const CategoryDetail = () => {
                     <div className="space-y-2 mb-4">
                       {product.features.slice(0, 2).map((feature, i) => (
                         <div key={i} className="flex items-center gap-2">
-                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span className="material-symbols-outlined w-4 h-4">check</span>
                           <span className="text-gray-600 text-xs">{feature}</span>
                         </div>
                       ))}

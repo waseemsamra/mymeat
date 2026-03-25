@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Eye, EyeOff } from 'lucide-react';
 
 const CannedGoods = () => {
   return (
@@ -25,7 +24,7 @@ const CannedGoods = () => {
               <div className="flex flex-wrap gap-4">
                 <Link to="/contact" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center gap-2 group shadow-xl">
                   Download Bulk Catalog
-                  <Download className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
+                  <span className="material-symbols-outlined mr-2">download</span>
                 </Link>
                 <Link to="/contact" className="border border-[#c0c9bb] text-[#1a1c19] hover:bg-[#eeeee9] px-8 py-4 rounded-xl font-bold transition-all">
                   Enquire for Wholesale
@@ -44,7 +43,7 @@ const CannedGoods = () => {
               </div>
               <div className="absolute -bottom-8 -right-8 backdrop-blur-md bg-white/70 p-6 rounded-2xl shadow-lg border border-white/20 hidden md:block max-w-xs">
                 <div className="flex items-center gap-3 mb-2">
-                  <Verified className="text-[#00450d] w-6 h-6" />
+                  <span className="material-symbols-outlined w-6 h-6">verified</span>
                   <span className="font-bold text-sm">Quality Guaranteed</span>
                 </div>
                 <p className="text-xs text-[#41493e]">Every batch undergoes rigorous 5-point quality inspection before export.</p>
@@ -147,15 +146,15 @@ const CannedGoods = () => {
               </p>
               <div className="space-y-4 mb-10">
                 <div className="flex items-center gap-3">
-                  <Check className="text-[#00450d] w-5 h-5" />
+                  <span className="material-symbols-outlined w-4 h-4">check</span>
                   <span className="font-medium">MSC & ASC Certified Seafood</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Check className="text-[#00450d] w-5 h-5" />
+                  <span className="material-symbols-outlined w-4 h-4">check</span>
                   <span className="font-medium">HACCP Approved Facilities</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Check className="text-[#00450d] w-5 h-5" />
+                  <span className="material-symbols-outlined w-4 h-4">check</span>
                   <span className="font-medium">Bulk 24-Pack Trays & Pallets</span>
                 </div>
               </div>
@@ -209,7 +208,7 @@ const CannedGoods = () => {
 
               {/* Custom Request Card */}
               <div className="border-2 border-dashed border-[#c0c9bb] rounded-2xl flex flex-col items-center justify-center p-6 text-center">
-                <Inventory2 className="text-[#c0c9bb] w-12 h-12 mb-2" />
+                <span className="material-symbols-outlined w-10 h-10">inventory_2</span>
                 <p className="text-sm text-[#717a6d] font-medium">Request custom protein packing solutions</p>
               </div>
             </div>
@@ -238,7 +237,7 @@ const CannedGoods = () => {
                   <h3 className="text-2xl font-bold mb-3">Wild Strawberry Jam</h3>
                   <p className="text-sm text-[#41493e] mb-6">Hand-picked wild strawberries from Alpine regions. 70% fruit content with no artificial thickeners. Farm-to-Jar traceability included.</p>
                   <Link to="/contact" className="flex items-center gap-2 font-bold text-[#00450d] group/btn">
-                    Get Batch Reports <Download className="w-4 h-4 text-sm group-hover/btn:translate-x-1 transition-transform" />
+                    Get Batch Reports <span className="material-symbols-outlined mr-2">download</span>
                   </Link>
                 </div>
               </div>
@@ -255,7 +254,7 @@ const CannedGoods = () => {
                   <h3 className="text-2xl font-bold mb-3">Bitter Orange Marmalade</h3>
                   <p className="text-sm text-[#41493e] mb-6">Seville oranges slowly simmered for the perfect balance of sweetness and pithy bitterness. Traditional copper kettle method.</p>
                   <Link to="/contact" className="flex items-center gap-2 font-bold text-[#00450d] group/btn">
-                    Get Batch Reports <Download className="w-4 h-4 text-sm group-hover/btn:translate-x-1 transition-transform" />
+                    Get Batch Reports <span className="material-symbols-outlined mr-2">download</span>
                   </Link>
                 </div>
               </div>
@@ -275,7 +274,7 @@ const CannedGoods = () => {
                 <div className="space-y-10">
                   <div className="flex gap-6">
                     <div className="w-12 h-12 rounded-lg bg-[#1b5e20] flex items-center justify-center shrink-0">
-                      <Inventory2 className="text-[#90d689] w-6 h-6" />
+                      <span className="material-symbols-outlined w-10 h-10">inventory_2</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-xl mb-2">Reinforced Export Packaging</h4>
@@ -285,7 +284,7 @@ const CannedGoods = () => {
 
                   <div className="flex gap-6">
                     <div className="w-12 h-12 rounded-lg bg-[#1b5e20] flex items-center justify-center shrink-0">
-                      <Thermostat className="text-[#90d689] w-6 h-6" />
+                      <span className="material-symbols-outlined w-10 h-10">thermostat</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-xl mb-2">Climate-Monitored Storage</h4>
@@ -295,7 +294,7 @@ const CannedGoods = () => {
 
                   <div className="flex gap-6">
                     <div className="w-12 h-12 rounded-lg bg-[#1b5e20] flex items-center justify-center shrink-0">
-                      <LocalShipping className="text-[#90d689] w-6 h-6" />
+                      <span className="material-symbols-outlined w-10 h-10">local_shipping</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-xl mb-2">Last-Mile Reliability</h4>

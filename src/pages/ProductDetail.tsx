@@ -325,7 +325,7 @@ const ProductDetail = () => {
                 <ul className="space-y-3">
                   {product.benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="material-symbols-outlined w-4 h-4">check</span>
                       <span className="text-gray-600">{benefit}</span>
                     </li>
                   ))}
