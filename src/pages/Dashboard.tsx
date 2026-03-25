@@ -5,7 +5,6 @@ import {
   ShoppingCart, 
   FileText, 
   Settings, 
-  User, 
   Building2, 
   LogOut,
   TrendingUp,
