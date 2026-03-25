@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Badge } from '../components/ui/badge';
 import { CardDescription } from '../components/ui/card';
@@ -5,7 +6,6 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Label } from '../../components/ui/label';
 import { Input } from '../../components/ui/input';
 import { Button } from '../components/ui/button';
-import { Card, CardContent } from '../components/ui/card';
 
 interface Product {
   id: number;
