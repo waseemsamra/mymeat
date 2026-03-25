@@ -161,6 +161,7 @@ const Home = () => {
               className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-[#d4a853] w-8' : 'bg-white/30'}`}
             />
           ))}
+        </div>
 
         <div className="absolute bottom-10 right-10 flex gap-4 z-20">
           <button onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)} className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-[#d4a853] hover:border-[#d4a853] hover:text-dark transition-all">
