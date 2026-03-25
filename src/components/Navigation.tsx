@@ -45,9 +45,15 @@ const Navigation = () => {
                     Fruits & Vegetables
                   </span>
                 </Link>
-                <Link to="/products/nuts-flavors" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                <Link to="/products/canned-goods" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
                   <span className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#ffdeac]"></span>
+                    Canned Goods
+                  </span>
+                </Link>
+                <Link to="/products/nuts-flavors" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#ffba38]"></span>
                     Nuts & Flavors
                   </span>
                 </Link>

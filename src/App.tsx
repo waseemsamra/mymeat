@@ -22,6 +22,7 @@ import Services from './pages/Services';
 import MeatSeafood from './pages/MeatSeafood';
 import RiceSpices from './pages/RiceSpices';
 import FruitsVegetables from './pages/FruitsVegetables';
+import CannedGoods from './pages/CannedGoods';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -145,6 +146,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><FruitsVegetables /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Canned Goods Category Page */}
+              <Route path="/products/canned-goods" element={
+                <>
+                  <Navigation />
+                  <main><CannedGoods /></main>
                   <Footer />
                 </>
               } />
