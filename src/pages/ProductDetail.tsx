@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   ArrowLeft, ArrowRight, Check, Leaf, Package, 
   Truck, Shield, Clock, ChevronRight, Star,
-} from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
