@@ -36,7 +36,7 @@ const AdminLayout = ({
   return (
     <div className="min-h-screen bg-[#fafaf5] flex">
       {/* Sidebar */}
-      <aside className="flex flex-col fixed left-0 top-0 h-full py-6 bg-[#f5f5f0] w-64 border-r border-[#e3e3de] font-manrope z-50" style={{ fontSize: '12px' }}>
+      <aside className="flex flex-col fixed left-0 top-0 h-full py-6 bg-[#f5f5f0] w-64 border-r border-[#e3e3de] font-manrope z-50" style={{ fontSize: '11px' }}>
         <div className="px-6 mb-10">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#1b5e20] rounded-lg flex items-center justify-center overflow-hidden">
@@ -47,8 +47,8 @@ const AdminLayout = ({
               />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-[#00450d] leading-none">Agrarian Admin</h1>
-              <p className="text-[9px] text-[#41493e] uppercase tracking-widest mt-1">Super Admin Console</p>
+              <h1 className="text-xs font-bold text-[#00450d] leading-none">Agrarian Admin</h1>
+              <p className="text-[8px] text-[#41493e] uppercase tracking-widest mt-1">Super Admin Console</p>
             </div>
           </div>
         </div>
@@ -58,20 +58,20 @@ const AdminLayout = ({
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 transition-colors duration-200 group ${
+              className={`w-full flex items-center gap-3 px-4 py-2 transition-colors duration-200 group ${
                 activeTab === item.id
                   ? 'text-[#00450d] font-bold border-r-4 border-[#00450d] bg-[#e8e8e3]'
                   : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]'
               }`}
             >
-              <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>{item.icon}</span>
               <span>{item.label}</span>
             </button>
           ))}
         </nav>
 
         <div className="px-4 mt-auto">
-          <button className="w-full flex items-center justify-center gap-2 bg-[#00450d] text-white py-2.5 rounded-md font-medium transition-transform scale-95 active:opacity-80" style={{ fontSize: '11px' }}>
+          <button className="w-full flex items-center justify-center gap-2 bg-[#00450d] text-white py-2 rounded-md font-medium transition-transform scale-95 active:opacity-80" style={{ fontSize: '10px' }}>
             <span className="material-symbols-outlined text-sm">download</span>
             Export Report
           </button>
