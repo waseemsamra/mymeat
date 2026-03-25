@@ -14,53 +14,60 @@ interface User {
   name: string;
 }
 
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: string;
+  color: string;
+}
+
+const menuItems: MenuItem[] = [
+  { id: 'cms', label: 'CMS Content', icon: '📝', color: 'bg-blue-500' },
+  { id: 'products', label: 'Products', icon: '📦', color: 'bg-green-500' },
+  { id: 'categories', label: 'Categories', icon: '🏷️', color: 'bg-purple-500' },
+  { id: 'testimonials', label: 'Testimonials', icon: '⭐', color: 'bg-amber-500' },
+  { id: 'orders', label: 'Enquiries', icon: '📊', color: 'bg-pink-500' },
+  { id: 'settings', label: 'Settings', icon: '⚙️', color: 'bg-gray-500' },
+];
+
 const NewAdminDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('cms');
   const [user, setUser] = useState<User | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     // Check if user is admin
     const storedUser = localStorage.getItem('user');
     const token = localStorage.getItem('idToken');
-    
+
     if (!storedUser || !token) {
-      // Not logged in - redirect to login
       navigate('/login');
       return;
     }
-    
+
     const userData: User = JSON.parse(storedUser);
-    
-    // Check if admin (by email or role)
+
     if (userData.email !== 'waseemsamra@gmail.com' && userData.role !== 'admin') {
-      // Not admin - redirect to dashboard
       navigate('/dashboard');
       return;
     }
-    
+
     setUser(userData);
   }, [navigate]);
 
   const handleLogout = async () => {
     try {
       console.log('🚪 [Logout] Signing out...');
-      
-      // Clear localStorage first
       localStorage.removeItem('user');
       localStorage.removeItem('idToken');
       localStorage.clear();
       console.log('🗑️ [Logout] Cleared localStorage');
-      
-      // Then sign out from Cognito
       await signOut({ global: true });
       console.log('✅ [Logout] Signed out from Cognito');
-      
-      // Force redirect to login
       window.location.replace('/login');
     } catch (error: any) {
       console.error('❌ [Logout] Error:', error);
-      // Clear localStorage anyway and redirect
       localStorage.clear();
       window.location.replace('/login');
     }
@@ -68,158 +75,189 @@ const NewAdminDashboard = () => {
 
   if (!user) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <h2>Loading...</h2>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <span className="material-symbols-outlined text-4xl text-primary animate-spin">progress_activity</span>
+          <h2 className="text-xl font-semibold mt-4 text-gray-700">Loading...</h2>
         </div>
       </div>
     );
   }
 
-  return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6' }}>
-      {/* Header */}
-      <header style={{
-        backgroundColor: 'white',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        padding: '1rem 2rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'cms':
+        return (
           <div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-              🌾 AgroFeed CMS - Admin Dashboard
-            </h1>
-            <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-              Welcome, {user.name} ({user.email})
-            </p>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Content Management System</h2>
+              <p className="text-gray-500">Manage your website content including hero, about, testimonials, and more</p>
+            </div>
+            <CMSManagement />
           </div>
+        );
+      case 'products':
+        return (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Product Management</h2>
+              <p className="text-gray-500">Add, edit, and manage your product catalog</p>
+            </div>
+            <ProductManagement />
+          </div>
+        );
+      case 'categories':
+        return (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Category Management</h2>
+              <p className="text-gray-500">Organize products into categories</p>
+            </div>
+            <CategoryManagement />
+          </div>
+        );
+      case 'testimonials':
+        return (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Testimonial Management</h2>
+              <p className="text-gray-500">Manage customer reviews and testimonials</p>
+            </div>
+            <TestimonialManagement />
+          </div>
+        );
+      case 'orders':
+        return (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Enquiry Management</h2>
+              <p className="text-gray-500">View and manage customer enquiries</p>
+            </div>
+            <EnquiryManagement />
+          </div>
+        );
+      case 'settings':
+        return (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Site Settings</h2>
+              <p className="text-gray-500">Configure your website settings</p>
+            </div>
+            <SiteSettingsEditor />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex">
+      {/* Sidebar */}
+      <aside
+        className={`fixed left-0 top-0 h-full bg-white shadow-xl transition-all duration-300 z-50 ${
+          sidebarOpen ? 'w-64' : 'w-20'
+        }`}
+      >
+        {/* Sidebar Header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
+          {sidebarOpen && (
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🌾</span>
+              <span className="font-bold text-lg text-gray-800">AgroFeed</span>
+            </div>
+          )}
           <button
-            onClick={handleLogout}
-            style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: '#ef4444',
-              color: 'white',
-              border: 'none',
-              borderRadius: '0.375rem',
-              cursor: 'pointer',
-              fontWeight: '500'
-            }}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            title={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
-            Logout
+            <span className="material-symbols-outlined text-gray-600">
+              {sidebarOpen ? 'first_page' : 'last_page'}
+            </span>
           </button>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-        {/* Tabs */}
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '0.5rem',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          marginBottom: '2rem'
-        }}>
-          <div style={{
-            display: 'flex',
-            borderBottom: '1px solid #e5e7eb',
-            padding: '0 1rem'
-          }}>
-            {[
-              { id: 'cms', label: '📝 CMS', icon: '📝' },
-              { id: 'products', label: '📦 Products', icon: '📦' },
-              { id: 'categories', label: '🏷️ Categories', icon: '🏷️' },
-              { id: 'testimonials', label: '⭐ Testimonials', icon: '⭐' },
-              { id: 'orders', label: '📊 Enquiries', icon: '📊' },
-              { id: 'settings', label: '⚙️ Settings', icon: '⚙️' }
-            ].map(tab => (
+        {/* Navigation Menu */}
+        <nav className="py-4">
+          {menuItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`w-full flex items-center gap-3 px-4 py-3 transition-all duration-200 ${
+                activeTab === item.id
+                  ? `${item.color} text-white shadow-md`
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+              title={!sidebarOpen ? item.label : ''}
+            >
+              <span className="text-xl">{item.icon}</span>
+              {sidebarOpen && (
+                <span className="font-medium">{item.label}</span>
+              )}
+              {activeTab === item.id && sidebarOpen && (
+                <span className="material-symbols-outlined ml-auto text-sm">chevron_right</span>
+              )}
+            </button>
+          ))}
+        </nav>
+
+        {/* Sidebar Footer - User Info */}
+        {sidebarOpen && (
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                {user.name.charAt(0)}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-gray-800 truncate">{user.name}</p>
+                <p className="text-xs text-gray-500 truncate">{user.email}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </aside>
+
+      {/* Main Content Area */}
+      <div
+        className={`flex-1 transition-all duration-300 ${
+          sidebarOpen ? 'ml-64' : 'ml-20'
+        }`}
+      >
+        {/* Top Header */}
+        <header className="h-16 bg-white shadow-sm sticky top-0 z-40">
+          <div className="h-full px-6 flex items-center justify-between">
+            <div>
+              <h1 className="text-xl font-bold text-gray-800">
+                {menuItems.find(m => m.id === activeTab)?.label || 'Dashboard'}
+              </h1>
+            </div>
+            <div className="flex items-center gap-4">
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  padding: '1rem 1.5rem',
-                  backgroundColor: activeTab === tab.id ? '#3b82f6' : 'transparent',
-                  color: activeTab === tab.id ? 'white' : '#6b7280',
-                  border: 'none',
-                  borderBottom: activeTab === tab.id ? '2px solid #3b82f6' : '2px solid transparent',
-                  cursor: 'pointer',
-                  fontWeight: activeTab === tab.id ? '600' : '500',
-                  transition: 'all 0.2s'
-                }}
+                onClick={() => navigate('/')}
+                className="px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors"
+                title="View Website"
               >
-                {tab.label}
+                <span className="material-symbols-outlined">visibility</span>
               </button>
-            ))}
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined">logout</span>
+                {sidebarOpen && <span>Logout</span>}
+              </button>
+            </div>
           </div>
+        </header>
 
-          {/* Tab Content */}
-          <div style={{ padding: '2rem' }}>
-            {activeTab === 'cms' && (
-              <div>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Content Management System
-                </h2>
-                <CMSManagement />
-              </div>
-            )}
-            
-            {activeTab === 'products' && (
-              <div>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Product Management
-                </h2>
-                <ProductManagement />
-              </div>
-            )}
-
-            {activeTab === 'categories' && (
-              <div>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Category Management
-                </h2>
-                <CategoryManagement />
-              </div>
-            )}
-            
-            {activeTab === 'testimonials' && (
-              <div>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Testimonial Management
-                </h2>
-                <TestimonialManagement />
-              </div>
-            )}
-            
-            {activeTab === 'orders' && (
-              <div>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Enquiry Management
-                </h2>
-                <EnquiryManagement />
-              </div>
-            )}
-            
-            {activeTab === 'settings' && (
-              <div>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-                  Site Settings
-                </h2>
-                <SiteSettingsEditor />
-              </div>
-            )}
+        {/* Page Content */}
+        <main className="p-6">
+          <div className="bg-white rounded-xl shadow-sm p-6 min-h-[calc(100vh-8rem)]">
+            {renderContent()}
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
