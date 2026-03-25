@@ -23,6 +23,7 @@ import MeatSeafood from './pages/MeatSeafood';
 import RiceSpices from './pages/RiceSpices';
 import FruitsVegetables from './pages/FruitsVegetables';
 import CannedGoods from './pages/CannedGoods';
+import NutsFlavors from './pages/NutsFlavors';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -154,6 +155,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><CannedGoods /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Nuts & Flavors Category Page */}
+              <Route path="/products/nuts-flavors" element={
+                <>
+                  <Navigation />
+                  <main><NutsFlavors /></main>
                   <Footer />
                 </>
               } />
