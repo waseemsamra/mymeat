@@ -126,12 +126,12 @@ const Services = () => {
               <div className="md:col-span-8 group relative overflow-hidden bg-[#ffffff] p-10 rounded-xl transition-all duration-500 hover:bg-[#fafaf5]">
                 <div className="flex flex-col h-full justify-between">
                   <div>
-                    <AcUnit className="text-[#503600] w-10 h-10 mb-6" />
+                    <span className="material-symbols-outlined w-12 h-12 mb-6">ac_unit</span>
                     <h3 className="font-headline font-bold text-2xl mb-4">Cold-Chain Management</h3>
                     <p className="text-[#41493e] max-w-lg">Specialized temperature-controlled storage and transit. Every container is equipped with real-time IoT sensors tracking humidity, temperature, and ethylene levels.</p>
                   </div>
                   <div className="mt-8 flex items-center text-[#503600] font-bold gap-4">
-                    <Sensors className="w-6 h-6" />
+                    <span className="material-symbols-outlined w-12 h-12 mb-6">sensors</span>
                     <span className="text-sm">Real-time Telemetry Enabled</span>
                   </div>
                 </div>
