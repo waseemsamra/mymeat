@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, isLoading, user, isAdmin } = useAuth();
   const location = useLocation();
 
   console.log('🔒 [ProtectedRoute]', {
@@ -15,7 +15,8 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     isAuthenticated,
     isLoading,
     userEmail: user?.email,
-    userRole: user?.role
+    userRole: user?.role,
+    isAdmin: isAdmin
   });
 
   // Show loading
@@ -38,10 +39,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   // Admin route - check if user is admin
   if (location.pathname.startsWith('/admin')) {
-    const isAdmin = user?.email === 'waseemsamra@gmail.com';
-    console.log('🔐 [ProtectedRoute] Admin route check:', { isAdmin, email: user?.email });
-    
-    if (!isAdmin) {
+    // Check if user is admin by role or by email
+    const isAdminUser = isAdmin || user?.email === 'waseemsamra@gmail.com';
+    console.log('🔐 [ProtectedRoute] Admin route check:', { isAdminUser, email: user?.email, role: user?.role });
+
+    if (!isAdminUser) {
       console.log('❌ [ProtectedRoute] Not admin - redirecting to dashboard');
       return <Navigate to="/dashboard" replace />;
     }
