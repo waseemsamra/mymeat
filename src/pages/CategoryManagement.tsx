@@ -10,6 +10,9 @@ interface Category {
   productCount?: number;
   status?: string;
   lastUpdated?: string;
+  parentId?: string | number | null;
+  isSubcategory?: boolean;
+  subcategories?: { id: string | number; name: string; items: number; ref: string }[];
 }
 
 const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
@@ -22,14 +25,19 @@ const CategoryManagement = () => {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
 
   // Form state
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     color: '#3b82f6',
-    image: ''
+    image: '',
+    parentId: '',
+    isSubcategory: false
   });
+
+  const [showSubcategoryToggle, setShowSubcategoryToggle] = useState(false);
 
   const colorOptions = [
     '#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'
@@ -67,17 +75,59 @@ const CategoryManagement = () => {
     } catch (error: any) {
       console.error('❌ Error loading categories:', error);
       toast.error('Failed to load categories');
+      // Fallback data with subcategories
       setCategories([
-        { id: 1, name: 'Rice & Spices', description: 'Grains, Masalas, Bulk Pulses', color: '#10b981', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuARVwuLEPDFGdxkvpS5dsyWNFGQL0aJh67MAAmRQ53w43UEaNEmpwJ8SAp5OUCJZg0xDA2z7aGZAtbTS1NdE1aMJqJ3FxcHQmIp1uTNoXyzFL2vt3OIUKseD3F_06sAh42_AgTPxUiEaNTIkNl3M5-raJ5xymYbSpyq3SSUv5SJqe_TbAr0DNBdrxEvodVzp9jbbRN5PpgLweST_D0abCWVI2dMTOMFciJCv0FPOmk1CXKCmZTWYJ69UYruE2H93AR3vqYcXuX64A2B', productCount: 428, status: 'Active', lastUpdated: 'Oct 24, 2023' },
-        { id: 2, name: 'Fruits & Veg', description: 'Seasonal, Exotic, Root', color: '#3b82f6', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB-SnUG_hmF6b-u3MAnWXAM2fZY2qHka5K9GnTA92WifSqIgSYSJp1lNaK1hsMTz7oUFWSp2B3hO9-75boIWCYuYYjTzohyvtLFrncHWdsU0WG9u8YnF0N6yWotYiq8xJK58CIvJssDWWtUpgq0Jq5gtXfhfQ0KuzT103tJUqEPk_HZ-MnuT1qEB31aYcVth1FMV6Egs1MGk9Wv5b3Y35p8FAhv_IYern4hBzpdooodSZYlSAmCsyYvQo7tW4dOtYUmjyznJbXqoQei', productCount: 312, status: 'Active', lastUpdated: 'Oct 25, 2023' },
-        { id: 3, name: 'Dairy & Poultry', description: 'Farm Fresh, Organic Certified', color: '#f59e0b', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBRGO-J-WiAHciThI2XL7Xv2_VlhruZjUWRWvJDjA91UNSjMXMozipoNIRrZNJ3WYyhGkVBxfDMzDtjx3FDg4kwAIzfneEbQtxR6l0DPmp9mlQNtrS31vESdEJoz5bpEDWwhQ63wuNafxBZgRQqrHMl7mwkbPiXIAiHVB0IsJHCQZXrI5kw8bWW-DXC-2yVdxYGRcKg1VHF6eO9KpGHoYEUwzsEDrX17q9DlJ3gdolRB3ro0CrCONv9Ucm6INJllC4Fd96AyXDL307M', productCount: 185, status: 'Active', lastUpdated: 'Oct 22, 2023' },
-        { id: 4, name: 'Beverages', description: 'Cold Pressed, Artisan Tea', color: '#ef4444', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDpXK2mY36bwysFvKjQ8qWmmCrmmCGI2TTSvsAHE-2YICbLoIhYTUiQ6JfrlE0yvYqXopZCw86V02iDiwwYpToI08n4DfI0WPDP3f0gHHwj_1WX73QtN_4AjySVMK2uzgAU2PZjWeF6qhcW9LnAXedbqLiTsZhyz3NID3W1AHcBZgom9TJwqaAXOuOA4jZA7LTNj9FpTXYvJbAfZB8KCHPwsFtMPXuKfx9lD-nMWzuHvxcTrUmueLjneAKW10hiejwpWZZcrW-9jZrJ', productCount: 92, status: 'Active', lastUpdated: 'Oct 19, 2023' },
-        { id: 5, name: 'Oils & Fats', description: 'Cold Pressed, Ghee, Nut Butters', color: '#8b5cf6', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCQs1sQqsr6CRsceZuQmTvaRTUdNrmqJU3MUUIslQ6Cp6VMRM9_TYUiQ6JfrlE0yvYqXopZCw86V02iDiwwYpToI08n4DfI0WPDP3f0gHHwj_1WX73QtN_4AjySVMK2uzgAU2PZjWeF6qhcW9LnAXedbqLiTsZhyz3NID3W1AHcBZgom9TJwqaAXOuOA4jZA7LTNj9FpTXYvJbAfZB8KCHPwsFtMPXuKfx9lD-nMWzuHvxcTrUmueLjneAKW10hiejwpWZZcrW-9jZrJ', productCount: 146, status: 'Active', lastUpdated: 'Oct 26, 2023' },
-        { id: 6, name: 'Dry Fruits', description: 'Nuts, Berries, Dehydrated', color: '#ec4899', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCLii8m47LdPr4_wGBuTllIvYT4S-b7YbSiRHyqXAtnru_eRKjCiq2U4ajfbXIhXBjHb5yjebd65fokDvUGfP7DM92lHvMXkQ5Lnz-nXc7mfZ_5mmfb4V8SMh6ArXQP94Wv-E92mesIXjXVyq1tdXvB1PU1SLG2Am7Th3iPdrQYrYpqiUuo7spHQ5B30_HMvq8bgruCa6XFTJwiFQfCUijs8fYkfKbgVK1VkOmnqDoC5s3z-eahNJ0VrrAvEUNcXMbp5dUnaBLV5wC7', productCount: 121, status: 'Active', lastUpdated: 'Oct 15, 2023' }
+        { 
+          id: 1, 
+          name: 'Rice & Spices', 
+          description: 'Grains, Masalas, Bulk Pulses', 
+          color: '#10b981', 
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuARVwuLEPDFGdxkvpS5dsyWNFGQL0aJh67MAAmRQ53w43UEaNEmpwJ8SAp5OUCJZg0xDA2z7aGZAtbTS1NdE1aMJqJ3FxcHQmIp1uTNoXyzFL2vt3OIUKseD3F_06sAh42_AgTPxUiEaNTIkNl3M5-raJ5xymYbSpyq3SSUv5SJqe_TbAr0DNBdrxEvodVzp9jbbRN5PpgLweST_D0abCWVI2dMTOMFciJCv0FPOmk1CXKCmZTWYJ69UYruE2H93AR3vqYcXuX64A2B', 
+          productCount: 428, 
+          status: 'Active', 
+          lastUpdated: 'Oct 24, 2023',
+          subcategories: [
+            { id: '1-1', name: 'Long Grain Rice', items: 112, ref: 'ECO-R-01' },
+            { id: '1-2', name: 'Aromatic Spices', items: 204, ref: 'ECO-S-04' },
+            { id: '1-3', name: 'Ground Powders', items: 112, ref: 'ECO-P-02' }
+          ]
+        },
+        { 
+          id: 2, 
+          name: 'Fruits & Veg', 
+          description: 'Seasonal, Exotic, Root', 
+          color: '#3b82f6', 
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB-SnUG_hmF6b-u3MAnWXAM2fZY2qHka5K9GnTA92WifSqIgSYSJp1lNaK1hsMTz7oUFWSp2B3hO9-75boIWCYuYYjTzohyvtLFrncHWdsU0WG9u8YnF0N6yWotYiq8xJK58CIvJssDWWtUpgq0Jq5gtXfhfQ0KuzT103tJUqEPk_HZ-MnuT1qEB31aYcVth1FMV6Egs1MGk9Wv5b3Y35p8FAhv_IYern4hBzpdooudSZYlSAmCsyYvQo7tW4dOtYUmjyznJbXqoQei', 
+          productCount: 312, 
+          status: 'Active', 
+          lastUpdated: 'Oct 25, 2023',
+          subcategories: []
+        },
+        { 
+          id: 3, 
+          name: 'Dairy & Poultry', 
+          description: 'Farm Fresh, Organic Certified', 
+          color: '#f59e0b', 
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBRGO-J-WiAHciThI2XL7Xv2_VlhruZjUWRWvJDjA91UNSjMXMozipoNIRrZNJ3WYyhGkVBxfDMzDtjx3FDg4kwAIzfneEbQtxR6l0DPmp9mlQNtrS31vESdEJoz5bpEDWwhQ63wuNafxBZgRQqrHMl7mwkbPiXIAiHVB0IsJHCQZXrI5kw8bWW-DXC-2yVdxYGRcKg1VHF6eO9KpGHoYEUwzsEDrX17q9DlJ3gdolRB3ro0CrCONv9Ucm6INJllC4Fd96AyXDL307M', 
+          productCount: 185, 
+          status: 'Active', 
+          lastUpdated: 'Oct 22, 2023',
+          subcategories: []
+        }
       ]);
     } finally {
       setLoading(false);
     }
+  };
+
+  const toggleCategory = (id: string | number) => {
+    const newExpanded = new Set(expandedCategories);
+    if (newExpanded.has(String(id))) {
+      newExpanded.delete(String(id));
+    } else {
+      newExpanded.add(String(id));
+    }
+    setExpandedCategories(newExpanded);
   };
 
   const handleOpenModal = (category?: Category) => {
@@ -87,16 +137,22 @@ const CategoryManagement = () => {
         name: category.name,
         description: category.description,
         color: category.color,
-        image: category.image || ''
+        image: category.image || '',
+        parentId: category.parentId ? String(category.parentId) : '',
+        isSubcategory: !!category.parentId
       });
+      setShowSubcategoryToggle(!!category.parentId);
     } else {
       setEditingCategory(null);
       setFormData({
         name: '',
         description: '',
         color: '#3b82f6',
-        image: ''
+        image: '',
+        parentId: '',
+        isSubcategory: false
       });
+      setShowSubcategoryToggle(false);
     }
     setIsModalOpen(true);
   };
@@ -108,8 +164,11 @@ const CategoryManagement = () => {
       name: '',
       description: '',
       color: '#3b82f6',
-      image: ''
+      image: '',
+      parentId: '',
+      isSubcategory: false
     });
+    setShowSubcategoryToggle(false);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,22 +215,23 @@ const CategoryManagement = () => {
         'Content-Type': 'application/json'
       };
 
+      const submitData: any = {
+        name: formData.name,
+        description: formData.description,
+        color: formData.color,
+        image: formData.image
+      };
+
+      if (formData.isSubcategory && formData.parentId) {
+        submitData.parentId = formData.parentId;
+        submitData.isSubcategory = true;
+      }
+
       if (editingCategory) {
-        const updateData = {
-          id: editingCategory.id,
-          name: formData.name,
-          description: formData.description,
-          color: formData.color,
-          image: formData.image,
-          updatedAt: new Date().toISOString()
-        };
-
-        console.log('📝 Updating category:', updateData);
-
         const response = await fetch(`${API_URL}/categories/${editingCategory.id}`, {
           method: 'PUT',
           headers: headers,
-          body: JSON.stringify(updateData)
+          body: JSON.stringify(submitData)
         });
 
         const result = await response.json();
@@ -185,19 +245,10 @@ const CategoryManagement = () => {
           toast.error(`Failed to update: ${result.message || 'Unknown error'}`);
         }
       } else {
-        const newCategory = {
-          name: formData.name,
-          description: formData.description,
-          color: formData.color,
-          image: formData.image
-        };
-
-        console.log('➕ Creating category:', newCategory);
-
         const response = await fetch(`${API_URL}/categories`, {
           method: 'POST',
           headers: headers,
-          body: JSON.stringify(newCategory)
+          body: JSON.stringify(submitData)
         });
 
         const result = await response.json();
@@ -220,7 +271,7 @@ const CategoryManagement = () => {
   };
 
   const handleDelete = async (id: string | number) => {
-    if (!confirm('Are you sure you want to delete this category? This will affect all products in this category.')) return;
+    if (!confirm('Are you sure you want to delete this category? This will affect all products and subcategories.')) return;
 
     try {
       const token = localStorage.getItem('idToken');
@@ -246,7 +297,7 @@ const CategoryManagement = () => {
     }
   };
 
-  const totalItems = categories.reduce((sum, cat) => sum + (cat.productCount || 0), 0);
+  const totalSubcategories = categories.reduce((sum, cat) => sum + (cat.subcategories?.length || 0), 0);
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -261,33 +312,36 @@ const CategoryManagement = () => {
           <h2 className="text-3xl font-extrabold tracking-tight text-[#1a1c19]">Inventory Ecosystem</h2>
           <p className="text-[#41493e] mt-2 max-w-lg">Manage the global distribution hierarchies and curate product collections for international export compliance.</p>
         </div>
-        <button
-          onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 px-6 py-3.5 bg-[#00450d] text-white rounded-xl font-bold shadow-xl shadow-[#00450d]/10 hover:shadow-[#00450d]/20 transition-all transform hover:-translate-y-0.5"
-        >
-          <span className="material-symbols-outlined">add_circle</span>
-          <span>Add New Category</span>
-        </button>
+        <div className="relative inline-block text-left">
+          <button
+            onClick={() => handleOpenModal()}
+            className="flex items-center gap-2 px-6 py-3.5 bg-[#00450d] text-white rounded-xl font-bold shadow-xl shadow-[#00450d]/10 hover:shadow-[#00450d]/20 transition-all transform hover:-translate-y-0.5"
+          >
+            <span className="material-symbols-outlined">add_circle</span>
+            <span>Add New</span>
+            <span className="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+          </button>
+        </div>
       </div>
 
       {/* Bento Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
         <div className="bg-[#f4f4ef] p-6 rounded-2xl">
           <p className="text-[#41493e] text-xs font-bold uppercase tracking-wider mb-2">Total Categories</p>
-          <h3 className="text-3xl font-extrabold text-[#1a1c19]">{String(categories.length).padStart(2, '0')}</h3>
+          <h3 className="text-3xl font-extrabold text-[#1a1c19]">06</h3>
           <div className="mt-4 flex items-center gap-2 text-xs text-[#047852] font-bold bg-[#dcfce7] w-fit px-2 py-1 rounded">
             <span className="material-symbols-outlined text-sm">trending_up</span>
             <span>12% Global Growth</span>
           </div>
         </div>
         <div className="bg-[#f4f4ef] p-6 rounded-2xl">
-          <p className="text-[#41493e] text-xs font-bold uppercase tracking-wider mb-2">Active Items</p>
-          <h3 className="text-3xl font-extrabold text-[#1a1c19]">{totalItems.toLocaleString()}</h3>
-          <p className="mt-4 text-xs text-[#717a6d]">Syncing with Global Hubs</p>
+          <p className="text-[#41493e] text-xs font-bold uppercase tracking-wider mb-2">Sub-Categories</p>
+          <h3 className="text-3xl font-extrabold text-[#1a1c19]">{totalSubcategories}</h3>
+          <p className="mt-4 text-xs text-[#717a6d]">Deep-tier mapping active</p>
         </div>
         <div className="bg-[#00450d] text-white p-6 rounded-2xl shadow-xl shadow-[#00450d]/20 relative overflow-hidden">
           <div className="relative z-10">
-            <p className="opacity-70 text-xs font-bold uppercase tracking-wider mb-2">System Status</p>
+            <p className="opacity-70 text-xs font-bold uppercase tracking-wider mb-2">Hierarchy Status</p>
             <h3 className="text-2xl font-bold">Optimized</h3>
             <p className="mt-4 text-xs font-medium">All nodes reporting nominal</p>
           </div>
@@ -305,8 +359,8 @@ const CategoryManagement = () => {
         {/* Table Header/Filters */}
         <div className="p-6 border-b border-[#f5f5f0] flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <h4 className="font-bold text-lg px-2">Core Categories</h4>
-            <span className="bg-[#f5f5f0] text-[#41493e] text-[10px] px-2 py-1 rounded-full font-bold">Live Data</span>
+            <h4 className="font-bold text-lg px-2">Ecosystem Hierarchy</h4>
+            <span className="bg-[#f5f5f0] text-[#41493e] text-[10px] px-2 py-1 rounded-full font-bold">Tree View</span>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex bg-[#f5f5f0] p-1 rounded-lg border border-[#e3e3de]">
@@ -338,22 +392,33 @@ const CategoryManagement = () => {
             <p className="mt-4 text-[#41493e]">Loading categories...</p>
           </div>
         ) : (
-          <>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-[#f5f5f0]/50">
-                    <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Category Name</th>
-                    <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Items Count</th>
-                    <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Status</th>
-                    <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Last Updated</th>
-                    <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0] text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#f5f5f0]">
-                  {categories.map((category) => (
-                    <tr key={category.id} className="hover:bg-[#f5f5f0]/40 transition-colors group">
-                      <td className="px-8 py-6">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#f5f5f0]/50">
+                  <th className="w-12 px-4 py-4 border-b border-[#f5f5f0]"></th>
+                  <th className="px-4 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Category Name</th>
+                  <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Items Count</th>
+                  <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Status</th>
+                  <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0]">Last Updated</th>
+                  <th className="px-8 py-4 text-[10px] uppercase tracking-widest font-extrabold text-[#717a6d] border-b border-[#f5f5f0] text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#f5f5f0]">
+                {categories.map((category) => (
+                  <>
+                    {/* Main Category Row */}
+                    <tr
+                      key={category.id}
+                      className="hover:bg-[#f5f5f0]/40 transition-colors group cursor-pointer"
+                      onClick={() => toggleCategory(String(category.id))}
+                    >
+                      <td className="px-4 py-6 text-center">
+                        <span className={`material-symbols-outlined text-[#717a6d] transition-transform duration-200 ${expandedCategories.has(String(category.id)) ? 'rotate-90' : ''}`}>
+                          chevron_right
+                        </span>
+                      </td>
+                      <td className="px-4 py-6">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-2xl overflow-hidden bg-[#f5f5f0] flex-shrink-0">
                             {category.image ? (
@@ -383,7 +448,7 @@ const CategoryManagement = () => {
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
-                          <span className="text-xs font-bold text-[#047852] uppercase tracking-tighter">{category.status || 'Active'}</span>
+                          <span className="text-xs font-bold text-[#047852] uppercase tracking-tighter">{category.status}</span>
                         </div>
                       </td>
                       <td className="px-8 py-6">
@@ -393,13 +458,19 @@ const CategoryManagement = () => {
                       <td className="px-8 py-6 text-right">
                         <div className="flex justify-end gap-2">
                           <button
-                            onClick={() => handleOpenModal(category)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenModal(category);
+                            }}
                             className="p-2 text-[#717a6d] hover:text-[#00450d] hover:bg-[#dcfce7] rounded-lg transition-all"
                           >
                             <span className="material-symbols-outlined text-xl">edit</span>
                           </button>
                           <button
-                            onClick={() => handleDelete(category.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(category.id);
+                            }}
                             className="p-2 text-[#717a6d] hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
                           >
                             <span className="material-symbols-outlined text-xl">delete</span>
@@ -407,22 +478,61 @@ const CategoryManagement = () => {
                         </div>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
 
-            {/* Pagination/Footer */}
-            <div className="p-6 border-t border-[#f5f5f0] flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-xs text-[#717a6d] font-medium">Showing {categories.length} of {categories.length} core categories in system</p>
-              <div className="flex gap-2">
-                <button className="px-3 py-1.5 border border-[#e3e3de] rounded-lg text-xs font-bold text-[#717a6d] cursor-not-allowed">Previous</button>
-                <button className="px-4 py-1.5 bg-[#dcfce7] text-[#047852] rounded-lg text-xs font-bold border border-[#86efac]">1</button>
-                <button className="px-3 py-1.5 border border-[#e3e3de] rounded-lg text-xs font-bold text-[#41493e] hover:bg-[#f5f5f0] transition-colors">Next</button>
-              </div>
-            </div>
-          </>
+                    {/* Subcategories Row */}
+                    {expandedCategories.has(String(category.id)) && (
+                      <tr className="bg-[#f5f5f0]/30">
+                        <td colSpan={6} className="p-0">
+                          <div className="pl-20 pr-8">
+                            <table className="w-full border-l-2 border-[#86efac] my-2">
+                              <tbody className="divide-y divide-[#f5f5f0]">
+                                {category.subcategories && category.subcategories.length > 0 ? (
+                                  category.subcategories.map((sub) => (
+                                    <tr key={sub.id} className="hover:bg-white transition-colors">
+                                      <td className="py-4 pl-6 text-sm">
+                                        <div className="flex items-center gap-3">
+                                          <div className="w-1.5 h-1.5 rounded-full bg-[#10b981]"></div>
+                                          <span className="font-medium text-[#1a1c19]">{sub.name}</span>
+                                        </div>
+                                      </td>
+                                      <td className="py-4 text-xs font-semibold text-[#41493e]">{sub.items} Items</td>
+                                      <td className="py-4 text-xs text-[#717a6d]">Ref: {sub.ref}</td>
+                                      <td className="py-4 text-right">
+                                        <button className="text-[#717a6d] hover:text-[#00450d] p-1">
+                                          <span className="material-symbols-outlined text-lg">edit</span>
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  ))
+                                ) : (
+                                  <tr>
+                                    <td colSpan={4} className="py-4 pl-6 italic text-xs text-[#717a6d]">
+                                      No subcategories - Click "Add New" to create subcategories
+                                    </td>
+                                  </tr>
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
+
+        {/* Pagination/Footer */}
+        <div className="p-6 border-t border-[#f5f5f0] flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-[#717a6d] font-medium">Showing {categories.length} of {categories.length} core categories in system</p>
+          <div className="flex gap-2">
+            <button className="px-3 py-1.5 border border-[#e3e3de] rounded-lg text-xs font-bold text-[#717a6d] cursor-not-allowed">Previous</button>
+            <button className="px-4 py-1.5 bg-[#dcfce7] text-[#047852] rounded-lg text-xs font-bold border border-[#86efac]">1</button>
+            <button className="px-3 py-1.5 border border-[#e3e3de] rounded-lg text-xs font-bold text-[#41493e] hover:bg-[#f5f5f0] transition-colors">Next</button>
+          </div>
+        </div>
       </div>
 
       {/* Contextual Footer */}
@@ -454,94 +564,196 @@ const CategoryManagement = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-[#e3e3de]">
-              <h3 className="text-xl font-bold text-[#1a1c19]">{editingCategory ? 'Edit Category' : 'Add New Category'}</h3>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-6 bg-[#2f312e]/60 backdrop-blur-md">
+          <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+            {/* Modal Header */}
+            <div className="px-10 py-8 bg-[#fafaf5] border-b border-[#e3e3de] flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-extrabold tracking-tight text-[#00450d]">{editingCategory ? 'Edit Category' : 'Add New Category'}</h2>
+                <p className="text-sm text-[#41493e] mt-1">Define a new curated collection for the editorial marketplace.</p>
+              </div>
+              <button
+                onClick={handleCloseModal}
+                className="p-2 hover:bg-[#f5f5f0] rounded-full transition-colors"
+              >
+                <span className="material-symbols-outlined text-[#717a6d]">close</span>
+              </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-[10px] font-label font-bold uppercase tracking-wider text-[#41493e] mb-1">Category Image</label>
-                <div className="flex items-center gap-4">
+
+            {/* Modal Body (Scrollable) */}
+            <form onSubmit={handleSubmit} className="p-10 overflow-y-auto space-y-8">
+              {/* Name & Description */}
+              <div className="grid grid-cols-1 gap-8">
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-[#41493e]">Category Name</label>
                   <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploading || saving}
-                    className="flex-1 text-sm"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full bg-[#f4f4ef] border-none border-b-2 border-[#717a6d]/30 focus:border-[#00450d] focus:ring-0 transition-all px-4 py-3 rounded-t-md text-[#1a1c19] font-medium"
+                    placeholder="e.g. Root Vegetables"
+                    type="text"
+                    required
+                    disabled={saving}
                   />
-                  <button type="button" disabled={uploading || saving} className="px-4 py-2 border border-[#e3e3de] rounded-lg text-xs font-bold hover:bg-[#f5f5f0] transition-colors">
-                    {uploading ? 'Uploading...' : 'Upload'}
-                  </button>
                 </div>
-                {formData.image && (
-                  <div className="mt-2">
-                    <img src={formData.image} alt="Category" className="w-full max-w-xs h-32 object-cover rounded-lg border" />
-                  </div>
-                )}
               </div>
 
-              <div>
-                <label className="block text-[10px] font-label font-bold uppercase tracking-wider text-[#41493e] mb-1">Category Name</label>
-                <input
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g., Rice & Spices"
-                  required
-                  disabled={saving}
-                  className="w-full px-3 py-2 border border-[#e3e3de] rounded-lg focus:ring-2 focus:ring-[#00450d]/20 focus:border-[#00450d]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-label font-bold uppercase tracking-wider text-[#41493e] mb-1">Description</label>
+              {/* Description */}
+              <div className="space-y-2">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-[#41493e]">Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Describe this category..."
+                  className="w-full bg-[#f4f4ef] border-none border-b-2 border-[#717a6d]/30 focus:border-[#00450d] focus:ring-0 transition-all px-4 py-3 rounded-t-md text-[#1a1c19] leading-relaxed"
+                  placeholder="Describe the essence of this category..."
+                  rows={4}
                   required
                   disabled={saving}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-[#e3e3de] rounded-lg focus:ring-2 focus:ring-[#00450d]/20 focus:border-[#00450d]"
                 />
               </div>
 
-              <div>
-                <label className="block text-[10px] font-label font-bold uppercase tracking-wider text-[#41493e] mb-1">Category Color</label>
-                <div className="flex gap-2 flex-wrap">
+              {/* Category Image Upload */}
+              <div className="space-y-4">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-[#41493e]">Category Image</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="aspect-square flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#717a6d]/30 bg-[#f4f4ef] text-[#717a6d] hover:border-[#00450d] hover:text-[#00450d] transition-all cursor-pointer relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploading || saving}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <span className="material-symbols-outlined text-2xl mb-2">{uploading ? 'cloud_upload' : 'add_a_photo'}</span>
+                    <p className="text-xs font-bold">Upload Image</p>
+                    <p className="text-[10px] text-[#717a6d] mt-1">PNG, JPG up to 5MB</p>
+                  </div>
+                  {formData.image && (
+                    <div className="aspect-square rounded-lg overflow-hidden border-2 border-[#00450d]">
+                      <img src={formData.image} alt="Category preview" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Icon Selection */}
+              <div className="space-y-4">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-[#41493e]">Category Color</label>
+                <div className="grid grid-cols-8 gap-3">
                   {colorOptions.map((color) => (
                     <button
                       key={color}
                       type="button"
                       onClick={() => setFormData({ ...formData, color })}
                       disabled={saving || uploading}
-                      className={`w-8 h-8 rounded-full border-2 transition-transform ${
-                        formData.color === color ? 'border-[#00450d] scale-110' : 'border-gray-300'
+                      className={`aspect-square rounded-lg border-2 transition-all ${
+                        formData.color === color
+                          ? 'border-[#00450d] bg-[#00450d]/5'
+                          : 'border-transparent bg-[#f4f4ef] hover:border-[#717a6d]'
                       }`}
-                      style={{ backgroundColor: color }}
+                      style={{ backgroundColor: formData.color === color ? color : undefined }}
                     />
                   ))}
                 </div>
               </div>
 
-              <div className="flex gap-2 pt-4">
-                <button
-                  type="submit"
-                  className="flex-1 py-3 bg-[#00450d] text-white rounded-xl font-bold hover:opacity-90 transition-all disabled:opacity-50"
-                  disabled={saving || uploading}
-                >
-                  {saving || uploading ? 'Saving...' : (editingCategory ? 'Update' : 'Create')} Category
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="px-6 py-3 border border-[#e3e3de] rounded-xl font-bold hover:bg-[#f5f5f0] transition-colors"
-                  disabled={saving || uploading}
-                >
-                  Cancel
-                </button>
+              {/* Category Type Toggle */}
+              <div className="space-y-4">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-[#41493e]">Category Type</label>
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="categoryType"
+                      checked={!formData.isSubcategory}
+                      onChange={() => {
+                        setFormData({ ...formData, isSubcategory: false, parentId: '' });
+                        setShowSubcategoryToggle(false);
+                      }}
+                      disabled={saving}
+                      className="w-4 h-4 text-[#00450d]"
+                    />
+                    <span className="text-sm font-medium text-[#1a1c19]">Parent Category</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="categoryType"
+                      checked={formData.isSubcategory}
+                      onChange={() => {
+                        setFormData({ ...formData, isSubcategory: true });
+                        setShowSubcategoryToggle(true);
+                      }}
+                      disabled={saving}
+                      className="w-4 h-4 text-[#00450d]"
+                    />
+                    <span className="text-sm font-medium text-[#1a1c19]">Subcategory</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Parent Category Dropdown (only for subcategories) */}
+              {showSubcategoryToggle && (
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-[#41493e]">Parent Category</label>
+                  <select
+                    value={formData.parentId}
+                    onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
+                    required={formData.isSubcategory}
+                    disabled={saving}
+                    className="w-full bg-[#f4f4ef] border-none border-b-2 border-[#717a6d]/30 focus:border-[#00450d] focus:ring-0 transition-all px-4 py-3 rounded-t-md text-[#1a1c19] font-medium"
+                  >
+                    <option value="">Select parent category</option>
+                    {categories.filter(c => !c.parentId && !c.isSubcategory).map((cat) => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* Status Toggle */}
+              <div className="flex items-center justify-between p-6 bg-[#eeeee9] rounded-xl">
+                <div className="flex gap-4 items-center">
+                  <span className="material-symbols-outlined text-[#00450d]">visibility</span>
+                  <div>
+                    <p className="text-sm font-bold text-[#1a1c19]">Category Status</p>
+                    <p className="text-xs text-[#41493e]">Toggle visibility on the public marketplace.</p>
+                  </div>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-[#717a6d] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00450d]"></div>
+                  <span className="ms-3 text-sm font-bold text-[#00450d] uppercase tracking-tighter">Active</span>
+                </label>
               </div>
             </form>
+
+            {/* Modal Footer */}
+            <div className="px-10 py-8 bg-[#f5f5f0] border-t border-[#e3e3de] flex justify-end gap-4">
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                disabled={saving || uploading}
+                className="px-8 py-3 text-sm font-bold text-[#717a6d] hover:text-[#1a1c19] transition-colors uppercase tracking-widest disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                onClick={(e) => {
+                  const form = e.currentTarget.closest('form');
+                  if (form) form.requestSubmit();
+                }}
+                disabled={saving || uploading}
+                className="bg-[#1B5E20] hover:bg-[#0c5216] text-white px-10 py-3 rounded-md font-bold text-sm shadow-lg shadow-[#00450d]/10 transition-all uppercase tracking-widest disabled:opacity-50"
+              >
+                {saving || uploading ? 'Creating...' : (editingCategory ? 'Update' : 'Create')} Category
+              </button>
+            </div>
           </div>
         </div>
       )}
