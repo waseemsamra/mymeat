@@ -1,238 +1,259 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Package, Check, ArrowRight, Loader2, Search } from 'lucide-react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-
-interface Product {
-  id: number | string;
-  name: string;
-  title?: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  detailImage?: string;
-  items?: string[];
-  features?: string[];
-  price?: number;
-  category?: string;
-  categoryId?: number | string;
-}
-
-interface Category {
-  id: number | string;
-  name: string;
-  description: string;
-  color: string;
-  image?: string;
-}
-
-const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 
 const Products = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-
-  useEffect(() => {
-    loadProductsAndCategories();
-  }, []);
-
-  const loadProductsAndCategories = async () => {
-    setLoading(true);
-    try {
-      // Load products
-      const productsResponse = await fetch(`${API_URL}/products`);
-      if (productsResponse.ok) {
-        const productsData = await productsResponse.json();
-        setProducts(productsData);
-      }
-
-      // Load categories
-      const categoriesResponse = await fetch(`${API_URL}/categories`);
-      if (categoriesResponse.ok) {
-        const categoriesData = await categoriesResponse.json();
-        setCategories(categoriesData);
-      }
-    } catch (error) {
-      console.error('Error loading data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !selectedCategory || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary mb-4" />
-          <p className="text-gray-600">Loading products...</p>
-        </div>
-      </div>
-    );
-  }
+  const categories = [
+    { name: 'Rice & Spices', image: 'https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600', badge: 'Export Grade' },
+    { name: 'Meat & Seafood', image: 'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600', badge: 'Fresh Catch' },
+    { name: 'Fruits & Vegetables', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600', badge: 'Seasonal' },
+    { name: 'Nuts & Flavors', image: 'https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600', badge: 'Artisan' },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5">
-      <Navigation />
-      
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="section-padding py-4">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
+    <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-none">
+        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+          <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
+            AgroFeed Global
+          </Link>
+          
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Home</Link>
+            <Link to="/products" className="font-headline font-bold tracking-tight text-sm text-[#00450d] border-b-2 border-[#00450d] pb-1">Categories</Link>
+            <Link to="/services" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Services</Link>
+            <Link to="/about" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">About</Link>
+            <Link to="/contact" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Contact</Link>
+          </div>
+
+          <Link to="/contact" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-5 py-2 rounded font-headline font-bold text-sm transition-all">
+            Enquire Now
           </Link>
         </div>
-      </div>
+      </nav>
 
-      {/* Hero Section */}
-      <div className="section-padding py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-dark mb-4">
-            Our Products
-          </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Discover our premium range of animal feed products, carefully crafted for optimal nutrition.
-          </p>
-        </div>
+      <main className="pt-20">
+        {/* Hero */}
+        <section className="relative h-[600px] flex items-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img
+              alt="Premium produce collection"
+              className="w-full h-full object-cover scale-105"
+              src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1920"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/60 to-transparent"></div>
+          </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
+            <div className="max-w-3xl">
+              <span className="font-sans text-white uppercase tracking-[0.2em] text-xs mb-4 block">Our Portfolio</span>
+              <h1 className="font-headline font-extrabold text-white text-5xl md:text-6xl leading-[1.1] tracking-tight mb-8">
+                Curated from the Earth's Finest Harvest.
+              </h1>
+              <p className="text-white/90 text-lg max-w-xl leading-relaxed">
+                Each category represents years of relationships with growers who share our commitment to quality, sustainability, and ethical practices.
+              </p>
+            </div>
+          </div>
+        </section>
 
-        {/* Filters */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Search */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary"
-              />
+        {/* Categories Grid */}
+        <section className="py-24 bg-[#fafaf5]">
+          <div className="max-w-7xl mx-auto px-8">
+            <div className="mb-16 max-w-2xl">
+              <span className="font-sans text-[#00450d] uppercase tracking-widest text-xs block mb-2">Explore Our Range</span>
+              <h2 className="font-headline font-bold text-4xl text-[#1a1c19] mb-4">Premium Categories.</h2>
+              <p className="text-[#41493e] text-lg leading-relaxed">
+                From ancient grain varieties to ocean-fresh seafood, our portfolio spans the globe's most sought-after agricultural products.
+              </p>
             </div>
 
-            {/* Category Filter */}
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-            >
-              <option value="">All Categories</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.name}>
-                  {cat.name}
-                </option>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {categories.map((category, index) => (
+                <Link
+                  key={index}
+                  to={`/products/${index}`}
+                  className={`group relative rounded-xl overflow-hidden editorial-shadow ${index % 2 === 0 ? 'md:mt-0' : 'md:mt-16'}`}
+                >
+                  <div className="aspect-[4/3] bg-[#eeeee9] overflow-hidden">
+                    <img
+                      alt={category.name}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                      src={category.image}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/80 via-[#00450d]/30 to-transparent"></div>
+                  <div className="absolute top-6 right-6 bg-[#ffdeac] px-4 py-2 rounded-full">
+                    <span className="text-[10px] font-bold text-[#604100] uppercase tracking-widest">{category.badge}</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <h3 className="font-headline font-bold text-3xl text-white mb-2">{category.name}</h3>
+                    <p className="text-white/80 text-sm mb-4">Explore our curated selection</p>
+                    <div className="flex items-center gap-2 text-[#acf4a4] font-bold text-sm">
+                      View Collection
+                      <span className="text-xl">→</span>
+                    </div>
+                  </div>
+                </Link>
               ))}
-            </select>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Products Horizontal Scroll */}
+        <section className="py-24 bg-[#f4f4ef]">
+          <div className="max-w-7xl mx-auto px-8">
+            <div className="flex justify-between items-end mb-12">
+              <div>
+                <span className="font-sans text-[#7a5649] uppercase tracking-widest text-xs block mb-2">Seasonal Selection</span>
+                <h2 className="font-headline font-bold text-4xl text-[#1a1c19]">Fresh Arrivals</h2>
+              </div>
+              <Link to="/products" className="text-[#00450d] font-headline font-bold text-sm border-b-2 border-[#00450d]/20 hover:border-[#00450d] transition-all pb-1">
+                View All Products
+              </Link>
+            </div>
+
+            <div className="flex gap-8 overflow-x-auto pb-8 -mx-4 px-4 scrollbar-hide">
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <Link
+                  key={item}
+                  to={`/products/${item}`}
+                  className="min-w-[300px] flex-shrink-0 group cursor-pointer"
+                >
+                  <div className="aspect-[4/5] bg-[#eeeee9] overflow-hidden rounded-xl mb-6 relative">
+                    <img
+                      alt="Product"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      src={`https://images.unsplash.com/photo-${1523049673857 + item}?w=600`}
+                    />
+                    <div className="absolute top-4 right-4 bg-[#ffdeac] px-3 py-1 rounded-full">
+                      <span className="text-[10px] font-bold text-[#604100] uppercase">Export Grade</span>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-headline font-bold text-[#1a1c19] mb-2">Premium Product {item}</h3>
+                  <p className="text-[#41493e] text-sm mb-4">Aromatic extra-long grain, aged 2 years.</p>
+                  <button className="w-full py-3 border border-[#c0c9bb] text-[#00450d] font-bold text-sm rounded hover:bg-[#00450d] hover:text-white transition-all">
+                    Enquire Now
+                  </button>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-24 bg-[#fafaf5]">
+          <div className="max-w-5xl mx-auto px-8">
+            <div className="bg-[#00450d] p-12 md:p-20 rounded-[2rem] text-center relative overflow-hidden">
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#1b5e20] rounded-full opacity-50"></div>
+              <div className="relative z-10">
+                <h2 className="text-3xl md:text-5xl font-headline font-extrabold text-white mb-6">
+                  Need a Custom Sourcing Solution?
+                </h2>
+                <p className="text-[#acf4a4] text-lg mb-10 max-w-xl mx-auto">
+                  Our network of boutique global farmers can be mobilized for your specific contractual requirements.
+                </p>
+                <div className="flex flex-col md:flex-row gap-4 justify-center">
+                  <Link to="/contact" className="bg-[#ffdeac] text-[#604100] px-10 py-4 rounded font-headline font-bold text-lg hover:bg-[#ffba38] transition-all">
+                    Request Custom Quote
+                  </Link>
+                  <Link to="/products" className="bg-transparent border-2 border-white/30 text-white px-10 py-4 rounded font-headline font-bold text-lg hover:bg-white/10 transition-all">
+                    Browse Catalog
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-stone-800 w-full pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
+          <div className="space-y-6">
+            <div className="text-lg font-headline font-bold text-white">AgroFeed Global</div>
+            <p className="font-sans text-sm leading-relaxed text-stone-400">Premium fresh food export and import curating the world's finest harvest.</p>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-green-500 font-sans text-sm font-semibold uppercase tracking-widest">Global Logistics: Live</span>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <h5 className="text-white font-semibold font-headline">The Portfolio</h5>
+            <ul className="space-y-4">
+              {['Rice & Spices', 'Meat & Seafood', 'Fruits & Vegetables', 'Nuts & Flavors'].map((item) => (
+                <li key={item}>
+                  <Link to="/products" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h5 className="text-white font-semibold font-headline">Excellence</h5>
+            <ul className="space-y-4">
+              {['Quality Control', 'Global Logistics', 'Privacy Policy', 'Terms of Service'].map((item) => (
+                <li key={item}>
+                  <Link to="#" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h5 className="text-white font-semibold font-headline">Join Our Newsletter</h5>
+            <p className="font-sans text-sm text-stone-400">Get seasonal harvest alerts and market insights.</p>
+            <div className="flex">
+              <input
+                className="bg-stone-900 border-none text-white text-sm focus:ring-1 focus:ring-stone-500 rounded-l-md w-full px-4 py-2"
+                placeholder="Email Address"
+                type="email"
+              />
+              <button className="bg-[#00450d] px-4 py-2 rounded-r-md text-white">
+                ✈️
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Products Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-16">
-            <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-            <h3 className="text-2xl font-bold text-gray-600 mb-2">No Products Found</h3>
-            <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
+        <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="font-sans text-xs text-stone-500">© 2026 AgroFeed Global. All Rights Reserved.</p>
+          <div className="flex gap-6">
+            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">📱</a>
+            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">🌐</a>
+            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">✉️</a>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <Link
-                key={product.id}
-                to={`/products/${product.id}`}
-                className="group relative bg-white rounded-2xl overflow-hidden
-                         shadow-card hover:shadow-card-hover transition-all duration-500
-                         hover:-translate-y-2"
-              >
-                {/* Image */}
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={product.image || '/product-placeholder.jpg'}
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform
-                             duration-700 group-hover:scale-110"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/product-placeholder.jpg';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        </div>
+      </footer>
 
-                  {/* Category Badge */}
-                  {product.category && (
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-dark">
-                        {product.category}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Price Badge */}
-                  {product.price && (
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 bg-primary text-white rounded-full text-sm font-bold">
-                        ${product.price.toFixed(2)}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Subtitle */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="text-white/70 text-xs font-medium uppercase tracking-wider">
-                      {product.subtitle}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-dark mb-3 group-hover:text-primary
-                               transition-colors duration-300">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
-                    {product.description}
-                  </p>
-
-                  {/* Features */}
-                  {product.features && product.features.length > 0 && (
-                    <div className="space-y-2 mb-4">
-                      {product.features.slice(0, 2).map((feature, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                          <span className="text-gray-600 text-xs">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* View Details */}
-                  <div className="flex items-center gap-2 text-primary text-sm font-medium
-                                opacity-0 group-hover:opacity-100 transition-all duration-300
-                                transform translate-y-2 group-hover:translate-y-0">
-                    View Details
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <Footer />
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+        
+        .font-headline {
+          font-family: 'Manrope', sans-serif;
+        }
+        
+        .font-body, .font-sans {
+          font-family: 'Inter', sans-serif;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        
+        .editorial-shadow {
+          box-shadow: 0 20px 40px rgba(26, 28, 25, 0.06);
+        }
+      `}</style>
     </div>
   );
 };

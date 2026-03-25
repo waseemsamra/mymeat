@@ -1,394 +1,356 @@
-import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Send, Mail, Phone, User, MessageSquare, CheckCircle, Loader2,
-  MapPin, Clock, ChevronRight
-} from 'lucide-react';
-import { toast, Toaster } from 'sonner';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const pageRef = useRef<HTMLDivElement>(null);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast.success('Message sent successfully! We will contact you soon.');
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-      });
-    }, 3000);
-  };
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.contact-hero-content', {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-      });
-
-      gsap.from('.contact-info-card', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.contact-info-section',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      gsap.from('.contact-form-container', {
-        x: 60,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.contact-form-section',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-    }, pageRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: 'Visit Us',
-      details: ['123 Farm Road, Agricultural District', 'Countryside, CA 90210'],
-    },
-    {
-      icon: Phone,
-      title: 'Call Us',
-      details: ['+1 (555) 123-4567', '+1 (555) 987-6543'],
-    },
-    {
-      icon: Mail,
-      title: 'Email Us',
-      details: ['info@agrofeed.com', 'sales@agrofeed.com'],
-    },
-    {
-      icon: Clock,
-      title: 'Working Hours',
-      details: ['Mon - Fri: 8:00 AM - 6:00 PM', 'Sat: 9:00 AM - 2:00 PM'],
-    },
-  ];
-
   return (
-    <div ref={pageRef} className="pt-20">
-      <Toaster position="top-right" richColors />
-      
-      {/* Hero Section */}
-      <section className="relative py-16 lg:py-24 bg-dark overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <img
-            src="/form-farmer.jpg"
-            alt="Contact background"
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/70" />
-        </div>
-
-        <div className="section-padding relative z-10">
-          <div className="contact-hero-content max-w-3xl">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-white/60 text-sm mb-6">
-              <a href="/" className="hover:text-white transition-colors">Home</a>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-white">Contact</span>
-            </div>
-
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 
-                           text-primary-light rounded-full text-sm font-medium mb-4">
-              <Mail className="w-4 h-4" />
-              Get in Touch
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Contact <span className="text-primary-light">Us</span>
-            </h1>
-            <p className="text-lg text-white/70 leading-relaxed">
-              Have questions about our products or need a custom quote? 
-              We are here to help. Reach out to our team and we will get back to you within 24 hours.
-            </p>
+    <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-none">
+        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+          <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
+            AgroFeed Global
+          </Link>
+          
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Home</Link>
+            <Link to="/products" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Categories</Link>
+            <Link to="/services" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Services</Link>
+            <Link to="/about" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">About</Link>
+            <Link to="/contact" className="font-headline font-bold tracking-tight text-sm text-[#00450d] border-b-2 border-[#00450d] pb-1">Contact</Link>
           </div>
-        </div>
-      </section>
 
-      {/* Contact Info & Form Section */}
-      <section className="py-16 lg:py-24 bg-white">
-        <div className="section-padding">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Contact Info */}
-            <div className="contact-info-section">
-              <h2 className="text-2xl font-bold text-dark mb-8">
-                Contact Information
-              </h2>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {contactInfo.map((info, index) => (
-                  <div
-                    key={index}
-                    className="contact-info-card bg-green-50 rounded-2xl p-6
-                             hover:bg-green-100 transition-colors duration-300"
-                  >
-                    <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
-                      <info.icon className="w-6 h-6 text-white" />
+          <Link to="/products" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-5 py-2 rounded font-headline font-bold text-sm transition-all">
+            View Catalog
+          </Link>
+        </div>
+      </nav>
+
+      <main className="pt-20">
+        {/* Hero */}
+        <section className="relative h-[500px] flex items-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img
+              alt="Global trade connections"
+              className="w-full h-full object-cover scale-105"
+              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1920"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/60 to-transparent"></div>
+          </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
+            <div className="max-w-3xl">
+              <span className="font-sans text-white uppercase tracking-[0.2em] text-xs mb-4 block">Get in Touch</span>
+              <h1 className="font-headline font-extrabold text-white text-5xl md:text-6xl leading-[1.1] tracking-tight mb-8">
+                Let's Grow Together.
+              </h1>
+              <p className="text-white/90 text-lg max-w-xl leading-relaxed">
+                Whether you're a producer seeking global markets or a buyer looking for premium sourcing, our team is ready to connect.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form & Info */}
+        <section className="py-24 bg-[#fafaf5]">
+          <div className="max-w-7xl mx-auto px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              {/* Contact Form */}
+              <div>
+                <span className="font-sans text-[#00450d] uppercase tracking-widest text-xs block mb-2">Send Us a Message</span>
+                <h2 className="font-headline font-bold text-4xl text-[#1a1c19] mb-8">Start the Conversation.</h2>
+                
+                <form className="space-y-6">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <label className="font-sans text-sm font-medium text-[#1a1c19] block mb-2">First Name</label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 bg-[#f4f4ef] border-b-2 border-[#c0c9bb] focus:border-[#00450d] focus:outline-none transition-colors rounded-t-md"
+                        placeholder="John"
+                      />
                     </div>
-                    <h3 className="font-bold text-dark mb-2">{info.title}</h3>
-                    {info.details.map((detail, i) => (
-                      <p key={i} className="text-gray-600 text-sm">{detail}</p>
-                    ))}
+                    <div>
+                      <label className="font-sans text-sm font-medium text-[#1a1c19] block mb-2">Last Name</label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 bg-[#f4f4ef] border-b-2 border-[#c0c9bb] focus:border-[#00450d] focus:outline-none transition-colors rounded-t-md"
+                        placeholder="Doe"
+                      />
+                    </div>
                   </div>
-                ))}
+
+                  <div>
+                    <label className="font-sans text-sm font-medium text-[#1a1c19] block mb-2">Email Address</label>
+                    <input
+                      type="email"
+                      className="w-full px-4 py-3 bg-[#f4f4ef] border-b-2 border-[#c0c9bb] focus:border-[#00450d] focus:outline-none transition-colors rounded-t-md"
+                      placeholder="john@company.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-sans text-sm font-medium text-[#1a1c19] block mb-2">Company</label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-3 bg-[#f4f4ef] border-b-2 border-[#c0c9bb] focus:border-[#00450d] focus:outline-none transition-colors rounded-t-md"
+                      placeholder="Your company name"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-sans text-sm font-medium text-[#1a1c19] block mb-2">Interest</label>
+                    <select className="w-full px-4 py-3 bg-[#f4f4ef] border-b-2 border-[#c0c9bb] focus:border-[#00450d] focus:outline-none transition-colors rounded-t-md">
+                      <option>General Enquiry</option>
+                      <option>Become a Supplier</option>
+                      <option>Become a Buyer</option>
+                      <option>Partnership Opportunity</option>
+                      <option>Media Enquiry</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="font-sans text-sm font-medium text-[#1a1c19] block mb-2">Message</label>
+                    <textarea
+                      rows={5}
+                      className="w-full px-4 py-3 bg-[#f4f4ef] border-b-2 border-[#c0c9bb] focus:border-[#00450d] focus:outline-none transition-colors rounded-t-md resize-none"
+                      placeholder="Tell us about your requirements..."
+                    ></textarea>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-[#00450d] text-white py-4 rounded font-headline font-bold text-base hover:bg-[#1b5e20] transition-all"
+                  >
+                    Send Message
+                  </button>
+                </form>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="mt-8 rounded-2xl overflow-hidden shadow-card h-64 bg-gray-100 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary mx-auto mb-2" />
-                    <p className="text-gray-600">Interactive Map</p>
-                    <p className="text-sm text-gray-500">123 Farm Road, Countryside, CA 90210</p>
+              {/* Contact Information */}
+              <div className="space-y-12">
+                <div>
+                  <span className="font-sans text-[#00450d] uppercase tracking-widest text-xs block mb-2">Our Offices</span>
+                  <h2 className="font-headline font-bold text-4xl text-[#1a1c19] mb-8">Global Presence.</h2>
+                  
+                  <div className="space-y-8">
+                    <div className="flex gap-4">
+                      <div className="w-12 h-12 rounded-lg bg-[#00450d]/10 flex items-center justify-center text-[#00450d] flex-shrink-0">
+                        <span className="text-2xl">🏢</span>
+                      </div>
+                      <div>
+                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Singapore (HQ)</h3>
+                        <p className="text-[#41493e] text-sm leading-relaxed">123 Trade Center, Marina Bay Financial Centre<br/>Singapore 018989</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <div className="w-12 h-12 rounded-lg bg-[#7a5649]/10 flex items-center justify-center text-[#7a5649] flex-shrink-0">
+                        <span className="text-2xl">🌍</span>
+                      </div>
+                      <div>
+                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Rotterdam (EU Hub)</h3>
+                        <p className="text-[#41493e] text-sm leading-relaxed">456 Port Avenue, Europoort<br/>Rotterdam, Netherlands 3045 AM</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <div className="w-12 h-12 rounded-lg bg-[#503600]/10 flex items-center justify-center text-[#503600] flex-shrink-0">
+                        <span className="text-2xl">🌏</span>
+                      </div>
+                      <div>
+                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Bangkok (APAC)</h3>
+                        <p className="text-[#41493e] text-sm leading-relaxed">789 Sukhumvit Road, Klongtoey<br/>Bangkok, Thailand 10110</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-8 border-t border-[#c0c9bb]/20">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-[#00450d]/10 flex items-center justify-center text-[#00450d] flex-shrink-0">
+                        <span className="text-xl">📞</span>
+                      </div>
+                      <div>
+                        <div className="font-sans text-xs uppercase tracking-widest text-[#717a6d] mb-1">Phone</div>
+                        <div className="font-headline font-bold text-[#1a1c19]">+31 10 123 4567</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-[#00450d]/10 flex items-center justify-center text-[#00450d] flex-shrink-0">
+                        <span className="text-xl">✉️</span>
+                      </div>
+                      <div>
+                        <div className="font-sans text-xs uppercase tracking-widest text-[#717a6d] mb-1">Email</div>
+                        <div className="font-headline font-bold text-[#1a1c19]">trade@agrofeed.global</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-[#00450d]/10 flex items-center justify-center text-[#00450d] flex-shrink-0">
+                        <span className="text-xl">🕐</span>
+                      </div>
+                      <div>
+                        <div className="font-sans text-xs uppercase tracking-widest text-[#717a6d] mb-1">Business Hours</div>
+                        <div className="font-headline font-bold text-[#1a1c19]">Mon - Fri: 9:00 - 18:00 CET</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* Contact Form */}
-            <div className="contact-form-section">
-              <div className="contact-form-container bg-white rounded-3xl shadow-card p-8 lg:p-10">
-                <h2 className="text-2xl font-bold text-dark mb-2">
-                  Send us a Message
-                </h2>
-                <p className="text-gray-600 mb-8">
-                  Fill out the form below and we will respond as soon as possible.
-                </p>
-
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Name */}
-                  <div className="form-field">
-                    <label className="block text-sm font-medium text-dark mb-2">
-                      Full Name *
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="John Smith"
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 
-                                 focus:border-primary focus:ring-2 focus:ring-primary/20 
-                                 outline-none transition-all duration-300 bg-white"
-                      />
-                    </div>
+        {/* Map Section */}
+        <section className="py-24 bg-[#f4f4ef]">
+          <div className="max-w-7xl mx-auto px-8">
+            <div className="text-center mb-16">
+              <span className="font-sans text-[#00450d] uppercase tracking-widest text-xs block mb-2">Our Reach</span>
+              <h2 className="font-headline font-bold text-4xl text-[#1a1c19]">Global Network.</h2>
+            </div>
+            
+            <div className="aspect-[21/9] bg-[#eeeee9] rounded-3xl overflow-hidden relative">
+              <img
+                alt="World Map"
+                className="w-full h-full object-cover"
+                src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1920"
+              />
+              <div className="absolute inset-0 bg-black/20"></div>
+              <div className="absolute bottom-8 left-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
+                <div className="grid grid-cols-3 gap-12 text-white">
+                  <div>
+                    <div className="font-headline font-bold text-xl">25+</div>
+                    <div className="text-xs font-sans opacity-70">Countries Served</div>
                   </div>
-
-                  {/* Email & Phone */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div className="form-field">
-                      <label className="block text-sm font-medium text-dark mb-2">
-                        Email Address *
-                      </label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          placeholder="john@example.com"
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 
-                                   focus:border-primary focus:ring-2 focus:ring-primary/20 
-                                   outline-none transition-all duration-300 bg-white"
-                        />
-                      </div>
-                    </div>
-                    <div className="form-field">
-                      <label className="block text-sm font-medium text-dark mb-2">
-                        Phone Number
-                      </label>
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          placeholder="+1 (555) 000-0000"
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 
-                                   focus:border-primary focus:ring-2 focus:ring-primary/20 
-                                   outline-none transition-all duration-300 bg-white"
-                        />
-                      </div>
-                    </div>
+                  <div>
+                    <div className="font-headline font-bold text-xl">120</div>
+                    <div className="text-xs font-sans opacity-70">Global Ports</div>
                   </div>
-
-                  {/* Subject */}
-                  <div className="form-field">
-                    <label className="block text-sm font-medium text-dark mb-2">
-                      Subject *
-                    </label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3.5 rounded-xl border border-gray-200 
-                               focus:border-primary focus:ring-2 focus:ring-primary/20 
-                               outline-none transition-all duration-300 bg-white appearance-none"
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="quote">Request a Quote</option>
-                      <option value="product">Product Inquiry</option>
-                      <option value="order">Order Status</option>
-                      <option value="support">Customer Support</option>
-                      <option value="other">Other</option>
-                    </select>
+                  <div>
+                    <div className="font-headline font-bold text-xl">500+</div>
+                    <div className="text-xs font-sans opacity-70">Farm Partners</div>
                   </div>
-
-                  {/* Message */}
-                  <div className="form-field">
-                    <label className="block text-sm font-medium text-dark mb-2">
-                      Message *
-                    </label>
-                    <div className="relative">
-                      <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                      <textarea
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        rows={5}
-                        required
-                        placeholder="How can we help you?"
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 
-                                 focus:border-primary focus:ring-2 focus:ring-primary/20 
-                                 outline-none transition-all duration-300 bg-white resize-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || isSubmitted}
-                    className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300
-                              flex items-center justify-center gap-2
-                              ${isSubmitted 
-                                ? 'bg-green-500 text-white' 
-                                : 'bg-primary text-white hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/30'
-                              } disabled:cursor-not-allowed`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        Sending...
-                      </>
-                    ) : isSubmitted ? (
-                      <>
-                        <CheckCircle className="w-5 h-5" />
-                        Sent Successfully!
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Send Message
-                      </>
-                    )}
-                  </button>
-                </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQ Section */}
-      <section className="py-16 lg:py-24 bg-green-50/50">
-        <div className="section-padding">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold text-dark mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-gray-600">
-              Find quick answers to common questions about our products and services.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {[
-              {
-                q: 'What is the minimum order quantity?',
-                a: 'Our minimum order quantity varies by product. Generally, we accept orders starting from 100kg for most products. Contact us for specific requirements.',
-              },
-              {
-                q: 'Do you offer delivery services?',
-                a: 'Yes, we offer delivery services to most locations. Delivery charges depend on distance and order size. Free delivery is available for large orders.',
-              },
-              {
-                q: 'How do you ensure product quality?',
-                a: 'All our products undergo rigorous quality testing including moisture analysis, nutritional testing, and visual inspection before shipping.',
-              },
-              {
-                q: 'Can I request a sample?',
-                a: 'Absolutely! We provide samples for most products so you can evaluate quality before placing a large order. Contact our sales team.',
-              },
-            ].map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover 
-                         transition-all duration-300"
-              >
-                <h3 className="font-bold text-dark mb-3">{faq.q}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{faq.a}</p>
+        {/* CTA */}
+        <section className="py-24 bg-[#fafaf5]">
+          <div className="max-w-5xl mx-auto px-8">
+            <div className="bg-[#00450d] p-12 md:p-20 rounded-[2rem] text-center relative overflow-hidden">
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#1b5e20] rounded-full opacity-50"></div>
+              <div className="relative z-10">
+                <h2 className="text-3xl md:text-5xl font-headline font-extrabold text-white mb-6">
+                  Ready to Expand Your Supply Chain?
+                </h2>
+                <p className="text-[#acf4a4] text-lg mb-10 max-w-xl mx-auto">
+                  Connect with our trade experts for a tailored quote and logistics plan for your business.
+                </p>
+                <div className="flex flex-col md:flex-row gap-4 justify-center">
+                  <Link to="/contact" className="bg-[#ffdeac] text-[#604100] px-10 py-4 rounded font-headline font-bold text-lg hover:bg-[#ffba38] transition-all">
+                    Request a Quote
+                  </Link>
+                  <a href="tel:+31101234567" className="bg-transparent border-2 border-white/30 text-white px-10 py-4 rounded font-headline font-bold text-lg hover:bg-white/10 transition-all">
+                    Talk to Sales
+                  </a>
+                </div>
               </div>
-            ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-stone-800 w-full pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
+          <div className="space-y-6">
+            <div className="text-lg font-headline font-bold text-white">AgroFeed Global</div>
+            <p className="font-sans text-sm leading-relaxed text-stone-400">Premium fresh food export and import curating the world's finest harvest.</p>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-green-500 font-sans text-sm font-semibold uppercase tracking-widest">Global Logistics: Live</span>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <h5 className="text-white font-semibold font-headline">The Portfolio</h5>
+            <ul className="space-y-4">
+              {['Rice & Spices', 'Meat & Seafood', 'Fruits & Vegetables', 'Nuts & Flavors'].map((item) => (
+                <li key={item}>
+                  <Link to="/products" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h5 className="text-white font-semibold font-headline">Excellence</h5>
+            <ul className="space-y-4">
+              {['Quality Control', 'Global Logistics', 'Privacy Policy', 'Terms of Service'].map((item) => (
+                <li key={item}>
+                  <Link to="#" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h5 className="text-white font-semibold font-headline">Join Our Newsletter</h5>
+            <p className="font-sans text-sm text-stone-400">Get seasonal harvest alerts and market insights.</p>
+            <div className="flex">
+              <input
+                className="bg-stone-900 border-none text-white text-sm focus:ring-1 focus:ring-stone-500 rounded-l-md w-full px-4 py-2"
+                placeholder="Email Address"
+                type="email"
+              />
+              <button className="bg-[#00450d] px-4 py-2 rounded-r-md text-white">
+                ✈️
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+
+        <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="font-sans text-xs text-stone-500">© 2026 AgroFeed Global. All Rights Reserved.</p>
+          <div className="flex gap-6">
+            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">📱</a>
+            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">🌐</a>
+            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">✉️</a>
+          </div>
+        </div>
+      </footer>
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+        
+        .font-headline {
+          font-family: 'Manrope', sans-serif;
+        }
+        
+        .font-body, .font-sans {
+          font-family: 'Inter', sans-serif;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        
+        .editorial-shadow {
+          box-shadow: 0 20px 40px rgba(26, 28, 25, 0.06);
+        }
+      `}</style>
     </div>
   );
 };
