@@ -20,6 +20,7 @@ import Categories from './pages/Categories';
 import About from './pages/About';
 import Services from './pages/Services';
 import MeatSeafood from './pages/MeatSeafood';
+import RiceSpices from './pages/RiceSpices';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -127,6 +128,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><MeatSeafood /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Rice & Spices Category Page */}
+              <Route path="/products/rice-spices" element={
+                <>
+                  <Navigation />
+                  <main><RiceSpices /></main>
                   <Footer />
                 </>
               } />
