@@ -17,6 +17,10 @@ const UserManagement = () => {
   const [selectedRole, setSelectedRole] = useState('All Roles');
   const [selectedStatus, setSelectedStatus] = useState('Any Status');
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -41,6 +45,47 @@ const UserManagement = () => {
 
   const handleAddUser = () => {
     setIsAddUserModalOpen(true);
+  };
+
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user);
+    setFormData({
+      fullName: user.name,
+      email: user.email,
+      role: user.role,
+      active: user.status === 'Active',
+      permissions: {
+        manageCategories: true,
+        editProducts: true,
+        viewFinancials: false,
+        auditLogistics: true,
+        supportChat: true,
+        globalSettings: false
+      }
+    });
+    setIsEditUserModalOpen(true);
+  };
+
+  const handleDeleteUser = (user: User) => {
+    setSelectedUser(user);
+    setDeleteConfirmText('');
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDeleteUser = () => {
+    if (deleteConfirmText === 'DELETE') {
+      toast.success('User deleted successfully!');
+      setIsDeleteModalOpen(false);
+      setSelectedUser(null);
+      setDeleteConfirmText('');
+    }
+  };
+
+  const handleSaveChanges = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success('User updated successfully!');
+    setIsEditUserModalOpen(false);
+    setSelectedUser(null);
   };
 
   const handleCreateUser = (e: React.FormEvent) => {
@@ -200,10 +245,16 @@ const UserManagement = () => {
                 <td className="px-8 py-6 text-sm text-[#717a6d]">{user.lastSession}</td>
                 <td className="px-8 py-6 text-right">
                   <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button className="p-2 text-[#717a6d] hover:text-[#00450d] transition-colors">
+                    <button
+                      onClick={() => handleEditUser(user)}
+                      className="p-2 text-[#717a6d] hover:text-[#00450d] transition-colors"
+                    >
                       <span className="material-symbols-outlined text-lg">edit</span>
                     </button>
-                    <button className="p-2 text-[#717a6d] hover:text-[#ba1a1a] transition-colors">
+                    <button
+                      onClick={() => handleDeleteUser(user)}
+                      className="p-2 text-[#717a6d] hover:text-[#ba1a1a] transition-colors"
+                    >
                       <span className="material-symbols-outlined text-lg">delete</span>
                     </button>
                   </div>
@@ -284,6 +335,161 @@ const UserManagement = () => {
           </div>
         </div>
       </footer>
+
+      {/* Edit User Modal */}
+      {isEditUserModalOpen && selectedUser && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-[#1a1c19]/40 backdrop-blur-sm p-4">
+          {/* Modal Container */}
+          <div className="bg-white w-full max-w-2xl rounded-xl shadow-2xl flex flex-col max-h-[92vh] overflow-hidden">
+            {/* Modal Header */}
+            <div className="p-8 border-b border-[#c0c9bb]/20 flex justify-between items-start">
+              <div>
+                <h3 className="text-2xl font-bold tracking-tight text-[#1a1c19]">Edit User Profile</h3>
+                <p className="text-sm text-[#41493e] mt-1">
+                  Update credentials and access levels for <span className="text-[#00450d] font-bold">{selectedUser.name}</span>
+                </p>
+              </div>
+              <button
+                onClick={() => setIsEditUserModalOpen(false)}
+                className="p-2 hover:bg-[#f4f4ef] rounded-full transition-colors"
+              >
+                <span className="material-symbols-outlined text-[#41493e]">close</span>
+              </button>
+            </div>
+
+            {/* Modal Body (Scrollable) */}
+            <form onSubmit={handleSaveChanges} className="p-8 overflow-y-auto space-y-8">
+              {/* Section 1: Core Information */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-[#41493e] block">Full Name</label>
+                  <input
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className="w-full bg-[#f4f4ef] border-b-2 border-[#717a6d]/20 focus:border-[#00450d] focus:ring-0 transition-colors py-3 px-1 text-[#1a1c19]"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-[#41493e] block">Email Address</label>
+                  <input
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-[#f4f4ef] border-b-2 border-[#717a6d]/20 focus:border-[#00450d] focus:ring-0 transition-colors py-3 px-1 text-[#1a1c19]"
+                    type="email"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Section 2: Role & Status */}
+              <div className="grid grid-cols-2 gap-8 items-end">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-[#41493e] block">Role Selection</label>
+                  <div className="relative">
+                    <select
+                      value={formData.role}
+                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                      className="w-full appearance-none bg-[#f4f4ef] border-b-2 border-[#717a6d]/20 focus:border-[#00450d] focus:ring-0 py-3 px-1 pr-10 text-[#1a1c19]"
+                    >
+                      <option>Super Admin</option>
+                      <option>Editor</option>
+                      <option>Partner</option>
+                    </select>
+                    <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-[#717a6d]">expand_more</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-[#f4f4ef] rounded-lg">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest text-[#41493e]">Account Status</p>
+                    <p className="text-sm font-bold text-[#047852]">Active</p>
+                  </div>
+                  {/* Toggle Switch */}
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.active}
+                      onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-12 h-6 bg-[#00450d] rounded-full relative cursor-pointer peer-focus:outline-none">
+                      <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full transition-all"></div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Section 3: Permissions Grid */}
+              <div className="space-y-4">
+                <label className="text-xs font-bold uppercase tracking-widest text-[#41493e] block">Platform Permissions</label>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { key: 'manageCategories', label: 'Manage Categories', desc: 'Full control over produce taxonomy and seasonal tagging.' },
+                    { key: 'editProducts', label: 'Edit Products', desc: 'Modify inventory listings, pricing, and curation details.' },
+                    { key: 'viewFinancials', label: 'View Financials', desc: 'Access to export revenue reports and margin analytics.' },
+                    { key: 'auditLogistics', label: 'Audit Logistics', desc: 'Track global shipping routes and supply chain health.' },
+                    { key: 'supportChat', label: 'Support Chat', desc: 'Direct communication portal with regional curators.' },
+                    { key: 'globalSettings', label: 'Global Settings', desc: 'Manage system-wide parameters and API integrations.' }
+                  ].map((perm) => (
+                    <label
+                      key={perm.key}
+                      className="flex items-start gap-4 p-4 rounded-xl bg-[#f4f4ef] border border-transparent hover:border-[#00450d]/20 cursor-pointer transition-all group"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.permissions[perm.key as keyof typeof formData.permissions]}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          permissions: { ...formData.permissions, [perm.key]: e.target.checked }
+                        })}
+                        className="mt-1 rounded text-[#00450d] focus:ring-[#00450d]/20 h-4 w-4"
+                      />
+                      <div>
+                        <p className="text-sm font-bold text-[#1a1c19] group-hover:text-[#00450d] transition-colors">{perm.label}</p>
+                        <p className="text-[11px] text-[#41493e] leading-tight mt-1">{perm.desc}</p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 4: Info Box (2FA) */}
+              <div className="bg-[#ffdeac]/30 p-5 rounded-lg flex gap-4 items-center border border-[#ffba38]/20">
+                <span className="material-symbols-outlined text-[#503600] text-2xl">verified_user</span>
+                <div>
+                  <p className="text-sm font-bold text-[#503600]">Two-Factor Authentication (2FA)</p>
+                  <p className="text-xs text-[#503600] leading-relaxed">
+                    This user has 2FA enabled via SMS. Any changes to critical permissions will require a re-verification code to be sent to their registered device for added security.
+                  </p>
+                </div>
+              </div>
+            </form>
+
+            {/* Modal Footer */}
+            <div className="p-8 bg-[#f4f4ef] flex justify-end items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setIsEditUserModalOpen(false)}
+                className="px-6 py-2.5 rounded-md font-bold text-sm text-[#41493e] hover:text-[#1a1c19] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                onClick={(e) => {
+                  const form = e.currentTarget.closest('form');
+                  if (form) form.requestSubmit();
+                }}
+                className="bg-[#00450d] text-white px-8 py-2.5 rounded-md font-bold text-sm shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>save</span>
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add User Modal */}
       {isAddUserModalOpen && (
@@ -432,6 +638,70 @@ const UserManagement = () => {
                 className="bg-[#00450d] text-white px-8 py-3 rounded-md font-bold text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all"
               >
                 Create User
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && selectedUser && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center p-6 bg-[#2f312e]/40 backdrop-blur-sm">
+          {/* Confirmation Modal */}
+          <div className="bg-white w-full max-w-lg rounded-xl shadow-2xl border border-[#c0c9bb]/20 overflow-hidden flex flex-col">
+            {/* Header/Warning Section */}
+            <div className="p-8 pb-0 flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-[#ffdad6] flex items-center justify-center mb-6">
+                <span className="material-symbols-outlined text-[#ba1a1a] text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>warning</span>
+              </div>
+              <h2 className="text-2xl font-extrabold tracking-tight text-[#1a1c19] mb-2">Delete User Account</h2>
+              <p className="text-[#41493e] text-base leading-relaxed max-w-md">
+                Are you sure you want to delete <span className="font-bold text-[#1a1c19]">{selectedUser.name}</span>? This action is permanent and will immediately revoke all platform access.
+              </p>
+            </div>
+
+            {/* Interaction Section */}
+            <div className="p-8 pt-10">
+              <label className="block text-xs font-bold uppercase tracking-widest text-[#41493e] mb-3" htmlFor="confirm-delete">
+                Type <span className="text-[#ba1a1a]">DELETE</span> to confirm
+              </label>
+              <div className="relative">
+                <input
+                  value={deleteConfirmText}
+                  onChange={(e) => setDeleteConfirmText(e.target.value)}
+                  className="w-full bg-[#f4f4ef] border-b-2 border-[#717a6d]/20 focus:border-[#ba1a1a] focus:ring-0 transition-all px-4 py-4 text-lg font-mono tracking-widest placeholder:text-[#717a6d]/40 placeholder:font-sans placeholder:tracking-normal rounded-t-lg"
+                  id="confirm-delete"
+                  placeholder="Type DELETE"
+                  type="text"
+                />
+              </div>
+              <div className="mt-4 flex items-start gap-3 p-4 bg-[#ffdeac]/30 rounded-xl border border-[#6e4b00]/10">
+                <span className="material-symbols-outlined text-[#503600] text-xl">info</span>
+                <p className="text-xs text-[#503600] leading-normal">
+                  All associated audit trails and historical records for this user will be archived but inactive.
+                </p>
+              </div>
+            </div>
+
+            {/* Actions Footer */}
+            <div className="bg-[#f4f4ef] p-6 flex flex-col sm:flex-row-reverse gap-3">
+              <button
+                onClick={confirmDeleteUser}
+                disabled={deleteConfirmText !== 'DELETE'}
+                className="flex-1 bg-[#ba1a1a] hover:bg-[#93000a] text-white font-bold py-3.5 px-6 rounded-xl transition-all active:scale-95 shadow-sm shadow-[#ba1a1a]/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span className="material-symbols-outlined text-sm">delete_forever</span>
+                Delete User
+              </button>
+              <button
+                onClick={() => {
+                  setIsDeleteModalOpen(false);
+                  setSelectedUser(null);
+                  setDeleteConfirmText('');
+                }}
+                className="flex-1 bg-[#e3e3de] hover:bg-[#d6d3cd] text-[#1a1c19] font-semibold py-3.5 px-6 rounded-xl transition-all active:scale-95"
+              >
+                Cancel
               </button>
             </div>
           </div>
