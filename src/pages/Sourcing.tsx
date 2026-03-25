@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
 
 const Sourcing = () => {
   return (
@@ -15,7 +14,7 @@ const Sourcing = () => {
             <img
               alt="Lush regenerative farm"
               className="w-full h-full object-cover scale-105"
-              src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1920"
+              src="https://images.unsplash.com/photo-1500937386577-5c52f32f890e?w=1920"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/60 to-transparent"></div>
           </div>
@@ -41,7 +40,7 @@ const Sourcing = () => {
               {/* Metric 1 - Carbon */}
               <div className="p-10 bg-[#ffffff] rounded-xl border-l-4 border-[#00450d] editorial-shadow">
                 <div className="flex items-center gap-4 mb-4">
-                  <CO2 className="text-[#00450d] w-8 h-8" />
+                  <span className="material-symbols-outlined text-[#00450d] w-8 h-8">co2</span>
                   <span className="text-sans font-bold text-[#717a6d] tracking-widest uppercase text-xs">Carbon Progress</span>
                 </div>
                 <h3 className="text-4xl font-headline font-bold text-[#1a1c19] mb-2">12.4k Tons</h3>
@@ -54,7 +53,7 @@ const Sourcing = () => {
               {/* Metric 2 - Fair Trade */}
               <div className="p-10 bg-[#ffffff] rounded-xl border-l-4 border-[#7a5649] editorial-shadow">
                 <div className="flex items-center gap-4 mb-4">
-                  <Payments className="text-[#7a5649] w-8 h-8" />
+                  <span className="material-symbols-outlined text-[#7a5649] w-8 h-8">payments</span>
                   <span className="text-sans font-bold text-[#717a6d] tracking-widest uppercase text-xs">Fair Trade Premiums</span>
                 </div>
                 <h3 className="text-4xl font-headline font-bold text-[#1a1c19] mb-2">$3.2M</h3>
@@ -67,7 +66,7 @@ const Sourcing = () => {
               {/* Metric 3 - Water */}
               <div className="p-10 bg-[#ffffff] rounded-xl border-l-4 border-[#503600] editorial-shadow">
                 <div className="flex items-center gap-4 mb-4">
-                  <WaterDrop className="text-[#503600] w-8 h-8" />
+                  <span className="material-symbols-outlined text-[#503600] w-8 h-8">water_drop</span>
                   <span className="text-sans font-bold text-[#717a6d] tracking-widest uppercase text-xs">Water Stewardship</span>
                 </div>
                 <h3 className="text-4xl font-headline font-bold text-[#1a1c19] mb-2">850M Gal</h3>
@@ -105,7 +104,7 @@ const Sourcing = () => {
               <ul className="space-y-6">
                 <li className="flex gap-4">
                   <div className="bg-[#1b5e20]/20 p-2 rounded-lg">
-                    <VerifiedUser className="text-[#00450d] w-6 h-6" />
+                    <span className="material-symbols-outlined text-[#00450d] w-6 h-6">verified_user</span>
                   </div>
                   <div>
                     <h4 className="font-bold text-[#1a1c19]">Verified Fair Trade</h4>
@@ -114,7 +113,7 @@ const Sourcing = () => {
                 </li>
                 <li className="flex gap-4">
                   <div className="bg-[#1b5e20]/20 p-2 rounded-lg">
-                    <MapPin className="text-[#00450d] w-6 h-6" />
+                    <span className="material-symbols-outlined text-[#00450d] w-6 h-6">location_on</span>
                   </div>
                   <div>
                     <h4 className="font-bold text-[#1a1c19]">Geo-Location Origin Data</h4>
@@ -182,14 +181,14 @@ const Sourcing = () => {
                 </p>
                 <div className="space-y-8">
                   <div className="flex gap-6 items-start">
-                    <AcUnit className="text-[#7a5649] w-10 h-10" />
+                    <span className="material-symbols-outlined text-[#7a5649] w-10 h-10">ac_unit</span>
                     <div>
                       <h4 className="font-bold text-[#1a1c19]">Solar-Powered Cold Storage</h4>
                       <p className="text-sm text-[#41493e]">Off-grid modular storage units powered entirely by renewable energy.</p>
                     </div>
                   </div>
                   <div className="flex gap-6 items-start">
-                    <Route className="text-[#7a5649] w-10 h-10" />
+                    <span className="material-symbols-outlined text-[#7a5649] w-10 h-10">route</span>
                     <div>
                       <h4 className="font-bold text-[#1a1c19]">Route Optimization</h4>
                       <p className="text-sm text-[#41493e]">Minimizing food miles through intelligent, multi-modal transport strategies.</p>
@@ -211,7 +210,7 @@ const Sourcing = () => {
         {/* Partner with Us CTA */}
         <section className="py-32 px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <Eco className="text-[#00450d] w-16 h-16 mb-8 mx-auto" />
+            <span className="material-symbols-outlined text-[#00450d] w-16 h-16 mb-8 mx-auto">eco</span>
             <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-[#1a1c19] mb-8">Align your brand with the planet's future.</h2>
             <p className="text-xl text-[#41493e] mb-12 max-w-2xl mx-auto">
               We partner with global retailers, restaurateurs, and manufacturers who refuse to compromise on ethics or quality.
