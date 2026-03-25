@@ -19,6 +19,7 @@ import CategoryDetail from './pages/CategoryDetail';
 import Categories from './pages/Categories';
 import About from './pages/About';
 import Services from './pages/Services';
+import MeatSeafood from './pages/MeatSeafood';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -118,6 +119,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><Services /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Meat & Seafood Category Page */}
+              <Route path="/products/meat-seafood" element={
+                <>
+                  <Navigation />
+                  <main><MeatSeafood /></main>
                   <Footer />
                 </>
               } />
