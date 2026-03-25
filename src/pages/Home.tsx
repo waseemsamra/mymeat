@@ -1,46 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
-const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
-
-interface Product {
-  id: string | number;
-  name?: string;
-  title?: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  category?: string;
-}
-
 const Home = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    loadProducts();
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const loadProducts = async () => {
-    try {
-      const response = await fetch(`${API_URL}/products`);
-      if (response.ok) {
-        const data = await response.json();
-        setProducts(data);
-      }
-    } catch (error) {
-      console.error('Error loading products:', error);
-    }
-  };
-
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
       {/* Top Navigation */}
