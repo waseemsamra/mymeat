@@ -6,14 +6,11 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CMSProvider } from './contexts/CMSContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import AdminDashboard from './pages/AdminDashboard';
 import CategoryDetail from './pages/CategoryDetail';
 import ProductsPage from './pages/Products';
 import Categories from './pages/Categories';
@@ -28,6 +25,7 @@ import FruitsVegetables from './pages/FruitsVegetables';
 import CannedGoods from './pages/CannedGoods';
 import NutsFlavors from './pages/NutsFlavors';
 import BakeryProducts from './pages/BakeryProducts';
+import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -182,17 +180,8 @@ function App() {
                 </>
               } />
 
-              {/* Protected routes */}
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/admin" element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
+              {/* Admin routes */}
+              <Route path="/admin" element={<NewAdminDashboard />} />
             </Routes>
           </div>
         </Router>
