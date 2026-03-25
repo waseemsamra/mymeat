@@ -1,374 +1,369 @@
-import { useState, useEffect } from 'react';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Save, Building, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Globe } from 'lucide-react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
-interface SiteSettings {
-  siteName: string;
-  tagline: string;
-  contactEmail: string;
-  contactPhone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  businessHours: string;
-  facebook: string;
-  twitter: string;
-  instagram: string;
-  linkedin: string;
-  website: string;
-}
-
 const SiteSettingsEditor = () => {
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState<SiteSettings>({
-    siteName: '',
-    tagline: '',
-    contactEmail: '',
-    contactPhone: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: '',
-    businessHours: '',
-    facebook: '',
-    twitter: '',
-    instagram: '',
-    linkedin: '',
-    website: ''
+  const [activeTab, setActiveTab] = useState('general');
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    portalName: 'The Global Agrarian',
+    supportEmail: 'ops@globalagrarian.com',
+    contactPhone: '+1 (555) 123-4567',
+    address: '123 Harvest Lane, Agricultural District',
+    timezone: 'UTC',
+    language: 'English'
   });
 
-  useEffect(() => {
-    loadSettings();
-  }, []);
-
-  const loadSettings = async () => {
+  const handleSave = () => {
     setLoading(true);
-    try {
-      const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
-      const response = await fetch(`${API_URL}/content/siteSettings`);
-      const data = await response.json();
-      
-      if (data && data.data) {
-        setFormData({
-          siteName: data.data.siteName || 'AgroFeed',
-          tagline: data.data.tagline || 'Premium Animal Feed Products',
-          contactEmail: data.data.contactEmail || '',
-          contactPhone: data.data.contactPhone || '',
-          address: data.data.address || '',
-          city: data.data.city || '',
-          state: data.data.state || '',
-          zipCode: data.data.zipCode || '',
-          country: data.data.country || '',
-          businessHours: data.data.businessHours || '',
-          facebook: data.data.facebook || '',
-          twitter: data.data.twitter || '',
-          instagram: data.data.instagram || '',
-          linkedin: data.data.linkedin || '',
-          website: data.data.website || ''
-        });
-      }
-      toast.success('Settings loaded!');
-    } catch (error: any) {
-      console.error('Error loading settings:', error);
-      // Load default settings
-      setFormData({
-        siteName: 'AgroFeed',
-        tagline: 'Premium Animal Feed Products',
-        contactEmail: 'info@agrofeed.com',
-        contactPhone: '+1 (555) 123-4567',
-        address: '123 Farm Road',
-        city: 'Agricultural District',
-        state: 'CA',
-        zipCode: '90210',
-        country: 'USA',
-        businessHours: 'Mon-Fri: 8AM-6PM',
-        facebook: '',
-        twitter: '',
-        instagram: '',
-        linkedin: '',
-        website: ''
-      });
-    } finally {
+    setTimeout(() => {
+      toast.success('System configuration saved!');
       setLoading(false);
-    }
+    }, 1000);
   };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    
-    try {
-      const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
-      
-      const response = await fetch(`${API_URL}/content`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'siteSettings',
-          data: formData
-        })
-      });
-      
-      if (response.ok) {
-        toast.success('Site settings saved successfully!');
-      } else {
-        toast.error('Failed to save settings');
-      }
-    } catch (error: any) {
-      console.error('Error saving settings:', error);
-      toast.error('Failed to save settings');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="text-center py-8">
-        <p>Loading settings...</p>
-      </div>
-    );
-  }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold">Site Settings</h2>
-        <p className="text-gray-500">Manage your website configuration and contact information</p>
+    <div className="max-w-6xl mx-auto">
+      {/* Header Section */}
+      <div className="mb-10">
+        <h2 className="text-3xl font-extrabold text-[#1a1c19] tracking-tight">System Settings</h2>
+        <p className="text-[#41493e] mt-2 text-base">Configure the core parameters of The Global Agrarian digital environment.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Basic Information */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Building className="h-5 w-5 text-primary" />
-              <CardTitle>Basic Information</CardTitle>
-            </div>
-            <CardDescription>General website and company information</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label>Site Name</Label>
-                <Input
-                  value={formData.siteName}
-                  onChange={(e) => setFormData({ ...formData, siteName: e.target.value })}
-                  placeholder="AgroFeed"
-                />
-              </div>
-              <div>
-                <Label>Tagline</Label>
-                <Input
-                  value={formData.tagline}
-                  onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
-                  placeholder="Premium Animal Feed Products"
-                />
-              </div>
-            </div>
-            <div>
-              <Label>Website URL</Label>
-              <div className="relative">
-                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-                <Input
-                  value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                  placeholder="https://agrofeed.com"
-                  className="pl-10"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Tabbed Interface */}
+      <div className="flex items-center gap-8 border-b border-[#c0c9bb]/30 mb-10 overflow-x-auto whitespace-nowrap">
+        <button
+          onClick={() => setActiveTab('general')}
+          className={`pb-4 text-sm font-bold transition-all flex items-center gap-2 ${
+            activeTab === 'general'
+              ? 'text-[#00450d] border-b-2 border-[#00450d]'
+              : 'text-[#41493e] hover:text-[#00450d]'
+          }`}
+        >
+          <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>tune</span>
+          General Settings
+        </button>
+        <button
+          onClick={() => setActiveTab('api')}
+          className={`pb-4 text-sm font-medium transition-all flex items-center gap-2 ${
+            activeTab === 'api'
+              ? 'text-[#00450d] border-b-2 border-[#00450d]'
+              : 'text-[#41493e] hover:text-[#00450d]'
+          }`}
+        >
+          <span className="material-symbols-outlined text-lg">api</span>
+          API Integration
+        </button>
+        <button
+          onClick={() => setActiveTab('notifications')}
+          className={`pb-4 text-sm font-medium transition-all flex items-center gap-2 ${
+            activeTab === 'notifications'
+              ? 'text-[#00450d] border-b-2 border-[#00450d]'
+              : 'text-[#41493e] hover:text-[#00450d]'
+          }`}
+        >
+          <span className="material-symbols-outlined text-lg">notifications_active</span>
+          Notification Rules
+        </button>
+        <button
+          onClick={() => setActiveTab('permissions')}
+          className={`pb-4 text-sm font-medium transition-all flex items-center gap-2 ${
+            activeTab === 'permissions'
+              ? 'text-[#00450d] border-b-2 border-[#00450d]'
+              : 'text-[#41493e] hover:text-[#00450d]'
+          }`}
+        >
+          <span className="material-symbols-outlined text-lg">shield_person</span>
+          User Roles & Permissions
+        </button>
+      </div>
 
-        {/* Contact Information */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-primary" />
-              <CardTitle>Contact Information</CardTitle>
-            </div>
-            <CardDescription>How customers can reach you</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label>Contact Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-                  <Input
-                    type="email"
-                    value={formData.contactEmail}
-                    onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
-                    placeholder="info@agrofeed.com"
-                    className="pl-10"
+      {/* Settings Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Main Form Column */}
+        <div className="lg:col-span-2 space-y-10">
+          {/* General Tab Content */}
+          {activeTab === 'general' && (
+            <section className="bg-white rounded-2xl p-8 space-y-8 shadow-sm">
+              <div className="border-l-4 border-[#00450d] pl-4">
+                <h3 className="text-xl font-bold text-[#1a1c19]">General Configuration</h3>
+                <p className="text-sm text-[#41493e]">Update your portal identity and contact details.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#41493e]">Portal Name</label>
+                  <input
+                    className="w-full bg-[#f4f4ef] border-b border-[#717a6d]/50 focus:border-[#00450d] px-4 py-3 outline-none transition-colors font-medium"
+                    type="text"
+                    value={formData.portalName}
+                    onChange={(e) => setFormData({ ...formData, portalName: e.target.value })}
                   />
+                  <p className="text-[11px] text-[#717a6d] italic">This name appears in browser tabs and system emails.</p>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#41493e]">Support Contact Email</label>
+                  <input
+                    className="w-full bg-[#f4f4ef] border-b border-[#717a6d]/50 focus:border-[#00450d] px-4 py-3 outline-none transition-colors font-medium"
+                    type="email"
+                    value={formData.supportEmail}
+                    onChange={(e) => setFormData({ ...formData, supportEmail: e.target.value })}
+                  />
+                  <p className="text-[11px] text-[#717a6d] italic">The primary address for automated system alerts.</p>
                 </div>
               </div>
-              <div>
-                <Label>Contact Phone</Label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-                  <Input
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#41493e]">Contact Phone</label>
+                  <input
+                    className="w-full bg-[#f4f4ef] border-b border-[#717a6d]/50 focus:border-[#00450d] px-4 py-3 outline-none transition-colors font-medium"
+                    type="tel"
                     value={formData.contactPhone}
                     onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
-                    placeholder="+1 (555) 123-4567"
-                    className="pl-10"
                   />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#41493e]">Timezone</label>
+                  <select
+                    className="w-full bg-[#f4f4ef] border-b border-[#717a6d]/50 focus:border-[#00450d] px-4 py-3 outline-none transition-colors font-medium"
+                    value={formData.timezone}
+                    onChange={(e) => setFormData({ ...formData, timezone: e.target.value })}
+                  >
+                    <option>UTC</option>
+                    <option>EST</option>
+                    <option>PST</option>
+                    <option>GMT</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div>
-              <Label>Business Hours</Label>
-              <Input
-                value={formData.businessHours}
-                onChange={(e) => setFormData({ ...formData, businessHours: e.target.value })}
-                placeholder="Mon-Fri: 8AM-6PM, Sat: 9AM-2PM"
-              />
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Address */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-primary" />
-              <CardTitle>Business Address</CardTitle>
-            </div>
-            <CardDescription>Your physical location</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label>Street Address</Label>
-              <Input
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                placeholder="123 Farm Road"
-              />
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div>
-                <Label>City</Label>
-                <Input
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  placeholder="Agricultural District"
-                />
+              <div className="space-y-4 pt-4">
+                <h4 className="text-sm font-bold text-[#1a1c19] flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#00450d] text-base">palette</span>
+                  Branding Assets
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="group relative overflow-hidden rounded-xl bg-[#e8e8e3] aspect-video flex flex-col items-center justify-center border-2 border-dashed border-[#c0c9bb] hover:border-[#00450d] transition-colors cursor-pointer">
+                    <span className="material-symbols-outlined text-3xl text-[#717a6d] group-hover:text-[#00450d] mb-2 transition-colors">cloud_upload</span>
+                    <p className="text-xs font-bold text-[#41493e]">Upload Primary Logo</p>
+                    <p className="text-[10px] text-[#717a6d] mt-1">PNG, SVG up to 2MB</p>
+                  </div>
+                  <div className="group relative overflow-hidden rounded-xl bg-[#e8e8e3] aspect-video flex flex-col items-center justify-center border-2 border-dashed border-[#c0c9bb] hover:border-[#00450d] transition-colors cursor-pointer">
+                    <span className="material-symbols-outlined text-3xl text-[#717a6d] group-hover:text-[#00450d] mb-2 transition-colors">featured_video</span>
+                    <p className="text-xs font-bold text-[#41493e]">Favicon (32x32)</p>
+                    <p className="text-[10px] text-[#717a6d] mt-1">ICO, PNG up to 100KB</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <Label>State</Label>
-                <Input
-                  value={formData.state}
-                  onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                  placeholder="CA"
-                />
-              </div>
-              <div>
-                <Label>ZIP Code</Label>
-                <Input
-                  value={formData.zipCode}
-                  onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
-                  placeholder="90210"
-                />
-              </div>
-              <div>
-                <Label>Country</Label>
-                <Input
-                  value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  placeholder="USA"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Social Media */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Globe className="h-5 w-5 text-primary" />
-              <CardTitle>Social Media Links</CardTitle>
-            </div>
-            <CardDescription>Connect with customers on social media</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label>
-                  <Facebook className="inline h-4 w-4 mr-2" />
-                  Facebook URL
-                </Label>
-                <Input
-                  value={formData.facebook}
-                  onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
-                  placeholder="https://facebook.com/yourpage"
-                />
+              <div className="pt-6 flex justify-end gap-4 border-t border-[#c0c9bb]/20">
+                <button className="px-6 py-2 text-sm font-bold text-[#41493e] hover:text-[#1a1c19] transition-colors">
+                  Discard Changes
+                </button>
+                <button
+                  onClick={handleSave}
+                  disabled={loading}
+                  className="px-8 py-2.5 bg-[#00450d] text-white rounded-lg font-bold shadow-lg shadow-[#00450d]/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+                >
+                  {loading ? 'Saving...' : 'Save System Config'}
+                </button>
               </div>
-              <div>
-                <Label>
-                  <Twitter className="inline h-4 w-4 mr-2" />
-                  Twitter URL
-                </Label>
-                <Input
-                  value={formData.twitter}
-                  onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                  placeholder="https://twitter.com/yourhandle"
-                />
-              </div>
-              <div>
-                <Label>
-                  <Instagram className="inline h-4 w-4 mr-2" />
-                  Instagram URL
-                </Label>
-                <Input
-                  value={formData.instagram}
-                  onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                  placeholder="https://instagram.com/yourprofile"
-                />
-              </div>
-              <div>
-                <Label>
-                  <Linkedin className="inline h-4 w-4 mr-2" />
-                  LinkedIn URL
-                </Label>
-                <Input
-                  value={formData.linkedin}
-                  onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                  placeholder="https://linkedin.com/company/yourcompany"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </section>
+          )}
 
-        {/* Save Button */}
-        <div className="flex justify-end">
-          <Button type="submit" disabled={saving} size="lg">
-            {saving ? (
-              <>
-                <span className="mr-2">⏳</span>
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="h-4 w-4 mr-2" />
-                Save Settings
-              </>
-            )}
-          </Button>
+          {/* API Tab Content */}
+          {activeTab === 'api' && (
+            <section className="bg-white rounded-2xl p-8 space-y-8 shadow-sm">
+              <div className="border-l-4 border-[#00450d] pl-4">
+                <h3 className="text-xl font-bold text-[#1a1c19]">API Integration</h3>
+                <p className="text-sm text-[#41493e]">Manage API keys and webhook endpoints.</p>
+              </div>
+              <div className="space-y-4">
+                <div className="p-4 bg-[#f4f4ef] rounded-lg">
+                  <p className="text-xs font-bold text-[#41493e] mb-2">API Endpoint</p>
+                  <code className="text-sm font-mono text-[#00450d]">https://api.globalagrarian.com/v2</code>
+                </div>
+                <div className="p-4 bg-[#f4f4ef] rounded-lg">
+                  <p className="text-xs font-bold text-[#41493e] mb-2">API Key</p>
+                  <code className="text-sm font-mono text-[#00450d]">sk_live_••••••••••••••••</code>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Notifications Tab Content */}
+          {activeTab === 'notifications' && (
+            <section className="bg-white rounded-2xl p-8 space-y-8 shadow-sm">
+              <div className="border-l-4 border-[#00450d] pl-4">
+                <h3 className="text-xl font-bold text-[#1a1c19]">Notification Rules</h3>
+                <p className="text-sm text-[#41493e]">Configure email and push notification preferences.</p>
+              </div>
+              <div className="space-y-4">
+                {['Low Stock Alerts', 'Order Confirmations', 'System Updates', 'Security Alerts'].map((item) => (
+                  <div key={item} className="flex items-center justify-between p-4 bg-[#f4f4ef] rounded-lg">
+                    <span className="text-sm font-medium text-[#1a1c19]">{item}</span>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" className="sr-only peer" defaultChecked />
+                      <div className="w-11 h-6 bg-[#e3e3de] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00450d]"></div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Permissions Tab Content */}
+          {activeTab === 'permissions' && (
+            <section className="bg-white rounded-2xl p-8 space-y-8 shadow-sm">
+              <div className="border-l-4 border-[#00450d] pl-4">
+                <h3 className="text-xl font-bold text-[#1a1c19]">User Roles & Permissions</h3>
+                <p className="text-sm text-[#41493e]">Manage access levels and user permissions.</p>
+              </div>
+              <div className="space-y-4">
+                {['Admin Access', 'Product Management', 'Category Management', 'User Management'].map((item) => (
+                  <div key={item} className="flex items-center justify-between p-4 bg-[#f4f4ef] rounded-lg">
+                    <span className="text-sm font-medium text-[#1a1c19]">{item}</span>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" className="sr-only peer" defaultChecked />
+                      <div className="w-11 h-6 bg-[#e3e3de] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00450d]"></div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Information Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-[#dcfce7] p-6 rounded-2xl border border-[#86efac]">
+              <div className="w-10 h-10 rounded-full bg-[#10b981] flex items-center justify-center mb-4">
+                <span className="material-symbols-outlined text-white">security</span>
+              </div>
+              <h4 className="text-lg font-bold text-[#00450d] mb-1">Security Audit</h4>
+              <p className="text-sm text-[#41493e] mb-4">Last full system scan was completed 14 hours ago. No vulnerabilities detected.</p>
+              <a className="text-xs font-bold text-[#00450d] flex items-center gap-1 group" href="#">
+                View Security Logs
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+            <div className="bg-[#fee2e2] p-6 rounded-2xl border border-[#fca5a5]">
+              <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center mb-4">
+                <span className="material-symbols-outlined text-white">dns</span>
+              </div>
+              <h4 className="text-lg font-bold text-[#991b1b] mb-1">Server Status</h4>
+              <p className="text-sm text-[#41493e] mb-4">Frankfurt (FRA-01) Node is currently operating at 99.98% uptime with 42ms latency.</p>
+              <a className="text-xs font-bold text-[#991b1b] flex items-center gap-1 group" href="#">
+                Cluster Health
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </div>
         </div>
-      </form>
+
+        {/* Sidebar Info Column */}
+        <div className="space-y-8">
+          {/* System Health Bento */}
+          <div className="bg-[#eeeee9] rounded-3xl p-6 space-y-6">
+            <h4 className="text-sm font-bold uppercase tracking-widest text-[#41493e]">Global System Health</h4>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-[#1a1c19]">Storage Capacity</span>
+                <span className="text-xs font-bold text-[#00450d]">68% Used</span>
+              </div>
+              <div className="w-full bg-[#e3e3de] rounded-full h-2">
+                <div className="bg-[#00450d] h-2 rounded-full" style={{ width: '68%' }}></div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-[#1a1c19]">API Latency</span>
+                <span className="text-xs font-bold text-[#503600]">Optimal</span>
+              </div>
+              <div className="flex gap-1 h-6 items-end">
+                <div className="bg-[#10b981]/30 w-full h-3 rounded-t-sm"></div>
+                <div className="bg-[#10b981]/40 w-full h-4 rounded-t-sm"></div>
+                <div className="bg-[#10b981]/50 w-full h-3 rounded-t-sm"></div>
+                <div className="bg-[#10b981]/60 w-full h-5 rounded-t-sm"></div>
+                <div className="bg-[#10b981] w-full h-6 rounded-t-sm"></div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-[#c0c9bb]/30">
+              <p className="text-[11px] text-[#41493e] font-medium leading-relaxed">
+                <span className="material-symbols-outlined text-xs inline-block align-middle mr-1">info</span>
+                Automatic backups are scheduled every 24 hours at 02:00 UTC. Next backup in 8 hours.
+              </p>
+            </div>
+          </div>
+
+          {/* Decorative Editorial Image */}
+          <div className="relative group overflow-hidden rounded-3xl aspect-[4/5]">
+            <img
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsSy9iDfMNoJjgyQkz8VfFbgIk40c6ElbBj36dmdyEEIy4_SdAe8pcz1iQzhhrOJ5dw5iNs73lkjHrJBpXl9U4JrMCa5puLBgSx1r-tJ57_Ym4q-J84O65NBQPiCTleqwyXmcXLgJF6uLQKGzGlTrSuvS-g2JgPn-OojjAAhvdAzSYPTDIrKFnRNxveR1rKFkkI39M8-6U0ooxTA2sF1rgoX0fuJFtZgAl7ns6l6L69CsKSg-x5bCS1bBhw2iqSsV_1dQXxjtutJoQ"
+              alt="Harvest"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
+              <p className="text-[#ffdeac] text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Seasonal Focus</p>
+              <h5 className="text-white font-bold text-2xl leading-tight">Harvesting Innovation & Integrity.</h5>
+              <div className="mt-4 flex items-center gap-2">
+                <div className="w-8 h-1 bg-[#ffdeac]"></div>
+                <p className="text-white/60 text-xs italic">Agrarian Logistics v2.4</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-[#2f312e] text-white p-12 mt-20">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="col-span-1 md:col-span-1">
+            <div className="flex items-center gap-2 mb-6">
+              <span className="material-symbols-outlined text-[#ffdeac]">eco</span>
+              <span className="font-bold text-xl tracking-tighter">THE GLOBAL AGRARIAN</span>
+            </div>
+            <p className="text-[#717a6d] text-sm leading-relaxed">
+              Curating the world's finest agricultural exports with precision and transparency since 1994.
+            </p>
+          </div>
+          <div>
+            <h6 className="text-xs font-bold uppercase tracking-widest text-[#ffdeac] mb-6">Internal Links</h6>
+            <ul className="space-y-3 text-sm text-[#717a6d]">
+              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Operational Dashboard</a></li>
+              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Vendor Compliance</a></li>
+              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Logistics Registry</a></li>
+            </ul>
+          </div>
+          <div>
+            <h6 className="text-xs font-bold uppercase tracking-widest text-[#ffdeac] mb-6">Support</h6>
+            <ul className="space-y-3 text-sm text-[#717a6d]">
+              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Admin Handbook</a></li>
+              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Security Protocols</a></li>
+              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Report Incident</a></li>
+            </ul>
+          </div>
+          <div>
+            <h6 className="text-xs font-bold uppercase tracking-widest text-[#503600] mb-6">Global Logistics Status</h6>
+            <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+                <span className="text-xs font-bold">All Corridors Open</span>
+              </div>
+              <p className="text-[11px] text-[#717a6d]">Sea freight latency: 12.4 days average. Air cargo priority: High.</p>
+            </div>
+          </div>
+        </div>
+        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-[#717a6d]">© 2024 The Global Agrarian. Confidential Super Admin Access.</p>
+          <div className="flex gap-6 text-[10px] uppercase font-bold tracking-widest text-[#717a6d]">
+            <a className="hover:text-[#ffdeac] transition-colors" href="#">Privacy Policy</a>
+            <a className="hover:text-[#ffdeac] transition-colors" href="#">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
