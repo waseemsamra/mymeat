@@ -70,7 +70,7 @@ const Navigation = () => {
           <Link to="/services" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/services') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
             Logistics
           </Link>
-          <Link to="/services" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/services') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
+          <Link to="/quality" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/quality') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
             Quality
           </Link>
           <Link to="/about" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/about') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
