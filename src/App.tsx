@@ -14,7 +14,6 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import NewAdminDashboard from './pages/NewAdminDashboard';
 import CategoryDetail from './pages/CategoryDetail';
 import Categories from './pages/Categories';
 import About from './pages/About';
@@ -219,7 +218,6 @@ function App() {
                 </ProtectedRoute>
               } />
               {/* Admin Dashboard - Main dashboard for admin only */}
-              <Route path="/admin" element={<NewAdminDashboard />} />
             </Routes>
           </div>
         </Router>
