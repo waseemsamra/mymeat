@@ -1,21 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Package, 
-  Users, 
-  FileText, 
-  LogOut,
-  Plus,
-  Edit,
-  Trash2,
-  Search,
-  Save,
-  X,
-  ChevronLeft,
-  DollarSign,
-  ShoppingCart,
-  MessageSquare
-} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -25,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { toast } from 'sonner';
-import { Download, Globe, CheckCircle, Award, TrendingUp, Clock, Verified, Shield, FileCheck, Microscope, Truck, Ship, Handshake, AcUnit, Sensors, Users, MapPin, CO2, Payments, WaterDrop, Map, Route, Leaf, Sprout, Wheat, Coffee, Nut, Fish, Beef, Apple, Carrot, Package, Truck, Timer, Thermometer, BadgeCheck, Medal, Star, Heart, Zap, Target, Award, TrendingUp, Clock } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import CMSManagement from './CMSManagement';
 
 // Product interface
@@ -112,9 +96,9 @@ const AdminDashboard = () => {
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState([
-    { id: 1, name: 'John Smith', role: 'Dairy Farm Owner', content: 'Best quality hay we have ever purchased.', rating: 5, avatar: 'JS' },
-    { id: 2, name: 'Sarah Johnson', role: 'Horse Trainer', content: 'Reliable delivery and excellent service.', rating: 5, avatar: 'SJ' },
-    { id: 3, name: 'Mike Williams', role: 'Livestock Rancher', content: 'Our livestock loves their products.', rating: 5, avatar: 'MW' },
+    { id: 1, name: 'John Farmer', role: 'Dairy Farm Owner', content: 'Best quality hay we have ever purchased.', rating: 5, avatar: 'JF' },
+    { id: 2, name: 'Sarah Smith', role: 'Horse Trainer', content: 'Reliable delivery and excellent service.', rating: 5, avatar: 'SS' },
+    { id: 3, name: 'Mike Johnson', role: 'Livestock Rancher', content: 'Our livestock loves their products.', rating: 5, avatar: 'MJ' },
   ]);
   const [editingTestimonial, setEditingTestimonial] = useState<typeof testimonials[0] | null>(null);
 
@@ -180,14 +164,14 @@ const AdminDashboard = () => {
   const handleSaveProduct = (product: Product) => {
     const existingIndex = products.findIndex(p => p.id === product.id);
     let updatedProducts;
-    
+
     if (existingIndex >= 0) {
       updatedProducts = [...products];
       updatedProducts[existingIndex] = product;
     } else {
       updatedProducts = [...products, product];
     }
-    
+
     setProducts(updatedProducts);
     localStorage.setItem('agrofeed_products', JSON.stringify(updatedProducts));
     toast.success('Product saved', {
@@ -201,14 +185,14 @@ const AdminDashboard = () => {
   const handleSaveTestimonial = (testimonial: typeof testimonials[0]) => {
     const existingIndex = testimonials.findIndex(t => t.id === testimonial.id);
     let updatedTestimonials;
-    
+
     if (existingIndex >= 0) {
       updatedTestimonials = [...testimonials];
       updatedTestimonials[existingIndex] = testimonial;
     } else {
       updatedTestimonials = [...testimonials, { ...testimonial, id: Date.now(), avatar: testimonial.name.split(' ').map(n => n[0]).join('') }];
     }
-    
+
     setTestimonials(updatedTestimonials);
     localStorage.setItem('agrofeed_testimonials', JSON.stringify(updatedTestimonials));
     toast.success('Testimonial saved');
@@ -222,18 +206,18 @@ const AdminDashboard = () => {
     toast.success('Testimonial deleted');
   };
 
-  const filteredProducts = products.filter(p =>
-    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = products.filter(product =>
+    product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const stats = [
-    { title: 'Total Products', value: products.length, icon: Package, color: 'text-blue-600', bgColor: 'bg-blue-100' },
-    { title: 'Total Orders', value: '12', change: '+2 this month', icon: ShoppingCart, color: 'text-blue-600', bgColor: 'bg-blue-100' },
-    { title: 'Total Revenue', value: '$24,500', change: '+15% from last month', icon: DollarSign, color: 'text-green-600', bgColor: 'bg-green-100' },
-    { title: 'Active Quotes', value: '3', change: '1 pending review', icon: FileText, color: 'text-amber-600', bgColor: 'bg-amber-100' },
-    { title: 'Customer Reviews', value: testimonials.length.toString(), icon: MessageSquare, color: 'text-purple-600', bgColor: 'bg-purple-100' },
-    { title: 'Total Users', value: '156', change: '+12 this week', icon: Users, color: 'text-pink-600', bgColor: 'bg-pink-100' },
+    { title: 'Total Products', value: products.length, icon: 'package', color: 'text-blue-600', bgColor: 'bg-blue-100' },
+    { title: 'Total Orders', value: '12', change: '+2 this month', icon: 'shopping_cart', color: 'text-blue-600', bgColor: 'bg-blue-100' },
+    { title: 'Total Revenue', value: '$24,500', change: '+15% from last month', icon: 'payments', color: 'text-green-600', bgColor: 'bg-green-100' },
+    { title: 'Active Quotes', value: '3', change: '1 pending review', icon: 'description', color: 'text-amber-600', bgColor: 'bg-amber-100' },
+    { title: 'Customer Reviews', value: testimonials.length.toString(), icon: 'star', color: 'text-purple-600', bgColor: 'bg-purple-100' },
+    { title: 'Total Users', value: '156', change: '+12 this week', icon: 'people', color: 'text-pink-600', bgColor: 'bg-pink-100' },
   ];
 
   if (!isAdmin) {
@@ -254,7 +238,7 @@ const AdminDashboard = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
-                <ChevronLeft className="h-5 w-5" />
+                <span className="material-symbols-outlined">arrow_back</span>
               </Button>
               <div>
                 <h1 className="text-xl font-bold text-dark">Admin Dashboard</h1>
@@ -267,7 +251,7 @@ const AdminDashboard = () => {
               </Badge>
               <Badge className="bg-primary">Admin</Badge>
               <Button variant="outline" size="sm" onClick={handleLogout}>
-                <LogOut className="h-4 w-4 mr-2" />
+                <span className="material-symbols-outlined mr-2">logout</span>
                 Logout
               </Button>
             </div>
@@ -277,15 +261,15 @@ const AdminDashboard = () => {
 
       <main className="section-padding py-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           {stats.map((stat) => (
-            <Card key={stat.title} className="hover:shadow-md transition-shadow">
+            <Card key={stat.title}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-xs font-medium text-muted-foreground">
                   {stat.title}
                 </CardTitle>
                 <div className={`p-2 rounded-lg ${stat.bgColor}`}>
-                  <stat.icon className={`h-4 w-4 ${stat.color}`} />
+                  <span className={`material-symbols-outlined h-4 w-4 ${stat.color}`}>{stat.icon}</span>
                 </div>
               </CardHeader>
               <CardContent>
@@ -297,7 +281,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Tabs Section */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 mt-8">
           <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid lg:grid-cols-5">
             <TabsTrigger value="cms">CMS</TabsTrigger>
             <TabsTrigger value="products">Products</TabsTrigger>
@@ -319,7 +303,7 @@ const AdminDashboard = () => {
                     <CardDescription>Add, edit, or remove products from your catalog</CardDescription>
                   </div>
                   <Button onClick={handleAddProduct}>
-                    <Plus className="h-4 w-4 mr-2" />
+                    <span className="material-symbols-outlined mr-2">add</span>
                     Add Product
                   </Button>
                 </div>
@@ -327,7 +311,7 @@ const AdminDashboard = () => {
               <CardContent>
                 {/* Search */}
                 <div className="relative mb-4">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground">search</span>
                   <Input
                     placeholder="Search products..."
                     value={searchTerm}
@@ -353,7 +337,7 @@ const AdminDashboard = () => {
                         <tr key={product.id} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
+                              <div className="w-10 h-10 bg-gray-100 rounded-lg overflow-hidden">
                                 <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
                               </div>
                               <div>
@@ -370,10 +354,10 @@ const AdminDashboard = () => {
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-2">
                               <Button variant="ghost" size="icon" onClick={() => handleEditProduct(product)}>
-                                <Edit className="h-4 w-4" />
+                                <span className="material-symbols-outlined h-4 w-4">edit</span>
                               </Button>
                               <Button variant="ghost" size="icon" onClick={() => handleDeleteProduct(product.id)}>
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <span className="material-symbols-outlined h-4 w-4 text-red-600">delete</span>
                               </Button>
                             </div>
                           </td>
@@ -395,7 +379,7 @@ const AdminDashboard = () => {
                     <CardDescription>Manage customer reviews and testimonials</CardDescription>
                   </div>
                   <Button onClick={() => setEditingTestimonial({ id: Date.now(), name: '', role: '', content: '', rating: 5, avatar: '' })}>
-                    <Plus className="h-4 w-4 mr-2" />
+                    <span className="material-symbols-outlined mr-2">add</span>
                     Add Testimonial
                   </Button>
                 </div>
@@ -423,11 +407,11 @@ const AdminDashboard = () => {
                       <p className="text-sm text-muted-foreground mb-4">{testimonial.content}</p>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm" onClick={() => setEditingTestimonial(testimonial)}>
-                          <Edit className="h-3 w-3 mr-1" />
+                          <span className="material-symbols-outlined h-3 w-3 mr-1">edit</span>
                           Edit
                         </Button>
                         <Button variant="outline" size="sm" onClick={() => handleDeleteTestimonial(testimonial.id)}>
-                          <Trash2 className="h-3 w-3 mr-1 text-red-600" />
+                          <span className="material-symbols-outlined h-3 w-3 mr-1 text-red-600">delete</span>
                           Delete
                         </Button>
                       </div>
@@ -455,22 +439,19 @@ const AdminDashboard = () => {
                     <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <ShoppingCart className="h-5 w-5 text-blue-600" />
+                          <span className="material-symbols-outlined h-5 w-5 text-blue-600">shopping_cart</span>
                         </div>
                         <div>
                           <p className="font-medium">{order.product}</p>
                           <p className="text-sm text-muted-foreground">{order.customer} • {order.quantity}</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <Badge className={
-                          order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                          order.status === 'In Transit' ? 'bg-blue-100 text-blue-800' :
-                          order.status === 'Processing' ? 'bg-amber-100 text-amber-800' :
-                          'bg-gray-100 text-gray-800'
-                        }>{order.status}</Badge>
-                        <p className="text-sm font-medium mt-1">{order.amount}</p>
-                      </div>
+                      <Badge className={
+                        order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                        order.status === 'In Transit' ? 'bg-blue-100 text-blue-800' :
+                        order.status === 'Processing' ? 'bg-amber-100 text-amber-800' :
+                        'bg-gray-100 text-gray-800'
+                      }>{order.status}</Badge>
                     </div>
                   ))}
                 </div>
@@ -499,7 +480,7 @@ const AdminDashboard = () => {
                     <Input defaultValue="+1 (555) 123-4567" />
                   </div>
                   <Button className="w-full">
-                    <Save className="h-4 w-4 mr-2" />
+                    <span className="material-symbols-outlined mr-2">save</span>
                     Save Settings
                   </Button>
                 </CardContent>
@@ -533,12 +514,12 @@ const AdminDashboard = () => {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                       >
-                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        <span className="material-symbols-outlined h-4 w-4">{showPassword ? 'visibility_off' : 'visibility'}</span>
                       </button>
                     </div>
                   </div>
                   <Button className="w-full">
-                    <Save className="h-4 w-4 mr-2" />
+                    <span className="material-symbols-outlined mr-2">save</span>
                     Update Profile
                   </Button>
                 </CardContent>
@@ -575,123 +556,63 @@ const AdminDashboard = () => {
 // Product Modal Component
 const ProductModal = ({ product, onClose, onSave }: { product: Product; onClose: () => void; onSave: (p: Product) => void }) => {
   const [formData, setFormData] = useState<Product>(product);
-  const [newItem, setNewItem] = useState('');
-  const [newFeature, setNewFeature] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
   };
 
-  const addItem = () => {
-    if (newItem.trim()) {
-      setFormData({ ...formData, items: [...formData.items, newItem.trim()] });
-      setNewItem('');
-    }
-  };
-
-  const removeItem = (index: number) => {
-    setFormData({ ...formData, items: formData.items.filter((_, i) => i !== index) });
-  };
-
-  const addFeature = () => {
-    if (newFeature.trim()) {
-      setFormData({ ...formData, features: [...formData.features, newFeature.trim()] });
-      setNewFeature('');
-    }
-  };
-
-  const removeFeature = (index: number) => {
-    setFormData({ ...formData, features: formData.features.filter((_, i) => i !== index) });
-  };
-
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">{product.id.startsWith('product-') ? 'Add Product' : 'Edit Product'}</h2>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>{product.id ? 'Edit Product' : 'Add Product'}</CardTitle>
+            <Button variant="ghost" size="icon" onClick={onClose}>
+              <span className="material-symbols-outlined">close</span>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label>Product Title</Label>
               <Input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
             </div>
             <div>
               <Label>Subtitle</Label>
-              <Input value={formData.subtitle} onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })} required />
-            </div>
-          </div>
-          <div>
-            <Label>Category</Label>
-            <Input value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} required />
-          </div>
-          <div>
-            <Label>Description</Label>
-            <textarea
-              className="w-full min-h-[100px] px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              required
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label>Image URL</Label>
-              <Input value={formData.image} onChange={(e) => setFormData({ ...formData, image: e.target.value })} />
+              <Input value={formData.subtitle} onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })} />
             </div>
             <div>
-              <Label>Detail Image URL</Label>
-              <Input value={formData.detailImage} onChange={(e) => setFormData({ ...formData, detailImage: e.target.value })} />
+              <Label>Description</Label>
+              <textarea
+                className="w-full min-h-[100px] px-3 py-2 border rounded-lg"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              />
             </div>
-          </div>
-          
-          <Separator />
-          
-          <div>
-            <Label>Product Items</Label>
-            <div className="flex gap-2 mt-2">
-              <Input value={newItem} onChange={(e) => setNewItem(e.target.value)} placeholder="Add item..." />
-              <Button type="button" onClick={addItem}><Plus className="h-4 w-4" /></Button>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Category</Label>
+                <Input value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} />
+              </div>
+              <div>
+                <Label>Image URL</Label>
+                <Input value={formData.image} onChange={(e) => setFormData({ ...formData, image: e.target.value })} />
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {formData.items.map((item, index) => (
-                <Badge key={index} variant="outline" className="cursor-pointer" onClick={() => removeItem(index)}>
-                  {item} <X className="h-3 w-3 ml-1" />
-                </Badge>
-              ))}
+            <div className="flex gap-2">
+              <Button type="submit" className="flex-1">
+                <span className="material-symbols-outlined mr-2">save</span>
+                Save Product
+              </Button>
+              <Button type="button" variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
             </div>
-          </div>
-
-          <div>
-            <Label>Features</Label>
-            <div className="flex gap-2 mt-2">
-              <Input value={newFeature} onChange={(e) => setNewFeature(e.target.value)} placeholder="Add feature..." />
-              <Button type="button" onClick={addFeature}><Plus className="h-4 w-4" /></Button>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {formData.features.map((feature, index) => (
-                <Badge key={index} variant="outline" className="cursor-pointer" onClick={() => removeFeature(index)}>
-                  {feature} <X className="h-3 w-3 ml-1" />
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex gap-4 pt-4">
-            <Button type="button" variant="outline" className="flex-1" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" className="flex-1">
-              <Save className="h-4 w-4 mr-2" />
-              Save Product
-            </Button>
-          </div>
-        </form>
-      </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
@@ -706,58 +627,62 @@ const TestimonialModal = ({ testimonial, onClose, onSave }: { testimonial: any; 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-md">
-        <div className="border-b px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">{testimonial.id > Date.now() - 1000 ? 'Add Testimonial' : 'Edit Testimonial'}</h2>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div>
-            <Label>Name</Label>
-            <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-lg">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>{testimonial.id ? 'Edit Testimonial' : 'Add Testimonial'}</CardTitle>
+            <Button variant="ghost" size="icon" onClick={onClose}>
+              <span className="material-symbols-outlined">close</span>
+            </Button>
           </div>
-          <div>
-            <Label>Role</Label>
-            <Input value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} required />
-          </div>
-          <div>
-            <Label>Content</Label>
-            <textarea
-              className="w-full min-h-[100px] px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              required
-            />
-          </div>
-          <div>
-            <Label>Rating</Label>
-            <div className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((rating) => (
-                <button
-                  key={rating}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, rating })}
-                  className={`text-2xl ${rating <= formData.rating ? 'text-amber-500' : 'text-gray-300'}`}
-                >
-                  ★
-                </button>
-              ))}
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Label>Name</Label>
+              <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
             </div>
-          </div>
-          <div className="flex gap-4 pt-4">
-            <Button type="button" variant="outline" className="flex-1" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" className="flex-1">
-              <Save className="h-4 w-4 mr-2" />
-              Save
-            </Button>
-          </div>
-        </form>
-      </div>
+            <div>
+              <Label>Role</Label>
+              <Input value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} />
+            </div>
+            <div>
+              <Label>Content</Label>
+              <textarea
+                className="w-full min-h-[100px] px-3 py-2 border rounded-lg"
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                required
+              />
+            </div>
+            <div>
+              <Label>Rating</Label>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, rating: star })}
+                    className={`text-2xl ${star <= formData.rating ? 'text-amber-500' : 'text-gray-300'}`}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button type="submit" className="flex-1">
+                <span className="material-symbols-outlined mr-2">save</span>
+                Save Testimonial
+              </Button>
+              <Button type="button" variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
