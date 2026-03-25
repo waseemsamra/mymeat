@@ -241,7 +241,7 @@ const CategoryManagement = () => {
           <p className="text-gray-500">Organize your products into categories</p>
         </div>
         <Button onClick={() => handleOpenModal()} disabled={loading}>
-          <Plus className="h-4 w-4 mr-2" />
+          <span className="material-symbols-outlined mr-2">add</span>
           Add Category
         </Button>
       </div>
@@ -252,7 +252,7 @@ const CategoryManagement = () => {
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                <Tag className="h-5 w-5 text-primary" />
+                <span className="material-symbols-outlined">label</span>
               </div>
               <div>
                 <div className="text-2xl font-bold">{categories.length}</div>
@@ -265,7 +265,7 @@ const CategoryManagement = () => {
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                <Package className="h-5 w-5 text-green-600" />
+                <span className="material-symbols-outlined">package</span>
               </div>
               <div>
                 <div className="text-2xl font-bold">{totalProducts}</div>
@@ -279,7 +279,7 @@ const CategoryManagement = () => {
       {/* Categories Grid */}
       {loading ? (
         <div className="text-center py-8">
-          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
+          <span className="material-symbols-outlined mr-2 animate-spin">progress_activity</span>
           <p className="mt-4 text-gray-600">Loading categories...</p>
         </div>
       ) : (
@@ -334,14 +334,14 @@ const CategoryManagement = () => {
                     variant="outline"
                     onClick={() => handleOpenModal(category)}
                   >
-                    <Edit className="h-3 w-3" />
+                    <span className="material-symbols-outlined h-3 w-3 mr-1">edit</span>
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => handleDelete(category.id)}
                   >
-                    <Trash2 className="h-3 w-3 text-red-600" />
+                    <span className="material-symbols-outlined h-3 w-3 mr-1 text-red-600">delete</span>
                   </Button>
                 </div>
               </CardContent>
@@ -360,7 +360,7 @@ const CategoryManagement = () => {
                   {editingCategory ? 'Edit Category' : 'Add Category'}
                 </CardTitle>
                 <Button size="sm" variant="ghost" onClick={handleCloseModal}>
-                  <X className="h-4 w-4" />
+                  <span className="material-symbols-outlined">close</span>
                 </Button>
               </div>
             </CardHeader>
@@ -384,7 +384,7 @@ const CategoryManagement = () => {
                         </>
                       ) : (
                         <>
-                          <Upload className="h-4 w-4 mr-2" />
+                          <span className="material-symbols-outlined mr-2">upload</span>
                           Upload
                         </>
                       )}
@@ -469,7 +469,7 @@ const CategoryManagement = () => {
                       </>
                     ) : (
                       <>
-                        <Save className="h-4 w-4 mr-2" />
+                        <span className="material-symbols-outlined mr-2">save</span>
                         {editingCategory ? 'Update' : 'Create'} Category
                       </>
                     )}

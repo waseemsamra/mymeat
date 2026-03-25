@@ -97,7 +97,7 @@ const CategoryDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 animate-spin text-primary" />
+        <span className="material-symbols-outlined mr-2 animate-spin">progress_activity</span>
       </div>
     );
   }
@@ -106,7 +106,7 @@ const CategoryDetail = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 flex items-center justify-center">
         <div className="text-center">
-          <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+          <span className="material-symbols-outlined">package</span>
           <h2 className="text-2xl font-bold text-gray-600 mb-2">Category Not Found</h2>
           <Link to="/categories" className="text-primary hover:underline">
             ← Back to Categories
@@ -125,7 +125,7 @@ const CategoryDetail = () => {
             to="/categories"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <span className="material-symbols-outlined">arrow_back</span>
             Back to Categories
           </Link>
         </div>
@@ -147,7 +147,7 @@ const CategoryDetail = () => {
             className="w-full h-full flex items-center justify-center"
             style={{ backgroundColor: category.color }}
           >
-            <Tag className="w-32 h-32 text-white/50" />
+            <span className="material-symbols-outlined">label</span>
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -185,7 +185,7 @@ const CategoryDetail = () => {
 
         {products.length === 0 ? (
           <div className="text-center py-16">
-            <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+            <span className="material-symbols-outlined">package</span>
             <h3 className="text-xl font-bold text-gray-600 mb-2">No Products Yet</h3>
             <p className="text-gray-500">Check back later for products in this category.</p>
           </div>
@@ -247,7 +247,7 @@ const CategoryDetail = () => {
                                 opacity-0 group-hover:opacity-100 transition-all duration-300
                                 transform translate-y-2 group-hover:translate-y-0">
                     View Details
-                    <ArrowRight className="w-4 h-4" />
+                    <span className="material-symbols-outlined">arrow_forward</span>
                   </div>
                 </div>
               </Link>

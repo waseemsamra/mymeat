@@ -211,13 +211,13 @@ const Dashboard = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" asChild>
                       <Link to="/products">
-                        <Package className="h-6 w-6" />
+                        <span className="material-symbols-outlined">package</span>
                         <span>Browse Products</span>
                       </Link>
                     </Button>
                     <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" asChild>
                       <Link to="/contact">
-                        <Mail className="h-6 w-6" />
+                        <span className="material-symbols-outlined w-5 h-5 text-blue-600">mail</span>
                         <span>Request Quote</span>
                       </Link>
                     </Button>
@@ -289,7 +289,7 @@ const Dashboard = () => {
                   {savedProducts.map((product, index) => (
                     <div key={index} className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                       <div className="aspect-square bg-gray-100 flex items-center justify-center">
-                        <Package className="h-12 w-12 text-muted-foreground" />
+                        <span className="material-symbols-outlined">package</span>
                       </div>
                       <div className="p-4">
                         <p className="font-medium truncate">{product.name}</p>
@@ -311,7 +311,7 @@ const Dashboard = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
+                    <span className="material-symbols-outlined w-5 h-5 text-blue-600">person</span>
                     Profile Information
                   </CardTitle>
                   <CardDescription>Update your personal details</CardDescription>

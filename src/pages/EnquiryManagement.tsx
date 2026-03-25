@@ -173,7 +173,7 @@ const EnquiryManagement = () => {
       {/* Filters */}
       <div className="flex gap-4">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground">search</span>
           <Input
             placeholder="Search enquiries..."
             value={searchTerm}
@@ -206,17 +206,17 @@ const EnquiryManagement = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                      <User className="h-5 w-5 text-primary" />
+                      <span className="material-symbols-outlined w-5 h-5 text-blue-600">person</span>
                     </div>
                     <div>
                       <CardTitle>{enquiry.name}</CardTitle>
                       <CardDescription className="flex items-center gap-4">
                         <span className="flex items-center gap-1">
-                          <Mail className="h-3 w-3" />
+                          <span className="material-symbols-outlined w-5 h-5 text-blue-600">mail</span>
                           {enquiry.email}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Phone className="h-3 w-3" />
+                          <span className="material-symbols-outlined w-5 h-5 text-blue-600">phone</span>
                           {enquiry.phone}
                         </span>
                       </CardDescription>
@@ -229,7 +229,7 @@ const EnquiryManagement = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-2 mb-2">
-                  <MessageSquare className="h-4 w-4 text-gray-500" />
+                  <span className="material-symbols-outlined w-5 h-5 text-blue-600">chat</span>
                   <span className="font-medium">{enquiry.product}</span>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{enquiry.message}</p>
@@ -260,7 +260,7 @@ const EnquiryManagement = () => {
                       variant="outline"
                       onClick={() => handleDelete(enquiry.id)}
                     >
-                      <Trash2 className="h-3 w-3 text-red-600" />
+                      <span className="material-symbols-outlined h-3 w-3 mr-1 text-red-600">delete</span>
                     </Button>
                   </div>
                 </div>
@@ -278,7 +278,7 @@ const EnquiryManagement = () => {
               <div className="flex items-center justify-between">
                 <CardTitle>Enquiry Details</CardTitle>
                 <Button size="sm" variant="ghost" onClick={() => setIsModalOpen(false)}>
-                  <X className="h-4 w-4" />
+                  <span className="material-symbols-outlined">close</span>
                 </Button>
               </div>
             </CardHeader>
@@ -287,15 +287,15 @@ const EnquiryManagement = () => {
                 <Label>Customer Information</Label>
                 <div className="mt-2 space-y-2">
                   <p className="flex items-center gap-2">
-                    <User className="h-4 w-4 text-gray-500" />
+                    <span className="material-symbols-outlined w-5 h-5 text-blue-600">person</span>
                     <strong>Name:</strong> {selectedEnquiry.name}
                   </p>
                   <p className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-gray-500" />
+                    <span className="material-symbols-outlined w-5 h-5 text-blue-600">mail</span>
                     <strong>Email:</strong> {selectedEnquiry.email}
                   </p>
                   <p className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-gray-500" />
+                    <span className="material-symbols-outlined w-5 h-5 text-blue-600">phone</span>
                     <strong>Phone:</strong> {selectedEnquiry.phone}
                   </p>
                 </div>
@@ -305,7 +305,7 @@ const EnquiryManagement = () => {
                 <Label>Enquiry Details</Label>
                 <div className="mt-2 space-y-2">
                   <p className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-gray-500" />
+                    <span className="material-symbols-outlined w-5 h-5 text-blue-600">chat</span>
                     <strong>Product:</strong> {selectedEnquiry.product}
                   </p>
                   <p className="flex items-center gap-2">

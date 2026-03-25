@@ -289,14 +289,14 @@ const ProductManagement = () => {
           <p className="text-gray-500">Manage your product catalog</p>
         </div>
         <Button onClick={() => handleOpenModal()}>
-          <Plus className="h-4 w-4 mr-2" />
+          <span className="material-symbols-outlined mr-2">add</span>
           Add Product
         </Button>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground">search</span>
         <Input
           placeholder="Search products..."
           value={searchTerm}
@@ -335,14 +335,14 @@ const ProductManagement = () => {
                       variant="outline"
                       onClick={() => handleOpenModal(product)}
                     >
-                      <Edit className="h-3 w-3" />
+                      <span className="material-symbols-outlined h-3 w-3 mr-1">edit</span>
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => handleDelete(product.id)}
                     >
-                      <Trash2 className="h-3 w-3 text-red-600" />
+                      <span className="material-symbols-outlined h-3 w-3 mr-1 text-red-600">delete</span>
                     </Button>
                   </div>
                 </div>
@@ -362,7 +362,7 @@ const ProductManagement = () => {
                   {editingProduct ? 'Edit Product' : 'Add Product'}
                 </CardTitle>
                 <Button size="sm" variant="ghost" onClick={handleCloseModal}>
-                  <X className="h-4 w-4" />
+                  <span className="material-symbols-outlined">close</span>
                 </Button>
               </div>
             </CardHeader>

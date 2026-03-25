@@ -247,7 +247,7 @@ const ProductDetail = () => {
 
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 
                            text-primary-light rounded-full text-sm font-medium mb-4">
-              <Package className="w-4 h-4" />
+              <span className="material-symbols-outlined">package</span>
               {product.subtitle}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
@@ -303,7 +303,7 @@ const ProductDetail = () => {
               {/* Specifications */}
               <div className="detail-info-card bg-green-50 rounded-2xl p-6">
                 <h3 className="text-lg font-bold text-dark mb-4 flex items-center gap-2">
-                  <Package className="w-5 h-5 text-primary" />
+                  <span className="material-symbols-outlined">package</span>
                   Specifications
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -369,7 +369,7 @@ const ProductDetail = () => {
                            px-6 py-3.5 rounded-xl font-semibold transition-all duration-300
                            hover:bg-green-100"
                 >
-                  <Phone className="w-5 h-5" />
+                  <span className="material-symbols-outlined w-5 h-5 text-blue-600">phone</span>
                   Call Us
                 </a>
               </div>
@@ -445,7 +445,7 @@ const ProductDetail = () => {
                   <div className="flex items-center gap-2 text-primary text-sm font-medium mt-3
                                 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     View Details
-                    <ArrowRight className="w-4 h-4" />
+                    <span className="material-symbols-outlined">arrow_forward</span>
                   </div>
                 </div>
               </Link>
@@ -461,7 +461,7 @@ const ProductDetail = () => {
           className="inline-flex items-center gap-2 text-primary font-medium
                    hover:text-primary-dark transition-colors duration-300"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <span className="material-symbols-outlined">arrow_back</span>
           Back to All Products
         </Link>
       </div>

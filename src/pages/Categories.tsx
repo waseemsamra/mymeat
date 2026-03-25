@@ -41,7 +41,7 @@ const Categories = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-accent/5 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary mb-4" />
+          <span className="material-symbols-outlined mr-2 animate-spin">progress_activity</span>
           <p className="text-gray-600">Loading categories...</p>
         </div>
       </div>
@@ -59,7 +59,7 @@ const Categories = () => {
             to="/"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <span className="material-symbols-outlined">arrow_back</span>
             Back to Home
           </Link>
         </div>
@@ -79,7 +79,7 @@ const Categories = () => {
         {/* Categories Grid */}
         {categories.length === 0 ? (
           <div className="text-center py-16">
-            <Tag className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+            <span className="material-symbols-outlined">label</span>
             <h3 className="text-2xl font-bold text-gray-600 mb-2">No Categories Found</h3>
             <p className="text-gray-500">Check back later for product categories.</p>
           </div>
@@ -111,7 +111,7 @@ const Categories = () => {
                                duration-700 group-hover:scale-105"
                       style={{ backgroundColor: category.color }}
                     >
-                      <Tag className="w-24 h-24 text-white/30" />
+                      <span className="material-symbols-outlined">label</span>
                     </div>
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -140,7 +140,7 @@ const Categories = () => {
                   <div className="flex items-center gap-2 text-primary font-semibold
                                 group-hover:gap-4 transition-all duration-300">
                     View Products
-                    <ArrowRight className="w-5 h-5" />
+                    <span className="material-symbols-outlined">arrow_forward</span>
                   </div>
                 </div>
 

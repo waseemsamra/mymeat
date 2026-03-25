@@ -265,7 +265,7 @@ const BakeryProducts = () => {
                   Enquire for Bulk
                 </Link>
                 <Link to="/contact" className="border-2 border-white/40 text-white px-10 py-4 rounded font-headline font-extrabold text-lg hover:bg-white/10 transition-all flex items-center gap-2">
-                  <Description className="w-5 h-5" />
+                  <span className="material-symbols-outlined mr-2">description</span>
                   Download Specs
                 </Link>
               </div>

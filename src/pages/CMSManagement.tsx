@@ -131,7 +131,7 @@ const HeroEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: an
                   </>
                 ) : (
                   <>
-                    <Upload className="h-4 w-4 mr-2" />
+                    <span className="material-symbols-outlined mr-2">upload</span>
                     Upload
                   </>
                 )}
@@ -201,7 +201,7 @@ const HeroEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: an
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <span className="material-symbols-outlined mr-2">save</span>
                 Save Changes
               </>
             )}
@@ -263,7 +263,7 @@ const AboutEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave: a
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <span className="material-symbols-outlined mr-2">save</span>
                 Save Changes
               </>
             )}
@@ -315,7 +315,7 @@ const TestimonialsEditor = ({ data, onSave, saving, setSaving }: { data: any; on
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <span className="material-symbols-outlined mr-2">save</span>
                 Save Changes
               </>
             )}
@@ -381,7 +381,7 @@ const EnquiryEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave:
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <span className="material-symbols-outlined mr-2">save</span>
                 Save Changes
               </>
             )}
@@ -447,7 +447,7 @@ const SettingsEditor = ({ data, onSave, saving, setSaving }: { data: any; onSave
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <span className="material-symbols-outlined mr-2">save</span>
                 Save Changes
               </>
             )}
