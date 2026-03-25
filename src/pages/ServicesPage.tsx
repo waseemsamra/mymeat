@@ -55,7 +55,7 @@ const Services = () => {
                 <div className="bg-[#f4f4ef] p-8 rounded-xl border-l-4 border-[#503600]">
                   <span className="text-[#503600] font-bold block mb-2 uppercase text-xs tracking-widest">Global Status</span>
                   <div className="flex items-center gap-3">
-                    <Globe className="text-[#503600] w-6 h-6" />
+                    <span className="material-symbols-outlined w-10 h-10">language</span>
                     <span className="text-[#1a1c19] font-semibold">142 Active Trade Routes</span>
                   </div>
                 </div>
@@ -72,7 +72,7 @@ const Services = () => {
               <div className="md:col-span-8 group relative overflow-hidden bg-[#ffffff] p-10 rounded-xl transition-all duration-500 hover:bg-[#fafaf5]">
                 <div className="flex flex-col h-full justify-between">
                   <div>
-                    <Ship className="text-[#00450d] w-10 h-10 mb-6" />
+                    <span className="material-symbols-outlined w-10 h-10">sailing</span>
                     <h3 className="font-headline font-bold text-2xl mb-4">Global Logistics</h3>
                     <p className="text-[#41493e] max-w-md">Seamless air, sea, and land transport networks optimized for speed and reliability. Our multimodal approach ensures no corner of the globe is out of reach.</p>
                   </div>
@@ -91,20 +91,20 @@ const Services = () => {
               {/* Quality Control */}
               <div className="md:col-span-4 bg-[#00450d] text-white p-10 rounded-xl flex flex-col justify-between">
                 <div>
-                  <Verified className="text-[#acf4a4] w-10 h-10 mb-6" />
+                  <span className="material-symbols-outlined w-6 h-6">verified</span>
                   <h3 className="font-headline font-bold text-2xl mb-4">Quality Control</h3>
                   <p className="text-[#acf4a4]/80">Three-stage inspection and certification process that guarantees export-grade excellence from farmgate to warehouse.</p>
                 </div>
                 <div className="mt-8">
                   <ul className="space-y-3 text-sm font-medium">
                     <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" /> Pre-harvest verification
+                      <span className="material-symbols-outlined w-4 h-4">check_circle</span> Pre-harvest verification
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" /> Mid-transit health checks
+                      <span className="material-symbols-outlined w-4 h-4">check_circle</span> Mid-transit health checks
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" /> Final destination audit
+                      <span className="material-symbols-outlined w-4 h-4">check_circle</span> Final destination audit
                     </li>
                   </ul>
                 </div>
@@ -113,7 +113,7 @@ const Services = () => {
               {/* Custom Sourcing */}
               <div className="md:col-span-4 bg-[#e3e3de] p-10 rounded-xl flex flex-col justify-between border border-transparent hover:border-[#c0c9bb] transition-colors">
                 <div>
-                  <Handshake className="text-[#7a5649] w-10 h-10 mb-6" />
+                  <span className="material-symbols-outlined w-10 h-10">handshake</span>
                   <h3 className="font-headline font-bold text-2xl mb-4">Custom Sourcing</h3>
                   <p className="text-[#41493e]">Boutique sourcing for specific client needs. We find the rare, the seasonal, and the ultra-premium through our private network.</p>
                 </div>

@@ -60,13 +60,13 @@ const Quality = () => {
               </div>
 
               <div className="bg-[#ffffff] p-8 rounded-xl editorial-shadow">
-                <Shield className="text-[#00450d] w-12 h-12 mb-6" />
+                <span className="material-symbols-outlined w-6 h-6">security</span>
                 <h3 className="font-headline font-bold text-xl mb-4">Zero Compromise</h3>
                 <p className="text-[#41493e] text-sm leading-relaxed">We reject any shipment that doesn't meet our stringent quality parameters, ensuring only excellence reaches your facility.</p>
               </div>
 
               <div className="bg-[#ffffff] p-8 rounded-xl editorial-shadow">
-                <Award className="text-[#00450d] w-12 h-12 mb-6" />
+                <span className="material-symbols-outlined w-6 h-6">workspace_premium</span>
                 <h3 className="font-headline font-bold text-xl mb-4">Certified Excellence</h3>
                 <p className="text-[#41493e] text-sm leading-relaxed">Our partners hold internationally recognized certifications including Global GAP, BRCGS, HACCP, and ISO 22000.</p>
               </div>
@@ -162,7 +162,7 @@ const Quality = () => {
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="bg-[#1b5e20] p-3 rounded-lg">
-                      <Shield className="text-[#90d689] w-6 h-6" />
+                      <span className="material-symbols-outlined w-6 h-6">security</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">BRCGS Food Safety</h4>
@@ -171,7 +171,7 @@ const Quality = () => {
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="bg-[#1b5e20] p-3 rounded-lg">
-                      <FileCheck className="text-[#90d689] w-6 h-6" />
+                      <span className="material-symbols-outlined w-6 h-6">fact_check</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">HACCP Certified</h4>
