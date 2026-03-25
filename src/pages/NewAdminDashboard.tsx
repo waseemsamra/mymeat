@@ -7,6 +7,7 @@ import SiteSettingsEditor from './SiteSettingsEditor';
 import HomepageCMS from './HomepageCMS';
 import NavigationMgmt from './NavigationMgmt';
 import FooterMgmt from './FooterMgmt';
+import UserManagement from './UserManagement';
 
 interface User {
   email: string;
@@ -71,11 +72,7 @@ const NewAdminDashboard = () => {
       case 'categories':
         return <CategoryManagement />;
       case 'users':
-        return (
-          <div className="bg-[#eeeee9] p-8 rounded-2xl">
-            <p className="text-[#41493e] text-sm">User management module coming soon...</p>
-          </div>
-        );
+        return <UserManagement />;
       case 'settings':
         return <SiteSettingsEditor />;
       default:
