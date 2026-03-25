@@ -18,6 +18,7 @@ import NewAdminDashboard from './pages/NewAdminDashboard';
 import CategoryDetail from './pages/CategoryDetail';
 import Categories from './pages/Categories';
 import About from './pages/About';
+import Services from './pages/Services';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -109,6 +110,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><About /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Services Page */}
+              <Route path="/services" element={
+                <>
+                  <Navigation />
+                  <main><Services /></main>
                   <Footer />
                 </>
               } />
