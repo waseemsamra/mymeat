@@ -50,11 +50,11 @@ const Home = () => {
           </Link>
           
           <div className="hidden md:flex items-center gap-8">
-            <a className="font-headline font-bold tracking-tight text-sm text-[#00450d] border-b-2 border-[#00450d] pb-1 hover:text-[#0c5216] transition-colors" href="#home">Home</a>
-            <a className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors" href="#categories">Categories</a>
-            <a className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors" href="#services">Services</a>
-            <a className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors" href="#about">About</a>
-            <a className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors" href="#contact">Contact</a>
+            <a href="#home" className="font-headline font-bold tracking-tight text-sm text-[#00450d] border-b-2 border-[#00450d] pb-1 hover:text-[#0c5216] transition-colors">Home</a>
+            <a href="#products" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Categories</a>
+            <a href="#services" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Services</a>
+            <Link to="/about" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">About</Link>
+            <Link to="/contact" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Contact</Link>
           </div>
 
           <Link to="/contact" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-6 py-2.5 rounded font-headline font-bold text-sm transition-all">
