@@ -35,12 +35,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (session.tokens) {
           // User is authenticated, get attributes
           const attributes = await fetchUserAttributes();
+          // Check for custom:role or custom_role attribute
+          const userRole = (attributes['custom:role'] || attributes['custom_role'] || 'user') as 'user' | 'admin';
+          
           const userWithoutPassword: User = {
             id: attributes.sub || '',
             email: attributes.email || '',
             name: attributes.name || '',
-            company: attributes.custom_company || '',
-            role: (attributes.custom_role as 'user' | 'admin') || 'user',
+            company: attributes.custom_company || attributes['custom:company'] || '',
+            role: userRole,
           };
           setUser(userWithoutPassword);
           localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
@@ -69,15 +72,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const result = await signIn({ username: email, password });
-      
+
       if (result.isSignedIn) {
         const attributes = await fetchUserAttributes();
+        // Check for custom:role or custom_role attribute
+        const userRole = (attributes['custom:role'] || attributes['custom_role'] || 'user') as 'user' | 'admin';
+        
         const userWithoutPassword: User = {
           id: attributes.sub || '',
           email: attributes.email || '',
           name: attributes.name || '',
-          company: attributes.custom_company || '',
-          role: (attributes.custom_role as 'user' | 'admin') || 'user',
+          company: attributes.custom_company || attributes['custom:company'] || '',
+          role: userRole,
         };
         setUser(userWithoutPassword);
         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userWithoutPassword));
@@ -87,7 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(false);
         return true;
       }
-      
+
       setIsLoading(false);
       return false;
     } catch (error: any) {
@@ -122,7 +128,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error('Logout error:', error);
     }
-    
+
     setUser(null);
     localStorage.removeItem(CURRENT_USER_KEY);
     toast.success('Logged out', {

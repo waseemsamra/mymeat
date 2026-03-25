@@ -14,20 +14,22 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import CategoryDetail from './pages/CategoryDetail';
+import ProductsPage from './pages/Products';
 import Categories from './pages/Categories';
 import About from './pages/About';
 import Services from './pages/Services';
+import ServicesPage from './pages/ServicesPage';
+import Quality from './pages/Quality';
+import Sourcing from './pages/Sourcing';
+import ProcurementCenter from './pages/ProcurementCenter';
 import MeatSeafood from './pages/MeatSeafood';
 import RiceSpices from './pages/RiceSpices';
 import FruitsVegetables from './pages/FruitsVegetables';
 import CannedGoods from './pages/CannedGoods';
 import NutsFlavors from './pages/NutsFlavors';
 import BakeryProducts from './pages/BakeryProducts';
-import ServicesPage from './pages/ServicesPage';
-import Quality from './pages/Quality';
-import Sourcing from './pages/Sourcing';
-import ProcurementCenter from './pages/ProcurementCenter';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -72,7 +74,7 @@ function App() {
               <Route path="/products" element={
                 <>
                   <Navigation />
-                  <main><Products /></main>
+                  <main><ProductsPage /></main>
                   <Footer />
                 </>
               } />
@@ -83,54 +85,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              <Route path="/contact" element={
-                <>
-                  <Navigation />
-                  <main><Contact /></main>
-                  <Footer />
-                </>
-              } />
-              {/* Category Detail Page */}
-              <Route path="/categories/:categoryId" element={
-                <>
-                  <Navigation />
-                  <main><CategoryDetail /></main>
-                  <Footer />
-                </>
-              } />
-              {/* Products Listing Page */}
-              <Route path="/products" element={
-                <>
-                  <Navigation />
-                  <main><Products /></main>
-                  <Footer />
-                </>
-              } />
-              {/* Categories Listing Page */}
-              <Route path="/categories" element={
-                <>
-                  <Navigation />
-                  <main><Categories /></main>
-                  <Footer />
-                </>
-              } />
-              {/* About Page */}
-              <Route path="/about" element={
-                <>
-                  <Navigation />
-                  <main><About /></main>
-                  <Footer />
-                </>
-              } />
-              {/* Services Page */}
-              <Route path="/services" element={
-                <>
-                  <Navigation />
-                  <main><Services /></main>
-                  <Footer />
-                </>
-              } />
-              {/* Meat & Seafood Category Page */}
               <Route path="/products/meat-seafood" element={
                 <>
                   <Navigation />
@@ -138,7 +92,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Rice & Spices Category Page */}
               <Route path="/products/rice-spices" element={
                 <>
                   <Navigation />
@@ -146,7 +99,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Fruits & Vegetables Category Page */}
               <Route path="/products/fruits-vegetables" element={
                 <>
                   <Navigation />
@@ -154,7 +106,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Canned Goods Category Page */}
               <Route path="/products/canned-goods" element={
                 <>
                   <Navigation />
@@ -162,7 +113,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Nuts & Flavors Category Page */}
               <Route path="/products/nuts-flavors" element={
                 <>
                   <Navigation />
@@ -170,7 +120,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Bakery Products Category Page */}
               <Route path="/products/bakery" element={
                 <>
                   <Navigation />
@@ -178,7 +127,27 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Services Page */}
+              <Route path="/categories" element={
+                <>
+                  <Navigation />
+                  <main><Categories /></main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/categories/:categoryId" element={
+                <>
+                  <Navigation />
+                  <main><CategoryDetail /></main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/about" element={
+                <>
+                  <Navigation />
+                  <main><About /></main>
+                  <Footer />
+                </>
+              } />
               <Route path="/services" element={
                 <>
                   <Navigation />
@@ -186,7 +155,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Quality Page */}
               <Route path="/quality" element={
                 <>
                   <Navigation />
@@ -194,7 +162,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Sourcing Page */}
               <Route path="/sourcing" element={
                 <>
                   <Navigation />
@@ -202,11 +169,17 @@ function App() {
                   <Footer />
                 </>
               } />
-              {/* Procurement Center Page */}
               <Route path="/procurement" element={
                 <>
                   <Navigation />
                   <main><ProcurementCenter /></main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/contact" element={
+                <>
+                  <Navigation />
+                  <main><Contact /></main>
                   <Footer />
                 </>
               } />
@@ -217,7 +190,11 @@ function App() {
                   <Dashboard />
                 </ProtectedRoute>
               } />
-              {/* Admin Dashboard - Main dashboard for admin only */}
+              <Route path="/admin" element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
             </Routes>
           </div>
         </Router>
