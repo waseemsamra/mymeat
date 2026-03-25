@@ -3,8 +3,8 @@ import { toast } from 'sonner';
 import { Badge } from '../components/ui/badge';
 import { CardDescription } from '../components/ui/card';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
-import { Label } from '../../components/ui/label';
-import { Input } from '../../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 
 interface Product {
