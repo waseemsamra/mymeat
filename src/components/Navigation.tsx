@@ -1,237 +1,100 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Leaf, User, LogOut, Settings } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { toast } from 'sonner';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Search, ShoppingCart, Globe } from 'lucide-react';
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
-  const { user, isAuthenticated, logout, isAdmin } = useAuth();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location]);
-
-  const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/products', label: 'Products' },
-    { path: '/contact', label: 'Contact' },
-  ];
-
-  // Temporary admin link for testing (remove after testing)
-  const showAdminLink = true; // Set to false to hide after testing
-
-  const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
-  };
-
-  const handleLogout = () => {
-    logout();
-    toast.success('Logged out', {
-      description: 'You have been successfully logged out.',
-    });
-    navigate('/');
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm'
-          : 'bg-transparent'
-      }`}
-    >
-      <nav className="section-padding">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center 
-                          transition-transform duration-300 group-hover:scale-110">
-              <Leaf className="w-6 h-6 text-white" />
-            </div>
-            <span className={`text-xl font-bold transition-colors duration-300 ${
-              isScrolled ? 'text-dark' : 'text-white'
-            }`}>
-              Agro<span className="text-primary">Feed</span>
-            </span>
-          </Link>
+    <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-stone-100/10">
+      <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+        <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
+          AgroFeed Global
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`relative font-medium transition-colors duration-300 ${
-                  isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
-                } ${isActive(link.path) ? 'text-primary' : ''}`}
-              >
-                {link.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                    isActive(link.path) ? 'w-full' : 'w-0 hover:w-full'
-                  }`}
-                />
-              </Link>
-            ))}
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8 font-headline font-semibold tracking-tight">
+          {/* Products Dropdown */}
+          <div className="relative group">
+            <button className={`flex items-center gap-1 py-2 ${isActive('/products') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : 'text-stone-600 hover:text-[#00450d]'} transition-colors`}>
+              Products
+              <span className="material-symbols-outlined text-sm">expand_more</span>
+            </button>
             
-            {isAuthenticated ? (
-              <>
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className={`flex items-center gap-2 font-medium transition-colors duration-300 ${
-                      isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
-                    } ${isActive('/admin') ? 'text-primary' : ''}`}
-                  >
-                    <Settings className="w-4 h-4" />
-                    Admin
-                  </Link>
-                )}
-                <Link
-                  to="/dashboard"
-                  className={`flex items-center gap-2 font-medium transition-colors duration-300 ${
-                    isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
-                  } ${isActive('/dashboard') ? 'text-primary' : ''}`}
-                >
-                  <User className="w-4 h-4" />
-                  {user?.name?.split(' ')[0] || 'Dashboard'}
+            {/* Dropdown Menu */}
+            <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+              <div className="py-2">
+                <Link to="/products/meat-seafood" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#00450d]"></span>
+                    Meat & Seafood
+                  </span>
                 </Link>
-                <button
-                  onClick={handleLogout}
-                  className={`flex items-center gap-2 font-medium transition-colors duration-300 ${
-                    isScrolled ? 'text-dark/80 hover:text-red-600' : 'text-white/90 hover:text-red-400'
-                  }`}
-                >
-                  <LogOut className="w-4 h-4" />
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className={`font-medium transition-colors duration-300 ${
-                    isScrolled ? 'text-dark/80 hover:text-primary' : 'text-white/90 hover:text-white'
-                  }`}
-                >
-                  Sign In
+                <Link to="/products/rice-spices" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#7a5649]"></span>
+                    Rice & Spices
+                  </span>
                 </Link>
-                <Link
-                  to="/contact"
-                  className="btn-primary text-sm"
-                >
-                  Get Quote
+                <Link to="/products/fruits-vegetables" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#503600]"></span>
+                    Fruits & Vegetables
+                  </span>
                 </Link>
-              </>
-            )}
+                <Link to="/products/nuts-flavors" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#ffdeac]"></span>
+                    Nuts & Flavors
+                  </span>
+                </Link>
+              </div>
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
-              isScrolled ? 'text-dark hover:bg-gray-100' : 'text-white hover:bg-white/10'
-            }`}
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <Link to="/services" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/services') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
+            Logistics
+          </Link>
+          <Link to="/services" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/services') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
+            Quality
+          </Link>
+          <Link to="/about" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/about') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
+            About
+          </Link>
+          <Link to="/contact" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/contact') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
+            Contact
+          </Link>
+        </div>
+
+        {/* Right Side */}
+        <div className="flex items-center gap-6">
+          {/* Search */}
+          <div className="hidden lg:flex items-center bg-[#f4f4ef] px-4 py-2 rounded-full border border-[#c0c9bb]/20">
+            <Search className="w-4 h-4 text-[#41493e] mr-2" />
+            <input
+              className="bg-transparent border-none focus:ring-0 text-sm w-48 font-sans"
+              placeholder="Search Produce..."
+              type="text"
+            />
+          </div>
+
+          <button className="bg-[#00450d] text-white px-6 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 font-headline font-semibold text-sm">
+            Enquire Now
           </button>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ${
-            isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <div className="py-4 space-y-2 bg-white rounded-xl shadow-lg mt-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`block px-4 py-3 font-medium transition-colors duration-300 ${
-                  isActive(link.path)
-                    ? 'text-primary bg-primary/5'
-                    : 'text-dark/80 hover:text-primary hover:bg-primary/5'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            
-            {isAuthenticated ? (
-              <>
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className={`block px-4 py-3 font-medium transition-colors duration-300 ${
-                      isActive('/admin')
-                        ? 'text-primary bg-primary/5'
-                        : 'text-dark/80 hover:text-primary hover:bg-primary/5'
-                    }`}
-                  >
-                    <Settings className="inline w-4 h-4 mr-2" />
-                    Admin Panel
-                  </Link>
-                )}
-                <Link
-                  to="/dashboard"
-                  className={`block px-4 py-3 font-medium transition-colors duration-300 ${
-                    isActive('/dashboard')
-                      ? 'text-primary bg-primary/5'
-                      : 'text-dark/80 hover:text-primary hover:bg-primary/5'
-                  }`}
-                >
-                  Dashboard
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-3 font-medium text-red-600 hover:bg-red-50 transition-colors duration-300"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                {/* Temporary Admin Link for Testing */}
-                {showAdminLink && (
-                  <Link
-                    to="/admin"
-                    className="block px-4 py-3 font-medium text-primary bg-primary/5 transition-colors duration-300"
-                  >
-                    🔑 Admin (Test)
-                  </Link>
-                )}
-                <Link
-                  to="/login"
-                  className="block px-4 py-3 font-medium text-dark/80 hover:text-primary hover:bg-primary/5 transition-colors duration-300"
-                >
-                  Sign In
-                </Link>
-                <div className="px-4 pt-2">
-                  <Link to="/contact" className="btn-primary block text-center">
-                    Get Quote
-                  </Link>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
-    </header>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+        
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+      `}</style>
+    </nav>
   );
 };
 

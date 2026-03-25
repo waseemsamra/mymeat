@@ -1,132 +1,98 @@
 import { Link } from 'react-router-dom';
-import { Leaf, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Globe, Mail, CheckCircle } from 'lucide-react';
 
 const Footer = () => {
-  const quickLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/products', label: 'Products' },
-    { path: '/contact', label: 'Contact Us' },
-  ];
-
-  const products = [
-    { path: '/products/hay', label: 'Hay Products' },
-    { path: '/products/alfalfa', label: 'Alfalfa' },
-    { path: '/products/straw', label: 'Straw Products' },
-    { path: '/products/grain', label: 'Grain & Silage' },
-    { path: '/products/pellets', label: 'Pellets' },
-  ];
-
   return (
-    <footer className="bg-dark text-white">
-      {/* Main Footer */}
-      <div className="section-padding py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Company Info */}
-          <div className="space-y-6">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center 
-                            transition-transform duration-300 group-hover:scale-110">
-                <Leaf className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold">
-                Agro<span className="text-primary-light">Feed</span>
-              </span>
-            </Link>
-            <p className="text-gray-400 leading-relaxed">
-              Premium quality animal feed products sourced from sustainable farms. 
-              Nourishing livestock with nature's best.
-            </p>
-            <div className="flex gap-3">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center
-                           transition-all duration-300 hover:bg-primary hover:scale-110"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
+    <footer className="bg-stone-800 w-full pt-16 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-screen-2xl mx-auto font-sans text-sm leading-relaxed">
+        {/* Brand Column */}
+        <div className="col-span-1">
+          <div className="text-lg font-bold text-white mb-6">AgroFeed Global</div>
+          <p className="text-stone-400 mb-8">Defining the next era of global fresh produce trade through precision and integrity.</p>
+          <div className="flex gap-4">
+            <a className="w-10 h-10 rounded-full border border-stone-700 flex items-center justify-center text-stone-400 hover:text-white transition-all" href="#">
+              <Globe className="w-5 h-5" />
+            </a>
+            <a className="w-10 h-10 rounded-full border border-stone-700 flex items-center justify-center text-stone-400 hover:text-white transition-all" href="#">
+              <Mail className="w-5 h-5" />
+            </a>
           </div>
+        </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Quick Links</h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-primary-light transition-colors duration-300
-                             flex items-center gap-2 group"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 
-                                   group-hover:opacity-100 transition-opacity duration-300" />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Global Network */}
+        <div className="col-span-1">
+          <h4 className="text-white font-medium mb-6">Global Network</h4>
+          <ul className="space-y-4">
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Europe Division
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Asia-Pacific Hub
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Americas Logistics
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                African Sourcing
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-          {/* Products */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Our Products</h3>
-            <ul className="space-y-3">
-              {products.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-primary-light transition-colors duration-300
-                             flex items-center gap-2 group"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 
-                                   group-hover:opacity-100 transition-opacity duration-300" />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Resources */}
+        <div className="col-span-1">
+          <h4 className="text-white font-medium mb-6">Resources</h4>
+          <ul className="space-y-4">
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Trade Terms
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Certifications
+              </Link>
+            </li>
+            <li>
+              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+                Global Logistics Status
+              </Link>
+            </li>
+          </ul>
+        </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Contact Us</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-gray-400">
-                <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span>123 Farm Road, Agricultural District,<br />Countryside, CA 90210</span>
-              </li>
-              <li className="flex items-center gap-3 text-gray-400">
-                <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                <span>+1 (555) 123-4567</span>
-              </li>
-              <li className="flex items-center gap-3 text-gray-400">
-                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <span>info@agrofeed.com</span>
-              </li>
-            </ul>
+        {/* Logistics Status */}
+        <div className="col-span-1 bg-stone-950/30 p-8 rounded-lg border border-stone-700/50">
+          <h4 className="text-white font-medium mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            Logistics Status
+          </h4>
+          <p className="text-xs text-stone-400 mb-6">All shipping lanes currently operational with minor delays in Suez Canal zone.</p>
+          <div className="flex items-center gap-2 text-green-500 font-bold text-xs uppercase tracking-widest">
+            <CheckCircle className="w-4 h-4" />
+            Operational
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/10">
-        <div className="section-padding py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} AgroFeed. All rights reserved.
-            </p>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-primary-light transition-colors duration-300">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary-light transition-colors duration-300">
-                Terms of Service
-              </a>
-            </div>
-          </div>
+      <div className="max-w-screen-2xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/30 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-xs">
+        <p>© 2026 AgroFeed Global. All Rights Reserved.</p>
+        <div className="flex gap-8">
+          <Link to="#" className="hover:text-white">Terms of Service</Link>
+          <Link to="#" className="hover:text-white">Cookie Policy</Link>
         </div>
       </div>
     </footer>
