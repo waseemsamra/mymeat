@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
-  ArrowLeft, ArrowRight, Check, Leaf, Package, 
+  Leaf, 
   Truck, Shield, Clock, ChevronRight, Star,
 } from 'lucide-react';
 
