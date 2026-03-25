@@ -271,7 +271,7 @@ const FruitsVegetables = () => {
                   ].map((item) => (
                     <div key={item.period} className="bg-white p-6 flex flex-col items-center justify-center text-center group hover:bg-[#00450d] transition-all cursor-default">
                       <p className="text-xs font-sans font-bold text-[#00450d] group-hover:text-white/70 uppercase mb-4">{item.period}</p>
-                      <item.icon className="w-8 h-8 mb-2 text-[#1a1c19] group-hover:text-white" />
+                      <span className="material-symbols-outlined w-8 h-8 mb-2 text-[#1a1c19] group-hover:text-white">{item.icon}</span>
                       <p className="font-headline font-bold group-hover:text-white">{item.name}</p>
                     </div>
                   ))}
