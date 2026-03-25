@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Leaf, ArrowRight, Globe, Truck, Certificate, FileText, Warehouse, Handshake, CheckCircle, MapPin, PlayCircle, Envelope, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Leaf, ArrowRight, Globe, Truck, FileText, Warehouse, Handshake, CheckCircle, MapPin, Envelope, ChevronLeft, ChevronRight, Award, Phone, Clock, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -85,7 +85,7 @@ const Home = () => {
   const services = [
     { icon: Globe, title: 'Global Sourcing', description: 'Direct partnerships with certified farms across 25+ countries, ensuring consistent quality and competitive pricing year-round.' },
     { icon: Truck, title: 'Cold Chain Logistics', description: 'Temperature-controlled transportation from farm to port to destination, maintaining freshness and extending shelf life.' },
-    { icon: Certificate, title: 'Quality Certification', description: 'Full compliance with GlobalGAP, HACCP, and organic certifications. Comprehensive inspection and documentation.' },
+    { icon: Award, title: 'Quality Certification', description: 'Full compliance with GlobalGAP, HACCP, and organic certifications. Comprehensive inspection and documentation.' },
     { icon: FileText, title: 'Trade Documentation', description: 'Complete handling of customs, phytosanitary certificates, and international trade compliance for seamless transactions.' },
     { icon: Warehouse, title: 'Storage Solutions', description: 'State-of-the-art cold storage facilities at major ports with inventory management and real-time tracking systems.' },
     { icon: Handshake, title: 'Trade Finance', description: 'Flexible payment terms and trade finance solutions to support your cash flow and business growth.' }
@@ -161,7 +161,6 @@ const Home = () => {
               className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-[#d4a853] w-8' : 'bg-white/30'}`}
             />
           ))}
-        </div>
 
         <div className="absolute bottom-10 right-10 flex gap-4 z-20">
           <button onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)} className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-[#d4a853] hover:border-[#d4a853] hover:text-dark transition-all">
@@ -309,10 +308,14 @@ const Home = () => {
             </div>
             <p className="text-white/60 leading-relaxed mb-8">Premium fresh produce import and export services connecting global markets with sustainable farming communities since 2009.</p>
             <div className="flex gap-4">
-              {['linkedin', 'twitter', 'instagram', 'facebook'].map((social) => (
-                <a key={social} href="#" className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-[#d4a853] hover:text-dark transition-all">
-                  <span className="sr-only">{social}</span>
-                  <div className="w-5 h-5 bg-current rounded-sm" />
+              {[
+                { name: 'linkedin', icon: Linkedin },
+                { name: 'twitter', icon: Twitter },
+                { name: 'instagram', icon: Instagram },
+                { name: 'facebook', icon: Facebook }
+              ].map((social) => (
+                <a key={social.name} href="#" className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-[#d4a853] hover:text-dark transition-all">
+                  <social.icon size={20} />
                 </a>
               ))}
             </div>
@@ -323,9 +326,9 @@ const Home = () => {
             { title: 'Products', links: ['Tropical Fruits', 'Vegetables', 'Organic Produce', 'Specialty Crops', 'Seasonal Items'] },
             { title: 'Contact Us', isContact: true, contacts: [
               { icon: MapPin, text: '123 Trade Center, Rotterdam, Netherlands' },
-              { icon: Globe, text: '+31 10 123 4567' },
+              { icon: Phone, text: '+31 10 123 4567' },
               { icon: Envelope, text: 'trade@agrofeed.global' },
-              { icon: CheckCircle, text: 'Mon - Fri: 9:00 - 18:00 CET' }
+              { icon: Clock, text: 'Mon - Fri: 9:00 - 18:00 CET' }
             ]}
           ].map((col, index) => (
             <div key={index}>
@@ -341,7 +344,7 @@ const Home = () => {
                 </div>
               ) : (
                 <ul className="list-none space-y-4">
-                  {col.links.map((link) => (
+                  {col.links?.map((link) => (
                     <li key={link}>
                       <a href="#" className="text-white/60 flex items-center gap-2 hover:text-[#d4a853] transition-colors">
                         <ArrowRight size={14} /> {link}
@@ -363,7 +366,7 @@ const Home = () => {
         </div>
       </footer>
 
-      <style jsx global>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
         
         .font-playfair {
