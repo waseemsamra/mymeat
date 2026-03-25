@@ -153,7 +153,7 @@ const Quality = () => {
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="bg-[#1b5e20] p-3 rounded-lg">
-                      <Globe className="text-[#90d689] w-6 h-6" />
+                      <span className="material-symbols-outlined w-12 h-12">language</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">Global GAP Certified</h4>
