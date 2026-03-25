@@ -207,7 +207,7 @@ const NutsFlavors = () => {
                 <div className="space-y-10">
                   <div className="flex gap-6 items-start">
                     <div className="bg-[#1b5e20] p-3 rounded-full text-[#90d689]">
-                      <Nutrition className="w-6 h-6" />
+                      <span className="material-symbols-outlined w-8 h-8">lunch_dining</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">Sunflower & Pumpkin Seeds</h4>
@@ -216,7 +216,7 @@ const NutsFlavors = () => {
                   </div>
                   <div className="flex gap-6 items-start">
                     <div className="bg-[#1b5e20] p-3 rounded-full text-[#90d689]">
-                      <Restaurant className="w-6 h-6" />
+                      <span className="material-symbols-outlined w-8 h-8">restaurant</span>
                     </div>
                     <div>
                       <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">Siberian & Cedar Pine Nuts</h4>
@@ -304,11 +304,11 @@ const NutsFlavors = () => {
                     <span className="text-[0.65rem] font-bold uppercase tracking-widest">Global GAP</span>
                   </div>
                   <div className="flex flex-col items-center gap-2">
-                    <Security className="w-10 h-10" />
+                    <span className="material-symbols-outlined w-8 h-8">security</span>
                     <span className="text-[0.65rem] font-bold uppercase tracking-widest">BRCGS Food</span>
                   </div>
                   <div className="flex flex-col items-center gap-2">
-                    <Eco className="w-10 h-10" />
+                    <span className="material-symbols-outlined w-8 h-8">eco</span>
                     <span className="text-[0.65rem] font-bold uppercase tracking-widest">Fair Trade</span>
                   </div>
                 </div>

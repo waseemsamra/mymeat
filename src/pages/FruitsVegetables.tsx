@@ -234,7 +234,7 @@ const FruitsVegetables = () => {
 
               {/* Custom Sourcing Card */}
               <div className="md:col-span-1 bg-[#00450d] relative flex flex-col items-center justify-center p-8 text-center">
-                <Globe className="text-[#acf4a4] w-12 h-12 mb-4" />
+                <span className="material-symbols-outlined w-12 h-12">language</span>
                 <h4 className="text-white font-headline font-bold text-xl mb-2">Custom Global Sourcing</h4>
                 <p className="text-white/70 text-sm leading-relaxed mb-6">Need a specific variety not listed? Our network spans 40+ countries.</p>
                 <Link to="/contact" className="text-white font-sans text-xs font-bold underline underline-offset-4 uppercase tracking-widest">
@@ -254,7 +254,7 @@ const FruitsVegetables = () => {
                   <h2 className="text-3xl font-headline font-bold text-[#1a1c19] mb-6">Seasonal Availability</h2>
                   <p className="text-[#41493e] mb-8">Stay ahead of market shifts. Our real-time calendar helps you plan inventories around peak harvest cycles.</p>
                   <div className="flex items-center gap-4 p-4 bg-white/50 rounded-lg">
-                    <Calendar className="text-[#503600] w-12 h-12" />
+                    <span className="material-symbols-outlined w-8 h-8">calendar_month</span>
                     <div>
                       <p className="font-headline font-bold text-[#1a1c19]">Currently in Peak</p>
                       <p className="text-sm text-[#41493e]">Stone Fruits & Summer Berries</p>
@@ -291,12 +291,12 @@ const FruitsVegetables = () => {
                 <p className="text-[#41493e] leading-relaxed">Rigorous adherence to international standards for safe, sustainable agriculture practices.</p>
               </div>
               <div className="text-center">
-                <Thermometer className="text-[#00450d] w-16 h-16 mb-6" />
+                <span className="material-symbols-outlined w-8 h-8">thermostat</span>
                 <h3 className="text-xl font-headline font-bold mb-4">Temperature Controlled</h3>
                 <p className="text-[#41493e] leading-relaxed">State-of-the-art cold chain logistics ensuring produce remains in its optimal thermal zone.</p>
               </div>
               <div className="text-center">
-                <TrackChanges className="text-[#00450d] w-16 h-16 mb-6" />
+                <span className="material-symbols-outlined w-8 h-8">track_changes</span>
                 <h3 className="text-xl font-headline font-bold mb-4">Full Traceability</h3>
                 <p className="text-[#41493e] leading-relaxed">Every batch is trackable back to its exact plot of origin for total transparency.</p>
               </div>
