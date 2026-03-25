@@ -28,6 +28,7 @@ import BakeryProducts from './pages/BakeryProducts';
 import ServicesPage from './pages/ServicesPage';
 import Quality from './pages/Quality';
 import Sourcing from './pages/Sourcing';
+import ProcurementCenter from './pages/ProcurementCenter';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -199,6 +200,14 @@ function App() {
                 <>
                   <Navigation />
                   <main><Sourcing /></main>
+                  <Footer />
+                </>
+              } />
+              {/* Procurement Center Page */}
+              <Route path="/procurement" element={
+                <>
+                  <Navigation />
+                  <main><ProcurementCenter /></main>
                   <Footer />
                 </>
               } />
