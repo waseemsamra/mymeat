@@ -7,7 +7,7 @@ import { Badge } from '../components/ui/badge';
 import { toast } from 'sonner';
 
 interface Category {
-  id: number | string;
+  id: string | number;
   name: string;
   description: string;
   color: string;
@@ -51,43 +51,28 @@ const CategoryManagement = () => {
   const loadCategories = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('idToken');
-      const response = await fetch(`${API_URL}/categories`, {
-        headers: {
-          'Authorization': token ? `Bearer ${token}` : '',
-          'Content-Type': 'application/json'
-        }
-      });
+      console.log('📡 Fetching categories from API...');
+      const response = await fetch(`${API_URL}/categories`);
 
       if (!response.ok) {
-        throw new Error('Failed to load categories');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('Loaded categories from API:', data);
+      console.log('✅ Categories API response:', data);
 
-      const transformedCategories = (Array.isArray(data) ? data : (data.categories || [])).map((item: any) => {
-        // Handle different API response formats
-        const id = item.id || item.categoryId || item.PK?.replace('CATEGORY#', '') || Date.now();
-        const dataField = item.data || item;
-        
-        return {
-          id: id,
-          name: dataField.name || item.name || 'Category',
-          description: dataField.description || item.description || '',
-          color: dataField.color || item.color || '#3b82f6',
-          image: dataField.image || item.image || '',
-          productCount: dataField.productCount || item.productCount || 0
-        };
-      });
-
-      setCategories(transformedCategories);
-      if (transformedCategories.length > 0) {
-        toast.success(`Loaded ${transformedCategories.length} categories from API!`);
+      // API returns array directly
+      if (Array.isArray(data)) {
+        setCategories(data);
+        toast.success(`Loaded ${data.length} categories from API!`);
+      } else {
+        console.error('Unexpected API response format:', data);
+        toast.error('Unexpected API response format');
+        setCategories([]);
       }
     } catch (error: any) {
-      console.error('Error loading categories:', error);
-      toast.error('Failed to load categories');
+      console.error('❌ Error loading categories:', error);
+      toast.error('Failed to load categories: ' + (error.message || 'Unknown error'));
 
       // Fallback to sample data
       setCategories([
@@ -151,9 +136,9 @@ const CategoryManagement = () => {
     setUploading(true);
     try {
       const { default: s3Service } = await import('../lib/S3Service');
-      
+
       const result = await s3Service.uploadImage(file, 'categories');
-      
+
       if (result.success && result.url) {
         setFormData({ ...formData, image: result.url });
         toast.success('Category image uploaded to S3!');
@@ -173,14 +158,8 @@ const CategoryManagement = () => {
     setSaving(true);
 
     try {
-      const token = localStorage.getItem('idToken');
-      const headers = {
-        'Authorization': token ? `Bearer ${token}` : '',
-        'Content-Type': 'application/json'
-      };
-
       if (editingCategory) {
-        // Update existing category via API
+        // UPDATE existing category
         const updateData = {
           id: editingCategory.id,
           name: formData.name,
@@ -190,16 +169,16 @@ const CategoryManagement = () => {
           updatedAt: new Date().toISOString()
         };
 
-        console.log('Updating category:', updateData);
+        console.log('📝 Updating category:', updateData);
 
         const response = await fetch(`${API_URL}/categories/${editingCategory.id}`, {
           method: 'PUT',
-          headers: headers,
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updateData)
         });
 
         const result = await response.json();
-        console.log('Update response:', result);
+        console.log('📝 Update response:', response.status, result);
 
         if (response.ok) {
           toast.success('Category updated successfully!');
@@ -209,7 +188,7 @@ const CategoryManagement = () => {
           toast.error(`Failed to update: ${result.message || 'Unknown error'}`);
         }
       } else {
-        // Create new category via API
+        // CREATE new category
         const newCategory = {
           name: formData.name,
           description: formData.description,
@@ -217,16 +196,16 @@ const CategoryManagement = () => {
           image: formData.image
         };
 
-        console.log('Creating category:', newCategory);
+        console.log('➕ Creating category:', newCategory);
 
         const response = await fetch(`${API_URL}/categories`, {
           method: 'POST',
-          headers: headers,
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newCategory)
         });
 
         const result = await response.json();
-        console.log('Create response:', result);
+        console.log('➕ Create response:', response.status, result);
 
         if (response.ok) {
           toast.success('Category created successfully!');
@@ -237,27 +216,25 @@ const CategoryManagement = () => {
         }
       }
     } catch (error: any) {
-      console.error('Error saving category:', error);
+      console.error('❌ Error saving category:', error);
       toast.error('Failed to save category: ' + (error.message || 'Unknown error'));
     } finally {
       setSaving(false);
     }
   };
 
-  const handleDelete = async (id: number | string) => {
+  const handleDelete = async (id: string | number) => {
     if (!confirm('Are you sure you want to delete this category? This will affect all products in this category.')) return;
 
     try {
-      const token = localStorage.getItem('idToken');
+      console.log('🗑️ Deleting category:', id);
+      
       const response = await fetch(`${API_URL}/categories/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': token ? `Bearer ${token}` : ''
-        }
+        method: 'DELETE'
       });
 
       const result = await response.json();
-      console.log('Delete response:', result);
+      console.log('🗑️ Delete response:', response.status, result);
 
       if (response.ok) {
         toast.success('Category deleted successfully!');
@@ -266,8 +243,8 @@ const CategoryManagement = () => {
         toast.error(`Failed to delete: ${result.message || 'Unknown error'}`);
       }
     } catch (error: any) {
-      console.error('Error deleting category:', error);
-      toast.error('Failed to delete category');
+      console.error('❌ Error deleting category:', error);
+      toast.error('Failed to delete category: ' + (error.message || 'Unknown error'));
     }
   };
 
