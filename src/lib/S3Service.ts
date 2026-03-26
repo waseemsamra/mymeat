@@ -47,7 +47,7 @@ class S3Service {
         throw new Error(`Upload failed: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      await response.json(); // API returns success
       
       // Build public URL
       const publicUrl = `${PUBLIC_S3_URL}/${folder}/${file.name}`;
