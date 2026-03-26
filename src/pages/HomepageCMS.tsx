@@ -130,7 +130,6 @@ const HomepageCMS = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
               <h4 className="text-white text-4xl font-bold mb-2">{formData.headline || 'Curating Earth\'s Finest Harvest'}</h4>
-              <p className="text-white/80 max-w-md">{formData.description || 'Premium agricultural exports delivered with logistical precision and botanical care.'}</p>
             </div>
             <div className="absolute top-4 right-4 flex gap-2">
               <button
