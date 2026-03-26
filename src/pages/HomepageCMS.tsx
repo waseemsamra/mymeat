@@ -44,7 +44,13 @@ const HomepageCMS = () => {
     setLoading(true);
     const success = await saveHeroData(formData);
     if (success) {
-      loadHeroData();
+      toast.success('Hero section saved!', {
+        description: 'Changes have been published to the homepage.'
+      });
+    } else {
+      toast.error('Failed to save', {
+        description: 'Please try again.'
+      });
     }
     setLoading(false);
   };
@@ -59,7 +65,7 @@ const HomepageCMS = () => {
 
     console.log('📷 Starting image upload...', file.name);
     setUploading(true);
-    
+
     try {
       const imageUrl = await uploadHeroImage(file);
       if (imageUrl) {
@@ -75,6 +81,23 @@ const HomepageCMS = () => {
       toast.error('Upload failed: ' + (error.message || 'Unknown error'));
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleSliderChange = (slides: any[]) => {
+    // Save the first active slide as the main hero data
+    const activeSlide = slides.find(s => s.isActive) || slides[0];
+    if (activeSlide) {
+      setFormData({
+        headline: activeSlide.headline,
+        description: activeSlide.description,
+        tagline: activeSlide.tagline,
+        button1Text: activeSlide.button1Text,
+        button1Link: activeSlide.button1Link,
+        button2Text: activeSlide.button2Text,
+        button2Link: activeSlide.button2Link,
+        imageUrl: activeSlide.imageUrl
+      });
     }
   };
 
@@ -161,24 +184,7 @@ const HomepageCMS = () => {
       {/* Hero Slider Manager - S3 Upload */}
       <section className="space-y-6 pt-6">
         <div className="border-t border-gray-200 pt-8">
-          <HeroSliderManager 
-            onSlideChange={(slides) => {
-              // Save the first active slide as the main hero data
-              const activeSlide = slides.find(s => s.isActive) || slides[0];
-              if (activeSlide) {
-                setFormData({
-                  headline: activeSlide.headline,
-                  description: activeSlide.description,
-                  tagline: activeSlide.tagline,
-                  button1Text: activeSlide.button1Text,
-                  button1Link: activeSlide.button1Link,
-                  button2Text: activeSlide.button2Text,
-                  button2Link: activeSlide.button2Link,
-                  imageUrl: activeSlide.imageUrl
-                });
-              }
-            }}
-          />
+          <HeroSliderManager onSlideChange={handleSliderChange} />
         </div>
       </section>
 
