@@ -4,14 +4,14 @@ import S3Service from '../lib/S3Service';
 
 export interface HeroSlide {
   id: string;
-  headline: string;
-  description: string;
+  headline: string;  // Maps to 'title' in backend
+  description: string;  // Maps to 'subtitle' in backend
   tagline: string;
-  button1Text: string;
-  button1Link: string;
+  button1Text: string;  // Maps to 'buttonText' in backend
+  button1Link: string;  // Maps to 'buttonLink' in backend
   button2Text: string;
   button2Link: string;
-  imageUrl: string;
+  imageUrl: string;  // Maps to 'image' in backend
   s3Key?: string;
   isActive: boolean;
   order: number;
@@ -102,6 +102,8 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     const file = event.target.files?.[0];
     if (!file) return;
 
+    console.log('📷 Starting upload for slide:', slideId, 'File:', file.name);
+
     // Validate file
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
@@ -122,22 +124,41 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     setUploadingId(slideId);
 
     try {
+      console.log('⬆️ Uploading to S3, folder: hero');
       // Upload to S3 in hero folder
       const result = await S3Service.uploadImage(file, 'hero');
-      
+
+      console.log('✅ Upload success! URL:', result.url);
+      console.log('🔑 S3 Key:', result.key);
+
       // Update slide with new image URL
-      const updatedSlides = slides.map(slide => 
-        slide.id === slideId 
+      const updatedSlides = slides.map(slide =>
+        slide.id === slideId
           ? { ...slide, imageUrl: result.url, s3Key: result.key }
           : slide
       );
-      
+
+      console.log('💾 Saving to localStorage:', updatedSlides);
       setSlides(updatedSlides);
       
+      // Direct save to localStorage (bypass any overrides)
+      localStorage.setItem('agrofeed_hero_slides', JSON.stringify(updatedSlides));
+      console.log('✅ Saved to localStorage!');
+      
+      // Verify save
+      const verifySave = localStorage.getItem('agrofeed_hero_slides');
+      console.log('🔍 Verification - Saved data:', verifySave ? 'YES' : 'NO');
+      if (verifySave) {
+        const parsed = JSON.parse(verifySave);
+        const updatedSlide = parsed.find((s: any) => s.id === slideId);
+        console.log('🔍 Updated slide has image:', updatedSlide?.imageUrl ? 'YES ✅' : 'NO ❌');
+      }
+
       toast.success('Hero image uploaded successfully!', {
         description: `Image uploaded to S3: hero/${file.name}`
       });
     } catch (error: any) {
+      console.error('❌ Upload error:', error);
       toast.error('Upload failed', {
         description: error.message || 'An error occurred during upload.'
       });
@@ -162,11 +183,14 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
       isActive: true,
       order: slides.length + 1
     };
-    
+
     const updatedSlides = [...slides, newSlide];
     setSlides(updatedSlides);
     setActiveSlideId(newSlide.id);
     
+    // Save immediately
+    localStorage.setItem('agrofeed_hero_slides', JSON.stringify(updatedSlides));
+
     toast.success('New slide added', {
       description: 'Configure the slide content and upload an image.'
     });
