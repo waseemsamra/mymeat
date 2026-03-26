@@ -152,8 +152,10 @@ const ImageManagement = () => {
         </div>
 
         {/* Bulk Upload Script */}
-        <BulkImageUpload 
+        <BulkImageUpload
           onUploadComplete={(results) => {
+            console.log('📊 Bulk upload complete:', results.length, 'results');
+            
             // Update local state with upload results
             const updatedImages = images.map(img => {
               const result = results.find(r => r.id === img.id);
@@ -169,6 +171,46 @@ const ImageManagement = () => {
             });
             setImages(updatedImages);
             localStorage.setItem('agrofeed_homepage_images', JSON.stringify(updatedImages));
+            
+            // ALSO update hero slides for the first image (hero)
+            const heroResult = results.find(r => r.id === 'hero-main');
+            if (heroResult && heroResult.status === 'success') {
+              console.log('🦸 Updating hero slides with uploaded image');
+              const existingSlides = JSON.parse(localStorage.getItem('agrofeed_hero_slides') || '[]');
+              
+              if (existingSlides.length > 0) {
+                // Update first slide with uploaded image
+                existingSlides[0] = {
+                  ...existingSlides[0],
+                  imageUrl: heroResult.s3Url,
+                  s3Key: heroResult.s3Key,
+                  isUploaded: true
+                };
+              } else {
+                // Create first slide
+                existingSlides.push({
+                  id: 'slide-1',
+                  headline: 'Nurturing the Global Harvest.',
+                  description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+                  tagline: 'Established 1984 — Global Curators',
+                  button1Text: 'View Portfolios',
+                  button1Link: '/products',
+                  button2Text: 'Our Reach',
+                  button2Link: '/about',
+                  imageUrl: heroResult.s3Url,
+                  s3Key: heroResult.s3Key,
+                  isActive: true,
+                  order: 1
+                });
+              }
+              
+              localStorage.setItem('agrofeed_hero_slides', JSON.stringify(existingSlides));
+              console.log('✅ Hero slides updated!');
+            }
+            
+            toast.success('Images uploaded and saved!', {
+              description: 'Refresh homepage to see changes.'
+            });
           }}
         />
 

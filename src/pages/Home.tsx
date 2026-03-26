@@ -5,148 +5,43 @@ import Footer from '../components/Footer';
 import { fetchHeroData, type HeroData } from '../lib/heroService';
 import { HOMEPAGE_S3_IMAGES } from '../data/s3Images';
 
-interface HeroSlide {
-  id: string;
-  headline: string;
-  description: string;
-  tagline: string;
-  button1Text: string;
-  button1Link: string;
-  button2Text: string;
-  button2Link: string;
-  imageUrl: string;
-  isActive: boolean;
-  order: number;
-}
-
 const Home = () => {
   const [heroData, setHeroData] = useState<HeroData | null>(null);
-  const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
     loadHeroData();
   }, []);
 
   const loadHeroData = async () => {
-    // First, try to load from localStorage (new slider system)
-    try {
-      const stored = localStorage.getItem('agrofeed_hero_slides');
-      console.log('📋 Stored slides:', stored);
-      
-      if (stored) {
-        const slides: HeroSlide[] = JSON.parse(stored);
-        console.log('📊 Parsed slides:', slides);
-        
-        const activeSlides = slides.filter(s => s.isActive);
-        console.log('✅ Active slides:', activeSlides);
-        
-        if (activeSlides.length > 0) {
-          setAllSlides(activeSlides);
-          const firstSlide = activeSlides[0];
-          console.log('🖼️ First slide image:', firstSlide.imageUrl);
-          
-          setHeroData({
-            id: firstSlide.id,
-            headline: firstSlide.headline,
-            description: firstSlide.description,
-            tagline: firstSlide.tagline,
-            button1Text: firstSlide.button1Text,
-            button1Link: firstSlide.button1Link,
-            button2Text: firstSlide.button2Text,
-            button2Link: firstSlide.button2Link,
-            imageUrl: firstSlide.imageUrl,
-            isActive: true,
-            updatedAt: new Date().toISOString()
-          });
-          return;
-        }
-      }
-    } catch (error) {
-      console.error('Error loading slides from localStorage:', error);
-    }
-    
-    // Fallback to API
+    // Load hero data from API (which gets it from S3/DynamoDB)
     try {
       const data = await fetchHeroData();
-      console.log('📡 API data:', data);
-      
       if (data) {
         setHeroData(data);
-      } else {
-        setHeroData({
-          id: 'hero-1',
-          headline: 'Nurturing the Global Harvest.',
-          description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
-          tagline: 'Established 1984 — Global Curators',
-          button1Text: 'View Portfolios',
-          button1Link: '/products',
-          button2Text: 'Our Reach',
-          button2Link: '/about',
-          imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
-          isActive: true,
-          updatedAt: new Date().toISOString()
-        });
+        console.log('✅ Hero data loaded from API/S3');
+        return;
       }
     } catch (error) {
-      console.error('Error fetching hero data:', error);
-      setHeroData({
-        id: 'hero-1',
-        headline: 'Nurturing the Global Harvest.',
-        description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
-        tagline: 'Established 1984 — Global Curators',
-        button1Text: 'View Portfolios',
-        button1Link: '/products',
-        button2Text: 'Our Reach',
-        button2Link: '/about',
-        imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
-        isActive: true,
-        updatedAt: new Date().toISOString()
-      });
+      console.log('⚠️ API not available, using S3 images directly');
     }
-  };
 
-  // Navigate to previous slide
-  const goToPreviousSlide = () => {
-    if (allSlides.length <= 1) return;
-    const newIndex = currentSlideIndex === 0 ? allSlides.length - 1 : currentSlideIndex - 1;
-    setCurrentSlideIndex(newIndex);
-    const slide = allSlides[newIndex];
+    // Fallback: Use S3 images directly from s3Images.ts
+    console.log('📸 Using S3 images from configuration');
     setHeroData({
-      id: slide.id,
-      headline: slide.headline,
-      description: slide.description,
-      tagline: slide.tagline,
-      button1Text: slide.button1Text,
-      button1Link: slide.button1Link,
-      button2Text: slide.button2Text,
-      button2Link: slide.button2Link,
-      imageUrl: slide.imageUrl,
+      id: 'hero-1',
+      headline: 'Nurturing the Global Harvest.',
+      description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+      tagline: 'Established 1984 — Global Curators',
+      button1Text: 'View Portfolios',
+      button1Link: '/products',
+      button2Text: 'Our Reach',
+      button2Link: '/about',
+      imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
       isActive: true,
       updatedAt: new Date().toISOString()
     });
   };
 
-  // Navigate to next slide
-  const goToNextSlide = () => {
-    if (allSlides.length <= 1) return;
-    const newIndex = (currentSlideIndex + 1) % allSlides.length;
-    setCurrentSlideIndex(newIndex);
-    const slide = allSlides[newIndex];
-    setHeroData({
-      id: slide.id,
-      headline: slide.headline,
-      description: slide.description,
-      tagline: slide.tagline,
-      button1Text: slide.button1Text,
-      button1Link: slide.button1Link,
-      button2Text: slide.button2Text,
-      button2Link: slide.button2Link,
-      imageUrl: slide.imageUrl,
-      isActive: true,
-      updatedAt: new Date().toISOString()
-    });
-  };
   return (
     <div className="bg-[#fafaf5] font-body text-on-surface antialiased selection:bg-[#acf4a4] selection:text-[#002203]">
       {/* Top Navigation */}
@@ -164,58 +59,6 @@ const Home = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 via-transparent to-transparent"></div>
           </div>
           
-          {/* Navigation Arrows */}
-          {allSlides.length > 1 && (
-            <>
-              <button
-                onClick={goToPreviousSlide}
-                className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
-                aria-label="Previous slide"
-              >
-                <span className="material-symbols-outlined text-3xl">chevron_left</span>
-              </button>
-              <button
-                onClick={goToNextSlide}
-                className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
-                aria-label="Next slide"
-              >
-                <span className="material-symbols-outlined text-3xl">chevron_right</span>
-              </button>
-            </>
-          )}
-          
-          {/* Slide Indicators */}
-          {allSlides.length > 1 && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-              {allSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setCurrentSlideIndex(index);
-                    const slide = allSlides[index];
-                    setHeroData({
-                      id: slide.id,
-                      headline: slide.headline,
-                      description: slide.description,
-                      tagline: slide.tagline,
-                      button1Text: slide.button1Text,
-                      button1Link: slide.button1Link,
-                      button2Text: slide.button2Text,
-                      button2Link: slide.button2Link,
-                      imageUrl: slide.imageUrl,
-                      isActive: true,
-                      updatedAt: new Date().toISOString()
-                    });
-                  }}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentSlideIndex ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
-          
           <div className="relative z-10 flex flex-col justify-end h-full px-12 pb-24 max-w-7xl mx-auto">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-[#ffdeac] mb-6 block">
               {heroData?.tagline || 'Established 1984 — Global Curators'}
@@ -227,14 +70,14 @@ const Home = () => {
               {heroData?.description || 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.'}
             </p>
             <div className="flex gap-4">
-              <Link 
-                to={heroData?.button1Link || '/products'} 
+              <Link
+                to={heroData?.button1Link || '/products'}
                 className="bg-white text-[#00450d] px-8 py-4 font-bold uppercase tracking-widest text-xs rounded-md hover:bg-[#e8e8e3] transition-all"
               >
                 {heroData?.button1Text || 'View Portfolios'}
               </Link>
-              <Link 
-                to={heroData?.button2Link || '/about'} 
+              <Link
+                to={heroData?.button2Link || '/about'}
                 className="border border-white/30 text-white backdrop-blur-sm px-8 py-4 font-bold uppercase tracking-widest text-xs rounded-md hover:bg-white/10 transition-all"
               >
                 {heroData?.button2Text || 'Our Reach'}

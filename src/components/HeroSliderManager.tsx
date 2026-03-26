@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import S3Service from '../lib/S3Service';
 
+const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
+
 export interface HeroSlide {
   id: string;
   headline: string;  // Maps to 'title' in backend
@@ -97,6 +99,68 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     }
   }, [slides, loading]);
 
+  // Save to backend API (DynamoDB) - NO localStorage
+  const saveToBackend = async (slidesToSave: HeroSlide[]) => {
+    try {
+      const token = localStorage.getItem('idToken');
+      
+      // Format for backend
+      const backendData = {
+        PK: 'hero',
+        SK: 'content',
+        type: 'cms',
+        slides: slidesToSave.map(slide => ({
+          id: slide.id,
+          headline: slide.headline,
+          description: slide.description,
+          tagline: slide.tagline,
+          button1Text: slide.button1Text,
+          button1Link: slide.button1Link,
+          button2Text: slide.button2Text,
+          button2Link: slide.button2Link,
+          imageUrl: slide.imageUrl,
+          s3Key: slide.s3Key,
+          isActive: slide.isActive,
+          order: slide.order
+        })),
+        updatedAt: new Date().toISOString()
+      };
+
+      console.log('💾 Saving to backend API:', backendData);
+      
+      const response = await fetch(`${API_URL}/cms/hero`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token ? `Bearer ${token}` : ''
+        },
+        body: JSON.stringify(backendData)
+      });
+
+      if (response.ok) {
+        await response.json();
+        console.log('✅ Saved to backend successfully!');
+        toast.success('Hero slides saved to backend!', {
+          description: 'Changes are live on the website.'
+        });
+        return true;
+      } else {
+        const error = await response.text();
+        console.error('❌ Backend save failed:', response.status, error);
+        toast.error('Failed to save to backend', {
+          description: 'Check API configuration'
+        });
+        return false;
+      }
+    } catch (error: any) {
+      console.error('❌ Backend save error:', error);
+      toast.error('Save failed', {
+        description: error.message || 'Network error'
+      });
+      return false;
+    }
+  };
+
   // Handle image upload for a slide
   const handleImageUpload = async (slideId: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -138,23 +202,13 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
           : slide
       );
 
-      console.log('💾 Saving to localStorage:', updatedSlides);
+      console.log('💾 Saving to backend API...');
       setSlides(updatedSlides);
       
-      // Direct save to localStorage (bypass any overrides)
-      localStorage.setItem('agrofeed_hero_slides', JSON.stringify(updatedSlides));
-      console.log('✅ Saved to localStorage!');
-      
-      // Verify save
-      const verifySave = localStorage.getItem('agrofeed_hero_slides');
-      console.log('🔍 Verification - Saved data:', verifySave ? 'YES' : 'NO');
-      if (verifySave) {
-        const parsed = JSON.parse(verifySave);
-        const updatedSlide = parsed.find((s: any) => s.id === slideId);
-        console.log('🔍 Updated slide has image:', updatedSlide?.imageUrl ? 'YES ✅' : 'NO ❌');
-      }
+      // Save to backend API (NOT localStorage)
+      await saveToBackend(updatedSlides);
 
-      toast.success('Hero image uploaded successfully!', {
+      toast.success('Hero image uploaded and saved!', {
         description: `Image uploaded to S3: hero/${file.name}`
       });
     } catch (error: any) {
