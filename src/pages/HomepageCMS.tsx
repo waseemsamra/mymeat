@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { fetchHeroData, saveHeroData, uploadHeroImage } from '../lib/heroService';
 import HeroSliderManager from '../components/HeroSliderManager';
-import S3Service from '../lib/S3Service';
 
 const HomepageCMS = () => {
   const [loading, setLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [heroSlides, setHeroSlides] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     headline: '',
     description: '',
@@ -165,7 +163,6 @@ const HomepageCMS = () => {
         <div className="border-t border-gray-200 pt-8">
           <HeroSliderManager 
             onSlideChange={(slides) => {
-              setHeroSlides(slides);
               // Save the first active slide as the main hero data
               const activeSlide = slides.find(s => s.isActive) || slides[0];
               if (activeSlide) {

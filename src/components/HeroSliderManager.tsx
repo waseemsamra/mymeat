@@ -189,16 +189,16 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-bold text-dark">Hero Slider Management</h3>
-          <p className="text-sm text-muted-foreground">
+          <h3 className="text-lg font-bold text-dark">Hero Slider Management</h3>
+          <p className="text-xs text-muted-foreground">
             Manage hero slider images and content. Upload images to S3.
           </p>
         </div>
         <button
           onClick={handleAddSlide}
-          className="flex items-center gap-2 px-4 py-2 bg-[#00450d] text-white rounded-lg hover:bg-[#0c5216] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[#00450d] text-white text-xs rounded-lg hover:bg-[#0c5216] transition-colors"
         >
-          <span className="material-symbols-outlined">add</span>
+          <span className="material-symbols-outlined text-sm">add</span>
           Add Slide
         </button>
       </div>
@@ -232,14 +232,14 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
               <div className="flex-1 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-gray-500">Slide {index + 1}</span>
+                    <span className="text-[10px] font-bold text-gray-500">Slide {index + 1}</span>
                     {slide.isActive && (
                       <span className="px-2 py-0.5 bg-green-100 text-green-800 text-[10px] font-bold rounded uppercase">
                         Active
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <button
                       onClick={() => handleMoveSlide(slide.id, 'up')}
                       disabled={index === 0}
@@ -274,13 +274,13 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
                   type="text"
                   value={slide.headline}
                   onChange={(e) => handleUpdateSlide(slide.id, { headline: e.target.value })}
-                  className="w-full text-sm font-bold border-b border-gray-300 focus:border-[#00450d] focus:ring-0 px-0 py-1"
+                  className="w-full text-xs font-semibold border-b border-gray-300 focus:border-[#00450d] focus:ring-0 px-0 py-1"
                   placeholder="Headline"
                 />
 
                 {/* Image Upload */}
                 <div className="flex items-center gap-2">
-                  <label className="flex items-center gap-2 px-3 py-1.5 bg-[#00450d] text-white text-xs rounded-lg cursor-pointer hover:bg-[#0c5216]">
+                  <label className="flex items-center gap-2 px-3 py-1.5 bg-[#00450d] text-white text-[10px] rounded-lg cursor-pointer hover:bg-[#0c5216]">
                     <span className="material-symbols-outlined text-sm">cloud_upload</span>
                     {uploadingId === slide.id ? 'Uploading...' : 'Upload Image'}
                     <input
@@ -292,7 +292,7 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
                     />
                   </label>
                   {slide.s3Key && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-[10px] text-gray-500">
                       📁 hero/{slide.s3Key.split('/').pop()}
                     </span>
                   )}
@@ -304,41 +304,41 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
             {activeSlideId === slide.id && (
               <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-medium text-gray-600">Tagline</label>
+                  <label className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Tagline</label>
                   <input
                     type="text"
                     value={slide.tagline}
                     onChange={(e) => handleUpdateSlide(slide.id, { tagline: e.target.value })}
-                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                    className="w-full text-xs border rounded px-3 py-2 mt-1"
                     placeholder="Established 1984"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-gray-600">Description</label>
+                  <label className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Description</label>
                   <textarea
                     value={slide.description}
                     onChange={(e) => handleUpdateSlide(slide.id, { description: e.target.value })}
-                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                    className="w-full text-xs border rounded px-3 py-2 mt-1"
                     rows={2}
                     placeholder="Slide description"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-gray-600">Button 1 Text</label>
+                  <label className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Button 1 Text</label>
                   <input
                     type="text"
                     value={slide.button1Text}
                     onChange={(e) => handleUpdateSlide(slide.id, { button1Text: e.target.value })}
-                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                    className="w-full text-xs border rounded px-3 py-2 mt-1"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-gray-600">Button 1 Link</label>
+                  <label className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Button 1 Link</label>
                   <input
                     type="text"
                     value={slide.button1Link}
                     onChange={(e) => handleUpdateSlide(slide.id, { button1Link: e.target.value })}
-                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                    className="w-full text-xs border rounded px-3 py-2 mt-1"
                   />
                 </div>
                 <div className="col-span-2">
@@ -349,7 +349,7 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
                       onChange={(e) => handleUpdateSlide(slide.id, { isActive: e.target.checked })}
                       className="rounded"
                     />
-                    <span className="text-sm font-medium">Active (visible on homepage)</span>
+                    <span className="text-xs font-medium">Active (visible on homepage)</span>
                   </label>
                 </div>
               </div>
@@ -359,11 +359,11 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
       </div>
 
       {/* Info Box */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-800">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+        <p className="text-[10px] text-blue-800">
           <strong>ℹ️ Image Upload:</strong> Images are uploaded to S3 bucket 
-          <code className="bg-blue-100 px-2 py-1 rounded ml-2">hero/</code> folder.
-          Public URL format: <code className="bg-blue-100 px-2 py-1 rounded ml-1">https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/filename.jpg</code>
+          <code className="bg-blue-100 px-1.5 py-0.5 rounded ml-1">hero/</code> folder.
+          Public URL: <code className="bg-blue-100 px-1.5 py-0.5 rounded ml-1">agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/filename.jpg</code>
         </p>
       </div>
     </div>
