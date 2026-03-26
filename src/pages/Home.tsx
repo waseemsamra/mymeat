@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const Home = () => {
   return (
@@ -423,105 +424,7 @@ const Home = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-stone-800 dark:bg-stone-950 w-full pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
-          <div className="space-y-6">
-            <div className="text-lg font-headline font-bold text-white">
-              The Global Agrarian
-            </div>
-            <p className="text-stone-400 font-sans text-sm leading-relaxed">
-              Premium fresh food export and import curating the world's finest harvest for global B2B partners.
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-green-500 font-sans text-sm font-semibold uppercase tracking-widest">
-                Global Logistics Status: Live
-              </span>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <h4 className="text-white font-semibold">Our Portfolio</h4>
-            <ul className="space-y-4">
-              <li>
-                <Link to="/products/rice-spices" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Rice & Spices
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/meat-seafood" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Meat & Seafood
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/fruits-vegetables" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Fruits & Vegetables
-                </Link>
-              </li>
-              <li>
-                <Link to="/products/nuts-flavors" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Nuts & Flavors
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-6">
-            <h4 className="text-white font-semibold">Excellence</h4>
-            <ul className="space-y-4">
-              <li>
-                <Link to="/quality" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Quality Control
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Global Logistics
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="text-stone-400 hover:text-[#ffdeac] transition-colors text-sm">
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-6">
-            <h4 className="text-white font-semibold">Join Our Newsletter</h4>
-            <p className="text-stone-400 text-sm">Get seasonal harvest alerts and market insights.</p>
-            <div className="flex">
-              <input
-                className="bg-stone-900 border-none text-white text-sm focus:ring-1 focus:ring-stone-500 rounded-l-md w-full"
-                placeholder="Email Address"
-                type="email"
-              />
-              <button className="bg-[#00450d] px-4 py-2 rounded-r-md">
-                <span className="material-symbols-outlined text-white text-sm">send</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-stone-400 text-sm">
-            © 2024 The Global Agrarian Editorial. All Rights Reserved.
-          </p>
-          <div className="flex gap-6">
-            <a className="text-stone-400 hover:text-white transition-colors" href="#">
-              <span className="material-symbols-outlined">social_leaderboard</span>
-            </a>
-            <a className="text-stone-400 hover:text-white transition-colors" href="#">
-              <span className="material-symbols-outlined">language</span>
-            </a>
-            <a className="text-stone-400 hover:text-white transition-colors" href="#">
-              <span className="material-symbols-outlined">mail</span>
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');

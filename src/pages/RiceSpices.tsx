@@ -1,34 +1,11 @@
 import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const RiceSpices = () => {
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
-          <Link to="/" className="text-xl font-extrabold tracking-tighter text-[#00450d] font-headline">
-            Gulf Link
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-10 font-headline uppercase tracking-wider text-sm font-bold">
-            <Link to="/products/rice-spices" className="text-[#00450d] border-b-2 border-[#00450d] pb-1">Rice</Link>
-            <Link to="/products/rice-spices#spices" className="text-stone-600 hover:text-[#00450d] transition-colors">Spices</Link>
-            <Link to="/services" className="text-stone-600 hover:text-[#00450d] transition-colors">Logistics</Link>
-            <Link to="/about" className="text-stone-600 hover:text-[#00450d] transition-colors">About</Link>
-            <Link to="/contact" className="text-stone-600 hover:text-[#00450d] transition-colors">Contact</Link>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button className="p-2 text-[#00450d] transition-all active:scale-95">
-              <span className="material-symbols-outlined">language</span>
-            </button>
-            <button className="p-2 text-[#00450d] transition-all active:scale-95">
-              <span className="material-symbols-outlined">account_circle</span>
-            </button>
-          </div>
-        </div>
-        <div className="bg-stone-100 h-px w-full opacity-20"></div>
-      </nav>
+      <Navigation />
 
       <main className="pt-20">
         {/* Hero Section */}
@@ -355,53 +332,8 @@ const RiceSpices = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-stone-900 w-full pt-16 pb-8 border-t border-stone-800">
-        <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 font-sans text-stone-400 text-sm leading-relaxed">
-          <div>
-            <span className="text-lg font-bold text-white mb-4 block">Gulf Link</span>
-            <p className="mb-6">Curating the earth's bounty for a global market. Excellence in agricultural export since 1994.</p>
-            <div className="flex gap-4">
-              <span className="material-symbols-outlined text-[#91d78a] cursor-pointer hover:text-[#acf4a4] transition-all">public</span>
-              <span className="material-symbols-outlined text-[#91d78a] cursor-pointer hover:text-[#acf4a4] transition-all">hub</span>
-              <span className="material-symbols-outlined text-[#91d78a] cursor-pointer hover:text-[#acf4a4] transition-all">verified_user</span>
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-4">
-            <span className="text-white font-medium">Resources</span>
-            <Link to="#" className="text-stone-500 hover:text-stone-300 transition-all">Sustainability Report</Link>
-            <Link to="/services" className="text-stone-500 hover:text-stone-300 transition-all flex items-center gap-2">
-              Global Logistics Status
-              <span className="w-2 h-2 rounded-full bg-[#91d78a]"></span>
-            </Link>
-            <Link to="#" className="text-stone-500 hover:text-stone-300 transition-all">Sourcing Map</Link>
-            <Link to="#" className="text-stone-500 hover:text-stone-300 transition-all">Export Standards</Link>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <span className="text-white font-medium">Legal</span>
-            <Link to="#" className="text-stone-500 hover:text-stone-300 transition-all">Privacy Policy</Link>
-            <Link to="#" className="text-stone-500 hover:text-stone-300 transition-all">Terms of Export</Link>
-            <Link to="#" className="text-stone-500 hover:text-stone-300 transition-all">Compliance Certifications</Link>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <span className="text-white font-medium">Contact</span>
-            <p>Export House, 44 Verdant Plaza</p>
-            <p>Singapore Central, 049317</p>
-            <p className="text-[#91d78a] font-bold mt-2">desk@agrofeed.global</p>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2026 Gulf Link. All Rights Reserved.</p>
-          <div className="flex gap-6">
-            <span className="text-stone-600">English (US)</span>
-            <span className="text-stone-600">Metric Units</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@300;400;500;600&display=swap');

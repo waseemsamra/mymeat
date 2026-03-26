@@ -1,28 +1,11 @@
 import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const About = () => {
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
-      {/* Top Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-none">
-        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
-          <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
-            Gulf Link
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Home</Link>
-            <Link to="/products" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Categories</Link>
-            <Link to="/services" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Services</Link>
-            <Link to="/about" className="font-headline font-bold tracking-tight text-sm text-[#00450d] border-b-2 border-[#00450d] pb-1">About</Link>
-            <Link to="/contact" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Contact</Link>
-          </div>
-
-          <Link to="/contact" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-5 py-2 rounded font-headline font-bold text-sm transition-all">
-            Enquire Now
-          </Link>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="pt-20">
         {/* Hero Section */}
@@ -263,62 +246,8 @@ const About = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-stone-800 w-full pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
-          <div className="space-y-6">
-            <div className="text-lg font-headline font-bold text-white">Gulf Link</div>
-            <p className="font-sans text-sm leading-relaxed text-stone-400">Curating the finest agricultural exports with precision, ethics, and modern logistics.</p>
-            <div className="flex gap-4">
-              <span className="px-3 py-1 bg-stone-700 text-[#ffdeac] text-[10px] uppercase font-bold tracking-widest rounded-full">HQ: Singapore</span>
-            </div>
-          </div>
 
-          <div className="space-y-6">
-            <h5 className="text-white font-semibold font-headline">The Portfolio</h5>
-            <ul className="space-y-4">
-              <li><Link to="/products" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">Rice & Spices</Link></li>
-              <li><Link to="/products" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">Meat & Seafood</Link></li>
-              <li><Link to="/services" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">Quality Control</Link></li>
-            </ul>
-          </div>
-
-          <div className="space-y-6">
-            <h5 className="text-white font-semibold font-headline">Global Status</h5>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <Link to="#" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">Global Logistics Status</Link>
-              </li>
-              <li><Link to="#" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">Privacy Policy</Link></li>
-              <li><Link to="#" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">Terms of Service</Link></li>
-            </ul>
-          </div>
-
-          <div className="space-y-6">
-            <h5 className="text-white font-semibold font-headline">Our Insights</h5>
-            <p className="font-sans text-sm text-stone-400">Subscribe for quarterly editorial on global food markets.</p>
-            <div className="flex">
-              <input
-                className="bg-stone-900 border-none rounded-l-md text-sm text-white w-full focus:ring-1 focus:ring-stone-500 px-4 py-2"
-                placeholder="Email"
-                type="email"
-              />
-              <button className="bg-[#00450d] px-4 rounded-r-md text-white hover:bg-[#1b5e20] transition-colors">
-                ✈️
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="font-sans text-xs text-stone-500">© 2026 Gulf Link. All Rights Reserved.</div>
-          <div className="flex gap-6">
-            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">🌐</a>
-            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">📊</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');

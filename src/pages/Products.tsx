@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const Products = () => {
   const categories = [
@@ -10,26 +12,7 @@ const Products = () => {
 
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-none">
-        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
-          <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
-            Gulf Link
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Home</Link>
-            <Link to="/products" className="font-headline font-bold tracking-tight text-sm text-[#00450d] border-b-2 border-[#00450d] pb-1">Categories</Link>
-            <Link to="/services" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Services</Link>
-            <Link to="/about" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">About</Link>
-            <Link to="/contact" className="font-headline font-bold tracking-tight text-sm text-stone-600 hover:text-[#00450d] transition-colors">Contact</Link>
-          </div>
-
-          <Link to="/contact" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-5 py-2 rounded font-headline font-bold text-sm transition-all">
-            Enquire Now
-          </Link>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="pt-20">
         {/* Hero */}
@@ -166,69 +149,8 @@ const Products = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-stone-800 w-full pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
-          <div className="space-y-6">
-            <div className="text-lg font-headline font-bold text-white">Gulf Link</div>
-            <p className="font-sans text-sm leading-relaxed text-stone-400">Premium fresh food export and import curating the world's finest harvest.</p>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="text-green-500 font-sans text-sm font-semibold uppercase tracking-widest">Global Logistics: Live</span>
-            </div>
-          </div>
 
-          <div className="space-y-6">
-            <h5 className="text-white font-semibold font-headline">The Portfolio</h5>
-            <ul className="space-y-4">
-              {['Rice & Spices', 'Meat & Seafood', 'Fruits & Vegetables', 'Nuts & Flavors'].map((item) => (
-                <li key={item}>
-                  <Link to="/products" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-6">
-            <h5 className="text-white font-semibold font-headline">Excellence</h5>
-            <ul className="space-y-4">
-              {['Quality Control', 'Global Logistics', 'Privacy Policy', 'Terms of Service'].map((item) => (
-                <li key={item}>
-                  <Link to="#" className="font-sans text-sm text-stone-400 hover:text-[#ffdeac] transition-colors">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-6">
-            <h5 className="text-white font-semibold font-headline">Join Our Newsletter</h5>
-            <p className="font-sans text-sm text-stone-400">Get seasonal harvest alerts and market insights.</p>
-            <div className="flex">
-              <input
-                className="bg-stone-900 border-none text-white text-sm focus:ring-1 focus:ring-stone-500 rounded-l-md w-full px-4 py-2"
-                placeholder="Email Address"
-                type="email"
-              />
-              <button className="bg-[#00450d] px-4 py-2 rounded-r-md text-white">
-                ✈️
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-sans text-xs text-stone-500">© 2026 Gulf Link. All Rights Reserved.</p>
-          <div className="flex gap-6">
-            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">📱</a>
-            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">🌐</a>
-            <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">✉️</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
