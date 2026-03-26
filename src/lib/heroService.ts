@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 
+const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 const S3_BASE_URL = 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com';
 
 export interface HeroData {
