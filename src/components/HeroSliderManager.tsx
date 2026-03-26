@@ -1,0 +1,373 @@
+import { useState } from 'react';
+import { toast } from 'sonner';
+import S3Service from '../lib/S3Service';
+
+interface HeroSlide {
+  id: string;
+  headline: string;
+  description: string;
+  tagline: string;
+  button1Text: string;
+  button1Link: string;
+  button2Text: string;
+  button2Link: string;
+  imageUrl: string;
+  s3Key?: string;
+  isActive: boolean;
+  order: number;
+}
+
+interface HeroSliderManagerProps {
+  onSlideChange?: (slides: HeroSlide[]) => void;
+}
+
+const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) => {
+  const [slides, setSlides] = useState<HeroSlide[]>([
+    {
+      id: 'slide-1',
+      headline: 'Nurturing the Global Harvest.',
+      description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+      tagline: 'Established 1984 — Global Curators',
+      button1Text: 'View Portfolios',
+      button1Link: '/products',
+      button2Text: 'Our Reach',
+      button2Link: '/about',
+      imageUrl: '',
+      isActive: true,
+      order: 1
+    }
+  ]);
+
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
+  const [activeSlideId, setActiveSlideId] = useState<string>('slide-1');
+
+  // Handle image upload for a slide
+  const handleImageUpload = async (slideId: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Invalid file type', {
+        description: 'Please upload JPEG, PNG, GIF, or WebP images only.'
+      });
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error('File too large', {
+        description: 'Maximum file size is 5MB.'
+      });
+      return;
+    }
+
+    setUploadingId(slideId);
+
+    try {
+      // Upload to S3 in hero folder
+      const result = await S3Service.uploadImage(file, 'hero');
+      
+      // Update slide with new image URL
+      const updatedSlides = slides.map(slide => 
+        slide.id === slideId 
+          ? { ...slide, imageUrl: result.url, s3Key: result.key }
+          : slide
+      );
+      
+      setSlides(updatedSlides);
+      
+      toast.success('Hero image uploaded successfully!', {
+        description: `Image uploaded to S3: hero/${file.name}`
+      });
+
+      if (onSlideChange) {
+        onSlideChange(updatedSlides);
+      }
+    } catch (error: any) {
+      toast.error('Upload failed', {
+        description: error.message || 'An error occurred during upload.'
+      });
+    } finally {
+      setUploadingId(null);
+      event.target.value = '';
+    }
+  };
+
+  // Add new slide
+  const handleAddSlide = () => {
+    const newSlide: HeroSlide = {
+      id: `slide-${Date.now()}`,
+      headline: 'New Hero Slide',
+      description: 'Add your description here',
+      tagline: 'Tagline',
+      button1Text: 'Learn More',
+      button1Link: '/products',
+      button2Text: 'Contact',
+      button2Link: '/contact',
+      imageUrl: '',
+      isActive: true,
+      order: slides.length + 1
+    };
+    
+    const updatedSlides = [...slides, newSlide];
+    setSlides(updatedSlides);
+    setActiveSlideId(newSlide.id);
+    
+    if (onSlideChange) {
+      onSlideChange(updatedSlides);
+    }
+    
+    toast.success('New slide added', {
+      description: 'Configure the slide content and upload an image.'
+    });
+  };
+
+  // Delete slide
+  const handleDeleteSlide = (slideId: string) => {
+    if (slides.length === 1) {
+      toast.error('Cannot delete', {
+        description: 'You must have at least one hero slide.'
+      });
+      return;
+    }
+
+    const updatedSlides = slides.filter(s => s.id !== slideId);
+    setSlides(updatedSlides);
+    
+    if (activeSlideId === slideId) {
+      setActiveSlideId(updatedSlides[0].id);
+    }
+    
+    if (onSlideChange) {
+      onSlideChange(updatedSlides);
+    }
+    
+    toast.success('Slide deleted');
+  };
+
+  // Update slide content
+  const handleUpdateSlide = (slideId: string, updates: Partial<HeroSlide>) => {
+    const updatedSlides = slides.map(slide => 
+      slide.id === slideId ? { ...slide, ...updates } : slide
+    );
+    setSlides(updatedSlides);
+    
+    if (onSlideChange) {
+      onSlideChange(updatedSlides);
+    }
+  };
+
+  // Move slide order
+  const handleMoveSlide = (slideId: string, direction: 'up' | 'down') => {
+    const index = slides.findIndex(s => s.id === slideId);
+    if (
+      (direction === 'up' && index === 0) ||
+      (direction === 'down' && index === slides.length - 1)
+    ) {
+      return;
+    }
+
+    const updatedSlides = [...slides];
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    [updatedSlides[index], updatedSlides[newIndex]] = [updatedSlides[newIndex], updatedSlides[index]];
+    
+    updatedSlides.forEach((slide, i) => {
+      slide.order = i + 1;
+    });
+    
+    setSlides(updatedSlides);
+    
+    if (onSlideChange) {
+      onSlideChange(updatedSlides);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-xl font-bold text-dark">Hero Slider Management</h3>
+          <p className="text-sm text-muted-foreground">
+            Manage hero slider images and content. Upload images to S3.
+          </p>
+        </div>
+        <button
+          onClick={handleAddSlide}
+          className="flex items-center gap-2 px-4 py-2 bg-[#00450d] text-white rounded-lg hover:bg-[#0c5216] transition-colors"
+        >
+          <span className="material-symbols-outlined">add</span>
+          Add Slide
+        </button>
+      </div>
+
+      {/* Slides List */}
+      <div className="space-y-4">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`border rounded-lg p-4 transition-all ${
+              activeSlideId === slide.id ? 'border-[#00450d] bg-green-50' : 'border-gray-200 bg-white'
+            }`}
+          >
+            <div className="flex items-start gap-4">
+              {/* Slide Thumbnail */}
+              <div className="w-48 h-28 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                {slide.imageUrl ? (
+                  <img
+                    src={slide.imageUrl}
+                    alt={slide.headline}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                    <span className="material-symbols-outlined text-4xl">image</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Slide Content */}
+              <div className="flex-1 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-gray-500">Slide {index + 1}</span>
+                    {slide.isActive && (
+                      <span className="px-2 py-0.5 bg-green-100 text-green-800 text-[10px] font-bold rounded uppercase">
+                        Active
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleMoveSlide(slide.id, 'up')}
+                      disabled={index === 0}
+                      className="p-1 hover:bg-gray-200 rounded disabled:opacity-30"
+                    >
+                      <span className="material-symbols-outlined text-sm">arrow_upward</span>
+                    </button>
+                    <button
+                      onClick={() => handleMoveSlide(slide.id, 'down')}
+                      disabled={index === slides.length - 1}
+                      className="p-1 hover:bg-gray-200 rounded disabled:opacity-30"
+                    >
+                      <span className="material-symbols-outlined text-sm">arrow_downward</span>
+                    </button>
+                    <button
+                      onClick={() => setActiveSlideId(slide.id)}
+                      className="p-1 hover:bg-gray-200 rounded"
+                    >
+                      <span className="material-symbols-outlined text-sm">edit</span>
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSlide(slide.id)}
+                      className="p-1 hover:bg-red-100 text-red-600 rounded"
+                    >
+                      <span className="material-symbols-outlined text-sm">delete</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Headline */}
+                <input
+                  type="text"
+                  value={slide.headline}
+                  onChange={(e) => handleUpdateSlide(slide.id, { headline: e.target.value })}
+                  className="w-full text-sm font-bold border-b border-gray-300 focus:border-[#00450d] focus:ring-0 px-0 py-1"
+                  placeholder="Headline"
+                />
+
+                {/* Image Upload */}
+                <div className="flex items-center gap-2">
+                  <label className="flex items-center gap-2 px-3 py-1.5 bg-[#00450d] text-white text-xs rounded-lg cursor-pointer hover:bg-[#0c5216]">
+                    <span className="material-symbols-outlined text-sm">cloud_upload</span>
+                    {uploadingId === slide.id ? 'Uploading...' : 'Upload Image'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(slide.id, e)}
+                      disabled={uploadingId === slide.id}
+                      className="hidden"
+                    />
+                  </label>
+                  {slide.s3Key && (
+                    <span className="text-xs text-gray-500">
+                      📁 hero/{slide.s3Key.split('/').pop()}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Expanded Editor */}
+            {activeSlideId === slide.id && (
+              <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-medium text-gray-600">Tagline</label>
+                  <input
+                    type="text"
+                    value={slide.tagline}
+                    onChange={(e) => handleUpdateSlide(slide.id, { tagline: e.target.value })}
+                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                    placeholder="Established 1984"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-600">Description</label>
+                  <textarea
+                    value={slide.description}
+                    onChange={(e) => handleUpdateSlide(slide.id, { description: e.target.value })}
+                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                    rows={2}
+                    placeholder="Slide description"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-600">Button 1 Text</label>
+                  <input
+                    type="text"
+                    value={slide.button1Text}
+                    onChange={(e) => handleUpdateSlide(slide.id, { button1Text: e.target.value })}
+                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-gray-600">Button 1 Link</label>
+                  <input
+                    type="text"
+                    value={slide.button1Link}
+                    onChange={(e) => handleUpdateSlide(slide.id, { button1Link: e.target.value })}
+                    className="w-full text-sm border rounded px-3 py-2 mt-1"
+                  />
+                </div>
+                <div className="col-span-2">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={slide.isActive}
+                      onChange={(e) => handleUpdateSlide(slide.id, { isActive: e.target.checked })}
+                      className="rounded"
+                    />
+                    <span className="text-sm font-medium">Active (visible on homepage)</span>
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Info Box */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p className="text-sm text-blue-800">
+          <strong>ℹ️ Image Upload:</strong> Images are uploaded to S3 bucket 
+          <code className="bg-blue-100 px-2 py-1 rounded ml-2">hero/</code> folder.
+          Public URL format: <code className="bg-blue-100 px-2 py-1 rounded ml-1">https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/filename.jpg</code>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default HeroSliderManager;
