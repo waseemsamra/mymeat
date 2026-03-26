@@ -1,5 +1,4 @@
 import { uploadData, remove, list } from 'aws-amplify/storage';
-import { v4 as uuidv4 } from 'uuid';
 
 // S3 Bucket configuration
 const BUCKET_NAME = 'agrofeed-content-agrofeed-536217686312';
@@ -21,11 +20,11 @@ class S3Service {
         throw new Error('File too large. Maximum size is 5MB.');
       }
 
-      const fileExtension = file.name.split('.').pop();
-      const fileName = `${folder}/${uuidv4()}-${Date.now()}.${fileExtension}`;
+      // Use short filename: folder/filename.jpg (no UUID/timestamp)
+      const shortFileName = `${folder}/${file.name}`;
 
       await uploadData({
-        key: fileName,
+        key: shortFileName,
         data: file,
         options: {
           contentType: file.type,
@@ -38,11 +37,11 @@ class S3Service {
       }).result;
 
       // Use public URL instead of pre-signed URL
-      const publicUrl = `${PUBLIC_S3_URL}/${fileName}`;
+      const publicUrl = `${PUBLIC_S3_URL}/${shortFileName}`;
 
       return {
         success: true,
-        key: fileName,
+        key: shortFileName,
         url: publicUrl,
         originalName: file.name,
         size: file.size,

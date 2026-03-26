@@ -68,8 +68,8 @@ const BulkImageUpload: React.FC<BulkUploadProps> = ({ onUploadComplete }) => {
         type: blob.type || 'image/jpeg'
       });
 
-      // Upload to S3
-      const result = await S3Service.uploadImage(file, image.folder);
+      // Upload to S3 - all in hero folder
+      const result = await S3Service.uploadImage(file, 'hero');
 
       return {
         id: image.id,
