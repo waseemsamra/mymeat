@@ -33,10 +33,86 @@ const DEFAULT_HERO: HeroData = {
 
 // Fetch Hero Data from DynamoDB via API (with localStorage fallback)
 export const fetchHeroData = async (): Promise<HeroData | null> => {
-  // Skip API - use localStorage directly (API has CORS issues)
+  try {
+    // Try API first
+    console.log('📡 Fetching hero data from API...');
+    const response = await fetch(`${API_URL}/cms/hero`);
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('✅ Hero data fetched from API:', data);
+      
+      // Handle API response format (has slides array)
+      if (data.slides && Array.isArray(data.slides)) {
+        const activeSlide = data.slides.find((s: any) => s.isActive) || data.slides[0];
+        if (activeSlide) {
+          const heroData = {
+            id: activeSlide.id || 'hero-1',
+            headline: activeSlide.headline || activeSlide.title || '',
+            description: activeSlide.description || activeSlide.subtitle || '',
+            tagline: activeSlide.tagline || '',
+            button1Text: activeSlide.button1Text || activeSlide.buttonText || '',
+            button1Link: activeSlide.button1Link || activeSlide.buttonLink || '',
+            button2Text: activeSlide.button2Text || '',
+            button2Link: activeSlide.button2Link || '',
+            imageUrl: activeSlide.imageUrl || activeSlide.image || '',
+            isActive: activeSlide.isActive !== false,
+            updatedAt: data.updatedAt || new Date().toISOString()
+          };
+          
+          // Cache in localStorage in HeroSliderManager format
+          const slides = data.slides.map((slide: any) => ({
+            id: slide.id || `slide-${Date.now()}`,
+            headline: slide.headline || slide.title || '',
+            description: slide.description || slide.subtitle || '',
+            tagline: slide.tagline || '',
+            button1Text: slide.button1Text || slide.buttonText || '',
+            button1Link: slide.button1Link || slide.buttonLink || '',
+            button2Text: slide.button2Text || '',
+            button2Link: slide.button2Link || '',
+            imageUrl: slide.imageUrl || slide.image || '',
+            s3Key: slide.s3Key || slide.imageUrl?.split('/').pop() || slide.image?.split('/').pop(),
+            isActive: slide.isActive !== false,
+            order: slide.order || 1
+          }));
+          
+          localStorage.setItem('agrofeed_hero_slides', JSON.stringify(slides));
+          console.log('💾 Cached hero data in localStorage');
+          
+          return heroData;
+        }
+      }
+      
+      // Handle single hero object format
+      if (data.headline || data.title) {
+        const heroData = {
+          id: data.id || 'hero-1',
+          headline: data.headline || data.title || '',
+          description: data.description || data.subtitle || '',
+          tagline: data.tagline || '',
+          button1Text: data.button1Text || data.buttonText || '',
+          button1Link: data.button1Link || data.buttonLink || '',
+          button2Text: data.button2Text || '',
+          button2Link: data.button2Link || '',
+          imageUrl: data.imageUrl || data.image || '',
+          isActive: data.isActive !== false,
+          updatedAt: data.updatedAt || new Date().toISOString()
+        };
+        
+        localStorage.setItem('agrofeed_hero_slides', JSON.stringify([{
+          ...heroData,
+          s3Key: heroData.imageUrl?.split('/').pop()
+        }]));
+        
+        return heroData;
+      }
+    }
+  } catch (error: any) {
+    console.log('⚠️ API not available, using localStorage:', error.message);
+  }
+
+  // Fallback to localStorage - Check HeroSliderManager format first
   console.log('📂 Loading hero data from localStorage...');
-  
-  // Check HeroSliderManager format first
   const sliderSlides = localStorage.getItem('agrofeed_hero_slides');
   if (sliderSlides) {
     try {
@@ -61,13 +137,6 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
     } catch (error) {
       console.log('⚠️ Error parsing slider slides:', error);
     }
-  }
-
-  // Fallback to old localStorage key
-  const cached = localStorage.getItem('gulflink_hero_content');
-  if (cached) {
-    console.log('✅ Hero data loaded from old localStorage');
-    return JSON.parse(cached);
   }
 
   // Final fallback to default
