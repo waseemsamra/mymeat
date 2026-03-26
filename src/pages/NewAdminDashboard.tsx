@@ -56,6 +56,18 @@ const NewAdminDashboard = () => {
     );
   }
 
+  const handleLogout = async () => {
+    try {
+      localStorage.clear();
+      toast.success('Logged out successfully');
+      navigate('/admin-login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      localStorage.clear();
+      navigate('/admin-login');
+    }
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
