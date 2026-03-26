@@ -56,13 +56,25 @@ const HomepageCMS = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    console.log('📷 Starting image upload...', file.name);
     setUploading(true);
-    const imageUrl = await uploadHeroImage(file);
-    if (imageUrl) {
-      setFormData({ ...formData, imageUrl });
-      toast.success('Hero image uploaded to S3!');
+    
+    try {
+      const imageUrl = await uploadHeroImage(file);
+      if (imageUrl) {
+        console.log('✅ Image uploaded, updating formData:', imageUrl);
+        setFormData(prev => ({ ...prev, imageUrl }));
+        toast.success('Hero image uploaded successfully!');
+      } else {
+        console.error('❌ Upload returned null URL');
+        toast.error('Upload failed - no URL returned');
+      }
+    } catch (error: any) {
+      console.error('❌ Upload error:', error);
+      toast.error('Upload failed: ' + (error.message || 'Unknown error'));
+    } finally {
+      setUploading(false);
     }
-    setUploading(false);
   };
 
   return (
@@ -88,13 +100,13 @@ const HomepageCMS = () => {
           {/* Preview Card */}
           <div className="col-span-12 lg:col-span-7 relative group rounded-2xl overflow-hidden shadow-lg aspect-[16/8] bg-[#eeeee9]">
             <img
-              alt="Fresh organic produce preview"
+              alt="Hero preview"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPvjVcMcAPnUfgGQ6dtsyNqw6gsKo1Kyjc1tv6pOo1v41mUmsE0QOEbN-xywroLKjD_JexyTES-l1AncWpiQqRrHAhdMRB6H170qmWK1emVCzUouJ4SZHUX20XIeLN6enbVbPjhZQZMNnV3W8gh42Cw5XqE4Mn1t8qRcBDLjs3c0M3tYyXuWNGN5OalU0WIv30ZEuvYAPsnM14PFad2-pB2GEt86eigx8D37_aKqdf79M_oWUAkkWjQnlcxp5EozTSryYooMixAcq_"
+              src={formData.imageUrl || 'https://agrofeed-content-agrofeed-536217686312.s3.us-east-1.amazonaws.com/hero/default.jpg'}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
-              <h4 className="text-white text-4xl font-bold mb-2">Curating Earth's Finest Harvest</h4>
-              <p className="text-white/80 max-w-md">Premium agricultural exports delivered with logistical precision and botanical care.</p>
+              <h4 className="text-white text-4xl font-bold mb-2">{formData.headline || 'Curating Earth\'s Finest Harvest'}</h4>
+              <p className="text-white/80 max-w-md">{formData.description || 'Premium agricultural exports delivered with logistical precision and botanical care.'}</p>
             </div>
             <div className="absolute top-4 right-4 flex gap-2">
               <button
@@ -367,9 +379,18 @@ const HomepageCMS = () => {
                         </p>
                       )}
                     </div>
-                    {formData.imageUrl && (
-                      <div className="w-48 h-32 rounded-lg overflow-hidden border-2 border-[#00450d]">
-                        <img src={formData.imageUrl} alt="Hero preview" className="w-full h-full object-cover" />
+                    {formData.imageUrl ? (
+                      <div className="w-48 h-32 rounded-lg overflow-hidden border-2 border-[#00450d] shadow-lg">
+                        <img 
+                          key={formData.imageUrl} 
+                          src={formData.imageUrl} 
+                          alt="Hero preview" 
+                          className="w-full h-full object-cover" 
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-48 h-32 rounded-lg overflow-hidden border-2 border-dashed border-[#717a6d] flex items-center justify-center bg-[#f4f4ef]">
+                        <span className="text-[#717a6d] text-sm">No image uploaded</span>
                       </div>
                     )}
                   </div>
