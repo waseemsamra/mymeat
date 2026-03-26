@@ -536,31 +536,6 @@ const CategoryManagement = () => {
       </div>
 
       {/* Contextual Footer */}
-      <footer className="mt-20 pt-10 border-t border-[#e3e3de] grid grid-cols-1 md:grid-cols-4 gap-8 pb-10">
-        <div className="col-span-2">
-          <h5 className="text-[#00450d] font-bold text-sm mb-4">Agrarian Admin Intelligence</h5>
-          <p className="text-[#41493e] text-sm max-w-sm leading-relaxed">Global supply chain oversight for premium agrarian exports. Ensuring quality, compliance, and freshness across 42 international territories.</p>
-        </div>
-        <div>
-          <h5 className="text-[#1a1c19] font-bold text-xs uppercase tracking-widest mb-4">Export Nodes</h5>
-          <ul className="space-y-2 text-sm text-[#41493e]">
-            <li><a className="hover:text-[#047852] transition-colors" href="#">Mumbai Hub</a></li>
-            <li><a className="hover:text-[#047852] transition-colors" href="#">Singapore Terminal</a></li>
-            <li><a className="hover:text-[#047852] transition-colors" href="#">Dubai Logistics</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5 className="text-[#1a1c19] font-bold text-xs uppercase tracking-widest mb-4">Compliance</h5>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="material-symbols-outlined text-[#10b981] text-sm">verified</span>
-            <span className="text-xs font-bold text-[#41493e]">ISO 22000 Certified</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#503600] text-sm">language</span>
-            <span className="text-xs font-bold text-[#41493e]">GDPR Compliant Data</span>
-          </div>
-        </div>
-      </footer>
 
       {/* Modal */}
       {isModalOpen && (

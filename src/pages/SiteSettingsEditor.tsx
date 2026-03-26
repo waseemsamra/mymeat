@@ -318,52 +318,6 @@ const SiteSettingsEditor = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#2f312e] text-white p-12 mt-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="material-symbols-outlined text-[#ffdeac]">eco</span>
-              <span className="font-bold text-xl tracking-tighter">THE GLOBAL AGRARIAN</span>
-            </div>
-            <p className="text-[#717a6d] text-sm leading-relaxed">
-              Curating the world's finest agricultural exports with precision and transparency since 1994.
-            </p>
-          </div>
-          <div>
-            <h6 className="text-xs font-bold uppercase tracking-widest text-[#ffdeac] mb-6">Internal Links</h6>
-            <ul className="space-y-3 text-sm text-[#717a6d]">
-              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Operational Dashboard</a></li>
-              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Vendor Compliance</a></li>
-              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Logistics Registry</a></li>
-            </ul>
-          </div>
-          <div>
-            <h6 className="text-xs font-bold uppercase tracking-widest text-[#ffdeac] mb-6">Support</h6>
-            <ul className="space-y-3 text-sm text-[#717a6d]">
-              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Admin Handbook</a></li>
-              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Security Protocols</a></li>
-              <li><a className="hover:text-[#ffdeac] transition-colors" href="#">Report Incident</a></li>
-            </ul>
-          </div>
-          <div>
-            <h6 className="text-xs font-bold uppercase tracking-widest text-[#503600] mb-6">Global Logistics Status</h6>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
-                <span className="text-xs font-bold">All Corridors Open</span>
-              </div>
-              <p className="text-[11px] text-[#717a6d]">Sea freight latency: 12.4 days average. Air cargo priority: High.</p>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[#717a6d]">© 2024 The Global Agrarian. Confidential Super Admin Access.</p>
-          <div className="flex gap-6 text-[10px] uppercase font-bold tracking-widest text-[#717a6d]">
-            <a className="hover:text-[#ffdeac] transition-colors" href="#">Privacy Policy</a>
-            <a className="hover:text-[#ffdeac] transition-colors" href="#">Terms of Service</a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

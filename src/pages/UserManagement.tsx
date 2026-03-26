@@ -303,57 +303,6 @@ const UserManagement = () => {
       </div>
 
       {/* Global Logistics Status Footer */}
-      <footer className="mt-20 pt-12 border-t border-[#e3e3de]">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          <div className="col-span-1">
-            <h4 className="font-bold text-[#00450d] mb-6">Global Agrarian</h4>
-            <p className="text-sm text-[#41493e] leading-relaxed opacity-70">
-              Curating the finest agricultural exports through intelligent data structures and global agrarian logic.
-            </p>
-          </div>
-          <div>
-            <h5 className="text-[10px] font-bold text-[#717a6d] uppercase tracking-widest mb-6">Management</h5>
-            <ul className="space-y-4 text-sm text-[#41493e]">
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Directory Control</a></li>
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Access Logs</a></li>
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Permission Sets</a></li>
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Security Keys</a></li>
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-[10px] font-bold text-[#717a6d] uppercase tracking-widest mb-6">Partnerships</h5>
-            <ul className="space-y-4 text-sm text-[#41493e]">
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Global Logistics</a></li>
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Supply Nodes</a></li>
-              <li><a className="hover:text-[#00450d] transition-colors" href="#">Wholesale API</a></li>
-            </ul>
-          </div>
-          <div className="bg-[#f4f4ef] p-6 rounded-2xl border border-[#e3e3de]/50">
-            <h5 className="text-[10px] font-bold text-[#717a6d] uppercase tracking-widest mb-4">Global Logistics Status</h5>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium">EU Corridor</span>
-                <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium">Asia Pacific</span>
-                <span className="w-2 h-2 rounded-full bg-[#503600]"></span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium">NA Free Trade</span>
-                <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center justify-between py-8 border-t border-[#f5f5f0]">
-          <p className="text-xs text-[#717a6d]">© 2024 Global Agrarian Editorial. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a className="text-xs text-[#717a6d] hover:text-[#41493e]" href="#">Privacy Protocol</a>
-            <a className="text-xs text-[#717a6d] hover:text-[#41493e]" href="#">Service Standards</a>
-          </div>
-        </div>
-      </footer>
 
       {/* Edit User Modal */}
       {isEditUserModalOpen && selectedUser && (

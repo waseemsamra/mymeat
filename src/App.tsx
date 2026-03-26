@@ -61,21 +61,9 @@ function App() {
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/register" element={<Register />} />
 
-              {/* Public routes with navigation and footer */}
-              <Route path="/" element={
-                <>
-                  <Navigation />
-                  <main><Home /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/products" element={
-                <>
-                  <Navigation />
-                  <main><ProductsPage /></main>
-                  <Footer />
-                </>
-              } />
+              {/* Public routes - pages have their own Navigation and Footer */}
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/:category" element={
                 <>
                   <Navigation />
@@ -83,55 +71,13 @@ function App() {
                   <Footer />
                 </>
               } />
-              <Route path="/products/meat-seafood" element={
-                <>
-                  <Navigation />
-                  <main><MeatSeafood /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/products/rice-spices" element={
-                <>
-                  <Navigation />
-                  <main><RiceSpices /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/products/fruits-vegetables" element={
-                <>
-                  <Navigation />
-                  <main><FruitsVegetables /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/products/canned-goods" element={
-                <>
-                  <Navigation />
-                  <main><CannedGoods /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/products/nuts-flavors" element={
-                <>
-                  <Navigation />
-                  <main><NutsFlavors /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/products/bakery" element={
-                <>
-                  <Navigation />
-                  <main><BakeryProducts /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/categories" element={
-                <>
-                  <Navigation />
-                  <main><Categories /></main>
-                  <Footer />
-                </>
-              } />
+              <Route path="/products/meat-seafood" element={<MeatSeafood />} />
+              <Route path="/products/rice-spices" element={<RiceSpices />} />
+              <Route path="/products/fruits-vegetables" element={<FruitsVegetables />} />
+              <Route path="/products/canned-goods" element={<CannedGoods />} />
+              <Route path="/products/nuts-flavors" element={<NutsFlavors />} />
+              <Route path="/products/bakery" element={<BakeryProducts />} />
+              <Route path="/categories" element={<Categories />} />
               <Route path="/categories/:categoryId" element={
                 <>
                   <Navigation />
@@ -139,48 +85,12 @@ function App() {
                   <Footer />
                 </>
               } />
-              <Route path="/about" element={
-                <>
-                  <Navigation />
-                  <main><About /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/services" element={
-                <>
-                  <Navigation />
-                  <main><ServicesPage /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/quality" element={
-                <>
-                  <Navigation />
-                  <main><Quality /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/sourcing" element={
-                <>
-                  <Navigation />
-                  <main><Sourcing /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/procurement" element={
-                <>
-                  <Navigation />
-                  <main><ProcurementCenter /></main>
-                  <Footer />
-                </>
-              } />
-              <Route path="/contact" element={
-                <>
-                  <Navigation />
-                  <main><Contact /></main>
-                  <Footer />
-                </>
-              } />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/quality" element={<Quality />} />
+              <Route path="/sourcing" element={<Sourcing />} />
+              <Route path="/procurement" element={<ProcurementCenter />} />
+              <Route path="/contact" element={<Contact />} />
 
               {/* Admin route - NewAdminDashboard handles auth internally */}
               <Route path="/admin" element={<NewAdminDashboard />} />
