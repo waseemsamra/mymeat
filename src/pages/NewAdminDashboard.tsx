@@ -32,17 +32,26 @@ const NewAdminDashboard = () => {
     const token = localStorage.getItem('idToken');
 
     if (!storedUser || !token) {
+      console.log('❌ [AdminDashboard] No user or token found, redirecting to login');
       navigate('/admin-login');
       return;
     }
 
     const userData: User = JSON.parse(storedUser);
+    console.log('✅ [AdminDashboard] User loaded:', userData);
 
-    if (userData.email !== 'waseemsamra@gmail.com' && userData.role !== 'admin') {
+    // Allow admin role OR specific admin emails
+    const allowedEmails = ['waseemsamra@gmail.com', 'admin@gulflink.com'];
+    if (userData.role !== 'admin' && !allowedEmails.includes(userData.email)) {
+      console.log('❌ [AdminDashboard] User not authorized:', userData.email);
+      toast.error('Access Denied', {
+        description: 'You do not have admin privileges.'
+      });
       navigate('/admin-login');
       return;
     }
 
+    console.log('✅ [AdminDashboard] Admin access granted');
     setUser(userData);
   }, [navigate]);
 
