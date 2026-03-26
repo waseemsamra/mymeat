@@ -30,19 +30,22 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
       if (data.slides && Array.isArray(data.slides)) {
         const activeSlide = data.slides.find((s: any) => s.isActive) || data.slides[0];
         if (activeSlide) {
-          return {
+          const heroData = {
             id: activeSlide.id || 'hero-1',
-            headline: activeSlide.headline || activeSlide.title || '',
-            description: activeSlide.description || activeSlide.subtitle || '',
-            tagline: activeSlide.tagline || '',
-            button1Text: activeSlide.button1Text || activeSlide.buttonText || '',
-            button1Link: activeSlide.button1Link || activeSlide.buttonLink || '',
-            button2Text: activeSlide.button2Text || '',
-            button2Link: activeSlide.button2Link || '',
+            headline: activeSlide.headline || activeSlide.title || 'Nurturing the Global Harvest.',
+            description: activeSlide.description || activeSlide.subtitle || 'We bridge the distance between origin and table...',
+            tagline: activeSlide.tagline || 'Established 1984 — Global Curators',
+            button1Text: activeSlide.button1Text || activeSlide.buttonText || 'View Portfolios',
+            button1Link: activeSlide.button1Link || activeSlide.buttonLink || '/products',
+            button2Text: activeSlide.button2Text || 'Our Reach',
+            button2Link: activeSlide.button2Link || '/about',
             imageUrl: activeSlide.imageUrl || activeSlide.image || '',
             isActive: activeSlide.isActive !== false,
             updatedAt: data.updatedAt || new Date().toISOString()
           };
+          
+          console.log('🖼️ Hero image URL:', heroData.imageUrl);
+          return heroData;
         }
       }
       

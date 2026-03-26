@@ -31,12 +31,30 @@ const Home = () => {
       const data = await fetchHeroData();
       if (data) {
         console.log('✅ Hero data loaded from API/S3');
-        setHeroData(data);
+        console.log('🖼️ Image URL from API:', data.imageUrl);
+        
+        // Check if image URL is the placeholder or doesn't exist
+        const isPlaceholder = data.imageUrl?.includes('hero-image.jpg') || !data.imageUrl;
+        
+        if (isPlaceholder) {
+          console.log('⚠️ Placeholder image detected, using S3 fallback');
+          // Use S3 images from configuration
+          setHeroData({
+            ...data,
+            imageUrl: HOMEPAGE_S3_IMAGES.heroMain
+          });
+        } else {
+          // Use image from API
+          setHeroData(data);
+        }
         return;
       }
     } catch (error) {
       console.log('⚠️ API not available, using S3 images');
     }
+    
+    // Fallback: Use S3 images directly
+    console.log('📸 Using S3 images from configuration');
   };
 
   return (
