@@ -1,4 +1,4 @@
-import { uploadData, remove, list } from 'aws-amplify/storage';
+import { remove, list } from 'aws-amplify/storage';
 
 // S3 Bucket configuration
 const BUCKET_NAME = 'agrofeed-content-agrofeed-536217686312';
