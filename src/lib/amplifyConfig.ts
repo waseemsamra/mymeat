@@ -33,9 +33,9 @@ const config = {
   },
   Storage: {
     S3: {
-      bucket: import.meta.env.VITE_AWS_S3_BUCKET || 'agrofeed-content-agrofeed-536217686312',
-      region: import.meta.env.VITE_AWS_S3_REGION || 'us-east-1',
-      // Disable automatic prefixes - upload directly to specified key
+      bucket: 'agrofeed-content-agrofeed-536217686312',
+      region: 'us-east-1',
+      // Disable automatic prefixes
       defaultPath: ''
     }
   }
