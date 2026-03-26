@@ -1,12 +1,11 @@
-import { remove, list } from 'aws-amplify/storage';
+import { uploadData, remove, list } from 'aws-amplify/storage';
 
 // S3 Bucket configuration
 const BUCKET_NAME = 'agrofeed-content-agrofeed-536217686312';
 const PUBLIC_S3_URL = `https://${BUCKET_NAME}.s3.amazonaws.com`;
-const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 
 class S3Service {
-  // Upload image to S3 via API Gateway
+  // Upload image to S3 using Amplify Storage
   async uploadImage(file: File, folder: string = 'images') {
     try {
       if (!file) throw new Error('No file provided');
@@ -21,47 +20,41 @@ class S3Service {
         throw new Error('File too large. Maximum size is 5MB.');
       }
 
-      // Convert file to base64
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-      });
+      // Use short filename: folder/filename.jpg
+      const fileName = `${folder}/${file.name}`;
 
-      // Upload via API Gateway
-      const response = await fetch(`${API_URL}/upload`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          file: base64,
-          folder: folder,
+      console.log('⬆️ Uploading to S3:', fileName);
+
+      // Upload using Amplify Storage
+      const uploadResult = await uploadData({
+        key: fileName,
+        data: file,
+        options: {
           contentType: file.type,
-          filename: file.name
-        })
+          metadata: {
+            originalName: file.name,
+            uploadedAt: new Date().toISOString(),
+            size: file.size.toString()
+          }
+        }
       });
 
-      if (!response.ok) {
-        throw new Error(`Upload failed: ${response.statusText}`);
-      }
+      const result = await uploadResult.result;
+      console.log('✅ Upload successful:', result.key);
 
-      await response.json(); // API returns success
-      
-      // Build public URL
-      const publicUrl = `${PUBLIC_S3_URL}/${folder}/${file.name}`;
+      // Build public URL (without any prefix)
+      const publicUrl = `${PUBLIC_S3_URL}/${fileName}`;
 
       return {
         success: true,
-        key: `${folder}/${file.name}`,
+        key: fileName,
         url: publicUrl,
         originalName: file.name,
         size: file.size,
         type: file.type
       };
-    } catch (error) {
-      console.error('Upload error:', error);
+    } catch (error: any) {
+      console.error('❌ Upload error:', error);
       throw error;
     }
   }
