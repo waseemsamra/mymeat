@@ -26,10 +26,25 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
   const [uploadingId, setUploadingId] = useState<string | null>(null);
   const [activeSlideId, setActiveSlideId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [sliderSettings, setSliderSettings] = useState({
+    duration: 5000,
+    transition: 'ken-burns'
+  });
 
   // Load slides from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem('agrofeed_hero_slides');
+    const storedSettings = localStorage.getItem('agrofeed_hero_settings');
+    
+    if (storedSettings) {
+      try {
+        const settings = JSON.parse(storedSettings);
+        setSliderSettings(settings);
+      } catch (error) {
+        console.error('Error loading slider settings:', error);
+      }
+    }
+    
     if (stored) {
       let parsedSlides = JSON.parse(stored);
       
@@ -486,6 +501,63 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
             {slides.filter(s => s.imageUrl).length}
           </p>
           <p className="text-[10px] text-gray-500 uppercase">With Images</p>
+        </div>
+      </div>
+
+      {/* Slider Settings */}
+      <div className="border rounded-lg p-4 bg-white">
+        <h4 className="text-sm font-bold text-dark mb-4 flex items-center gap-2">
+          <span className="material-symbols-outlined text-[#00450d]">settings</span>
+          Slider Settings
+        </h4>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Slide Duration */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-medium text-gray-600 uppercase tracking-wide block flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm">speed</span>
+              Slide Duration
+            </label>
+            <select
+              value={sliderSettings.duration}
+              onChange={(e) => {
+                const newSettings = { ...sliderSettings, duration: parseInt(e.target.value) };
+                setSliderSettings(newSettings);
+                localStorage.setItem('agrofeed_hero_settings', JSON.stringify(newSettings));
+              }}
+              className="w-full text-xs border rounded px-3 py-2 bg-white"
+            >
+              <option value="3000">3 seconds (3000ms)</option>
+              <option value="5000">5 seconds (5000ms)</option>
+              <option value="8000">8 seconds (8000ms)</option>
+              <option value="10000">10 seconds (10000ms)</option>
+            </select>
+          </div>
+
+          {/* Transition Animation */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-medium text-gray-600 uppercase tracking-wide block flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm">animation</span>
+              Transition
+            </label>
+            <select
+              value={sliderSettings.transition}
+              onChange={(e) => {
+                const newSettings = { ...sliderSettings, transition: e.target.value };
+                setSliderSettings(newSettings);
+                localStorage.setItem('agrofeed_hero_settings', JSON.stringify(newSettings));
+              }}
+              className="w-full text-xs border rounded px-3 py-2 bg-white"
+            >
+              <option value="fade">Fade</option>
+              <option value="ken-burns">Ken Burns</option>
+              <option value="slide">Slide</option>
+              <option value="zoom">Zoom</option>
+            </select>
+          </div>
+        </div>
+        <div className="mt-3 flex items-center gap-2 text-[10px] text-gray-500">
+          <span className="material-symbols-outlined text-sm">info</span>
+          <span>Current: {sliderSettings.duration / 1000}s duration, {sliderSettings.transition === 'ken-burns' ? 'Ken Burns' : sliderSettings.transition} transition</span>
         </div>
       </div>
 
