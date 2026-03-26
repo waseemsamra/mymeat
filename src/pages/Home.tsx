@@ -1,8 +1,37 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { fetchHeroData, type HeroData } from '../lib/heroService';
 
 const Home = () => {
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
+
+  useEffect(() => {
+    loadHeroData();
+  }, []);
+
+  const loadHeroData = async () => {
+    const data = await fetchHeroData();
+    if (data) {
+      setHeroData(data);
+    } else {
+      // Fallback data if API fails
+      setHeroData({
+        id: 'hero-1',
+        headline: 'Nurturing the Global Harvest.',
+        description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+        tagline: 'Established 1984 — Global Curators',
+        button1Text: 'View Portfolios',
+        button1Link: '/products',
+        button2Text: 'Our Reach',
+        button2Link: '/about',
+        imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7nVHkmnkQhAe7yFvtb1ZkfDJG5NCwSe1YaymOfdBYdk7NDYNQ_36-YpJnOHJ0NDFnEuYueQsBXQjO6q0x5ZTO7zsszUSqPCxPYgmc08ecXOXZBkTnfI_p-aGjTPyHjWlLC586YJDZ-9vznSjDcOyhnSfdoUWITE9Tfb-zvSx0fxhahBTL0ZABwQZJy_fEiTZtlImXs9ehoAzyItJ7daB2OXio7L8EWazFvWR0mnijYoUXPNWaqwmdSGaywckhjENZXpU2OuggDlv6',
+        isActive: true,
+        updatedAt: new Date().toISOString()
+      });
+    }
+  };
   return (
     <div className="bg-[#fafaf5] font-body text-on-surface antialiased selection:bg-[#acf4a4] selection:text-[#002203]">
       {/* Top Navigation */}
@@ -15,24 +44,32 @@ const Home = () => {
             <img
               alt="Cinematic wide shot of a lush tea plantation"
               className="w-full h-full object-cover opacity-80 scale-105"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7nVHkmnkQhAe7yFvtb1ZkfDJG5NCwSe1YaymOfdBYdk7NDYNQ_36-YpJnOHJ0NDFnEuYueQsBXQjO6q0x5ZTO7zsszUSqPCxPYgmc08ecXOXZBkTnfI_p-aGjTPyHjWlLC586YJDZ-9vznSjDcOyhnSfdoUWITE9Tfb-zvSx0fxhahBTL0ZABwQZJy_fEiTZtlImXs9ehoAzyItJ7daB2OXio7L8EWazFvWR0mnijYoUXPNWaqwmdSGaywckhjENZXpU2OuggDlv6"
+              src={heroData?.imageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7nVHkmnkQhAe7yFvtb1ZkfDJG5NCwSe1YaymOfdBYdk7NDYNQ_36-YpJnOHJ0NDFnEuYueQsBXQjO6q0x5ZTO7zsszUSqPCxPYgmc08ecXOXZBkTnfI_p-aGjTPyHjWlLC586YJDZ-9vznSjDcOyhnSfdoUWITE9Tfb-zvSx0fxhahBTL0ZABwQZJy_fEiTZtlImXs9ehoAzyItJ7daB2OXio7L8EWazFvWR0mnijYoUXPNWaqwmdSGaywckhjENZXpU2OuggDlv6'}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 via-transparent to-transparent"></div>
           </div>
           <div className="relative z-10 flex flex-col justify-end h-full px-12 pb-24 max-w-7xl mx-auto">
-            <span className="font-label text-xs uppercase tracking-[0.3em] text-[#ffdeac] mb-6 block">Established 1984 — Global Curators</span>
+            <span className="font-label text-xs uppercase tracking-[0.3em] text-[#ffdeac] mb-6 block">
+              {heroData?.tagline || 'Established 1984 — Global Curators'}
+            </span>
             <h1 className="font-headline text-6xl md:text-8xl font-extrabold text-white leading-[0.9] tracking-tighter mb-8 max-w-4xl">
-              Nurturing the <br/><span className="italic font-light">Global Harvest.</span>
+              {heroData?.headline || 'Nurturing the'} <br/><span className="italic font-light">{heroData?.description || 'Global Harvest.'}</span>
             </h1>
             <p className="text-white/80 text-lg md:text-xl max-w-xl font-light leading-relaxed mb-10">
-              We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.
+              {heroData?.description || 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.'}
             </p>
             <div className="flex gap-4">
-              <Link to="/products" className="bg-white text-[#00450d] px-8 py-4 font-bold uppercase tracking-widest text-xs rounded-md hover:bg-[#e8e8e3] transition-all">
-                View Portfolios
+              <Link 
+                to={heroData?.button1Link || '/products'} 
+                className="bg-white text-[#00450d] px-8 py-4 font-bold uppercase tracking-widest text-xs rounded-md hover:bg-[#e8e8e3] transition-all"
+              >
+                {heroData?.button1Text || 'View Portfolios'}
               </Link>
-              <Link to="/about" className="border border-white/30 text-white backdrop-blur-sm px-8 py-4 font-bold uppercase tracking-widest text-xs rounded-md hover:bg-white/10 transition-all">
-                Our Reach
+              <Link 
+                to={heroData?.button2Link || '/about'} 
+                className="border border-white/30 text-white backdrop-blur-sm px-8 py-4 font-bold uppercase tracking-widest text-xs rounded-md hover:bg-white/10 transition-all"
+              >
+                {heroData?.button2Text || 'Our Reach'}
               </Link>
             </div>
           </div>

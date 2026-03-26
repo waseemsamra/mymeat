@@ -1,35 +1,68 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { fetchHeroData, saveHeroData, uploadHeroImage } from '../lib/heroService';
 
 const HomepageCMS = () => {
   const [loading, setLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [slideData, setSlideData] = useState({
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPvjVcMcAPnUfgGQ6dtsyNqw6gsKo1Kyjc1tv6pOo1v41mUmsE0QOEbN-xywroLKjD_JexyTES-l1AncWpiQqRrHAhdMRB6H170qmWK1emVCzUouJ4SZHUX20XIeLN6enbVbPjhZQZMNnV3W8gh42Cw5XqE4Mn1t8qRcBDLjs3c0M3tYyXuWNGN5OalU0WIv30ZEuvYAPsnM14PFad2-pB2GEt86eigx8D37_aKqdf79M_oWUAkkWjQnlcxp5EozTSryYooMixAcq_',
-    headline: 'Curating Earth\'s Finest Harvest',
-    description: 'Premium agricultural exports delivered with logistical precision and botanical care.',
-    ctaText: 'Explore Produce',
-    ctaLink: '/collections/seasonal-harvest',
-    visible: true,
-    order: 1
+  const [uploading, setUploading] = useState(false);
+  const [formData, setFormData] = useState({
+    headline: '',
+    description: '',
+    tagline: '',
+    button1Text: '',
+    button1Link: '',
+    button2Text: '',
+    button2Link: '',
+    imageUrl: ''
   });
 
-  const handleSave = () => {
+  useEffect(() => {
+    loadHeroData();
+  }, []);
+
+  const loadHeroData = async () => {
     setLoading(true);
-    setTimeout(() => {
-      toast.success('Homepage changes saved!');
-      setLoading(false);
-    }, 1000);
+    const data = await fetchHeroData();
+    if (data) {
+      setFormData({
+        headline: data.headline,
+        description: data.description,
+        tagline: data.tagline,
+        button1Text: data.button1Text,
+        button1Link: data.button1Link,
+        button2Text: data.button2Text,
+        button2Link: data.button2Link,
+        imageUrl: data.imageUrl
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleSave = async () => {
+    setLoading(true);
+    const success = await saveHeroData(formData);
+    if (success) {
+      loadHeroData();
+    }
+    setLoading(false);
   };
 
   const handleEditSlide = () => {
     setIsEditModalOpen(true);
   };
 
-  const handleSaveSlide = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success('Slide updated successfully!');
-    setIsEditModalOpen(false);
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const imageUrl = await uploadHeroImage(file);
+    if (imageUrl) {
+      setFormData({ ...formData, imageUrl });
+      toast.success('Hero image uploaded to S3!');
+    }
+    setUploading(false);
   };
 
   return (
@@ -254,7 +287,7 @@ const HomepageCMS = () => {
                 <span className="text-[10px] font-bold tracking-widest uppercase text-[#41493e]">Live Preview</span>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#00450d] animate-pulse"></span>
-                  <span className="text-xs font-semibold text-[#00450d]">Slide 02 Preview</span>
+                  <span className="text-xs font-semibold text-[#00450d]">Hero Preview</span>
                 </div>
               </div>
 
@@ -262,16 +295,16 @@ const HomepageCMS = () => {
               <div className="relative flex-1 rounded-lg overflow-hidden group aspect-[4/5] md:aspect-auto shadow-sm">
                 <img
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src={slideData.image}
+                  src={formData.imageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPvjVcMcAPnUfgGQ6dtsyNqw6gsKo1Kyjc1tv6pOo1v41mUmsE0QOEbN-xywroLKjD_JexyTES-l1AncWpiQqRrHAhdMRB6H170qmWK1emVCzUouJ4SZHUX20XIeLN6enbVbPjhZQZMNnV3W8gh42Cw5XqE4Mn1t8qRcBDLjs3c0M3tYyXuWNGN5OalU0WIv30ZEuvYAPsnM14PFad2-pB2GEt86eigx8D37_aKqdf79M_oWUAkkWjQnlcxp5EozTSryYooMixAcq_'}
                   alt="Hero preview"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-6 w-full">
-                  <span className="inline-block px-2 py-1 bg-[#ffdeac] text-[#503600] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">Seasonal Selection</span>
-                  <h3 className="text-white font-bold text-2xl leading-tight mb-2">{slideData.headline}</h3>
-                  <p className="text-white/80 text-sm line-clamp-2 mb-4">{slideData.description}</p>
+                  <span className="inline-block px-2 py-1 bg-[#ffdeac] text-[#503600] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">{formData.tagline || 'SEASONAL SELECTION'}</span>
+                  <h3 className="text-white font-bold text-2xl leading-tight mb-2">{formData.headline || 'Your Headline Here'}</h3>
+                  <p className="text-white/80 text-sm line-clamp-2 mb-4">{formData.description || 'Your description text will appear here...'}</p>
                   <button className="px-5 py-2 bg-[#00450d] text-white text-xs font-bold rounded-sm inline-flex items-center gap-2">
-                    {slideData.ctaText}
+                    {formData.button1Text || 'Learn More'}
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                   </button>
                 </div>
@@ -279,27 +312,21 @@ const HomepageCMS = () => {
 
               <div className="mt-6 p-4 bg-[#e3e3de]/30 rounded-lg space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-semibold text-[#1a1c19]">Visibility Status</label>
+                  <label className="text-sm font-semibold text-[#1a1c19]">Active Status</label>
                   <label className="relative inline-flex h-6 w-11 items-center rounded-full bg-[#00450d] cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={slideData.visible}
-                      onChange={(e) => setSlideData({ ...slideData, visible: e.target.checked })}
+                      checked={true}
                       className="sr-only peer"
                     />
                     <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-6 transition peer-checked:translate-x-1"></span>
                   </label>
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-semibold text-[#1a1c19]">Slide Priority</label>
+                  <label className="text-sm font-semibold text-[#1a1c19]">Display Order</label>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-[#41493e]">Order #</span>
-                    <input
-                      className="w-12 h-8 text-center bg-white border-none rounded-md text-sm font-bold focus:ring-2 focus:ring-[#00450d]/20"
-                      type="number"
-                      value={slideData.order}
-                      onChange={(e) => setSlideData({ ...slideData, order: parseInt(e.target.value) || 1 })}
-                    />
+                    <span className="text-xs text-[#41493e]">Priority #</span>
+                    <span className="w-12 h-8 text-center bg-white border-none rounded-md text-sm font-bold">1</span>
                   </div>
                 </div>
               </div>
@@ -320,38 +347,64 @@ const HomepageCMS = () => {
                 </button>
               </div>
 
-              <form onSubmit={handleSaveSlide} className="space-y-8">
+              <form onSubmit={(e) => { e.preventDefault(); handleSave(); }} className="space-y-8">
                 {/* Image Upload */}
                 <div className="space-y-3">
-                  <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Slide Background Media</label>
-                  <div className="border-2 border-dashed border-[#c0c9bb]/30 rounded-xl p-8 flex flex-col items-center justify-center bg-[#f4f4ef]/50 hover:bg-[#f4f4ef] transition-colors group cursor-pointer">
-                    <div className="w-12 h-12 rounded-full bg-[#00450d]/10 flex items-center justify-center text-[#00450d] mb-4 group-hover:scale-110 transition-transform">
-                      <span className="material-symbols-outlined">cloud_upload</span>
+                  <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Hero Image (S3)</label>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        disabled={uploading}
+                        className="w-full text-sm"
+                      />
+                      {uploading && (
+                        <p className="text-xs text-[#00450d] mt-2 flex items-center gap-2">
+                          <span className="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+                          Uploading to S3...
+                        </p>
+                      )}
                     </div>
-                    <p className="text-sm font-semibold text-[#1a1c19]">Drop your harvest photography here</p>
-                    <p className="text-xs text-[#41493e] mt-1">PNG, JPG up to 10MB. Recommended 2400x1200px</p>
-                    <button className="mt-4 px-4 py-2 text-xs font-bold text-[#00450d] bg-white border border-[#c0c9bb]/30 rounded-md shadow-sm" type="button">Choose File</button>
+                    {formData.imageUrl && (
+                      <div className="w-48 h-32 rounded-lg overflow-hidden border-2 border-[#00450d]">
+                        <img src={formData.imageUrl} alt="Hero preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 {/* Text Content */}
                 <div className="space-y-6">
                   <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Tagline</label>
+                    <input
+                      className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-lg font-bold text-[#1a1c19] placeholder:text-[#717a6d] transition-all"
+                      type="text"
+                      value={formData.tagline}
+                      onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+                      placeholder="Established 1984 — Global Curators"
+                    />
+                  </div>
+                  <div className="space-y-2">
                     <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Main Headline</label>
                     <input
                       className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-lg font-bold text-[#1a1c19] placeholder:text-[#717a6d] transition-all"
                       type="text"
-                      value={slideData.headline}
-                      onChange={(e) => setSlideData({ ...slideData, headline: e.target.value })}
+                      value={formData.headline}
+                      onChange={(e) => setFormData({ ...formData, headline: e.target.value })}
+                      placeholder="Nurturing the Global Harvest"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Sub-headline / Description</label>
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Description</label>
                     <textarea
                       className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-sm text-[#41493e] resize-none"
                       rows={3}
-                      value={slideData.description}
-                      onChange={(e) => setSlideData({ ...slideData, description: e.target.value })}
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      placeholder="We bridge the distance between origin and table..."
                     />
                   </div>
                 </div>
@@ -359,22 +412,47 @@ const HomepageCMS = () => {
                 {/* CTA Configuration */}
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Button Text</label>
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Button 1 Text</label>
                     <input
                       className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-sm font-semibold text-[#1a1c19] transition-all"
                       type="text"
-                      value={slideData.ctaText}
-                      onChange={(e) => setSlideData({ ...slideData, ctaText: e.target.value })}
+                      value={formData.button1Text}
+                      onChange={(e) => setFormData({ ...formData, button1Text: e.target.value })}
+                      placeholder="View Portfolios"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">CTA Destination</label>
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Button 1 Link</label>
                     <div className="relative">
                       <input
                         className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 pl-4 pr-10 py-3 text-sm text-[#41493e] transition-all"
                         type="text"
-                        value={slideData.ctaLink}
-                        onChange={(e) => setSlideData({ ...slideData, ctaLink: e.target.value })}
+                        value={formData.button1Link}
+                        onChange={(e) => setFormData({ ...formData, button1Link: e.target.value })}
+                        placeholder="/products"
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#717a6d] text-sm">link</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Button 2 Text</label>
+                    <input
+                      className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 px-4 py-3 text-sm font-semibold text-[#1a1c19] transition-all"
+                      type="text"
+                      value={formData.button2Text}
+                      onChange={(e) => setFormData({ ...formData, button2Text: e.target.value })}
+                      placeholder="Our Reach"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest uppercase text-[#41493e] block">Button 2 Link</label>
+                    <div className="relative">
+                      <input
+                        className="w-full bg-[#f4f4ef] border-b-2 border-[#c0c9bb]/20 border-t-0 border-x-0 focus:border-[#00450d] focus:ring-0 pl-4 pr-10 py-3 text-sm text-[#41493e] transition-all"
+                        type="text"
+                        value={formData.button2Link}
+                        onChange={(e) => setFormData({ ...formData, button2Link: e.target.value })}
+                        placeholder="/about"
                       />
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#717a6d] text-sm">link</span>
                     </div>
@@ -388,7 +466,7 @@ const HomepageCMS = () => {
                     type="button"
                   >
                     <span className="material-symbols-outlined text-sm">delete</span>
-                    Remove Slide
+                    Reset to Default
                   </button>
                   <div className="flex items-center gap-3">
                     <button
@@ -400,10 +478,15 @@ const HomepageCMS = () => {
                     </button>
                     <button
                       type="submit"
-                      className="px-8 py-2.5 bg-[#00450d] text-white text-sm font-bold rounded-md shadow-lg shadow-[#00450d]/20 flex items-center gap-2 hover:opacity-90 transition-opacity"
+                      disabled={loading || uploading}
+                      className="px-8 py-2.5 bg-[#00450d] text-white text-sm font-bold rounded-md shadow-lg shadow-[#00450d]/20 flex items-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
                     >
-                      Save Changes
-                      <span className="material-symbols-outlined text-sm">done_all</span>
+                      {loading ? 'Saving...' : (
+                        <>
+                          Save Changes
+                          <span className="material-symbols-outlined text-sm">done_all</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
