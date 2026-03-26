@@ -21,45 +21,69 @@ interface HeroSlide {
 
 const Home = () => {
   const [heroData, setHeroData] = useState<HeroData | null>(null);
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
     loadHeroData();
   }, []);
 
   const loadHeroData = async () => {
+    setIsLoading(true);
+    
     // First, try to load from localStorage (new slider system)
-    const stored = localStorage.getItem('agrofeed_hero_slides');
-    if (stored) {
-      const slides: HeroSlide[] = JSON.parse(stored);
-      const activeSlides = slides.filter(s => s.isActive);
-      
-      if (activeSlides.length > 0) {
-        // Use the first active slide
-        const activeSlide = activeSlides[0];
-        setHeroData({
-          id: activeSlide.id,
-          headline: activeSlide.headline,
-          description: activeSlide.description,
-          tagline: activeSlide.tagline,
-          button1Text: activeSlide.button1Text,
-          button1Link: activeSlide.button1Link,
-          button2Text: activeSlide.button2Text,
-          button2Link: activeSlide.button2Link,
-          imageUrl: activeSlide.imageUrl,
-          isActive: true,
-          updatedAt: new Date().toISOString()
-        });
-        return;
+    try {
+      const stored = localStorage.getItem('agrofeed_hero_slides');
+      if (stored) {
+        const slides: HeroSlide[] = JSON.parse(stored);
+        const activeSlides = slides.filter(s => s.isActive);
+        
+        if (activeSlides.length > 0) {
+          // Use the first active slide
+          const activeSlide = activeSlides[0];
+          setHeroData({
+            id: activeSlide.id,
+            headline: activeSlide.headline,
+            description: activeSlide.description,
+            tagline: activeSlide.tagline,
+            button1Text: activeSlide.button1Text,
+            button1Link: activeSlide.button1Link,
+            button2Text: activeSlide.button2Text,
+            button2Link: activeSlide.button2Link,
+            imageUrl: activeSlide.imageUrl,
+            isActive: true,
+            updatedAt: new Date().toISOString()
+          });
+          setIsLoading(false);
+          return;
+        }
       }
+    } catch (error) {
+      console.error('Error loading slides from localStorage:', error);
     }
     
     // Fallback to API
-    const data = await fetchHeroData();
-    if (data) {
-      setHeroData(data);
-    } else {
-      // Fallback data if API fails
+    try {
+      const data = await fetchHeroData();
+      if (data) {
+        setHeroData(data);
+      } else {
+        // Fallback data if API fails
+        setHeroData({
+          id: 'hero-1',
+          headline: 'Nurturing the Global Harvest.',
+          description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+          tagline: 'Established 1984 — Global Curators',
+          button1Text: 'View Portfolios',
+          button1Link: '/products',
+          button2Text: 'Our Reach',
+          button2Link: '/about',
+          imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
+          isActive: true,
+          updatedAt: new Date().toISOString()
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching hero data:', error);
+      // Use S3 default image as final fallback
       setHeroData({
         id: 'hero-1',
         headline: 'Nurturing the Global Harvest.',
@@ -74,6 +98,8 @@ const Home = () => {
         updatedAt: new Date().toISOString()
       });
     }
+    
+    setIsLoading(false);
   };
   return (
     <div className="bg-[#fafaf5] font-body text-on-surface antialiased selection:bg-[#acf4a4] selection:text-[#002203]">
@@ -96,7 +122,7 @@ const Home = () => {
               {heroData?.tagline || 'Established 1984 — Global Curators'}
             </span>
             <h1 className="font-headline text-6xl md:text-8xl font-extrabold text-white leading-[0.9] tracking-tighter mb-8 max-w-4xl">
-              {heroData?.headline || 'Nurturing the'} <br/><span className="italic font-light">{heroData?.description || 'Global Harvest.'}</span>
+              {heroData?.headline || 'Nurturing the Global Harvest.'}
             </h1>
             <p className="text-white/80 text-lg md:text-xl max-w-xl font-light leading-relaxed mb-10">
               {heroData?.description || 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.'}

@@ -37,7 +37,7 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
       const activeSlides = parsedSlides.filter((s: HeroSlide) => s.isActive);
       if (activeSlides.length > 1) {
         // Deactivate all but the first active slide
-        parsedSlides = parsedSlides.map((slide: HeroSlide, index: number) => {
+        parsedSlides = parsedSlides.map((slide: HeroSlide) => {
           if (activeSlides[0].id === slide.id) {
             return { ...slide, isActive: true };
           }
