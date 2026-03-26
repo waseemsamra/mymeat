@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
 
 const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
-const S3_BASE_URL = import.meta.env.VITE_AWS_S3_URL || 'https://agrofeed-content-agrofeed-536217686312.s3.us-east-1.amazonaws.com';
-const HERO_STORAGE_KEY = 'gulflink_hero_content';
+const S3_BASE_URL = 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com';
+const HERO_STORAGE_KEY = 'agrofeed_hero_slides';  // Match HeroSliderManager key
 
 export interface HeroData {
   id: string;
@@ -50,10 +50,37 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
     console.log('⚠️ API not available, using localStorage:', error.message);
   }
 
-  // Fallback to localStorage
-  const cached = localStorage.getItem(HERO_STORAGE_KEY);
+  // Fallback to localStorage - Check HeroSliderManager format first
+  const sliderSlides = localStorage.getItem('agrofeed_hero_slides');
+  if (sliderSlides) {
+    try {
+      const slides = JSON.parse(sliderSlides);
+      const activeSlide = slides.find((s: any) => s.isActive) || slides[0];
+      if (activeSlide) {
+        console.log('✅ Hero data loaded from HeroSliderManager');
+        return {
+          id: activeSlide.id,
+          headline: activeSlide.headline,
+          description: activeSlide.description,
+          tagline: activeSlide.tagline,
+          button1Text: activeSlide.button1Text,
+          button1Link: activeSlide.button1Link,
+          button2Text: activeSlide.button2Text,
+          button2Link: activeSlide.button2Link,
+          imageUrl: activeSlide.imageUrl,
+          isActive: activeSlide.isActive,
+          updatedAt: new Date().toISOString()
+        };
+      }
+    } catch (error) {
+      console.log('⚠️ Error parsing slider slides:', error);
+    }
+  }
+
+  // Fallback to old localStorage key
+  const cached = localStorage.getItem('gulflink_hero_content');
   if (cached) {
-    console.log('✅ Hero data loaded from localStorage');
+    console.log('✅ Hero data loaded from old localStorage');
     return JSON.parse(cached);
   }
 
@@ -65,7 +92,16 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
 // Save Hero Data to DynamoDB via API (with localStorage fallback)
 export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean> => {
   const dataToSave = {
-    ...heroData,
+    id: heroData.id || 'hero-1',
+    headline: heroData.headline || '',
+    description: heroData.description || '',
+    tagline: heroData.tagline || '',
+    button1Text: heroData.button1Text || '',
+    button1Link: heroData.button1Link || '',
+    button2Text: heroData.button2Text || '',
+    button2Link: heroData.button2Link || '',
+    imageUrl: heroData.imageUrl || '',
+    isActive: heroData.isActive !== false,
     updatedAt: new Date().toISOString()
   };
 
@@ -84,7 +120,8 @@ export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean
     if (response.ok) {
       const result = await response.json();
       console.log('✅ Hero data saved to API:', result);
-      localStorage.setItem(HERO_STORAGE_KEY, JSON.stringify(dataToSave));
+      // Also save in HeroSliderManager format
+      saveToHeroSliderFormat(dataToSave);
       toast.success('Hero content saved successfully!');
       return true;
     }
@@ -92,53 +129,77 @@ export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean
     console.log('⚠️ API save failed, saving to localStorage:', error.message);
   }
 
-  // Fallback to localStorage
-  localStorage.setItem(HERO_STORAGE_KEY, JSON.stringify(dataToSave));
+  // Fallback to localStorage - Save in HeroSliderManager format
+  saveToHeroSliderFormat(dataToSave);
   console.log('✅ Hero data saved to localStorage');
   toast.success('Hero content saved locally!');
   return true;
 };
 
-// Upload Hero Image to S3 (with local fallback)
+// Helper to save in HeroSliderManager format
+const saveToHeroSliderFormat = (heroData: HeroData) => {
+  // Get existing slides
+  const existingSlides = localStorage.getItem('agrofeed_hero_slides');
+  let slides: any[] = [];
+  
+  if (existingSlides) {
+    try {
+      slides = JSON.parse(existingSlides);
+    } catch (error) {
+      console.log('⚠️ Error parsing existing slides, creating new');
+    }
+  }
+  
+  // Update or create the active slide
+  const activeIndex = slides.findIndex(s => s.isActive);
+  const slideData = {
+    id: heroData.id,
+    headline: heroData.headline,
+    description: heroData.description,
+    tagline: heroData.tagline,
+    button1Text: heroData.button1Text,
+    button1Link: heroData.button1Link,
+    button2Text: heroData.button2Text,
+    button2Link: heroData.button2Link,
+    imageUrl: heroData.imageUrl,
+    s3Key: heroData.imageUrl.split('/').pop(),
+    isActive: heroData.isActive !== false,
+    order: 1
+  };
+  
+  if (activeIndex >= 0) {
+    slides[activeIndex] = { ...slides[activeIndex], ...slideData };
+  } else if (slides.length > 0) {
+    slides[0] = { ...slides[0], ...slideData, isActive: true };
+  } else {
+    slides.push(slideData);
+  }
+  
+  localStorage.setItem('agrofeed_hero_slides', JSON.stringify(slides));
+  console.log('💾 Saved to HeroSliderManager format:', slides.length, 'slides');
+};
+
+// Upload Hero Image to S3
 export const uploadHeroImage = async (file: File): Promise<string | null> => {
   try {
-    const token = localStorage.getItem('idToken');
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('folder', 'hero');
-
-    const response = await fetch(`${API_URL}/upload`, {
-      method: 'POST',
-      headers: {
-        'Authorization': token ? `Bearer ${token}` : ''
-      },
-      body: formData
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log('✅ Image uploaded to S3:', result.url);
-      return result.url;
-    }
+    console.log('📷 Starting S3 upload...', file.name);
+    
+    // Import S3Service dynamically
+    const S3ServiceModule = await import('./S3Service');
+    const S3Service = S3ServiceModule.default;
+    
+    // Upload to S3 using S3Service
+    const result = await S3Service.uploadImage(file, 'hero');
+    
+    console.log('✅ Image uploaded to S3!');
+    console.log('🔑 S3 Key:', result.key);
+    console.log('🌐 URL:', result.url);
+    
+    toast.success('Image uploaded to S3 successfully!');
+    return result.url;
   } catch (error: any) {
-    console.log('⚠️ API upload not available');
-  }
-
-  // Fallback: Upload directly to S3 bucket
-  try {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `hero/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-    const s3Url = `${S3_BASE_URL}/${fileName}`;
-
-    // Create presigned upload URL (you'll need a Lambda for this)
-    // For now, use local preview
-    const localUrl = URL.createObjectURL(file);
-    console.log('✅ Using local preview, S3 URL would be:', s3Url);
-    toast.success('Image ready (configure S3 upload in backend)');
-    return localUrl;
-  } catch (error) {
-    console.error('❌ Failed to prepare image upload');
-    toast.error('Failed to load image');
+    console.error('❌ S3 upload failed:', error);
+    toast.error('Upload failed: ' + (error.message || 'Unknown error'));
     return null;
   }
 };

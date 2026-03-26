@@ -68,8 +68,8 @@ const BulkImageUpload: React.FC<BulkUploadProps> = ({ onUploadComplete }) => {
         type: blob.type || 'image/jpeg'
       });
 
-      // Upload to S3 using the folder structure
-      const result = await S3Service.uploadImage(file, `homepage-images/${image.folder}`);
+      // Upload to S3
+      const result = await S3Service.uploadImage(file, image.folder);
 
       return {
         id: image.id,
@@ -258,7 +258,7 @@ const BulkImageUpload: React.FC<BulkUploadProps> = ({ onUploadComplete }) => {
           <p className="text-sm text-blue-800">
             <strong>ℹ️ Note:</strong> This script will download all images from their current URLs 
             and upload them to your S3 bucket under the folder structure: 
-            <code className="bg-blue-100 px-2 py-1 rounded ml-2">homepage-images/{'{section}'}/{'{filename}'}</code>
+            <code className="bg-blue-100 px-2 py-1 rounded ml-2">{'{section}'}/{'{filename}'}</code>
           </p>
         </div>
       </CardContent>

@@ -83,7 +83,7 @@ const ImageManagement = () => {
 
     try {
       // Upload to S3
-      const result = await S3Service.uploadImage(file, 'homepage-images');
+      const result = await S3Service.uploadImage(file, 'hero');
       
       // Update image record
       const updatedImages = images.map(img => 

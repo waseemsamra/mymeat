@@ -85,9 +85,12 @@ const HomepageCMS = () => {
   };
 
   const handleSliderChange = (slides: any[]) => {
+    console.log('📊 Slides changed:', slides.length, 'slides');
+    
     // Save the first active slide as the main hero data
     const activeSlide = slides.find(s => s.isActive) || slides[0];
     if (activeSlide) {
+      console.log('🔄 Updating formData with active slide:', activeSlide.headline);
       setFormData({
         headline: activeSlide.headline,
         description: activeSlide.description,
@@ -97,6 +100,25 @@ const HomepageCMS = () => {
         button2Text: activeSlide.button2Text,
         button2Link: activeSlide.button2Link,
         imageUrl: activeSlide.imageUrl
+      });
+      
+      // Auto-save to backend when slides change
+      console.log('💾 Auto-saving to backend...');
+      saveHeroData({
+        headline: activeSlide.headline,
+        description: activeSlide.description,
+        tagline: activeSlide.tagline,
+        button1Text: activeSlide.button1Text,
+        button1Link: activeSlide.button1Link,
+        button2Text: activeSlide.button2Text,
+        button2Link: activeSlide.button2Link,
+        imageUrl: activeSlide.imageUrl
+      }).then(success => {
+        if (success) {
+          console.log('✅ Auto-save successful!');
+        } else {
+          console.log('⚠️ Auto-save failed - data saved locally only');
+        }
       });
     }
   };

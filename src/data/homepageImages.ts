@@ -142,7 +142,7 @@ export const HOMEPAGE_IMAGES: HomePageImageConfig[] = [
 
 // Helper function to get S3 key for an image
 export const getS3Key = (image: HomePageImageConfig): string => {
-  return `homepage-images/${image.folder}/${image.name}`;
+  return `${image.folder}/${image.name}`;
 };
 
 // Helper function to get public S3 URL for an image
