@@ -35,10 +35,8 @@ const config = {
     S3: {
       bucket: import.meta.env.VITE_AWS_S3_BUCKET || 'agrofeed-content-agrofeed-536217686312',
       region: import.meta.env.VITE_AWS_S3_REGION || 'us-east-1',
-      // Use access level to control prefixes
-      // 'public' access level means files are publicly readable
-      // but doesn't add 'public/' prefix to the key
-      accessLevel: 'public'
+      // Disable automatic prefixes - upload directly to specified key
+      defaultPath: ''
     }
   }
 };
