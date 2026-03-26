@@ -10,6 +10,7 @@ import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { toast } from 'sonner';
 import CMSManagement from './CMSManagement';
+import ImageManagement from './ImageManagement';
 
 // Product interface
 interface Product {
@@ -281,9 +282,10 @@ const AdminDashboard = () => {
 
         {/* Tabs Section */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 mt-8">
-          <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid lg:grid-cols-5">
+          <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid lg:grid-cols-6">
             <TabsTrigger value="cms">CMS</TabsTrigger>
             <TabsTrigger value="products">Products</TabsTrigger>
+            <TabsTrigger value="images">Images</TabsTrigger>
             <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -291,6 +293,10 @@ const AdminDashboard = () => {
 
           <TabsContent value="cms" className="space-y-4">
             <CMSManagement />
+          </TabsContent>
+
+          <TabsContent value="images" className="space-y-4">
+            <ImageManagement />
           </TabsContent>
 
           <TabsContent value="products" className="space-y-4">

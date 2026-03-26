@@ -9,6 +9,7 @@ import NavigationMgmt from './NavigationMgmt';
 import FooterMgmt from './FooterMgmt';
 import UserManagement from './UserManagement';
 import AdminProfile from './AdminProfile';
+import ImageManagement from './ImageManagement';
 
 interface User {
   email: string;
@@ -99,6 +100,8 @@ const NewAdminDashboard = () => {
         return <SiteSettingsEditor />;
       case 'profile':
         return <AdminProfile />;
+      case 'images':
+        return <ImageManagement />;
       default:
         return null;
     }
@@ -196,6 +199,7 @@ const NewAdminDashboard = () => {
                 { id: 'overview', label: 'Overview', icon: 'dashboard' },
                 { id: 'categories', label: 'Categories', icon: 'category' },
                 { id: 'products', label: 'Products', icon: 'inventory_2' },
+                { id: 'images', label: 'Images', icon: 'image' },
                 { id: 'users', label: 'Users', icon: 'group' },
                 { id: 'cms', label: 'CMS', icon: 'auto_awesome_motion', hasSubmenu: true },
                 { id: 'settings', label: 'Settings', icon: 'settings' }
