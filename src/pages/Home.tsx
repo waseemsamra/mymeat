@@ -21,6 +21,9 @@ interface HeroSlide {
 
 const Home = () => {
   const [heroData, setHeroData] = useState<HeroData | null>(null);
+  const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     loadHeroData();
@@ -35,21 +38,21 @@ const Home = () => {
         const activeSlides = slides.filter(s => s.isActive);
         
         if (activeSlides.length > 0) {
-          // Use the first active slide
-          const activeSlide = activeSlides[0];
+          setAllSlides(activeSlides);
           setHeroData({
-            id: activeSlide.id,
-            headline: activeSlide.headline,
-            description: activeSlide.description,
-            tagline: activeSlide.tagline,
-            button1Text: activeSlide.button1Text,
-            button1Link: activeSlide.button1Link,
-            button2Text: activeSlide.button2Text,
-            button2Link: activeSlide.button2Link,
-            imageUrl: activeSlide.imageUrl,
+            id: activeSlides[0].id,
+            headline: activeSlides[0].headline,
+            description: activeSlides[0].description,
+            tagline: activeSlides[0].tagline,
+            button1Text: activeSlides[0].button1Text,
+            button1Link: activeSlides[0].button1Link,
+            button2Text: activeSlides[0].button2Text,
+            button2Link: activeSlides[0].button2Link,
+            imageUrl: activeSlides[0].imageUrl,
             isActive: true,
             updatedAt: new Date().toISOString()
           });
+          setIsLoaded(true);
           return;
         }
       }
@@ -62,8 +65,8 @@ const Home = () => {
       const data = await fetchHeroData();
       if (data) {
         setHeroData(data);
+        setIsLoaded(true);
       } else {
-        // Fallback data if API fails
         setHeroData({
           id: 'hero-1',
           headline: 'Nurturing the Global Harvest.',
@@ -77,10 +80,10 @@ const Home = () => {
           isActive: true,
           updatedAt: new Date().toISOString()
         });
+        setIsLoaded(true);
       }
     } catch (error) {
       console.error('Error fetching hero data:', error);
-      // Use S3 default image as final fallback
       setHeroData({
         id: 'hero-1',
         headline: 'Nurturing the Global Harvest.',
@@ -94,7 +97,50 @@ const Home = () => {
         isActive: true,
         updatedAt: new Date().toISOString()
       });
+      setIsLoaded(true);
     }
+  };
+
+  // Navigate to previous slide
+  const goToPreviousSlide = () => {
+    if (allSlides.length <= 1) return;
+    const newIndex = currentSlideIndex === 0 ? allSlides.length - 1 : currentSlideIndex - 1;
+    setCurrentSlideIndex(newIndex);
+    const slide = allSlides[newIndex];
+    setHeroData({
+      id: slide.id,
+      headline: slide.headline,
+      description: slide.description,
+      tagline: slide.tagline,
+      button1Text: slide.button1Text,
+      button1Link: slide.button1Link,
+      button2Text: slide.button2Text,
+      button2Link: slide.button2Link,
+      imageUrl: slide.imageUrl,
+      isActive: true,
+      updatedAt: new Date().toISOString()
+    });
+  };
+
+  // Navigate to next slide
+  const goToNextSlide = () => {
+    if (allSlides.length <= 1) return;
+    const newIndex = (currentSlideIndex + 1) % allSlides.length;
+    setCurrentSlideIndex(newIndex);
+    const slide = allSlides[newIndex];
+    setHeroData({
+      id: slide.id,
+      headline: slide.headline,
+      description: slide.description,
+      tagline: slide.tagline,
+      button1Text: slide.button1Text,
+      button1Link: slide.button1Link,
+      button2Text: slide.button2Text,
+      button2Link: slide.button2Link,
+      imageUrl: slide.imageUrl,
+      isActive: true,
+      updatedAt: new Date().toISOString()
+    });
   };
   return (
     <div className="bg-[#fafaf5] font-body text-on-surface antialiased selection:bg-[#acf4a4] selection:text-[#002203]">
@@ -107,11 +153,65 @@ const Home = () => {
           <div className="absolute inset-0 z-0">
             <img
               alt="Cinematic wide shot of a lush tea plantation"
-              className="w-full h-full object-cover opacity-80 scale-105"
+              className="w-full h-full object-cover opacity-80 scale-105 transition-opacity duration-500"
               src={heroData?.imageUrl || HOMEPAGE_S3_IMAGES.heroMain}
+              style={{ opacity: isLoaded ? 0.8 : 0 }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 via-transparent to-transparent"></div>
           </div>
+          
+          {/* Navigation Arrows */}
+          {allSlides.length > 1 && (
+            <>
+              <button
+                onClick={goToPreviousSlide}
+                className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
+                aria-label="Previous slide"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_left</span>
+              </button>
+              <button
+                onClick={goToNextSlide}
+                className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
+                aria-label="Next slide"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_right</span>
+              </button>
+            </>
+          )}
+          
+          {/* Slide Indicators */}
+          {allSlides.length > 1 && (
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+              {allSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setCurrentSlideIndex(index);
+                    const slide = allSlides[index];
+                    setHeroData({
+                      id: slide.id,
+                      headline: slide.headline,
+                      description: slide.description,
+                      tagline: slide.tagline,
+                      button1Text: slide.button1Text,
+                      button1Link: slide.button1Link,
+                      button2Text: slide.button2Text,
+                      button2Link: slide.button2Link,
+                      imageUrl: slide.imageUrl,
+                      isActive: true,
+                      updatedAt: new Date().toISOString()
+                    });
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentSlideIndex ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
+          
           <div className="relative z-10 flex flex-col justify-end h-full px-12 pb-24 max-w-7xl mx-auto">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-[#ffdeac] mb-6 block">
               {heroData?.tagline || 'Established 1984 — Global Curators'}
