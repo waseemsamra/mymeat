@@ -5,14 +5,56 @@ import Footer from '../components/Footer';
 import { fetchHeroData, type HeroData } from '../lib/heroService';
 import { HOMEPAGE_S3_IMAGES } from '../data/s3Images';
 
+interface HeroSlide {
+  id: string;
+  headline: string;
+  description: string;
+  tagline: string;
+  button1Text: string;
+  button1Link: string;
+  button2Text: string;
+  button2Link: string;
+  imageUrl: string;
+  isActive: boolean;
+  order: number;
+}
+
 const Home = () => {
   const [heroData, setHeroData] = useState<HeroData | null>(null);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   useEffect(() => {
     loadHeroData();
   }, []);
 
   const loadHeroData = async () => {
+    // First, try to load from localStorage (new slider system)
+    const stored = localStorage.getItem('agrofeed_hero_slides');
+    if (stored) {
+      const slides: HeroSlide[] = JSON.parse(stored);
+      const activeSlides = slides.filter(s => s.isActive);
+      
+      if (activeSlides.length > 0) {
+        // Use the first active slide
+        const activeSlide = activeSlides[0];
+        setHeroData({
+          id: activeSlide.id,
+          headline: activeSlide.headline,
+          description: activeSlide.description,
+          tagline: activeSlide.tagline,
+          button1Text: activeSlide.button1Text,
+          button1Link: activeSlide.button1Link,
+          button2Text: activeSlide.button2Text,
+          button2Link: activeSlide.button2Link,
+          imageUrl: activeSlide.imageUrl,
+          isActive: true,
+          updatedAt: new Date().toISOString()
+        });
+        return;
+      }
+    }
+    
+    // Fallback to API
     const data = await fetchHeroData();
     if (data) {
       setHeroData(data);

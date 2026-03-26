@@ -31,10 +31,25 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
   useEffect(() => {
     const stored = localStorage.getItem('agrofeed_hero_slides');
     if (stored) {
-      const parsedSlides = JSON.parse(stored);
+      let parsedSlides = JSON.parse(stored);
+      
+      // Ensure only ONE slide is active
+      const activeSlides = parsedSlides.filter((s: HeroSlide) => s.isActive);
+      if (activeSlides.length > 1) {
+        // Deactivate all but the first active slide
+        parsedSlides = parsedSlides.map((slide: HeroSlide, index: number) => {
+          if (activeSlides[0].id === slide.id) {
+            return { ...slide, isActive: true };
+          }
+          return { ...slide, isActive: false };
+        });
+        localStorage.setItem('agrofeed_hero_slides', JSON.stringify(parsedSlides));
+      }
+      
       setSlides(parsedSlides);
       if (parsedSlides.length > 0 && !activeSlideId) {
-        setActiveSlideId(parsedSlides[0].id);
+        const firstActive = parsedSlides.find((s: HeroSlide) => s.isActive) || parsedSlides[0];
+        setActiveSlideId(firstActive.id);
       }
     } else {
       // Default slide
@@ -190,10 +205,23 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     setSlides(updatedSlides);
   };
 
-  // Toggle slide active status
+  // Toggle slide active status - ensure only one slide is active at a time
   const handleToggleActive = (slideId: string) => {
+    // If we're deactivating the last active slide, don't allow it
+    const activeSlides = slides.filter(s => s.isActive);
+    const targetSlide = slides.find(s => s.id === slideId);
+    
+    if (targetSlide?.isActive && activeSlides.length === 1) {
+      toast.error('Cannot deactivate', {
+        description: 'At least one slide must be active.'
+      });
+      return;
+    }
+    
     const updatedSlides = slides.map(slide => 
-      slide.id === slideId ? { ...slide, isActive: !slide.isActive } : slide
+      slide.id === slideId 
+        ? { ...slide, isActive: !slide.isActive } 
+        : slide
     );
     setSlides(updatedSlides);
   };
