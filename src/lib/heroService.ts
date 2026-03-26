@@ -1,8 +1,6 @@
 import { toast } from 'sonner';
 
-const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 const S3_BASE_URL = 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com';
-const HERO_STORAGE_KEY = 'agrofeed_hero_slides';  // Match HeroSliderManager key
 
 export interface HeroData {
   id: string;
@@ -35,22 +33,10 @@ const DEFAULT_HERO: HeroData = {
 
 // Fetch Hero Data from DynamoDB via API (with localStorage fallback)
 export const fetchHeroData = async (): Promise<HeroData | null> => {
-  try {
-    // Try API first
-    const response = await fetch(`${API_URL}/cms/hero`);
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('✅ Hero data fetched from API:', data);
-      // Cache in localStorage
-      localStorage.setItem(HERO_STORAGE_KEY, JSON.stringify(data));
-      return data;
-    }
-  } catch (error: any) {
-    console.log('⚠️ API not available, using localStorage:', error.message);
-  }
-
-  // Fallback to localStorage - Check HeroSliderManager format first
+  // Skip API - use localStorage directly (API has CORS issues)
+  console.log('📂 Loading hero data from localStorage...');
+  
+  // Check HeroSliderManager format first
   const sliderSlides = localStorage.getItem('agrofeed_hero_slides');
   if (sliderSlides) {
     try {
@@ -89,7 +75,7 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
   return DEFAULT_HERO;
 };
 
-// Save Hero Data to DynamoDB via API (with localStorage fallback)
+// Save Hero Data to localStorage (API has CORS issues)
 export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean> => {
   const dataToSave = {
     id: heroData.id || 'hero-1',
@@ -105,32 +91,12 @@ export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean
     updatedAt: new Date().toISOString()
   };
 
-  try {
-    const token = localStorage.getItem('idToken');
-
-    const response = await fetch(`${API_URL}/cms/hero`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token ? `Bearer ${token}` : ''
-      },
-      body: JSON.stringify(dataToSave)
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log('✅ Hero data saved to API:', result);
-      // Also save in HeroSliderManager format
-      saveToHeroSliderFormat(dataToSave);
-      toast.success('Hero content saved successfully!');
-      return true;
-    }
-  } catch (error: any) {
-    console.log('⚠️ API save failed, saving to localStorage:', error.message);
-  }
-
-  // Fallback to localStorage - Save in HeroSliderManager format
+  // Skip API - save directly to localStorage (API has CORS issues)
+  console.log('💾 Saving hero data to localStorage...');
+  
+  // Save in HeroSliderManager format
   saveToHeroSliderFormat(dataToSave);
+  
   console.log('✅ Hero data saved to localStorage');
   toast.success('Hero content saved locally!');
   return true;
