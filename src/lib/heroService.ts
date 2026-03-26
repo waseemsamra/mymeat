@@ -30,6 +30,14 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
       if (data.slides && Array.isArray(data.slides)) {
         const activeSlide = data.slides.find((s: any) => s.isActive) || data.slides[0];
         if (activeSlide) {
+          let imageUrl = activeSlide.imageUrl || activeSlide.image || '';
+          
+          // Fix: Add 'public/' prefix if missing
+          if (imageUrl && !imageUrl.includes('/public/')) {
+            console.log('🔄 Fixing image URL - adding public/ prefix');
+            imageUrl = imageUrl.replace('/hero/', '/public/hero/');
+          }
+          
           const heroData = {
             id: activeSlide.id || 'hero-1',
             headline: activeSlide.headline || activeSlide.title || 'Nurturing the Global Harvest.',
@@ -39,7 +47,7 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
             button1Link: activeSlide.button1Link || activeSlide.buttonLink || '/products',
             button2Text: activeSlide.button2Text || 'Our Reach',
             button2Link: activeSlide.button2Link || '/about',
-            imageUrl: activeSlide.imageUrl || activeSlide.image || '',
+            imageUrl: imageUrl,
             isActive: activeSlide.isActive !== false,
             updatedAt: data.updatedAt || new Date().toISOString()
           };
@@ -51,6 +59,13 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
       
       // Handle single hero object format
       if (data.headline || data.title) {
+        let imageUrl = data.imageUrl || data.image || '';
+        
+        // Fix: Add 'public/' prefix if missing
+        if (imageUrl && !imageUrl.includes('/public/')) {
+          imageUrl = imageUrl.replace('/hero/', '/public/hero/');
+        }
+        
         return {
           id: data.id || 'hero-1',
           headline: data.headline || data.title || '',
@@ -60,7 +75,7 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
           button1Link: data.button1Link || data.buttonLink || '',
           button2Text: data.button2Text || '',
           button2Link: data.button2Link || '',
-          imageUrl: data.imageUrl || data.image || '',
+          imageUrl: imageUrl,
           isActive: data.isActive !== false,
           updatedAt: data.updatedAt || new Date().toISOString()
         };
@@ -134,18 +149,18 @@ export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean
 export const uploadHeroImage = async (file: File): Promise<string | null> => {
   try {
     console.log('📷 Starting S3 upload...', file.name);
-    
+
     // Import S3Service dynamically
     const S3ServiceModule = await import('./S3Service');
     const S3Service = S3ServiceModule.default;
-    
-    // Upload to S3 using S3Service
-    const result = await S3Service.uploadImage(file, 'hero');
-    
+
+    // Upload to S3 in public/hero folder
+    const result = await S3Service.uploadImage(file, 'public/hero');
+
     console.log('✅ Image uploaded to S3!');
     console.log('🔑 S3 Key:', result.key);
     console.log('🌐 URL:', result.url);
-    
+
     toast.success('Image uploaded to S3 successfully!');
     return result.url;
   } catch (error: any) {
