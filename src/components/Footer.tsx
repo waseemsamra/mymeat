@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-screen-2xl mx-auto font-sans text-sm leading-relaxed">
         {/* Brand Column */}
         <div className="col-span-1">
-          <div className="text-lg font-bold text-white mb-6">AgroFeed Global</div>
+          <div className="text-lg font-bold text-white mb-6">Gulf Link</div>
           <p className="text-stone-400 mb-8">Defining the next era of global fresh produce trade through precision and integrity.</p>
           <div className="flex gap-4">
             <a className="w-10 h-10 rounded-full border border-stone-700 flex items-center justify-center text-stone-400 hover:text-white transition-all" href="#">
@@ -89,7 +89,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="max-w-screen-2xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/30 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-xs">
-        <p>© 2026 AgroFeed Global. All Rights Reserved.</p>
+        <p>© 2026 Gulf Link. All Rights Reserved.</p>
         <div className="flex gap-8">
           <Link to="#" className="hover:text-white">Terms of Service</Link>
           <Link to="#" className="hover:text-white">Cookie Policy</Link>

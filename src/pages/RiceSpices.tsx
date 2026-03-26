@@ -7,7 +7,7 @@ const RiceSpices = () => {
       <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
           <Link to="/" className="text-xl font-extrabold tracking-tighter text-[#00450d] font-headline">
-            AgroFeed Global
+            Gulf Link
           </Link>
           
           <div className="hidden md:flex items-center gap-10 font-headline uppercase tracking-wider text-sm font-bold">
@@ -359,7 +359,7 @@ const RiceSpices = () => {
       <footer className="bg-stone-900 w-full pt-16 pb-8 border-t border-stone-800">
         <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 font-sans text-stone-400 text-sm leading-relaxed">
           <div>
-            <span className="text-lg font-bold text-white mb-4 block">AgroFeed Global</span>
+            <span className="text-lg font-bold text-white mb-4 block">Gulf Link</span>
             <p className="mb-6">Curating the earth's bounty for a global market. Excellence in agricultural export since 1994.</p>
             <div className="flex gap-4">
               <span className="material-symbols-outlined text-[#91d78a] cursor-pointer hover:text-[#acf4a4] transition-all">public</span>
@@ -395,7 +395,7 @@ const RiceSpices = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2026 AgroFeed Global. All Rights Reserved.</p>
+          <p>© 2026 Gulf Link. All Rights Reserved.</p>
           <div className="flex gap-6">
             <span className="text-stone-600">English (US)</span>
             <span className="text-stone-600">Metric Units</span>

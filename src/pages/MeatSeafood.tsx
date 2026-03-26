@@ -1,30 +1,12 @@
 import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const MeatSeafood = () => {
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased scroll-smooth">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md">
-        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
-          <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] uppercase font-headline">
-            AgroFeed Global
-          </Link>
-          
-          <div className="hidden md:flex gap-8 font-headline font-medium tracking-tight">
-            <Link to="/products/meat-seafood" className="text-[#00450d] border-b-2 border-[#00450d] pb-1">Meats</Link>
-            <Link to="/products/seafood" className="text-stone-600 hover:text-[#00450d] transition-colors">Seafood</Link>
-            <Link to="/products/certifications" className="text-stone-600 hover:text-[#00450d] transition-colors">Certifications</Link>
-            <Link to="/services" className="text-stone-600 hover:text-[#00450d] transition-colors">Logistics</Link>
-            <Link to="/contact" className="text-stone-600 hover:text-[#00450d] transition-colors">Bulk Inquiry</Link>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="material-symbols-outlined text-[#00450d] cursor-pointer hover:opacity-80 transition-opacity">account_circle</span>
-            <span className="material-symbols-outlined text-[#00450d] cursor-pointer hover:opacity-80 transition-opacity">public</span>
-          </div>
-        </div>
-        <div className="bg-stone-100 h-[1px] opacity-20"></div>
-      </nav>
+      <Navigation />
 
       <main className="pt-24">
         {/* Hero Section */}
@@ -330,72 +312,7 @@ const MeatSeafood = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-stone-900 w-full pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 w-full mt-20">
-          <div>
-            <div className="font-headline font-bold text-white text-xl mb-6">AgroFeed Global</div>
-            <p className="font-sans text-xs leading-relaxed text-stone-500 mb-4">Curating the world's most exceptional agricultural products for global B2B delivery. Precision. Quality. Ethics.</p>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#ffba38]"></span>
-              <span className="font-sans text-xs text-[#ffba38]">Global Logistics: Stable</span>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-white font-bold text-sm mb-6 uppercase tracking-wider">Product Categories</h4>
-            <ul className="space-y-3 font-sans text-xs text-stone-500">
-              <li><Link to="/products/meat-seafood" className="hover:text-[#ffba38] transition-colors">Premium Meats</Link></li>
-              <li><Link to="/products/seafood" className="hover:text-[#ffba38] transition-colors">Wild Seafood</Link></li>
-              <li><Link to="/products" className="hover:text-[#ffba38] transition-colors">Seasonal Produce</Link></li>
-              <li><Link to="/products" className="hover:text-[#ffba38] transition-colors">Specialty Grains</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-bold text-sm mb-6 uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-3 font-sans text-xs text-stone-500">
-              <li><Link to="#" className="hover:text-[#ffba38] transition-colors">Terms of Export</Link></li>
-              <li><Link to="#" className="hover:text-[#ffba38] transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/services" className="hover:text-[#ffba38] transition-colors">Global Logistics Status</Link></li>
-              <li><Link to="#" className="hover:text-[#ffba38] transition-colors">Sustainability Report</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-bold text-sm mb-6 uppercase tracking-wider">Contact Curator</h4>
-            <p className="font-sans text-xs text-stone-500 mb-4">Connect with our export team for tailored quotations and logistics support.</p>
-            <Link to="/contact" className="w-full bg-[#ffba38] text-white font-bold py-3 rounded hover:bg-[#ffdeac] transition-colors text-xs uppercase tracking-widest block">
-              Enquire Now
-            </Link>
-          </div>
-        </div>
-
-        <div className="border-t border-stone-800 mt-16 pt-8 px-12 text-center md:text-left">
-          <p className="font-sans text-xs text-stone-600">© 2026 AgroFeed Global. All Rights Reserved.</p>
-        </div>
-      </footer>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@300;400;500;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-        
-        .font-headline {
-          font-family: 'Manrope', sans-serif;
-        }
-        
-        .font-body, .font-sans {
-          font-family: 'Inter', sans-serif;
-        }
-        
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .scroll-smooth {
-          scroll-behavior: smooth;
-        }
-      `}</style>
+      <Footer />
     </div>
   );
 };

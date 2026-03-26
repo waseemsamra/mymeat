@@ -9,7 +9,7 @@ const Navigation = () => {
     <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-stone-100/10">
       <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
         <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
-          AgroFeed Global
+          Gulf Link
         </Link>
 
         {/* Desktop Menu */}

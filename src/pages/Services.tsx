@@ -1,28 +1,12 @@
 import { Link } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const Services = () => {
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-[#fafaf5]/70 backdrop-blur-md transition-all duration-300">
-        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
-          <Link to="/" className="text-xl font-black text-[#00450d] uppercase tracking-tighter font-headline">
-            AgroFeed Global
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-8 font-headline font-bold tracking-tight">
-            <Link to="/products" className="text-stone-600 hover:text-[#00450d] transition-colors">Produce</Link>
-            <Link to="/services" className="text-stone-600 hover:text-[#00450d] transition-colors">Logistics</Link>
-            <Link to="/services" className="text-[#00450d] border-b-2 border-[#00450d] pb-1">Quality</Link>
-            <Link to="/services" className="text-stone-600 hover:text-[#00450d] transition-colors">Sourcing</Link>
-            <Link to="/about" className="text-stone-600 hover:text-[#00450d] transition-colors">About</Link>
-          </div>
-
-          <Link to="/contact" className="bg-[#00450d] text-white px-5 py-2 rounded font-bold text-sm tracking-wide hover:opacity-90 transition-opacity">
-            Contact Sales
-          </Link>
-        </div>
-      </nav>
+      <Navigation />
 
       <main className="pt-20">
         {/* Hero Section */}
@@ -236,47 +220,7 @@ const Services = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#2f312e] text-green-50 w-full pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto font-sans text-sm leading-relaxed">
-          <div>
-            <span className="text-lg font-bold text-white mb-4 block">AgroFeed Global</span>
-            <p className="text-stone-400">Curating the Earth's Finest. A premier network for international food logistics and premium sourcing.</p>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-6">Services</h4>
-            <ul className="space-y-4">
-              <li><Link to="/services" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Global Logistics</Link></li>
-              <li><Link to="/services" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Quality Control</Link></li>
-              <li><Link to="/services" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Custom Sourcing</Link></li>
-              <li><Link to="/services" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Cold-Chain</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-6">Company</h4>
-            <ul className="space-y-4">
-              <li><Link to="#" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Privacy Policy</Link></li>
-              <li><Link to="#" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Terms of Export</Link></li>
-              <li><Link to="#" className="text-stone-400 hover:text-white transition-colors hover:translate-x-1 inline-block">Sustainability Report</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-6">Global Logistics Status</h4>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#ffba38] animate-pulse"></span>
-              <span className="text-stone-200">Routes Operational</span>
-            </div>
-            <p className="text-stone-400 text-xs">Updated: 2026-03-23 GMT</p>
-            <div className="mt-8 flex gap-4">
-              <span className="text-stone-400 cursor-pointer hover:text-white transition-colors text-2xl">🌐</span>
-              <span className="text-stone-400 cursor-pointer hover:text-white transition-colors text-2xl">✉️</span>
-            </div>
-          </div>
-        </div>
-        <div className="mt-16 pt-8 border-t border-white/5 text-center px-8">
-          <p className="text-stone-500 text-xs">© 2026 AgroFeed Global. Curating the Earth's Finest.</p>
-        </div>
-      </footer>
+      <Footer />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');

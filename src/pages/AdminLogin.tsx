@@ -115,7 +115,7 @@ const AdminLogin = () => {
           <div className="relative z-10 flex flex-col justify-between p-16 w-full text-white">
             <div>
               <h1 className="font-headline font-extrabold text-4xl tracking-tighter mb-2">
-                Agrarian Admin
+                Gulf Link Admin
               </h1>
               <p className="font-body text-on-primary-container max-w-sm opacity-90 leading-relaxed">
                 The Global Agrarian Editorial Super Admin Console. Manage global harvest logs and editorial workflows with precision.
@@ -141,7 +141,7 @@ const AdminLogin = () => {
             {/* Mobile Branding */}
             <div className="md:hidden text-center mb-8">
               <h1 className="font-headline font-extrabold text-3xl tracking-tighter text-primary">
-                Agrarian Admin
+                Gulf Link Admin
               </h1>
               <div className="inline-flex items-center gap-2 mt-2 px-3 py-1 bg-surface-container-high rounded-full">
                 <span className="material-symbols-outlined text-xs" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
@@ -280,7 +280,7 @@ const AdminLogin = () => {
       <footer className="py-8 px-12 flex flex-col md:flex-row justify-between items-center gap-4 bg-zinc-900 dark:bg-black z-40">
         <div className="flex flex-col md:flex-row items-center gap-6">
           <span className="text-sm font-bold text-white">
-            © 2024 The Global Agrarian Editorial. Secure Super Admin Portal.
+            © 2024 Gulf Link. Secure Super Admin Portal.
           </span>
           <div className="h-4 w-[1px] bg-zinc-700 hidden md:block"></div>
           <div className="flex gap-6">

@@ -14,7 +14,7 @@ const Products = () => {
       <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-none">
         <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
           <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
-            AgroFeed Global
+            Gulf Link
           </Link>
           
           <div className="hidden md:flex items-center gap-8">
@@ -170,7 +170,7 @@ const Products = () => {
       <footer className="bg-stone-800 w-full pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 max-w-7xl mx-auto">
           <div className="space-y-6">
-            <div className="text-lg font-headline font-bold text-white">AgroFeed Global</div>
+            <div className="text-lg font-headline font-bold text-white">Gulf Link</div>
             <p className="font-sans text-sm leading-relaxed text-stone-400">Premium fresh food export and import curating the world's finest harvest.</p>
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -221,7 +221,7 @@ const Products = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-stone-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-sans text-xs text-stone-500">© 2026 AgroFeed Global. All Rights Reserved.</p>
+          <p className="font-sans text-xs text-stone-500">© 2026 Gulf Link. All Rights Reserved.</p>
           <div className="flex gap-6">
             <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">📱</a>
             <a className="text-stone-500 hover:text-white transition-colors text-xl" href="#">🌐</a>
