@@ -23,7 +23,6 @@ const Home = () => {
   const [heroData, setHeroData] = useState<HeroData | null>(null);
   const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     loadHeroData();
@@ -33,26 +32,33 @@ const Home = () => {
     // First, try to load from localStorage (new slider system)
     try {
       const stored = localStorage.getItem('agrofeed_hero_slides');
+      console.log('📋 Stored slides:', stored);
+      
       if (stored) {
         const slides: HeroSlide[] = JSON.parse(stored);
+        console.log('📊 Parsed slides:', slides);
+        
         const activeSlides = slides.filter(s => s.isActive);
+        console.log('✅ Active slides:', activeSlides);
         
         if (activeSlides.length > 0) {
           setAllSlides(activeSlides);
+          const firstSlide = activeSlides[0];
+          console.log('🖼️ First slide image:', firstSlide.imageUrl);
+          
           setHeroData({
-            id: activeSlides[0].id,
-            headline: activeSlides[0].headline,
-            description: activeSlides[0].description,
-            tagline: activeSlides[0].tagline,
-            button1Text: activeSlides[0].button1Text,
-            button1Link: activeSlides[0].button1Link,
-            button2Text: activeSlides[0].button2Text,
-            button2Link: activeSlides[0].button2Link,
-            imageUrl: activeSlides[0].imageUrl,
+            id: firstSlide.id,
+            headline: firstSlide.headline,
+            description: firstSlide.description,
+            tagline: firstSlide.tagline,
+            button1Text: firstSlide.button1Text,
+            button1Link: firstSlide.button1Link,
+            button2Text: firstSlide.button2Text,
+            button2Link: firstSlide.button2Link,
+            imageUrl: firstSlide.imageUrl,
             isActive: true,
             updatedAt: new Date().toISOString()
           });
-          setIsLoaded(true);
           return;
         }
       }
@@ -63,9 +69,10 @@ const Home = () => {
     // Fallback to API
     try {
       const data = await fetchHeroData();
+      console.log('📡 API data:', data);
+      
       if (data) {
         setHeroData(data);
-        setIsLoaded(true);
       } else {
         setHeroData({
           id: 'hero-1',
@@ -80,7 +87,6 @@ const Home = () => {
           isActive: true,
           updatedAt: new Date().toISOString()
         });
-        setIsLoaded(true);
       }
     } catch (error) {
       console.error('Error fetching hero data:', error);
@@ -97,7 +103,6 @@ const Home = () => {
         isActive: true,
         updatedAt: new Date().toISOString()
       });
-      setIsLoaded(true);
     }
   };
 
@@ -149,13 +154,12 @@ const Home = () => {
 
       <main className="pt-20">
         {/* Section 1: Hero Slider (Cinematic) */}
-        <section className="relative h-[921px] w-full overflow-hidden bg-[#00450d]">
+        <section className="relative h-[829px] w-full overflow-hidden bg-[#00450d]">
           <div className="absolute inset-0 z-0">
             <img
-              alt="Cinematic wide shot of a lush tea plantation"
-              className="w-full h-full object-cover opacity-80 scale-105 transition-opacity duration-500"
+              alt="Hero slide"
+              className="w-full h-full object-cover opacity-80 scale-105"
               src={heroData?.imageUrl || HOMEPAGE_S3_IMAGES.heroMain}
-              style={{ opacity: isLoaded ? 0.8 : 0 }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 via-transparent to-transparent"></div>
           </div>
