@@ -188,9 +188,9 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     setUploadingId(slideId);
 
     try {
-      console.log('⬆️ Uploading to S3, folder: hero');
-      // Upload to S3 in hero folder
-      const result = await S3Service.uploadImage(file, 'hero');
+      console.log('⬆️ Uploading to S3, folder: public/hero');
+      // Upload to S3 - Amplify adds 'public/' prefix automatically, so we use 'public/hero'
+      const result = await S3Service.uploadImage(file, 'public/hero');
 
       console.log('✅ Upload success! URL:', result.url);
       console.log('🔑 S3 Key:', result.key);
@@ -269,12 +269,25 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     toast.success('Slide deleted');
   };
 
-  // Update slide content
+  // Update slide content and auto-save
   const handleUpdateSlide = (slideId: string, updates: Partial<HeroSlide>) => {
-    const updatedSlides = slides.map(slide => 
+    const updatedSlides = slides.map(slide =>
       slide.id === slideId ? { ...slide, ...updates } : slide
     );
     setSlides(updatedSlides);
+    
+    // Auto-save after 1 second delay (debounce)
+    setTimeout(() => {
+      saveToBackend(updatedSlides);
+    }, 1000);
+  };
+
+  // Manual save button handler
+  const handleSaveAll = async () => {
+    const success = await saveToBackend(slides);
+    if (success) {
+      console.log('✅ All slides saved!');
+    }
   };
 
   // Move slide order
@@ -337,13 +350,22 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
             Manage multiple hero slides. Currently {slides.length} slide{slides.length !== 1 ? 's' : ''} configured.
           </p>
         </div>
-        <button
-          onClick={handleAddSlide}
-          className="flex items-center gap-2 px-4 py-2 bg-[#00450d] text-white text-xs rounded-lg hover:bg-[#0c5216] transition-colors"
-        >
-          <span className="material-symbols-outlined text-sm">add</span>
-          Add Slide
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleSaveAll}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <span className="material-symbols-outlined text-sm">save</span>
+            Save All
+          </button>
+          <button
+            onClick={handleAddSlide}
+            className="flex items-center gap-2 px-4 py-2 bg-[#00450d] text-white text-xs rounded-lg hover:bg-[#0c5216] transition-colors"
+          >
+            <span className="material-symbols-outlined text-sm">add</span>
+            Add Slide
+          </button>
+        </div>
       </div>
 
       {/* Slides List */}
