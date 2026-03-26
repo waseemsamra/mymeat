@@ -35,9 +35,8 @@ const config = {
     S3: {
       bucket: import.meta.env.VITE_AWS_S3_BUCKET || 'agrofeed-content-agrofeed-536217686312',
       region: import.meta.env.VITE_AWS_S3_REGION || 'us-east-1',
-      credentials: {
-        identityPoolId: import.meta.env.VITE_AWS_COGNITO_IDENTITY_POOL_ID || 'us-east-1:7d4e0b0c-2a44-4be1-94c6-1c73af02e000'
-      }
+      // Disable all automatic prefixes
+      bucketLayout: 'NO_PREFIX'
     }
   }
 };
