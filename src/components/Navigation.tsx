@@ -148,6 +148,12 @@ const Navigation = () => {
           <Link to="/procurement" className="bg-[#00450d] text-white px-6 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 font-headline font-semibold text-sm">
             Enquire Now
           </Link>
+
+          {/* Admin Login Button */}
+          <Link to="/admin-login" className="hidden md:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
+            <span className="material-symbols-outlined text-sm">admin_panel_settings</span>
+            Admin
+          </Link>
         </div>
       </div>
 
