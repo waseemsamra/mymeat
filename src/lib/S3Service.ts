@@ -3,8 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // S3 Bucket configuration
 const BUCKET_NAME = 'agrofeed-content-agrofeed-536217686312';
-const BUCKET_REGION = 'us-east-1';
-const PUBLIC_S3_URL = `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com`;
+const PUBLIC_S3_URL = `https://${BUCKET_NAME}.s3.amazonaws.com`;
 
 class S3Service {
   // Upload image to S3

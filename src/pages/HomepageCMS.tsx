@@ -148,7 +148,7 @@ const HomepageCMS = () => {
             <img
               alt="Hero preview"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              src={formData.imageUrl || 'https://agrofeed-content-agrofeed-536217686312.s3.us-east-1.amazonaws.com/hero/default.jpg'}
+              src={formData.imageUrl || 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/default.jpg'}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
               <h4 className="text-white text-4xl font-bold mb-2">{formData.headline || 'Curating Earth\'s Finest Harvest'}</h4>
