@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import AdminLayout from '../components/AdminLayout';
 import ProductManagement from './ProductManagement';
 import CategoryManagement from './CategoryManagement';
@@ -160,9 +161,17 @@ const NewAdminDashboard = () => {
                 </div>
               ))}
             </nav>
-            <div className="mt-6 pt-6 border-t border-[#e3e3de]">
-              <button className="w-full py-2.5 bg-[#00450d] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#0c5216] transition-colors">
+            <div className="mt-6 pt-6 border-t border-[#e3e3de] space-y-3">
+              <button className="w-full py-2.5 bg-[#00450d] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#0c5216] transition-colors flex items-center justify-center gap-2">
+                <span className="material-symbols-outlined text-sm">download</span>
                 Export Report
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full py-2.5 bg-[#f4f4ef] text-[#ba1a1a] rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#ffdad6] transition-colors flex items-center justify-center gap-2"
+              >
+                <span className="material-symbols-outlined text-sm">logout</span>
+                Logout
               </button>
             </div>
           </div>
