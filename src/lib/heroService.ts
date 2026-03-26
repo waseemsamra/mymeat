@@ -71,74 +71,60 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
   return null;
 };
 
-// Save Hero Data to localStorage (API has CORS issues)
+// Save Hero Data to Backend API
 export const saveHeroData = async (heroData: Partial<HeroData>): Promise<boolean> => {
-  const dataToSave = {
-    id: heroData.id || 'hero-1',
-    headline: heroData.headline || '',
-    description: heroData.description || '',
-    tagline: heroData.tagline || '',
-    button1Text: heroData.button1Text || '',
-    button1Link: heroData.button1Link || '',
-    button2Text: heroData.button2Text || '',
-    button2Link: heroData.button2Link || '',
-    imageUrl: heroData.imageUrl || '',
-    isActive: heroData.isActive !== false,
-    updatedAt: new Date().toISOString()
-  };
+  try {
+    const token = localStorage.getItem('idToken');
+    
+    const dataToSave = {
+      PK: 'hero',
+      SK: 'content',
+      type: 'cms',
+      slides: [{
+        id: heroData.id || 'hero-1',
+        headline: heroData.headline || '',
+        description: heroData.description || '',
+        tagline: heroData.tagline || '',
+        button1Text: heroData.button1Text || '',
+        button1Link: heroData.button1Link || '',
+        button2Text: heroData.button2Text || '',
+        button2Link: heroData.button2Link || '',
+        imageUrl: heroData.imageUrl || '',
+        isActive: heroData.isActive !== false,
+        order: 1
+      }],
+      updatedAt: new Date().toISOString()
+    };
 
-  // Skip API - save directly to localStorage (API has CORS issues)
-  console.log('💾 Saving hero data to localStorage...');
-  
-  // Save in HeroSliderManager format
-  saveToHeroSliderFormat(dataToSave);
-  
-  console.log('✅ Hero data saved to localStorage');
-  toast.success('Hero content saved locally!');
-  return true;
-};
+    console.log('💾 Saving to backend API...');
+    
+    const response = await fetch(`${API_URL}/cms/hero`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      body: JSON.stringify(dataToSave)
+    });
 
-// Helper to save in HeroSliderManager format
-const saveToHeroSliderFormat = (heroData: HeroData) => {
-  // Get existing slides
-  const existingSlides = localStorage.getItem('agrofeed_hero_slides');
-  let slides: any[] = [];
-  
-  if (existingSlides) {
-    try {
-      slides = JSON.parse(existingSlides);
-    } catch (error) {
-      console.log('⚠️ Error parsing existing slides, creating new');
+    if (response.ok) {
+      await response.json();
+      console.log('✅ Saved to backend successfully!');
+      toast.success('Hero content saved to backend!');
+      return true;
+    } else {
+      const error = await response.text();
+      console.error('❌ Backend save failed:', response.status, error);
+      toast.error('Failed to save to backend');
+      return false;
     }
+  } catch (error: any) {
+    console.error('❌ Save error:', error);
+    toast.error('Save failed', {
+      description: error.message || 'Network error'
+    });
+    return false;
   }
-  
-  // Update or create the active slide
-  const activeIndex = slides.findIndex(s => s.isActive);
-  const slideData = {
-    id: heroData.id,
-    headline: heroData.headline,
-    description: heroData.description,
-    tagline: heroData.tagline,
-    button1Text: heroData.button1Text,
-    button1Link: heroData.button1Link,
-    button2Text: heroData.button2Text,
-    button2Link: heroData.button2Link,
-    imageUrl: heroData.imageUrl,
-    s3Key: heroData.imageUrl.split('/').pop(),
-    isActive: heroData.isActive !== false,
-    order: 1
-  };
-  
-  if (activeIndex >= 0) {
-    slides[activeIndex] = { ...slides[activeIndex], ...slideData };
-  } else if (slides.length > 0) {
-    slides[0] = { ...slides[0], ...slideData, isActive: true };
-  } else {
-    slides.push(slideData);
-  }
-  
-  localStorage.setItem('agrofeed_hero_slides', JSON.stringify(slides));
-  console.log('💾 Saved to HeroSliderManager format:', slides.length, 'slides');
 };
 
 // Upload Hero Image to S3
