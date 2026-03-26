@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import AdminLayout from '../components/AdminLayout';
 import ProductManagement from './ProductManagement';
 import CategoryManagement from './CategoryManagement';
 import SiteSettingsEditor from './SiteSettingsEditor';
@@ -9,6 +8,7 @@ import HomepageCMS from './HomepageCMS';
 import NavigationMgmt from './NavigationMgmt';
 import FooterMgmt from './FooterMgmt';
 import UserManagement from './UserManagement';
+import AdminProfile from './AdminProfile';
 
 interface User {
   email: string;
@@ -88,14 +88,93 @@ const NewAdminDashboard = () => {
         return <UserManagement />;
       case 'settings':
         return <SiteSettingsEditor />;
+      case 'profile':
+        return <AdminProfile />;
       default:
         return null;
     }
   };
 
   return (
-    <AdminLayout>
-      <div className="flex gap-8">
+    <div className="min-h-screen bg-[#fafaf5]">
+      {/* Admin Header */}
+      <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-[#e3e3de]">
+        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-[#00450d] rounded-xl flex items-center justify-center text-white shadow-lg">
+                <span className="material-symbols-outlined">potted_plant</span>
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-[#00450d]">Gulf Link Admin</h1>
+                <p className="text-[10px] text-[#41493e] uppercase tracking-widest">Super Admin Console</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6">
+            {/* Search */}
+            <div className="relative hidden md:block">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#717a6d] text-sm">search</span>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-64 pl-10 pr-4 py-2 bg-[#f4f4ef] border-none rounded-full text-sm focus:ring-2 focus:ring-[#00450d]/20"
+              />
+            </div>
+
+            {/* Notifications */}
+            <button className="relative text-[#41493e] hover:text-[#00450d] transition-colors">
+              <span className="material-symbols-outlined">notifications</span>
+              <span className="absolute top-0 right-0 w-2 h-2 bg-[#ba1a1a] rounded-full border-2 border-white"></span>
+            </button>
+
+            {/* Profile Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-3 cursor-pointer">
+                <div className="text-right hidden lg:block">
+                  <p className="text-xs font-bold text-[#1a1c19]">{user?.name || 'Admin'}</p>
+                  <p className="text-[10px] text-[#41493e]">Super Admin</p>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-[#00450d] flex items-center justify-center text-white font-bold border-2 border-[#00450d]/20 group-hover:border-[#00450d] transition-all">
+                  {user?.name?.charAt(0) || 'A'}
+                </div>
+                <span className="material-symbols-outlined text-sm text-[#41493e]">expand_more</span>
+              </button>
+
+              {/* Dropdown Menu */}
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-[#e3e3de] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 z-50">
+                <div className="p-4 border-b border-[#e3e3de]">
+                  <p className="text-sm font-bold text-[#1a1c19]">{user?.name || 'Admin'}</p>
+                  <p className="text-xs text-[#41493e]">{user?.email || 'admin@gulflink.com'}</p>
+                </div>
+                <div className="py-2">
+                  <button
+                    onClick={() => setActiveTab('profile')}
+                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[#41493e] hover:bg-[#f4f4ef] transition-colors text-left"
+                  >
+                    <span className="material-symbols-outlined text-sm">account_circle</span>
+                    Profile Settings
+                  </button>
+                  <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[#41493e] hover:bg-[#f4f4ef] transition-colors text-left">
+                    <span className="material-symbols-outlined text-sm">security</span>
+                    Security
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[#ba1a1a] hover:bg-[#ffdad6] transition-colors text-left"
+                  >
+                    <span className="material-symbols-outlined text-sm">logout</span>
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex gap-8 p-8 max-w-screen-2xl mx-auto">
         {/* Admin Sidebar */}
         <aside className="w-64 flex-shrink-0">
           <div className="sticky top-32 bg-white rounded-xl shadow-sm border border-[#e3e3de] p-4">
@@ -182,7 +261,7 @@ const NewAdminDashboard = () => {
           {renderContent()}
         </div>
       </div>
-    </AdminLayout>
+    </div>
   );
 };
 
