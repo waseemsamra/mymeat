@@ -241,9 +241,9 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     const updatedSlides = [...slides, newSlide];
     setSlides(updatedSlides);
     setActiveSlideId(newSlide.id);
-    
-    // Save immediately
-    localStorage.setItem('agrofeed_hero_slides', JSON.stringify(updatedSlides));
+
+    // Save to backend API (NOT localStorage)
+    saveToBackend(updatedSlides);
 
     toast.success('New slide added', {
       description: 'Configure the slide content and upload an image.'

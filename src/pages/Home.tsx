@@ -6,7 +6,20 @@ import { fetchHeroData, type HeroData } from '../lib/heroService';
 import { HOMEPAGE_S3_IMAGES } from '../data/s3Images';
 
 const Home = () => {
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
+  // Initialize with S3 images to prevent flicker
+  const [heroData, setHeroData] = useState<HeroData>({
+    id: 'hero-1',
+    headline: 'Nurturing the Global Harvest.',
+    description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+    tagline: 'Established 1984 — Global Curators',
+    button1Text: 'View Portfolios',
+    button1Link: '/products',
+    button2Text: 'Our Reach',
+    button2Link: '/about',
+    imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
+    isActive: true,
+    updatedAt: new Date().toISOString()
+  });
 
   useEffect(() => {
     loadHeroData();
@@ -17,29 +30,13 @@ const Home = () => {
     try {
       const data = await fetchHeroData();
       if (data) {
-        setHeroData(data);
         console.log('✅ Hero data loaded from API/S3');
+        setHeroData(data);
         return;
       }
     } catch (error) {
-      console.log('⚠️ API not available, using S3 images directly');
+      console.log('⚠️ API not available, using S3 images');
     }
-
-    // Fallback: Use S3 images directly from s3Images.ts
-    console.log('📸 Using S3 images from configuration');
-    setHeroData({
-      id: 'hero-1',
-      headline: 'Nurturing the Global Harvest.',
-      description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
-      tagline: 'Established 1984 — Global Curators',
-      button1Text: 'View Portfolios',
-      button1Link: '/products',
-      button2Text: 'Our Reach',
-      button2Link: '/about',
-      imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
-      isActive: true,
-      updatedAt: new Date().toISOString()
-    });
   };
 
   return (
