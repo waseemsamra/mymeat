@@ -27,8 +27,6 @@ const Home = () => {
   }, []);
 
   const loadHeroData = async () => {
-    setIsLoading(true);
-    
     // First, try to load from localStorage (new slider system)
     try {
       const stored = localStorage.getItem('agrofeed_hero_slides');
@@ -52,7 +50,6 @@ const Home = () => {
             isActive: true,
             updatedAt: new Date().toISOString()
           });
-          setIsLoading(false);
           return;
         }
       }
@@ -98,8 +95,6 @@ const Home = () => {
         updatedAt: new Date().toISOString()
       });
     }
-    
-    setIsLoading(false);
   };
   return (
     <div className="bg-[#fafaf5] font-body text-on-surface antialiased selection:bg-[#acf4a4] selection:text-[#002203]">
