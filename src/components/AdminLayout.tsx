@@ -1,200 +1,160 @@
 import { type ReactNode, useState } from 'react';
-
-interface AdminLayoutProps {
-  children: ReactNode;
-  activeTab: string;
-  onTabChange: (tab: string) => void;
-  title?: string;
-  user?: { name: string; email: string } | null;
-}
-
-interface MenuItem {
-  id: string;
-  label: string;
-  icon: string;
-  subItems?: { id: string; label: string }[];
-}
-
-const menuItems: MenuItem[] = [
-  { id: 'overview', label: 'Overview', icon: 'dashboard' },
-  { id: 'categories', label: 'Categories', icon: 'category' },
-  { id: 'products', label: 'Products', icon: 'inventory_2' },
-  { id: 'users', label: 'Users', icon: 'group' },
-  { 
-    id: 'cms', 
-    label: 'CMS', 
-    icon: 'auto_awesome_motion',
-    subItems: [
-      { id: 'homepage', label: 'Homepage CMS' },
-      { id: 'navigation', label: 'Navigation Mgmt' },
-      { id: 'footer', label: 'Footer Mgmt' }
-    ]
-  },
-  { id: 'settings', label: 'Settings', icon: 'settings' },
-];
+import { Link } from 'react-router-dom';
 
 const AdminLayout = ({
-  children,
-  activeTab,
-  onTabChange,
-  title,
-  user
-}: AdminLayoutProps) => {
+  children
+}: { children: ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedMenu, setExpandedMenu] = useState<string | null>('cms');
-
-  const toggleMenu = (menuId: string) => {
-    setExpandedMenu(expandedMenu === menuId ? null : menuId);
-  };
 
   return (
-    <div className="min-h-screen bg-[#fafaf5] flex">
-      {/* Sidebar */}
-      <aside className="flex flex-col fixed left-0 top-0 h-full py-6 bg-[#f5f5f0] w-64 border-r border-[#e3e3de] font-manrope z-50">
-        <div className="px-6 mb-10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#1b5e20] rounded-lg flex items-center justify-center overflow-hidden">
-              <img
-                alt="Global Agrarian Logo"
-                className="w-8 h-8 object-contain"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRpHzleH93N_pzlBHi4dsYdTa6XKsuzsqehWodH_7xLi43wg221Pe3g1CF3cGhDEte0L_VdshLM0MobzJwNU6L-CKrWLlb9LniuQAGhaZEzN88XBOo2CErWYfizMmcYp98MSgiVKS56JLYcBmioX8zeQ-L1Xh55oW1bTQBKDmYkZ2DzJu1bFwb4gMk4wn82Hpv2_GjKOmNpEo3DzTrEgXFH4r4DFwLLFEI1ccKCVlCwfQeMP_v0RsMXR_d-XYRdFTUapeQHm6ABrYy"
-              />
-            </div>
-            <div>
-              <h1 className="text-sm font-bold text-[#00450d] leading-none" style={{ fontSize: '12px' }}>Agrarian Admin</h1>
-              <p className="text-[10px] text-[#41493e] uppercase tracking-widest mt-1">Super Admin Console</p>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-[#fafaf5]">
+      {/* Top Navigation - Same as Home Page */}
+      <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-stone-100/10">
+        <div className="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+          <Link to="/" className="text-xl font-bold tracking-tighter text-[#00450d] font-headline">
+            AgroFeed Global
+          </Link>
 
-        <nav className="flex-1 px-4 space-y-1">
-          {menuItems.map((item) => (
-            <div key={item.id}>
-              <button
-                onClick={() => {
-                  if (item.subItems) {
-                    toggleMenu(item.id);
-                  } else {
-                    onTabChange(item.id);
-                  }
-                }}
-                className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 transition-colors duration-200 group ${
-                  activeTab === item.id && !item.subItems
-                    ? 'text-[#00450d] font-bold border-r-4 border-[#00450d] bg-[#e8e8e3]'
-                    : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]'
-                }`}
-                style={{ fontSize: '12px' }}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </div>
-                {item.subItems && (
-                  <span className={`material-symbols-outlined transition-transform ${expandedMenu === item.id ? 'rotate-90' : ''}`}>
-                    chevron_right
-                  </span>
-                )}
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8 font-headline font-semibold tracking-tight">
+            <Link to="/" className="text-stone-600 hover:text-[#00450d] transition-colors">
+              Home
+            </Link>
+
+            {/* Products Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 py-2 text-stone-600 hover:text-[#00450d] transition-colors">
+                Products
+                <span className="material-symbols-outlined text-sm">expand_more</span>
               </button>
-              
-              {/* Submenu Items */}
-              {item.subItems && expandedMenu === item.id && (
-                <div className="ml-4 mt-1 space-y-1 border-l-2 border-[#e3e3de] pl-2">
-                  {item.subItems.map((subItem) => (
-                    <button
-                      key={subItem.id}
-                      onClick={() => onTabChange(subItem.id)}
-                      className={`w-full text-left px-4 py-2 transition-colors duration-200 ${
-                        activeTab === subItem.id
-                          ? 'text-[#00450d] font-bold bg-[#e8e8e3]'
-                          : 'text-[#41493e] hover:text-[#00450d] hover:bg-[#e8e8e3]/50'
-                      }`}
-                      style={{ fontSize: '12px' }}
-                    >
-                      {subItem.label}
-                    </button>
-                  ))}
+              <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                <div className="py-2">
+                  <Link to="/products/meat-seafood" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#00450d]"></span>
+                      Meat & Seafood
+                    </span>
+                  </Link>
+                  <Link to="/products/rice-spices" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#7a5649]"></span>
+                      Rice & Spices
+                    </span>
+                  </Link>
+                  <Link to="/products/fruits-vegetables" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#503600]"></span>
+                      Fruits & Vegetables
+                    </span>
+                  </Link>
                 </div>
-              )}
+              </div>
             </div>
-          ))}
-        </nav>
 
-        <div className="px-4 mt-auto">
-          <button className="w-full flex items-center justify-center gap-2 bg-[#00450d] text-white py-2.5 rounded-md font-medium transition-transform scale-95 active:opacity-80" style={{ fontSize: '12px' }}>
-            <span className="material-symbols-outlined text-sm">download</span>
-            Export Report
-          </button>
-        </div>
-      </aside>
+            {/* About Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 py-2 text-stone-600 hover:text-[#00450d] transition-colors">
+                About
+                <span className="material-symbols-outlined text-sm">expand_more</span>
+              </button>
+              <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                <div className="py-2">
+                  <Link to="/about" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                    About Us
+                  </Link>
+                  <Link to="/quality" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                    Quality & Certifications
+                  </Link>
+                </div>
+              </div>
+            </div>
 
-      {/* Main Content Area */}
-      <main className="ml-64 min-h-screen flex-1" style={{ fontSize: '12px' }}>
-        {/* Top Header */}
-        <header className="w-full h-16 sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-[#e3e3de] flex justify-between items-center px-8">
-          <div className="flex items-center flex-1 max-w-xl">
-            <div className="relative w-full">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#717a6d]">search</span>
+            <Link to="/contact" className="text-stone-600 hover:text-[#00450d] transition-colors">
+              Contact
+            </Link>
+
+            {/* Admin Link */}
+            <Link to="/admin" className="text-[#00450d] font-bold hover:text-[#0c5216] transition-colors">
+              Admin
+            </Link>
+          </div>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-6">
+            <div className="relative hidden sm:block">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">search</span>
               <input
-                className="w-full bg-[#f5f5f0] border-none rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-[#00450d]/20"
-                placeholder="Search marketplace assets..."
+                className="pl-10 pr-4 py-2 bg-stone-100 border-none rounded-full text-sm focus:ring-2 focus:ring-[#00450d]/20 w-64"
+                placeholder="Search..."
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ fontSize: '12px' }}
+              />
+            </div>
+            <button className="text-stone-500 hover:text-[#00450d] transition-colors relative">
+              <span className="material-symbols-outlined">notifications</span>
+              <span className="absolute top-0 right-0 w-2 h-2 bg-[#503600] rounded-full"></span>
+            </button>
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-stone-200 border border-stone-300">
+              <img
+                alt="Admin Profile"
+                src="https://ui-avatars.com/api/?name=Admin&background=00450d&color=fff"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-4">
-              <button className="text-[#41493e] hover:text-[#00450d] transition-colors relative">
-                <span className="material-symbols-outlined">notifications</span>
-                <span className="absolute top-0 right-0 w-2 h-2 bg-[#503600] rounded-full"></span>
-              </button>
-              <button className="text-[#41493e] hover:text-[#00450d] transition-colors">
-                <span className="material-symbols-outlined">help_outline</span>
-              </button>
+        </div>
+      </nav>
+
+      {/* Main Content Area */}
+      <main className="pt-24 pb-10 px-8 max-w-screen-2xl mx-auto">
+        {children}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[#2f312e] text-white py-12 mt-20">
+        <div className="max-w-screen-2xl mx-auto px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div>
+              <h4 className="font-bold text-lg mb-4">AgroFeed Global</h4>
+              <p className="text-sm text-stone-400 leading-relaxed">
+                Curating the finest agricultural exports through intelligent data structures and global agrarian logic.
+              </p>
             </div>
-            <div className="h-8 w-[1px] bg-[#e3e3de]"></div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.replace('/');
-                }}
-                className="text-[#41493e] hover:text-red-600 transition-colors flex items-center gap-1"
-                title="Logout"
-              >
-                <span className="material-symbols-outlined">logout</span>
-              </button>
-              {user && (
-                <>
-                  <div className="text-right">
-                    <p className="font-bold text-[#1a1c19]" style={{ fontSize: '11px' }}>{user.name}</p>
-                    <p className="text-[#41493e]" style={{ fontSize: '9px' }}>Super Admin</p>
-                  </div>
-                  <div className="w-9 h-9 rounded-full border border-[#e3e3de] bg-[#00450d] flex items-center justify-center text-white font-bold" style={{ fontSize: '13px' }}>
-                    {user.name.charAt(0)}
-                  </div>
-                </>
-              )}
+            <div>
+              <h5 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-4">Products</h5>
+              <ul className="space-y-2 text-sm text-stone-400">
+                <li><Link to="/products/meat-seafood" className="hover:text-white transition-colors">Meat & Seafood</Link></li>
+                <li><Link to="/products/rice-spices" className="hover:text-white transition-colors">Rice & Spices</Link></li>
+                <li><Link to="/products/fruits-vegetables" className="hover:text-white transition-colors">Fruits & Vegetables</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-4">Company</h5>
+              <ul className="space-y-2 text-sm text-stone-400">
+                <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                <li><Link to="/quality" className="hover:text-white transition-colors">Quality</Link></li>
+                <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-4">Support</h5>
+              <ul className="space-y-2 text-sm text-stone-400">
+                <li><Link to="/admin" className="hover:text-white transition-colors">Admin Panel</Link></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+              </ul>
             </div>
           </div>
-        </header>
-
-        {/* Page Content */}
-        <div className="p-10 w-full">
-          {title && title !== 'Overview' && (
-            <div className="mb-8">
-              <div className="flex items-center gap-2 text-[#717a6d] mb-2 tracking-widest uppercase font-semibold" style={{ fontSize: '10px' }}>
-                <span>Console</span>
-                <span className="material-symbols-outlined" style={{ fontSize: '10px' }}>chevron_right</span>
-                <span className="text-[#047852]">{title}</span>
-              </div>
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-stone-400">© 2024 AgroFeed Global. All rights reserved.</p>
+            <div className="flex gap-6">
+              <a href="#" className="text-xs text-stone-400 hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="text-xs text-stone-400 hover:text-white transition-colors">Terms</a>
             </div>
-          )}
-          {children}
+          </div>
         </div>
-      </main>
+      </footer>
     </div>
   );
 };

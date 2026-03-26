@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdminLayout from '../components/AdminLayout';
 import ProductManagement from './ProductManagement';
 import CategoryManagement from './CategoryManagement';
 import SiteSettingsEditor from './SiteSettingsEditor';
@@ -81,14 +80,85 @@ const NewAdminDashboard = () => {
   };
 
   return (
-    <AdminLayout
-      activeTab={activeTab}
-      onTabChange={setActiveTab}
-      user={user}
-      title={activeTab === 'homepage' ? 'Homepage CMS' : activeTab === 'navigation' ? 'Navigation Mgmt' : activeTab === 'footer' ? 'Footer Mgmt' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
-    >
-      {renderContent()}
-    </AdminLayout>
+    <div className="flex gap-8">
+      {/* Admin Sidebar */}
+      <aside className="w-64 flex-shrink-0">
+        <div className="sticky top-32 bg-white rounded-xl shadow-sm border border-[#e3e3de] p-4">
+          <div className="mb-6 px-2">
+            <h2 className="text-sm font-bold text-[#00450d]">Admin Console</h2>
+            <p className="text-[10px] text-[#41493e] uppercase tracking-widest">Management Panel</p>
+          </div>
+          <nav className="space-y-1">
+            {[
+              { id: 'overview', label: 'Overview', icon: 'dashboard' },
+              { id: 'categories', label: 'Categories', icon: 'category' },
+              { id: 'products', label: 'Products', icon: 'inventory_2' },
+              { id: 'users', label: 'Users', icon: 'group' },
+              { id: 'cms', label: 'CMS', icon: 'auto_awesome_motion', hasSubmenu: true },
+              { id: 'settings', label: 'Settings', icon: 'settings' }
+            ].map((item) => (
+              <div key={item.id}>
+                <button
+                  onClick={() => setActiveTab(item.id)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                    activeTab === item.id
+                      ? 'bg-[#00450d]/10 text-[#00450d] font-bold'
+                      : 'text-[#41493e] hover:bg-[#f4f4ef]'
+                  }`}
+                >
+                  <span className="material-symbols-outlined">{item.icon}</span>
+                  <span className="text-sm">{item.label}</span>
+                </button>
+                {item.hasSubmenu && activeTab === 'cms' && (
+                  <div className="ml-8 mt-1 space-y-1 border-l-2 border-[#e3e3de] pl-2">
+                    <button
+                      onClick={() => setActiveTab('homepage')}
+                      className={`w-full text-left px-4 py-2 text-sm rounded ${
+                        String(activeTab) === 'homepage'
+                          ? 'text-[#00450d] font-bold'
+                          : 'text-[#41493e] hover:text-[#00450d]'
+                      }`}
+                    >
+                      Homepage CMS
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('navigation')}
+                      className={`w-full text-left px-4 py-2 text-sm rounded ${
+                        String(activeTab) === 'navigation'
+                          ? 'text-[#00450d] font-bold'
+                          : 'text-[#41493e] hover:text-[#00450d]'
+                      }`}
+                    >
+                      Navigation Mgmt
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('footer')}
+                      className={`w-full text-left px-4 py-2 text-sm rounded ${
+                        String(activeTab) === 'footer'
+                          ? 'text-[#00450d] font-bold'
+                          : 'text-[#41493e] hover:text-[#00450d]'
+                      }`}
+                    >
+                      Footer Mgmt
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+          <div className="mt-6 pt-6 border-t border-[#e3e3de]">
+            <button className="w-full py-2.5 bg-[#00450d] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#0c5216] transition-colors">
+              Export Report
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex-1 min-w-0">
+        {renderContent()}
+      </div>
+    </div>
   );
 };
 
