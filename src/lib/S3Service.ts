@@ -3,9 +3,10 @@ import { uploadData, remove, list } from 'aws-amplify/storage';
 // S3 Bucket configuration
 const BUCKET_NAME = 'agrofeed-content-agrofeed-536217686312';
 const PUBLIC_S3_URL = `https://${BUCKET_NAME}.s3.amazonaws.com`;
+const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 
 class S3Service {
-  // Upload image to S3
+  // Upload image to S3 via API Gateway
   async uploadImage(file: File, folder: string = 'images') {
     try {
       if (!file) throw new Error('No file provided');
@@ -20,28 +21,40 @@ class S3Service {
         throw new Error('File too large. Maximum size is 5MB.');
       }
 
-      // Use short filename: folder/filename.jpg (no UUID/timestamp)
-      const shortFileName = `${folder}/${file.name}`;
+      // Convert file to base64
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+      });
 
-      await uploadData({
-        key: shortFileName,
-        data: file,
-        options: {
+      // Upload via API Gateway
+      const response = await fetch(`${API_URL}/upload`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          file: base64,
+          folder: folder,
           contentType: file.type,
-          metadata: {
-            originalName: file.name,
-            uploadedAt: new Date().toISOString(),
-            size: file.size.toString()
-          }
-        }
-      }).result;
+          filename: file.name
+        })
+      });
 
-      // Use public URL instead of pre-signed URL
-      const publicUrl = `${PUBLIC_S3_URL}/${shortFileName}`;
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      
+      // Build public URL
+      const publicUrl = `${PUBLIC_S3_URL}/${folder}/${file.name}`;
 
       return {
         success: true,
-        key: shortFileName,
+        key: `${folder}/${file.name}`,
         url: publicUrl,
         originalName: file.name,
         size: file.size,
