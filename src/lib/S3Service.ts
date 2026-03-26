@@ -1,25 +1,30 @@
-import { uploadData, remove, list, getUrl } from 'aws-amplify/storage';
+import { uploadData, remove, list } from 'aws-amplify/storage';
 import { v4 as uuidv4 } from 'uuid';
+
+// S3 Bucket configuration
+const BUCKET_NAME = 'agrofeed-content-agrofeed-536217686312';
+const BUCKET_REGION = 'us-east-1';
+const PUBLIC_S3_URL = `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com`;
 
 class S3Service {
   // Upload image to S3
   async uploadImage(file: File, folder: string = 'images') {
     try {
       if (!file) throw new Error('No file provided');
-      
+
       const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
       if (!allowedTypes.includes(file.type)) {
         throw new Error('Invalid file type.');
       }
-      
+
       const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
         throw new Error('File too large. Maximum size is 5MB.');
       }
-      
+
       const fileExtension = file.name.split('.').pop();
       const fileName = `${folder}/${uuidv4()}-${Date.now()}.${fileExtension}`;
-      
+
       await uploadData({
         key: fileName,
         data: file,
@@ -32,13 +37,14 @@ class S3Service {
           }
         }
       }).result;
-      
-      const urlResult = await getUrl({ key: fileName });
-      
+
+      // Use public URL instead of pre-signed URL
+      const publicUrl = `${PUBLIC_S3_URL}/${fileName}`;
+
       return {
         success: true,
         key: fileName,
-        url: urlResult.url.toString(),
+        url: publicUrl,
         originalName: file.name,
         size: file.size,
         type: file.type
@@ -60,11 +66,11 @@ class S3Service {
     }
   }
   
-  // Get image URL
+  // Get image URL (returns public URL)
   async getImageUrl(key: string) {
     try {
-      const result = await getUrl({ key });
-      return result.url.toString();
+      // Return public URL instead of pre-signed URL
+      return `${PUBLIC_S3_URL}/${key}`;
     } catch (error) {
       console.error('Get URL error:', error);
       return null;
