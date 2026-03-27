@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { fetchHeroData, saveHeroData, uploadHeroImage } from '../lib/heroService';
 import HeroSliderManager from '../components/HeroSliderManager';
+import PortfolioManager from '../components/PortfolioManager';
 
 const HomepageCMS = () => {
   const [loading, setLoading] = useState(false);
@@ -124,6 +125,11 @@ const HomepageCMS = () => {
       {/* Hero Slider Manager - S3 Upload */}
       <section className="space-y-6">
         <HeroSliderManager onSlideChange={handleSliderChange} />
+      </section>
+
+      {/* Portfolio Manager */}
+      <section className="space-y-6 pt-6">
+        <PortfolioManager />
       </section>
 
       {/* Section Reordering & Management */}

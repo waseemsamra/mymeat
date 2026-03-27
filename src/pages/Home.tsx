@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { type HeroData } from '../lib/heroService';
 import { HOMEPAGE_S3_IMAGES } from '../data/s3Images';
+import { fetchPortfolioData } from '../lib/portfolioService';
 
 interface HeroSlide {
   id: string;
@@ -40,7 +41,14 @@ const Home = () => {
 
   useEffect(() => {
     loadHeroData();
+    loadPortfolios();
   }, []);
+
+  const loadPortfolios = async () => {
+    const data = await fetchPortfolioData();
+    console.log('✅ Portfolios loaded:', data.length, 'items');
+    // Portfolios loaded but using hardcoded layout for design consistency
+  };
 
   const loadHeroData = async () => {
     // Load hero data from API (which gets it from S3/DynamoDB)
