@@ -20,8 +20,20 @@ interface HeroSlide {
 }
 
 const Home = () => {
-  // Initialize with null - will load from API
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
+  // Initialize with hardcoded fallback (will be replaced by API data if available)
+  const [heroData, setHeroData] = useState<HeroData>({
+    id: 'hero-1',
+    headline: 'Nurturing the Global Harvest.',
+    description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+    tagline: 'Established 1984 — Global Curators',
+    button1Text: 'View Portfolios',
+    button1Link: '/products',
+    button2Text: 'Our Reach',
+    button2Link: '/about',
+    imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
+    isActive: true,
+    updatedAt: new Date().toISOString()
+  });
 
   const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -72,12 +84,24 @@ const Home = () => {
         }
       }
 
-      // No slides in database
-      console.log('⚠️ No slides in database - create one in admin dashboard');
-      setHeroData(null);
+      // No slides in database - use hardcoded fallback
+      console.log('⚠️ No slides in database - using hardcoded fallback');
+      setHeroData({
+        id: 'hero-1',
+        headline: 'Nurturing the Global Harvest.',
+        description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+        tagline: 'Established 1984 — Global Curators',
+        button1Text: 'View Portfolios',
+        button1Link: '/products',
+        button2Text: 'Our Reach',
+        button2Link: '/about',
+        imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
+        isActive: true,
+        updatedAt: new Date().toISOString()
+      });
     } catch (error) {
-      console.log('⚠️ API not available, using S3 images');
-      // Fallback to S3 images
+      console.log('⚠️ API error - using hardcoded fallback');
+      // API error - use hardcoded fallback
       setHeroData({
         id: 'hero-1',
         headline: 'Nurturing the Global Harvest.',
