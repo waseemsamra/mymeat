@@ -32,19 +32,17 @@ const Home = () => {
       if (data) {
         console.log('✅ Hero data loaded from API/S3');
         console.log('🖼️ Image URL from API:', data.imageUrl);
-        
-        // Check if image URL is the placeholder or doesn't exist
-        const isPlaceholder = data.imageUrl?.includes('hero-image.jpg') || !data.imageUrl;
-        
-        if (isPlaceholder) {
-          console.log('⚠️ Placeholder image detected, using S3 fallback');
-          // Use S3 images from configuration
+
+        // Only use S3 fallback if image URL is truly empty
+        if (!data.imageUrl) {
+          console.log('⚠️ No image URL from API, using S3 fallback');
           setHeroData({
             ...data,
             imageUrl: HOMEPAGE_S3_IMAGES.heroMain
           });
         } else {
-          // Use image from API
+          // Use image from API (even if it's hero-image.jpg)
+          console.log('✅ Using image from API');
           setHeroData(data);
         }
         return;
@@ -52,7 +50,7 @@ const Home = () => {
     } catch (error) {
       console.log('⚠️ API not available, using S3 images');
     }
-    
+
     // Fallback: Use S3 images directly
     console.log('📸 Using S3 images from configuration');
   };

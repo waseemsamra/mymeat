@@ -25,17 +25,23 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
     if (response.ok) {
       const data = await response.json();
       console.log('✅ Hero data fetched from API:', data);
+      console.log('📊 Slides array:', data.slides);
       
       // Handle API response format (has slides array)
       if (data.slides && Array.isArray(data.slides)) {
+        console.log('📊 Number of slides:', data.slides.length);
         const activeSlide = data.slides.find((s: any) => s.isActive) || data.slides[0];
+        console.log('🎯 Active slide:', activeSlide);
+        
         if (activeSlide) {
           let imageUrl = activeSlide.imageUrl || activeSlide.image || '';
+          console.log('🖼️ Original image URL:', imageUrl);
           
           // Fix: Add 'public/' prefix if missing
           if (imageUrl && !imageUrl.includes('/public/')) {
             console.log('🔄 Fixing image URL - adding public/ prefix');
             imageUrl = imageUrl.replace('/hero/', '/public/hero/');
+            console.log('🖼️ Fixed image URL:', imageUrl);
           }
           
           const heroData = {
@@ -52,7 +58,7 @@ export const fetchHeroData = async (): Promise<HeroData | null> => {
             updatedAt: data.updatedAt || new Date().toISOString()
           };
           
-          console.log('🖼️ Hero image URL:', heroData.imageUrl);
+          console.log('🎯 Final hero data:', heroData);
           return heroData;
         }
       }
