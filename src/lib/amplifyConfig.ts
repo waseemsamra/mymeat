@@ -35,8 +35,10 @@ const config = {
     S3: {
       bucket: 'agrofeed-content-agrofeed-536217686312',
       region: 'us-east-1',
-      // Disable automatic prefixes
-      defaultPath: ''
+      // Use identity pool for credentials
+      credentials: {
+        identityPoolId: 'us-east-1:7d4e0b0c-2a44-4be1-94c6-1c73af02e000'
+      }
     }
   }
 };

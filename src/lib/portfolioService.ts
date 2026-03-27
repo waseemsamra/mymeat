@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import type { PortfolioData, PortfolioItem } from '../types/portfolio';
+import type { PortfolioItem } from '../types/portfolio';
 
 const API_URL = 'https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod';
 
@@ -10,8 +10,8 @@ const DEFAULT_PORTFOLIOS: PortfolioItem[] = [
     title: 'Rice & Rare Spices',
     subtitle: 'Origin: South Asia',
     description: 'Six distinct categories, sourced with surgical precision from the world\'s most fertile regions.',
-    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/public/hero/02-portfolio-rice-spices.jpg',
-    s3Key: 'public/hero/02-portfolio-rice-spices.jpg',
+    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/02-portfolio-rice-spices.jpg',
+    s3Key: 'hero/02-portfolio-rice-spices.jpg',
     link: '/products/rice-spices',
     order: 1,
     isActive: true
@@ -21,8 +21,8 @@ const DEFAULT_PORTFOLIOS: PortfolioItem[] = [
     title: 'Seasonal Citrus',
     subtitle: 'Origin: Mediterranean',
     description: 'Six distinct categories, sourced with surgical precision from the world\'s most fertile regions.',
-    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/public/hero/03-portfolio-seasonal-citrus.jpg',
-    s3Key: 'public/hero/03-portfolio-seasonal-citrus.jpg',
+    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/03-portfolio-seasonal-citrus.jpg',
+    s3Key: 'hero/03-portfolio-seasonal-citrus.jpg',
     link: '/products/fruits-vegetables',
     order: 2,
     isActive: true
@@ -32,8 +32,8 @@ const DEFAULT_PORTFOLIOS: PortfolioItem[] = [
     title: 'Global Grains',
     subtitle: 'Origin: Central Plains',
     description: 'Six distinct categories, sourced with surgical precision from the world\'s most fertile regions.',
-    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/public/hero/04-portfolio-global-grains.jpg',
-    s3Key: 'public/hero/04-portfolio-global-grains.jpg',
+    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/04-portfolio-global-grains.jpg',
+    s3Key: 'hero/04-portfolio-global-grains.jpg',
     link: '/products/grains',
     order: 3,
     isActive: true
@@ -43,8 +43,8 @@ const DEFAULT_PORTFOLIOS: PortfolioItem[] = [
     title: 'Organic Root Produce',
     subtitle: 'Origin: Global Tropics',
     description: 'Six distinct categories, sourced with surgical precision from the world\'s most fertile regions.',
-    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/public/hero/05-portfolio-organic-produce.jpg',
-    s3Key: 'public/hero/05-portfolio-organic-produce.jpg',
+    imageUrl: 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/05-portfolio-organic-produce.jpg',
+    s3Key: 'hero/05-portfolio-organic-produce.jpg',
     link: '/products/produce',
     order: 4,
     isActive: true
@@ -79,7 +79,7 @@ export const savePortfolioData = async (items: PortfolioItem[]): Promise<boolean
   try {
     const token = localStorage.getItem('idToken');
     
-    const dataToSave: PortfolioData = {
+    const dataToSave = {
       PK: 'portfolios',
       SK: 'content',
       type: 'cms',
@@ -129,8 +129,8 @@ export const uploadPortfolioImage = async (file: File): Promise<string | null> =
     const S3ServiceModule = await import('./S3Service');
     const S3Service = S3ServiceModule.default;
 
-    // Upload to S3 in public/hero folder (same as other images)
-    const result = await S3Service.uploadImage(file, 'public/hero');
+    // Upload to S3 in hero folder (same as all other images)
+    const result = await S3Service.uploadImage(file, 'hero');
 
     console.log('✅ Portfolio image uploaded to S3!');
     console.log('🔑 S3 Key:', result.key);
