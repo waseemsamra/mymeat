@@ -55,10 +55,6 @@ const HomepageCMS = () => {
     setLoading(false);
   };
 
-  const handleEditSlide = () => {
-    setIsEditModalOpen(true);
-  };
-
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -125,88 +121,9 @@ const HomepageCMS = () => {
 
   return (
     <div className="w-full space-y-12">
-      {/* Hero Slider Configuration */}
-      <section className="space-y-6">
-        <div className="flex justify-between items-end">
-          <div className="max-w-xl">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#7a5649] uppercase mb-2 block">Visual Core</span>
-            <h3 className="text-3xl font-bold tracking-tight text-[#00450d]">Hero Header Management</h3>
-          </div>
-          <button
-            onClick={handleSave}
-            disabled={loading}
-            className="flex items-center gap-2 px-6 py-2 bg-[#1b5e20] text-white font-semibold rounded-lg hover:bg-[#00450d] transition-all active:scale-95 disabled:opacity-50"
-          >
-            <span className="material-symbols-outlined text-sm">save</span>
-            <span>{loading ? 'Saving...' : 'Publish Changes'}</span>
-          </button>
-        </div>
-
-        <div className="grid grid-cols-12 gap-8 items-start">
-          {/* Preview Card */}
-          <div className="col-span-12 lg:col-span-7 relative group rounded-2xl overflow-hidden shadow-lg aspect-[16/8] bg-[#eeeee9]">
-            <img
-              alt="Hero preview"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              src={formData.imageUrl || 'https://agrofeed-content-agrofeed-536217686312.s3.amazonaws.com/hero/default.jpg'}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
-              <h4 className="text-white text-4xl font-bold mb-2">{formData.headline || 'Curating Earth\'s Finest Harvest'}</h4>
-            </div>
-            <div className="absolute top-4 right-4 flex gap-2">
-              <button
-                onClick={handleEditSlide}
-                className="p-2 bg-white/90 backdrop-blur rounded-lg text-[#00450d] hover:bg-white transition-all shadow-sm"
-              >
-                <span className="material-symbols-outlined">edit</span>
-              </button>
-              <button className="p-2 bg-white/90 backdrop-blur rounded-lg text-[#7a5649] hover:bg-white transition-all shadow-sm">
-                <span className="material-symbols-outlined">collections</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Hero Controls */}
-          <div className="col-span-12 lg:col-span-5 space-y-4">
-            <div className="p-6 bg-white rounded-2xl shadow-lg border-b-2 border-[#00450d]/5">
-              <label className="block text-xs font-bold text-[#7a5649] uppercase tracking-widest mb-4">Headline Settings</label>
-              <input
-                className="w-full px-0 py-2 bg-transparent border-0 border-b border-[#717a6d] focus:ring-0 focus:border-[#00450d] text-lg font-bold text-[#1a1c19] transition-all mb-6"
-                type="text"
-                defaultValue="Curating Earth's Finest Harvest"
-              />
-              <label className="block text-xs font-bold text-[#7a5649] uppercase tracking-widest mb-4">Call to Action Link</label>
-              <div className="flex items-center gap-3 p-3 bg-[#f4f4ef] rounded-xl border border-[#c0c9bb]/20">
-                <span className="material-symbols-outlined text-[#717a6d]">link</span>
-                <input
-                  className="flex-1 bg-transparent border-0 focus:ring-0 text-sm font-medium"
-                  type="text"
-                  defaultValue="/collections/seasonal-harvest"
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="flex-1 p-4 bg-[#f4f4ef] rounded-xl text-center cursor-pointer hover:bg-[#e8e8e3] transition-all">
-                <span className="material-symbols-outlined text-[#00450d] mb-1">speed</span>
-                <p className="text-[10px] font-bold text-[#717a6d] uppercase">Slide Duration</p>
-                <p className="text-sm font-bold">5000ms</p>
-              </div>
-              <div className="flex-1 p-4 bg-[#f4f4ef] rounded-xl text-center cursor-pointer hover:bg-[#e8e8e3] transition-all">
-                <span className="material-symbols-outlined text-[#00450d] mb-1">animation</span>
-                <p className="text-[10px] font-bold text-[#717a6d] uppercase">Transition</p>
-                <p className="text-sm font-bold">Ken Burns</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Hero Slider Manager - S3 Upload */}
-      <section className="space-y-6 pt-6">
-        <div className="border-t border-gray-200 pt-8">
-          <HeroSliderManager onSlideChange={handleSliderChange} />
-        </div>
+      <section className="space-y-6">
+        <HeroSliderManager onSlideChange={handleSliderChange} />
       </section>
 
       {/* Section Reordering & Management */}
