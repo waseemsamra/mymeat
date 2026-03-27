@@ -2,8 +2,22 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { fetchHeroData, type HeroData } from '../lib/heroService';
+import { type HeroData } from '../lib/heroService';
 import { HOMEPAGE_S3_IMAGES } from '../data/s3Images';
+
+interface HeroSlide {
+  id: string;
+  headline: string;
+  description: string;
+  tagline: string;
+  button1Text: string;
+  button1Link: string;
+  button2Text: string;
+  button2Link: string;
+  imageUrl: string;
+  isActive: boolean;
+  order: number;
+}
 
 const Home = () => {
   // Initialize with S3 images to prevent flicker
@@ -21,6 +35,9 @@ const Home = () => {
     updatedAt: new Date().toISOString()
   });
 
+  const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
   useEffect(() => {
     loadHeroData();
   }, []);
@@ -28,24 +45,37 @@ const Home = () => {
   const loadHeroData = async () => {
     // Load hero data from API (which gets it from S3/DynamoDB)
     try {
-      const data = await fetchHeroData();
-      if (data) {
-        console.log('✅ Hero data loaded from API/S3');
-        console.log('🖼️ Image URL from API:', data.imageUrl);
-
-        // Only use S3 fallback if image URL is truly empty
-        if (!data.imageUrl) {
-          console.log('⚠️ No image URL from API, using S3 fallback');
+      const response = await fetch('https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod/cms/hero');
+      const data = await response.json();
+      
+      console.log('📊 API Response:', data);
+      console.log('📊 Slides array:', data.slides);
+      
+      if (data.slides && Array.isArray(data.slides)) {
+        console.log('📊 Number of slides:', data.slides.length);
+        setAllSlides(data.slides);
+        
+        // Get active slide or first slide
+        const activeSlide = data.slides.find((s: any) => s.isActive) || data.slides[0];
+        console.log('🎯 Active slide:', activeSlide);
+        
+        if (activeSlide && activeSlide.imageUrl) {
+          console.log('✅ Using slide image from API');
           setHeroData({
-            ...data,
-            imageUrl: HOMEPAGE_S3_IMAGES.heroMain
+            id: activeSlide.id,
+            headline: activeSlide.headline || activeSlide.title || '',
+            description: activeSlide.description || activeSlide.subtitle || '',
+            tagline: activeSlide.tagline || '',
+            button1Text: activeSlide.button1Text || activeSlide.buttonText || '',
+            button1Link: activeSlide.button1Link || activeSlide.buttonLink || '',
+            button2Text: activeSlide.button2Text || '',
+            button2Link: activeSlide.button2Link || '',
+            imageUrl: activeSlide.imageUrl,
+            isActive: true,
+            updatedAt: data.updatedAt || new Date().toISOString()
           });
-        } else {
-          // Use image from API (even if it's hero-image.jpg)
-          console.log('✅ Using image from API');
-          setHeroData(data);
+          return;
         }
-        return;
       }
     } catch (error) {
       console.log('⚠️ API not available, using S3 images');
@@ -53,6 +83,68 @@ const Home = () => {
 
     // Fallback: Use S3 images directly
     console.log('📸 Using S3 images from configuration');
+  };
+
+  // Navigate to previous slide
+  const goToPreviousSlide = () => {
+    if (allSlides.length <= 1) return;
+    const newIndex = currentSlideIndex === 0 ? allSlides.length - 1 : currentSlideIndex - 1;
+    setCurrentSlideIndex(newIndex);
+    const slide = allSlides[newIndex];
+    setHeroData({
+      id: slide.id,
+      headline: slide.headline || '',
+      description: slide.description || '',
+      tagline: slide.tagline || '',
+      button1Text: slide.button1Text || '',
+      button1Link: slide.button1Link || '',
+      button2Text: slide.button2Text || '',
+      button2Link: slide.button2Link || '',
+      imageUrl: slide.imageUrl || '',
+      isActive: true,
+      updatedAt: new Date().toISOString()
+    });
+  };
+
+  // Navigate to next slide
+  const goToNextSlide = () => {
+    if (allSlides.length <= 1) return;
+    const newIndex = (currentSlideIndex + 1) % allSlides.length;
+    setCurrentSlideIndex(newIndex);
+    const slide = allSlides[newIndex];
+    setHeroData({
+      id: slide.id,
+      headline: slide.headline || '',
+      description: slide.description || '',
+      tagline: slide.tagline || '',
+      button1Text: slide.button1Text || '',
+      button1Link: slide.button1Link || '',
+      button2Text: slide.button2Text || '',
+      button2Link: slide.button2Link || '',
+      imageUrl: slide.imageUrl || '',
+      isActive: true,
+      updatedAt: new Date().toISOString()
+    });
+  };
+
+  // Go to specific slide
+  const goToSlide = (index: number) => {
+    if (index === currentSlideIndex || index >= allSlides.length) return;
+    setCurrentSlideIndex(index);
+    const slide = allSlides[index];
+    setHeroData({
+      id: slide.id,
+      headline: slide.headline || '',
+      description: slide.description || '',
+      tagline: slide.tagline || '',
+      button1Text: slide.button1Text || '',
+      button1Link: slide.button1Link || '',
+      button2Text: slide.button2Text || '',
+      button2Link: slide.button2Link || '',
+      imageUrl: slide.imageUrl || '',
+      isActive: true,
+      updatedAt: new Date().toISOString()
+    });
   };
 
   return (
@@ -66,12 +158,48 @@ const Home = () => {
           <div className="absolute inset-0 z-0">
             <img
               alt="Hero slide"
-              className="w-full h-full object-cover opacity-80 scale-105"
+              className="w-full h-full object-cover opacity-80 scale-105 transition-opacity duration-500"
               src={heroData?.imageUrl || HOMEPAGE_S3_IMAGES.heroMain}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 via-transparent to-transparent"></div>
           </div>
-          
+
+          {/* Navigation Arrows */}
+          {allSlides.length > 1 && (
+            <>
+              <button
+                onClick={goToPreviousSlide}
+                className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
+                aria-label="Previous slide"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_left</span>
+              </button>
+              <button
+                onClick={goToNextSlide}
+                className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
+                aria-label="Next slide"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_right</span>
+              </button>
+            </>
+          )}
+
+          {/* Slide Indicators */}
+          {allSlides.length > 1 && (
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+              {allSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentSlideIndex ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
+
           <div className="relative z-10 flex flex-col justify-end h-full px-12 pb-24 max-w-7xl mx-auto">
             <span className="font-label text-xs uppercase tracking-[0.3em] text-[#ffdeac] mb-6 block">
               {heroData?.tagline || 'Established 1984 — Global Curators'}
