@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { type HeroData } from '../lib/heroService';
 import { HOMEPAGE_S3_IMAGES } from '../data/s3Images';
 import { fetchPortfolioData } from '../lib/portfolioService';
+import type { PortfolioItem } from '../types/portfolio';
 
 interface HeroSlide {
   id: string;
@@ -38,6 +39,7 @@ const Home = () => {
 
   const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
 
   useEffect(() => {
     loadHeroData();
@@ -46,8 +48,8 @@ const Home = () => {
 
   const loadPortfolios = async () => {
     const data = await fetchPortfolioData();
+    setPortfolios(data);
     console.log('✅ Portfolios loaded:', data.length, 'items');
-    // Portfolios loaded but using hardcoded layout for design consistency
   };
 
   const loadHeroData = async () => {
@@ -276,58 +278,38 @@ const Home = () => {
               <p className="max-w-md text-[#41493e] leading-relaxed">Six distinct categories, sourced with surgical precision from the world's most fertile regions.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-              {/* Item 1: Large Rice/Spices */}
-              <Link to="/products/rice-spices" className="md:col-span-8 group relative overflow-hidden rounded-xl h-[500px] cursor-pointer">
-                <img
-                  alt="Overhead view of artisanal spices"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src={HOMEPAGE_S3_IMAGES.portfolioRiceSpices}
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all"></div>
-                <div className="absolute bottom-10 left-10 text-white">
-                  <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#ffdeac] mb-2 block">Origin: South Asia</span>
-                  <h3 className="text-3xl font-headline font-bold">Rice & Rare Spices</h3>
-                </div>
-              </Link>
-              {/* Item 2: Vertical Fruits */}
-              <Link to="/products/fruits-vegetables" className="md:col-span-4 group relative overflow-hidden rounded-xl h-[500px] cursor-pointer mt-12 md:mt-24">
-                <img
-                  alt="Close-up of fresh organic citrus fruits"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src={HOMEPAGE_S3_IMAGES.portfolioCitrus}
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all"></div>
-                <div className="absolute bottom-10 left-10 text-white">
-                  <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#ffdeac] mb-2 block">Origin: Mediterranean</span>
-                  <h3 className="text-3xl font-headline font-bold">Seasonal Citrus</h3>
-                </div>
-              </Link>
-              {/* Item 3: Grain Portfolio */}
-              <div className="md:col-span-5 group relative overflow-hidden rounded-xl h-[400px] cursor-pointer">
-                <img
-                  alt="Golden wheat field being harvested"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src={HOMEPAGE_S3_IMAGES.portfolioGrains}
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all"></div>
-                <div className="absolute bottom-10 left-10 text-white">
-                  <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#ffdeac] mb-2 block">Origin: Central Plains</span>
-                  <h3 className="text-3xl font-headline font-bold">Global Grains</h3>
-                </div>
-              </div>
-              {/* Item 4: Logistics/Packaging */}
-              <div className="md:col-span-7 group relative overflow-hidden rounded-xl h-[400px] cursor-pointer md:-mt-12">
-                <img
-                  alt="Fresh vibrant vegetables artfully arranged"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src={HOMEPAGE_S3_IMAGES.portfolioProduce}
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all"></div>
-                <div className="absolute bottom-10 left-10 text-white">
-                  <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#ffdeac] mb-2 block">Origin: Global Tropics</span>
-                  <h3 className="text-3xl font-headline font-bold">Organic Root Produce</h3>
-                </div>
-              </div>
+              {/* Render portfolios from API - show first 4 active items */}
+              {portfolios.filter(p => p.isActive).slice(0, 4).map((portfolio, index) => {
+                // Use asymmetric layout for first 4 items
+                const layouts = [
+                  'md:col-span-8 h-[500px]',  // Item 1: Large
+                  'md:col-span-4 h-[500px] mt-12 md:mt-24',  // Item 2: Vertical
+                  'md:col-span-5 h-[400px]',  // Item 3: Medium
+                  'md:col-span-7 h-[400px] md:-mt-12'  // Item 4: Wide
+                ];
+                const layout = layouts[index] || 'md:col-span-6 h-[400px]';
+                
+                return (
+                  <Link
+                    key={portfolio.id}
+                    to={portfolio.link || '/products'}
+                    className={`${layout} group relative overflow-hidden rounded-xl cursor-pointer`}
+                  >
+                    <img
+                      alt={portfolio.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      src={portfolio.imageUrl || HOMEPAGE_S3_IMAGES.portfolioRiceSpices}
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all"></div>
+                    <div className="absolute bottom-10 left-10 text-white">
+                      <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#ffdeac] mb-2 block">
+                        {portfolio.subtitle || 'Origin: TBD'}
+                      </span>
+                      <h3 className="text-3xl font-headline font-bold">{portfolio.title || 'Portfolio Item'}</h3>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
