@@ -20,20 +20,8 @@ interface HeroSlide {
 }
 
 const Home = () => {
-  // Initialize with S3 images to prevent flicker
-  const [heroData, setHeroData] = useState<HeroData>({
-    id: 'hero-1',
-    headline: 'Nurturing the Global Harvest.',
-    description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
-    tagline: 'Established 1984 — Global Curators',
-    button1Text: 'View Portfolios',
-    button1Link: '/products',
-    button2Text: 'Our Reach',
-    button2Link: '/about',
-    imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
-    isActive: true,
-    updatedAt: new Date().toISOString()
-  });
+  // Initialize with null - will load from API
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
 
   const [allSlides, setAllSlides] = useState<HeroSlide[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -51,17 +39,17 @@ const Home = () => {
       console.log('📊 API Response:', data);
       console.log('📊 Slides array:', data.slides);
 
-      if (data.slides && Array.isArray(data.slides)) {
+      if (data.slides && Array.isArray(data.slides) && data.slides.length > 0) {
         console.log('📊 Number of slides:', data.slides.length);
         setAllSlides(data.slides);
 
         // Find active slide index
         const activeIndex = data.slides.findIndex((s: any) => s.isActive);
         const activeSlide = activeIndex >= 0 ? data.slides[activeIndex] : data.slides[0];
-        
+
         console.log('🎯 Active slide index:', activeIndex);
         console.log('🎯 Active slide:', activeSlide);
-        
+
         // Set current slide index to active slide
         setCurrentSlideIndex(activeIndex >= 0 ? activeIndex : 0);
 
@@ -83,12 +71,27 @@ const Home = () => {
           return;
         }
       }
+
+      // No slides in database
+      console.log('⚠️ No slides in database - create one in admin dashboard');
+      setHeroData(null);
     } catch (error) {
       console.log('⚠️ API not available, using S3 images');
+      // Fallback to S3 images
+      setHeroData({
+        id: 'hero-1',
+        headline: 'Nurturing the Global Harvest.',
+        description: 'We bridge the distance between origin and table through sophisticated logistics and uncompromising standards of agricultural curation.',
+        tagline: 'Established 1984 — Global Curators',
+        button1Text: 'View Portfolios',
+        button1Link: '/products',
+        button2Text: 'Our Reach',
+        button2Link: '/about',
+        imageUrl: HOMEPAGE_S3_IMAGES.heroMain,
+        isActive: true,
+        updatedAt: new Date().toISOString()
+      });
     }
-
-    // Fallback: Use S3 images directly
-    console.log('📸 Using S3 images from configuration');
   };
 
   // Navigate to previous slide
