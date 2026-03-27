@@ -47,20 +47,26 @@ const Home = () => {
     try {
       const response = await fetch('https://euwheigeak.execute-api.us-east-1.amazonaws.com/prod/cms/hero');
       const data = await response.json();
-      
+
       console.log('📊 API Response:', data);
       console.log('📊 Slides array:', data.slides);
-      
+
       if (data.slides && Array.isArray(data.slides)) {
         console.log('📊 Number of slides:', data.slides.length);
         setAllSlides(data.slides);
+
+        // Find active slide index
+        const activeIndex = data.slides.findIndex((s: any) => s.isActive);
+        const activeSlide = activeIndex >= 0 ? data.slides[activeIndex] : data.slides[0];
         
-        // Get active slide or first slide
-        const activeSlide = data.slides.find((s: any) => s.isActive) || data.slides[0];
+        console.log('🎯 Active slide index:', activeIndex);
         console.log('🎯 Active slide:', activeSlide);
         
+        // Set current slide index to active slide
+        setCurrentSlideIndex(activeIndex >= 0 ? activeIndex : 0);
+
         if (activeSlide && activeSlide.imageUrl) {
-          console.log('✅ Using slide image from API');
+          console.log('✅ Using slide image from API:', activeSlide.imageUrl);
           setHeroData({
             id: activeSlide.id,
             headline: activeSlide.headline || activeSlide.title || '',

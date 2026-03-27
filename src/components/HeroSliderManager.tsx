@@ -103,7 +103,11 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
   const saveToBackend = async (slidesToSave: HeroSlide[]) => {
     try {
       const token = localStorage.getItem('idToken');
-      
+
+      console.log('📊 Slides to save:', slidesToSave);
+      console.log('📊 First slide image:', slidesToSave[0]?.imageUrl);
+      console.log('📊 First slide s3Key:', slidesToSave[0]?.s3Key);
+
       // Format for backend
       const backendData = {
         PK: 'hero',
@@ -118,8 +122,8 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
           button1Link: slide.button1Link,
           button2Text: slide.button2Text,
           button2Link: slide.button2Link,
-          imageUrl: slide.imageUrl,
-          s3Key: slide.s3Key,
+          imageUrl: slide.imageUrl || '',
+          s3Key: slide.s3Key || '',
           isActive: slide.isActive,
           order: slide.order
         })),
@@ -276,17 +280,19 @@ const HeroSliderManager: React.FC<HeroSliderManagerProps> = ({ onSlideChange }) 
     );
     setSlides(updatedSlides);
     
-    // Auto-save after 1 second delay (debounce)
-    setTimeout(() => {
-      saveToBackend(updatedSlides);
-    }, 1000);
+    console.log('✏️ Slide updated locally:', updates);
+    console.log('💡 Click "Save All" button to save changes to backend');
   };
 
   // Manual save button handler
   const handleSaveAll = async () => {
+    console.log('💾 Saving all slides to backend...');
     const success = await saveToBackend(slides);
     if (success) {
       console.log('✅ All slides saved!');
+      toast.success('All changes saved!', {
+        description: 'Refresh homepage to see updates.'
+      });
     }
   };
 
