@@ -120,8 +120,8 @@ const Contact = () => {
                         <span className="text-2xl">🏢</span>
                       </div>
                       <div>
-                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Singapore (HQ)</h3>
-                        <p className="text-[#41493e] text-sm leading-relaxed">123 Trade Center, Marina Bay Financial Centre<br/>Singapore 018989</p>
+                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Dubai (HQ)</h3>
+                        <p className="text-[#41493e] text-sm leading-relaxed">Meydan Free Zone<br/>Dubai, UAE</p>
                       </div>
                     </div>
 
@@ -130,8 +130,8 @@ const Contact = () => {
                         <span className="text-2xl">🌍</span>
                       </div>
                       <div>
-                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Rotterdam (EU Hub)</h3>
-                        <p className="text-[#41493e] text-sm leading-relaxed">456 Port Avenue, Europoort<br/>Rotterdam, Netherlands 3045 AM</p>
+                        <h3 className="font-headline font-bold text-xl text-[#1a1c19] mb-2">Singapore</h3>
+                        <p className="text-[#41493e] text-sm leading-relaxed">347 Trade Center, Marina Bay Financial Centre<br/>Singapore 018989</p>
                       </div>
                     </div>
 
