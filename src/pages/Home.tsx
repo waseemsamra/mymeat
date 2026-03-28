@@ -76,7 +76,8 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Desktop Grid - Hidden on Mobile */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Rice & Spices */}
               <Link
                 to="/products/rice-spices"
@@ -235,6 +236,165 @@ const Home = () => {
                   <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
                     Explore Category
                     <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Mobile Horizontal Carousel - Visible only on mobile */}
+            <div className="md:hidden flex gap-4 overflow-x-auto hide-scrollbar pb-4 -mx-4 px-4">
+              <Link
+                to="/products/rice-spices"
+                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    alt="Rice & Spices"
+                    className="w-full h-full object-cover"
+                    src="/products/home-rice-spices.jpg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-xl font-headline font-bold">Rice & Spices</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
+                    Aromatic long-grain basmati, rare whole spices, and export-grade pantry essentials.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
+                    Explore
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                to="/products/fruits-vegetables"
+                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    alt="Fruits & Vegetables"
+                    className="w-full h-full object-cover"
+                    src="/products/home-fruits-vegetables.jpg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-xl font-headline font-bold">Fruits & Vegetables</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
+                    24-hour farm-to-shipping logistics for seasonal produce.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
+                    Explore
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                to="/products/nuts-flavors"
+                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    alt="Nuts & Flavors"
+                    className="w-full h-full object-cover"
+                    src="/products/home-nuts-hero.jpg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-xl font-headline font-bold">Nuts & Flavors</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
+                    Macadamias, walnuts, and rare flavors.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
+                    Explore
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                to="/products/canned-goods"
+                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    alt="Canned Foods"
+                    className="w-full h-full object-cover"
+                    src="/products/home-canned-foods.jpg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-xl font-headline font-bold">Canned Foods</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
+                    Preserving freshness through advanced canning techniques.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
+                    Explore
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                to="/products/meat-seafood"
+                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    alt="Meat & Seafood"
+                    className="w-full h-full object-cover"
+                    src="/products/home-meat-seafood.jpg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-xl font-headline font-bold">Meat & Seafood</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
+                    Pasture-raised cuts and sustainable oceanic catch.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
+                    Explore
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                to="/products/bakery"
+                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    alt="Bakery Products"
+                    className="w-full h-full object-cover"
+                    src="/products/home-bakery.jpg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <h3 className="text-white text-xl font-headline font-bold">Bakery Products</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
+                    Par-baked solutions and artisanal flours.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
+                    Explore
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
                   </span>
                 </div>
               </Link>
