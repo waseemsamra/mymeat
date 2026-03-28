@@ -10,7 +10,7 @@ const VendorLogin = () => {
             to="/"
             className="text-xl font-bold tracking-tighter text-green-900 dark:text-green-50 font-headline"
           >
-            The Global Agrarian
+            Gulf Link
           </Link>
           <nav className="flex items-center gap-8">
             <Link
@@ -171,10 +171,10 @@ const VendorLogin = () => {
         <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">
             <div className="text-lg font-bold text-stone-100 font-headline">
-              The Global Agrarian
+              Gulf Link
             </div>
             <p className="text-stone-400 font-inter text-sm tracking-wide max-w-sm">
-              © 2024 The Global Agrarian Editorial. All rights reserved.
+              © 2024 Gulf Link Editorial. All rights reserved.
             </p>
           </div>
 

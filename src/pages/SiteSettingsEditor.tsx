@@ -5,7 +5,7 @@ const SiteSettingsEditor = () => {
   const [activeTab, setActiveTab] = useState('general');
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    portalName: 'The Global Agrarian',
+    portalName: 'Gulf Link',
     supportEmail: 'ops@globalagrarian.com',
     contactPhone: '+1 (555) 123-4567',
     address: '123 Harvest Lane, Agricultural District',
@@ -26,7 +26,7 @@ const SiteSettingsEditor = () => {
       {/* Header Section */}
       <div className="mb-10">
         <h2 className="text-3xl font-extrabold text-[#1a1c19] tracking-tight">System Settings</h2>
-        <p className="text-[#41493e] mt-2 text-base">Configure the core parameters of The Global Agrarian digital environment.</p>
+        <p className="text-[#41493e] mt-2 text-base">Configure the core parameters of Gulf Link digital environment.</p>
       </div>
 
       {/* Tabbed Interface */}

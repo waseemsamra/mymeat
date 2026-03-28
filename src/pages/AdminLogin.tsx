@@ -118,7 +118,7 @@ const AdminLogin = () => {
                 Gulf Link Admin
               </h1>
               <p className="font-body text-on-primary-container max-w-sm opacity-90 leading-relaxed">
-                The Global Agrarian Editorial Super Admin Console. Manage global harvest logs and editorial workflows with precision.
+                Gulf Link Editorial Super Admin Console. Manage global harvest logs and editorial workflows with precision.
               </p>
             </div>
             <div className="space-y-6">

@@ -353,7 +353,7 @@ const RiceSpices = () => {
               <div className="relative z-10 max-w-2xl mx-auto">
                 <h2 className="font-headline text-4xl md:text-5xl font-bold text-white mb-6">Scale Your Supply Chain</h2>
                 <p className="text-[#90d689] text-lg mb-10">
-                  Partner with The Global Agrarian for reliable, high-volume sourcing of the world's finest rice and spices. Request our current inventory and specification sheets.
+                  Partner with Gulf Link for reliable, high-volume sourcing of the world's finest rice and spices. Request our current inventory and specification sheets.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
                   <Link

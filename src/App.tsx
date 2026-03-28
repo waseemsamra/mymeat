@@ -29,6 +29,7 @@ import BakeryProducts from './pages/BakeryProducts';
 import AllProducts from './pages/AllProducts';
 import GlobalLogistics from './pages/GlobalLogistics';
 import VendorLogin from './pages/VendorLogin';
+import TradePolicy from './pages/TradePolicy';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 

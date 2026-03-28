@@ -24,7 +24,7 @@ const About = () => {
                 Our Heritage & Future
               </span>
               <h1 className="font-headline font-extrabold text-white text-5xl md:text-7xl leading-[1.1] tracking-tight mb-8">
-                The Global Agrarian: Bridging the Gap from Soil to Table.
+                Gulf Link: Bridging the Gap from Soil to Table.
               </h1>
               <div className="flex gap-4">
                 <a
