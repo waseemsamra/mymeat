@@ -1,6 +1,7 @@
 {
   "description": "Product images reference - Local images stored in /public/products folder",
   "lastUpdated": "2026-03-28",
+  "source": "Picsum Photos (https://picsum.photos)",
   "categoryImages": {
     "riceSpices": "/products/rice-spices.jpg",
     "fruitsVegetables": "/products/fruits-vegetables.jpg",
@@ -43,5 +44,6 @@
     }
   },
   "totalImages": 25,
-  "note": "All images are stored locally in /public/products folder. Update data/all-products.json and src/pages/AllProducts.tsx when adding new images."
+  "imageSize": "800x600",
+  "note": "All images are stored locally in /public/products folder. Images are from Picsum Photos placeholder service. Replace with actual product photos for production."
 }
