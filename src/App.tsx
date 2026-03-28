@@ -30,6 +30,7 @@ import AllProducts from './pages/AllProducts';
 import GlobalLogistics from './pages/GlobalLogistics';
 import VendorLogin from './pages/VendorLogin';
 import TradePolicy from './pages/TradePolicy';
+import Certifications from './pages/Certifications';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
@@ -97,6 +98,7 @@ function App() {
               <Route path="/sourcing" element={<Sourcing />} />
               <Route path="/procurement" element={<ProcurementCenter />} />
               <Route path="/trade-policy" element={<TradePolicy />} />
+              <Route path="/certifications" element={<Certifications />} />
               <Route path="/vendor-login" element={<VendorLogin />} />
               <Route path="/contact" element={<Contact />} />
 
