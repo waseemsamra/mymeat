@@ -4,8 +4,7 @@ import Footer from '../components/Footer';
 
 const MeatSeafood = () => {
   return (
-    <div className="bg-[#fafaf5] min-h-screen font-sans antialiased scroll-smooth">
-      {/* Navigation */}
+    <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
       <Navigation />
 
       <main className="pt-24">
@@ -14,23 +13,31 @@ const MeatSeafood = () => {
           <div className="absolute inset-0 w-full h-full z-0">
             <img
               className="w-full h-full object-cover brightness-[0.85]"
-              src="https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?w=1920"
+              alt="Premium marbled wagyu beef steak"
+              src="/products/meat-hero.jpg"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/40 to-transparent"></div>
           </div>
-          
           <div className="container mx-auto px-8 relative z-10">
             <div className="max-w-3xl">
-              <span className="inline-block px-4 py-1 rounded-full bg-[#ffdeac] text-[#604100] text-xs font-bold tracking-widest uppercase mb-6">B2B Global Export</span>
+              <span className="inline-block px-4 py-1 rounded-full bg-[#ffdeac] text-[#281900] text-xs font-bold tracking-widest uppercase mb-6">
+                B2B Global Export
+              </span>
               <h1 className="font-headline font-extrabold text-5xl md:text-7xl text-white tracking-tighter leading-tight mb-8">
-                Prime Cuts & Sustainable Seafood: Precision Cold-Chain Export
+                Prime Cuts & Sustainable Seafood:<br/>Precision Cold-Chain Export
               </h1>
               <div className="flex flex-wrap gap-4">
-                <Link to="/contact" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-8 py-4 rounded font-bold transition-all flex items-center gap-2 group">
+                <Link
+                  to="/contact"
+                  className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-8 py-4 rounded-md font-bold transition-all flex items-center gap-2 group"
+                >
                   Request Wholesale Quote
                   <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </Link>
-                <Link to="/services" className="border border-white/50 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-8 py-4 rounded font-bold transition-all">
+                <Link
+                  to="/procurement"
+                  className="border border-white/50 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-8 py-4 rounded-md font-bold transition-all"
+                >
                   View Logistics Portal
                 </Link>
               </div>
@@ -43,11 +50,15 @@ const MeatSeafood = () => {
           <div className="container mx-auto px-8">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <div className="max-w-2xl">
-                <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter text-[#00450d] mb-4">Premium Meats</h2>
-                <p className="text-lg text-[#41493e] leading-relaxed">Sourcing excellence from heritage breeds and pasture-raised herds. Our precision selection ensures marbling consistency and exceptional flavor profiles for high-end hospitality and retail.</p>
+                <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter text-[#00450d] mb-4">
+                  Premium Meats
+                </h2>
+                <p className="text-[#41493e] text-lg leading-relaxed">
+                  Sourcing excellence from heritage breeds and pasture-raised herds. Our precision selection ensures marbling consistency and exceptional flavor profiles for high-end hospitality and retail.
+                </p>
               </div>
               <div className="hidden md:block pb-2">
-                <span className="font-sans text-xs uppercase tracking-[0.2em] text-[#717a6d]">Category 01 / Land</span>
+                <span className="font-label text-xs uppercase tracking-[0.2em] text-[#717a6d]">Category 01 / Land</span>
               </div>
             </div>
 
@@ -57,20 +68,30 @@ const MeatSeafood = () => {
               <div className="md:col-span-8 group relative overflow-hidden rounded-xl bg-[#ffffff] h-[500px]">
                 <img
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?w=800"
+                  alt="Wide shot of several raw ribeye steaks"
+                  src="/products/beef-ribeye.jpg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8 w-full">
                   <div className="flex justify-between items-end">
                     <div>
                       <h3 className="text-white font-headline text-3xl font-bold mb-2">Fresh Beef</h3>
-                      <p className="text-white/80 text-sm max-w-sm mb-6">A5 Wagyu, Black Angus, and Grass-Fed selections with full traceability and aging profiles.</p>
+                      <p className="text-white/80 text-sm max-w-sm mb-6">
+                        A5 Wagyu, Black Angus, and Grass-Fed selections with full traceability and aging profiles.
+                      </p>
                       <div className="flex gap-2">
-                        <span className="bg-[#00450d]/30 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded border border-white/20 uppercase tracking-tighter">Wagyu Certified</span>
-                        <span className="bg-[#00450d]/30 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded border border-white/20 uppercase tracking-tighter">Angus Prime</span>
+                        <span className="bg-[#00450d]/30 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded border border-white/20 uppercase tracking-tighter">
+                          Wagyu Certified
+                        </span>
+                        <span className="bg-[#00450d]/30 backdrop-blur-md text-white text-[10px] px-2 py-1 rounded border border-white/20 uppercase tracking-tighter">
+                          Angus Prime
+                        </span>
                       </div>
                     </div>
-                    <Link to="/contact" className="bg-white text-[#00450d] px-6 py-3 rounded font-bold text-sm hover:bg-[#acf4a4] transition-colors">
+                    <Link
+                      to="/contact"
+                      className="bg-white text-[#00450d] px-6 py-3 rounded-md font-bold text-sm hover:bg-[#acf4a4] transition-colors"
+                    >
                       Enquire for Bulk
                     </Link>
                   </div>
@@ -81,14 +102,21 @@ const MeatSeafood = () => {
               <div className="md:col-span-4 group relative overflow-hidden rounded-xl bg-[#ffffff]">
                 <img
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="https://images.unsplash.com/photo-1587593810167-a84920ea0780?w=600"
+                  alt="Gourmet roasted chicken dish"
+                  src="/products/poultry-chicken.jpg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8">
                   <h3 className="text-white font-headline text-2xl font-bold mb-2">Poultry</h3>
-                  <p className="text-white/80 text-sm mb-4">Corn-fed, organic, and free-range options for global distribution.</p>
-                  <Link to="/contact" className="text-white flex items-center gap-2 font-bold text-sm group/btn">
-                    Request Quote <span className="material-symbols-outlined group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                  <p className="text-white/80 text-sm mb-4">
+                    Corn-fed, organic, and free-range options for global distribution.
+                  </p>
+                  <Link
+                    to="/contact"
+                    className="text-white flex items-center gap-2 font-bold text-sm group/btn"
+                  >
+                    Request Quote
+                    <span className="material-symbols-outlined group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
                   </Link>
                 </div>
               </div>
@@ -97,13 +125,19 @@ const MeatSeafood = () => {
               <div className="md:col-span-4 group relative overflow-hidden rounded-xl bg-[#ffffff] h-[400px]">
                 <img
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=600"
+                  alt="Raw lamb rack with herb crust"
+                  src="/products/lamb-specialty.jpg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8">
                   <h3 className="text-white font-headline text-2xl font-bold mb-2">Specialty Cuts</h3>
-                  <p className="text-white/80 text-sm mb-4">New Zealand Lamb and Game meats tailored to executive culinary requirements.</p>
-                  <Link to="/contact" className="bg-[#00450d]/40 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded font-bold text-sm hover:bg-white hover:text-[#00450d] transition-all">
+                  <p className="text-white/80 text-sm mb-4">
+                    New Zealand Lamb and Game meats tailored to executive culinary requirements.
+                  </p>
+                  <Link
+                    to="/contact"
+                    className="bg-[#00450d]/40 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-md font-bold text-sm hover:bg-white hover:text-[#00450d] transition-all"
+                  >
                     Bulk Details
                   </Link>
                 </div>
@@ -115,12 +149,16 @@ const MeatSeafood = () => {
                   <div>
                     <span className="material-symbols-outlined text-[#00450d] text-4xl mb-4">verified</span>
                     <h4 className="font-headline font-bold text-xl mb-2">Heritage Integrity</h4>
-                    <p className="text-[#41493e] text-sm">Every cut is tracked back to the farm of origin. We verify genetic purity and ethical raising standards for every export lot.</p>
+                    <p className="text-[#41493e] text-sm">
+                      Every cut is tracked back to the farm of origin. We verify genetic purity and ethical raising standards for every export lot.
+                    </p>
                   </div>
                   <div>
                     <span className="material-symbols-outlined text-[#00450d] text-4xl mb-4">inventory</span>
                     <h4 className="font-headline font-bold text-xl mb-2">Custom Fabrication</h4>
-                    <p className="text-[#41493e] text-sm">Bespoke butchery services to meet specific regional requirements and weight-bracket tolerances.</p>
+                    <p className="text-[#41493e] text-sm">
+                      Bespoke butchery services to meet specific regional requirements and weight-bracket tolerances.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -133,11 +171,15 @@ const MeatSeafood = () => {
           <div className="container mx-auto px-8">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <div className="max-w-2xl">
-                <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter text-[#00450d] mb-4">Wild-Caught Seafood</h2>
-                <p className="text-lg text-[#41493e] leading-relaxed">From the icy deep of the North Atlantic to the tropical Pacific, we manage a direct pipeline of sustainable marine protein. Fresh-frozen at sea to lock in sashimi-grade quality.</p>
+                <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter text-[#00450d] mb-4">
+                  Wild-Caught Seafood
+                </h2>
+                <p className="text-[#41493e] text-lg leading-relaxed">
+                  From the icy deep of the North Atlantic to the tropical Pacific, we manage a direct pipeline of sustainable marine protein. Fresh-frozen at sea to lock in sashimi-grade quality.
+                </p>
               </div>
               <div className="hidden md:block pb-2">
-                <span className="font-sans text-xs uppercase tracking-[0.2em] text-[#717a6d]">Category 02 / Ocean</span>
+                <span className="font-label text-xs uppercase tracking-[0.2em] text-[#717a6d]">Category 02 / Ocean</span>
               </div>
             </div>
 
@@ -148,7 +190,9 @@ const MeatSeafood = () => {
                 <div className="order-2 lg:order-1 space-y-8">
                   <div className="space-y-4">
                     <h3 className="font-headline text-3xl font-bold text-[#00450d]">Wild Salmon & Bluefin Tuna</h3>
-                    <p className="text-[#41493e] text-lg leading-relaxed">Our wild-caught program prioritizes MSC-certified fisheries. Available in H&G, fletches, or portion-controlled fillets with ultra-low temperature (ULT) logistics.</p>
+                    <p className="text-[#41493e] text-lg leading-relaxed">
+                      Our wild-caught program prioritizes MSC-certified fisheries. Available in H&G, fletches, or portion-controlled fillets with ultra-low temperature (ULT) logistics.
+                    </p>
                   </div>
                   <ul className="space-y-4">
                     <li className="flex items-start gap-3">
@@ -165,7 +209,10 @@ const MeatSeafood = () => {
                     </li>
                   </ul>
                   <div className="flex gap-4 pt-4">
-                    <Link to="/contact" className="bg-[#00450d] text-white px-8 py-3 rounded font-bold hover:bg-[#1b5e20] transition-all">
+                    <Link
+                      to="/contact"
+                      className="bg-[#00450d] text-white px-8 py-3 rounded-md font-bold hover:bg-[#1b5e20] transition-all"
+                    >
                       Request Wholesale Quote
                     </Link>
                   </div>
@@ -174,7 +221,8 @@ const MeatSeafood = () => {
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-xl">
                     <img
                       className="w-full h-full object-cover"
-                      src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800"
+                      alt="Close up of fresh raw tuna steaks"
+                      src="/products/tuna-sashimi.jpg"
                     />
                     <div className="absolute top-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-green-500"></span>
@@ -189,17 +237,20 @@ const MeatSeafood = () => {
                 <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-xl">
                   <img
                     className="w-full h-full object-cover"
-                    src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=800"
+                    alt="Bounty of fresh oysters and crabs"
+                    src="/products/shellfish-oysters.jpg"
                   />
                   <div className="absolute bottom-6 right-6 bg-[#00450d]/80 backdrop-blur text-white px-6 py-4 rounded-xl max-w-[200px]">
-                    <p className="text-xs font-sans uppercase mb-1">Cold Chain Peak</p>
+                    <p className="text-xs font-label uppercase mb-1">Cold Chain Peak</p>
                     <p className="text-sm font-bold">Live air-freight available for major global hubs.</p>
                   </div>
                 </div>
                 <div className="space-y-8">
                   <div className="space-y-4">
                     <h3 className="font-headline text-3xl font-bold text-[#00450d]">Shellfish & Crustaceans</h3>
-                    <p className="text-[#41493e] text-lg leading-relaxed">Direct sourcing for King Crab, Lobster, Oysters, and Scallops. Our live-holding facilities ensure minimal stress and maximum mortality protection during transit.</p>
+                    <p className="text-[#41493e] text-lg leading-relaxed">
+                      Direct sourcing for King Crab, Lobster, Oysters, and Scallops. Our live-holding facilities ensure minimal stress and maximum mortality protection during transit.
+                    </p>
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="p-6 bg-[#e3e3de] rounded-xl">
@@ -211,7 +262,10 @@ const MeatSeafood = () => {
                       <p className="text-xs text-[#41493e]">Grade A selection from the North Atlantic.</p>
                     </div>
                   </div>
-                  <Link to="/contact" className="bg-[#7a5649] text-white px-8 py-3 rounded font-bold hover:bg-[#603f33] transition-all">
+                  <Link
+                    to="/contact"
+                    className="bg-[#7a5649] text-white px-8 py-3 rounded-md font-bold hover:bg-[#603f33] transition-all"
+                  >
                     Enquire for Bulk
                   </Link>
                 </div>
@@ -222,11 +276,14 @@ const MeatSeafood = () => {
 
         {/* Trust & Logistics Section */}
         <section className="py-24 bg-[#2f312e] text-white overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10 pointer-events-none"></div>
           <div className="container mx-auto px-8 relative z-10">
             <div className="mb-20 text-center max-w-3xl mx-auto">
-              <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter mb-6 italic">The Precision Path</h2>
-              <p className="text-white/70 text-lg">Maintaining biological integrity through every mile of the global journey.</p>
+              <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter mb-6 italic">
+                The Precision Path
+              </h2>
+              <p className="text-white/70 text-lg">
+                Maintaining biological integrity through every mile of the global journey.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -234,7 +291,7 @@ const MeatSeafood = () => {
               <div className="space-y-12">
                 <div className="flex items-center gap-6">
                   <div className="h-px flex-1 bg-white/20"></div>
-                  <span className="text-xs font-sans uppercase tracking-widest text-[#90d689]">Cold-Chain Integrity</span>
+                  <span className="text-xs font-label uppercase tracking-widest text-[#90d689]">Cold-Chain Integrity</span>
                 </div>
                 <div className="relative bg-white/5 border border-white/10 p-10 rounded-2xl backdrop-blur-sm">
                   <div className="flex flex-col gap-8">
@@ -242,21 +299,27 @@ const MeatSeafood = () => {
                       <span className="material-symbols-outlined text-4xl text-[#acf4a4]">thermostat</span>
                       <div>
                         <h4 className="text-xl font-bold mb-2">Live Thermal Monitoring</h4>
-                        <p className="text-white/60 text-sm leading-relaxed">IoT-enabled sensors in every container provide real-time temperature telemetry to your dashboard 24/7.</p>
+                        <p className="text-white/60 text-sm leading-relaxed">
+                          IoT-enabled sensors in every container provide real-time temperature telemetry to your dashboard 24/7.
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-6">
                       <span className="material-symbols-outlined text-4xl text-[#acf4a4]">ac_unit</span>
                       <div>
                         <h4 className="text-xl font-bold mb-2">Nitrogen Snap-Freeze</h4>
-                        <p className="text-white/60 text-sm leading-relaxed">Advanced cryogenic freezing technologies preserve cellular structure, eliminating drip loss upon thawing.</p>
+                        <p className="text-white/60 text-sm leading-relaxed">
+                          Advanced cryogenic freezing technologies preserve cellular structure, eliminating drip loss upon thawing.
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-6">
                       <span className="material-symbols-outlined text-4xl text-[#acf4a4]">route</span>
                       <div>
                         <h4 className="text-xl font-bold mb-2">Optimized Last Mile</h4>
-                        <p className="text-white/60 text-sm leading-relaxed">Seamless handoffs to certified local refrigerated fleets, ensuring the chain remains unbroken to your dock.</p>
+                        <p className="text-white/60 text-sm leading-relaxed">
+                          Seamless handoffs to certified local refrigerated fleets, ensuring the chain remains unbroken to your dock.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -267,26 +330,46 @@ const MeatSeafood = () => {
               <div className="space-y-12">
                 <div className="flex items-center gap-6">
                   <div className="h-px flex-1 bg-white/20"></div>
-                  <span className="text-xs font-sans uppercase tracking-widest text-[#90d689]">Verified Compliance</span>
+                  <span className="text-xs font-label uppercase tracking-widest text-[#90d689]">Verified Compliance</span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { icon: 'verified_user', title: 'HACCP', desc: 'Hazard Analysis Critical Control Point' },
-                    { icon: 'waves', title: 'MSC', desc: 'Sustainable Marine Stewardship' },
-                    { icon: 'restaurant', title: 'Halal', desc: 'Certified Halal Processing' },
-                    { icon: 'menu_book', title: 'Kosher', desc: 'Strict Dietary Protocols' }
-                  ].map((cert) => (
-                    <div key={cert.title} className="bg-white p-8 rounded-xl flex flex-col items-center text-center group hover:bg-[#acf4a4] transition-colors">
-                      <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-[#eeeee9]">
-                        <span className="material-symbols-outlined text-[#00450d] text-3xl">{cert.icon}</span>
-                      </div>
-                      <h5 className="text-[#00450d] font-bold text-sm uppercase mb-1">{cert.title}</h5>
-                      <p className="text-[#41493e] text-[10px]">{cert.desc}</p>
+                  {/* Cert Card 1 */}
+                  <div className="bg-white p-8 rounded-xl flex flex-col items-center text-center group hover:bg-[#acf4a4] transition-colors">
+                    <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-[#eeeee9]">
+                      <span className="material-symbols-outlined text-[#00450d] text-3xl">verified_user</span>
                     </div>
-                  ))}
+                    <h5 className="text-[#00450d] font-bold text-sm uppercase mb-1">HACCP</h5>
+                    <p className="text-[#41493e] text-[10px]">Hazard Analysis Critical Control Point Certified</p>
+                  </div>
+                  {/* Cert Card 2 */}
+                  <div className="bg-white p-8 rounded-xl flex flex-col items-center text-center group hover:bg-[#acf4a4] transition-colors">
+                    <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-[#eeeee9]">
+                      <span className="material-symbols-outlined text-[#00450d] text-3xl" style={{fontVariationSettings: "'FILL' 1"}}>waves</span>
+                    </div>
+                    <h5 className="text-[#00450d] font-bold text-sm uppercase mb-1">MSC</h5>
+                    <p className="text-[#41493e] text-[10px]">Sustainable Marine Stewardship Council</p>
+                  </div>
+                  {/* Cert Card 3 */}
+                  <div className="bg-white p-8 rounded-xl flex flex-col items-center text-center group hover:bg-[#acf4a4] transition-colors">
+                    <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-[#eeeee9]">
+                      <span className="material-symbols-outlined text-[#00450d] text-3xl">restaurant</span>
+                    </div>
+                    <h5 className="text-[#00450d] font-bold text-sm uppercase mb-1">Halal</h5>
+                    <p className="text-[#41493e] text-[10px]">Certified Halal Processing & Slaughter</p>
+                  </div>
+                  {/* Cert Card 4 */}
+                  <div className="bg-white p-8 rounded-xl flex flex-col items-center text-center group hover:bg-[#acf4a4] transition-colors">
+                    <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-[#eeeee9]">
+                      <span className="material-symbols-outlined text-[#00450d] text-3xl">menu_book</span>
+                    </div>
+                    <h5 className="text-[#00450d] font-bold text-sm uppercase mb-1">Kosher</h5>
+                    <p className="text-[#41493e] text-[10px]">Strict Adherence to Dietary Protocols</p>
+                  </div>
                 </div>
                 <div className="pt-6 text-center lg:text-left">
-                  <p className="text-white/40 text-xs italic">All export documentation is digitized and verifiable via our blockchain ledger for ultimate transparent procurement.</p>
+                  <p className="text-white/40 text-xs italic">
+                    All export documentation is digitized and verifiable via our blockchain ledger for ultimate transparent procurement.
+                  </p>
                 </div>
               </div>
             </div>
@@ -297,13 +380,23 @@ const MeatSeafood = () => {
         <section className="py-24 bg-[#e3e3de]">
           <div className="container mx-auto px-8 text-center">
             <div className="max-w-4xl mx-auto space-y-8">
-              <h2 className="font-headline text-4xl md:text-6xl font-extrabold tracking-tighter text-[#00450d]">Begin Your Procurement Journey</h2>
-              <p className="text-[#41493e] text-xl">Speak with a dedicated regional curator to secure your seasonal allocation or request a full price list for contract manufacturing.</p>
+              <h2 className="font-headline text-4xl md:text-6xl font-extrabold tracking-tighter text-[#00450d]">
+                Begin Your Procurement Journey
+              </h2>
+              <p className="text-[#41493e] text-xl">
+                Speak with a dedicated regional curator to secure your seasonal allocation or request a full price list for contract manufacturing.
+              </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                <Link to="/contact" className="bg-[#00450d] text-white px-12 py-5 rounded font-bold text-lg hover:bg-[#1b5e20] transition-all shadow-lg">
+                <Link
+                  to="/contact"
+                  className="bg-[#00450d] text-white px-12 py-5 rounded-md font-bold text-lg hover:bg-[#1b5e20] transition-all shadow-lg"
+                >
                   Request Wholesale Quote
                 </Link>
-                <Link to="/services" className="bg-white border border-[#c0c9bb] text-[#00450d] px-12 py-5 rounded font-bold text-lg hover:bg-[#fafaf5] transition-all">
+                <Link
+                  to="/procurement"
+                  className="bg-white border border-[#717a6d] text-[#00450d] px-12 py-5 rounded-md font-bold text-lg hover:bg-[#fafaf5] transition-all"
+                >
                   Download Logistics Guide
                 </Link>
               </div>
