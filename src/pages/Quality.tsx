@@ -14,7 +14,7 @@ const Quality = () => {
             <img
               className="w-full h-full object-cover"
               alt="clean high-tech laboratory setting"
-              src="/products/quality-hero.jpg"
+              src="/products/certificate-banner.png"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/90 to-[#00450d]/40"></div>
           </div>
