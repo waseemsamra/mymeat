@@ -3,50 +3,51 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
 // Hardcoded product data with local images from /public/products folder
+// Version v2 - cache busting
 const allProductsData = {
-  version: "1.0.0",
+  version: "1.0.1",
   lastUpdated: "2026-03-28T00:00:00Z",
   categories: [
     {
       id: "rice-spices",
       name: "Rice & Spices",
       description: "Sourcing long-grain Basmati, Jasmine, and rare heritage spices directly from cooperatives across South Asia and the Mediterranean.",
-      image: "/products/rice-spices.jpg",
+      image: "/products/rice-spices.jpg?v=2",
       link: "/products/rice-spices"
     },
     {
       id: "fruits-vegetables",
       name: "Fruits & Vegetables",
       description: "Seasonal harvests and year-round staples maintained through precision temperature-controlled logistics from farm gate to port.",
-      image: "/products/fruits-vegetables.jpg",
+      image: "/products/fruits-vegetables.jpg?v=2",
       link: "/products/fruits-vegetables"
     },
     {
       id: "nuts-flavors",
       name: "Nuts & Flavors",
       description: "High-yield almonds, cashews, and botanical extracts tailored for large-scale food manufacturing and gourmet retail bulk buy.",
-      image: "/products/nuts-flavors.jpg",
+      image: "/products/nuts-flavors.jpg?v=2",
       link: "/products/nuts-flavors"
     },
     {
       id: "canned-goods",
       name: "Canned Foods",
       description: "Advanced preservation techniques that lock in peak-season nutrition for long-haul stability and inventory resilience.",
-      image: "/products/canned-goods.jpg",
+      image: "/products/canned-goods.jpg?v=2",
       link: "/products/canned-goods"
     },
     {
       id: "meat-seafood",
       name: "Meat & Seafood",
       description: "Sustainably sourced protein from certified ethical producers, adhering to rigorous cold-chain protocols for global export.",
-      image: "/products/meat-seafood.jpg",
+      image: "/products/meat-seafood.jpg?v=2",
       link: "/products/meat-seafood"
     },
     {
       id: "bakery-products",
       name: "Bakery Products",
       description: "Par-baked and artisanal grain solutions designed for high-volume hospitality and international distribution networks.",
-      image: "/products/bakery-products.jpg",
+      image: "/products/bakery-products.jpg?v=2",
       link: "/products/bakery"
     }
   ],
@@ -55,21 +56,21 @@ const allProductsData = {
       id: "alphonso-mango",
       name: "Alphonso Mangoes",
       description: "Ratnagiri's finest, hand-picked for peak sweetness and fiber-less texture.",
-      image: "/products/alphonso-mango.jpg",
+      image: "/products/alphonso-mango.jpg?v=2",
       origin: "India"
     },
     {
       id: "saffron",
       name: "Spanish Saffron",
       description: "Grade 1 Aromatic saffron threads from the fields of La Mancha, Spain.",
-      image: "/products/saffron.jpg",
+      image: "/products/saffron.jpg?v=2",
       origin: "Spain"
     },
     {
       id: "wagyu",
       name: "Wagyu Ribeye",
       description: "Japanese A5 certified Ribeye with exquisite marbling and buttery texture.",
-      image: "/products/wagyu.jpg",
+      image: "/products/wagyu.jpg?v=2",
       origin: "Japan"
     }
   ]
@@ -116,7 +117,7 @@ const AllProducts = () => {
                 <img
                   alt="Premium fresh organic vegetables"
                   className="w-full h-full object-cover"
-                  src="/products/fruits-vegetables.jpg"
+                  src="/products/fruits-vegetables.jpg?v=2"
                 />
               </div>
               <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#fdcdbc] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
@@ -288,7 +289,7 @@ const AllProducts = () => {
                 <img
                   alt="Shipping containers port"
                   className="rounded-2xl editorial-shadow relative z-10 w-full object-cover aspect-square"
-                  src="/products/meat-seafood.jpg"
+                  src="/products/meat-seafood.jpg?v=2"
                 />
                 {/* Floating Badge */}
                 <div className="absolute -bottom-8 -left-8 bg-white p-6 editorial-shadow rounded-xl z-20 flex items-center gap-4">
