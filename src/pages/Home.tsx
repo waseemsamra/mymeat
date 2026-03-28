@@ -57,14 +57,23 @@ const Home = () => {
         {/* Our Curated Portfolios Section */}
         <section className="py-24 bg-[#fafaf5]">
           <div className="max-w-7xl mx-auto px-8">
-            <div className="mb-16">
-              <span className="text-[#00450d] font-label font-bold tracking-[0.2em] text-xs mb-2 uppercase block">
-                The Global Selection
-              </span>
-              <h2 className="text-4xl md:text-5xl font-headline font-bold text-on-surface">
-                Our Curated Portfolios
-              </h2>
-              <div className="mt-4 h-1.5 w-24 bg-[#00450d]"></div>
+            <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <span className="text-[#00450d] font-label font-bold tracking-[0.2em] text-xs mb-2 uppercase block">
+                  The Global Selection
+                </span>
+                <h2 className="text-4xl md:text-5xl font-headline font-bold text-on-surface">
+                  Our Curated Portfolios
+                </h2>
+                <div className="mt-4 h-1.5 w-24 bg-[#00450d]"></div>
+              </div>
+              <Link
+                to="/all-products"
+                className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm border-b-2 border-[#1b5e20]/20 hover:border-[#00450d] transition-all pb-1 group"
+              >
+                Explore Full Range
+                <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
