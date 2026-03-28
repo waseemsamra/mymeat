@@ -27,6 +27,7 @@ import CannedGoods from './pages/CannedGoods';
 import NutsFlavors from './pages/NutsFlavors';
 import BakeryProducts from './pages/BakeryProducts';
 import AllProducts from './pages/AllProducts';
+import GlobalLogistics from './pages/GlobalLogistics';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
@@ -90,6 +91,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/quality" element={<Quality />} />
+              <Route path="/logistics" element={<GlobalLogistics />} />
               <Route path="/sourcing" element={<Sourcing />} />
               <Route path="/procurement" element={<ProcurementCenter />} />
               <Route path="/contact" element={<Contact />} />
