@@ -149,14 +149,8 @@ const Navigation = () => {
             Enquire Now
           </Link>
 
-          {/* Admin Login Button */}
-          <Link to="/admin-login" className="hidden md:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
-            <span className="material-symbols-outlined text-sm">admin_panel_settings</span>
-            Admin
-          </Link>
-
           {/* Vendor Login Button */}
-          <Link to="/vendor-login" className="hidden md:flex items-center gap-2 bg-[#00450d] text-white px-4 py-2.5 rounded-md hover:bg-[#1b5e20] transition-all duration-300 font-headline font-semibold text-sm">
+          <Link to="/vendor-login" className="hidden md:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
             <span className="material-symbols-outlined text-sm">storefront</span>
             Partner
           </Link>
