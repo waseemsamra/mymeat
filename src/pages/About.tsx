@@ -14,7 +14,7 @@ const About = () => {
             <img
               alt="Lush agricultural landscape"
               className="w-full h-full object-cover scale-105"
-              src="/products/about-hero.jpg"
+              src="/products/about-banner.png"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/60 to-transparent"></div>
           </div>
