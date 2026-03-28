@@ -13,26 +13,34 @@ const RiceSpices = () => {
           <div className="absolute inset-0 z-0">
             <img
               className="w-full h-full object-cover"
-              src="https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=1920"
+              alt="overhead view of premium white basmati rice and spices"
+              src="/products/rice-hero.jpg"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/80 to-transparent"></div>
           </div>
-          
           <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
             <div className="max-w-2xl">
-              <span className="inline-block px-3 py-1 bg-[#ffdeac] text-[#604100] font-sans text-[0.75rem] uppercase tracking-widest rounded-sm mb-6">Curated Selection</span>
+              <span className="inline-block px-3 py-1 bg-[#ffdeac] text-[#281900] font-label text-[0.75rem] uppercase tracking-widest rounded-sm mb-6">
+                Curated Selection
+              </span>
               <h1 className="font-headline text-5xl md:text-7xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
                 Premium Rice & <br/>Global Spices
               </h1>
-              <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-10 font-sans max-w-lg">
+              <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-10 font-body max-w-lg">
                 Sourcing excellence from heritage farms across the globe. We provide the editorial standard for bulk agricultural imports, ensuring purity, potency, and provenance.
               </p>
               <div className="flex gap-4">
-                <Link to="/products" className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-8 py-4 rounded font-bold transition-all flex items-center gap-2 group">
+                <Link
+                  to="/contact"
+                  className="bg-[#00450d] hover:bg-[#1b5e20] text-white px-8 py-4 rounded-md font-bold transition-all flex items-center gap-2 group"
+                >
                   Explore Catalog
                   <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </Link>
-                <Link to="/about" className="backdrop-blur-md bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 rounded font-bold transition-all">
+                <Link
+                  to="/about"
+                  className="backdrop-blur-md bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 rounded-md font-bold transition-all"
+                >
                   Our Sourcing Story
                 </Link>
               </div>
@@ -46,7 +54,9 @@ const RiceSpices = () => {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
               <div className="max-w-xl">
                 <h2 className="font-headline text-4xl font-bold text-[#00450d] mb-4">Grains of Distinction</h2>
-                <p className="text-[#41493e] leading-relaxed">From the foothills of the Himalayas to the fertile plains of Southeast Asia, our rice varieties are selected for their distinct aromatic profiles and culinary integrity.</p>
+                <p className="text-[#41493e] leading-relaxed">
+                  From the foothills of the Himalayas to the fertile plains of Southeast Asia, our rice varieties are selected for their distinct aromatic profiles and culinary integrity.
+                </p>
               </div>
               <div className="h-px bg-[#c0c9bb] flex-grow mx-8 hidden lg:block mb-4 opacity-30"></div>
             </div>
@@ -57,56 +67,64 @@ const RiceSpices = () => {
                 <div className="h-64 overflow-hidden">
                   <img
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600"
+                    alt="Close up of extra long grain premium basmati rice"
+                    src="/products/rice-basmati-detail.jpg"
                   />
                 </div>
                 <div className="p-8">
                   <h3 className="font-headline text-xl font-bold text-[#00450d] mb-4">Aged Basmati</h3>
                   <div className="space-y-3 mb-8">
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Origin</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Origin</span>
                       <span className="text-[#1a1c19] font-semibold">Punjab Region</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Aroma</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Aroma</span>
                       <span className="text-[#1a1c19] font-semibold">Nutty & Floral</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Length</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Length</span>
                       <span className="text-[#1a1c19] font-semibold">8.4mm +</span>
                     </div>
                   </div>
-                  <Link to="/contact" className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded text-sm">
+                  <Link
+                    to="/contact"
+                    className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded-md text-sm"
+                  >
                     Enquire for Bulk
                   </Link>
                 </div>
               </div>
 
-              {/* Rice Card 2 - Jasmine */}
+              {/* Rice Card 2 - Fragrant Jasmine */}
               <div className="group bg-[#ffffff] rounded-xl overflow-hidden transition-all hover:bg-[#fafaf5]">
                 <div className="h-64 overflow-hidden">
                   <img
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600"
+                    alt="Thai jasmine rice in a wooden bowl"
+                    src="/products/rice-jasmine-detail.jpg"
                   />
                 </div>
                 <div className="p-8">
                   <h3 className="font-headline text-xl font-bold text-[#00450d] mb-4">Fragrant Jasmine</h3>
                   <div className="space-y-3 mb-8">
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Origin</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Origin</span>
                       <span className="text-[#1a1c19] font-semibold">Thailand</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Aroma</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Aroma</span>
                       <span className="text-[#1a1c19] font-semibold">Pandan Leaf</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Length</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Length</span>
                       <span className="text-[#1a1c19] font-semibold">7.2mm</span>
                     </div>
                   </div>
-                  <Link to="/contact" className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded text-sm">
+                  <Link
+                    to="/contact"
+                    className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded-md text-sm"
+                  >
                     Enquire for Bulk
                   </Link>
                 </div>
@@ -117,56 +135,64 @@ const RiceSpices = () => {
                 <div className="h-64 overflow-hidden">
                   <img
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600"
+                    alt="Long grain white rice spilling from a burlap sack"
+                    src="/products/rice-longgrain.jpg"
                   />
                 </div>
                 <div className="p-8">
                   <h3 className="font-headline text-xl font-bold text-[#00450d] mb-4">Long Grain</h3>
                   <div className="space-y-3 mb-8">
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Origin</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Origin</span>
                       <span className="text-[#1a1c19] font-semibold">Vietnam</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Aroma</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Aroma</span>
                       <span className="text-[#1a1c19] font-semibold">Neutral</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Length</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Length</span>
                       <span className="text-[#1a1c19] font-semibold">6.5mm</span>
                     </div>
                   </div>
-                  <Link to="/contact" className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded text-sm">
+                  <Link
+                    to="/contact"
+                    className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded-md text-sm"
+                  >
                     Enquire for Bulk
                   </Link>
                 </div>
               </div>
 
-              {/* Rice Card 4 - Parboiled */}
+              {/* Rice Card 4 - Parboiled Gold */}
               <div className="group bg-[#ffffff] rounded-xl overflow-hidden transition-all hover:bg-[#fafaf5]">
                 <div className="h-64 overflow-hidden">
                   <img
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600"
+                    alt="Parboiled rice grains in a professional display dish"
+                    src="/products/rice-parboiled.jpg"
                   />
                 </div>
                 <div className="p-8">
                   <h3 className="font-headline text-xl font-bold text-[#00450d] mb-4">Parboiled Gold</h3>
                   <div className="space-y-3 mb-8">
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Origin</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Origin</span>
                       <span className="text-[#1a1c19] font-semibold">India / USA</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Aroma</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Aroma</span>
                       <span className="text-[#1a1c19] font-semibold">Earthy</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#41493e] font-sans uppercase tracking-wider">Length</span>
+                      <span className="text-[#41493e] font-label uppercase tracking-wider">Length</span>
                       <span className="text-[#1a1c19] font-semibold">6.8mm</span>
                     </div>
                   </div>
-                  <Link to="/contact" className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded text-sm">
+                  <Link
+                    to="/contact"
+                    className="w-full py-3 border border-[#717a6d]/20 text-[#00450d] font-bold hover:bg-[#00450d] hover:text-white transition-colors rounded-md text-sm"
+                  >
                     Enquire for Bulk
                   </Link>
                 </div>
@@ -175,35 +201,39 @@ const RiceSpices = () => {
           </div>
         </section>
 
-        {/* Spices Section: Bento Grid */}
-        <section className="py-32 bg-[#f4f4ef]" id="spices">
+        {/* Spices Section: Bento Grid Layout */}
+        <section className="py-32 bg-[#f4f4ef]">
           <div className="max-w-7xl mx-auto px-8">
             <div className="text-center mb-20">
-              <span className="text-[#503600] font-sans text-[0.75rem] uppercase tracking-[0.2em] font-bold">The Spice Curators</span>
+              <span className="text-[#503600] font-label text-[0.75rem] uppercase tracking-[0.2em] font-bold">The Spice Curators</span>
               <h2 className="font-headline text-5xl font-bold text-[#00450d] mt-4">Vibrant Aromatics</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-6 grid-rows-2 gap-6 h-auto md:h-[800px]">
               {/* Turmeric */}
-              <div className="md:col-span-3 md:row-span-1 bg-[#eeeee9] rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
+              <div className="md:col-span-3 md:row-span-1 bg-[#f4f4ef] rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
                 <div className="relative z-10">
                   <h3 className="font-headline text-3xl font-bold text-[#00450d] mb-2">Turmeric</h3>
                   <p className="text-[#7a5649] font-medium mb-6">High Curcumin Content</p>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#503600]"></span> Grade: A+ Export
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#503600]"></span>
+                      Grade: A+ Export
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#503600]"></span> Form: Whole Fingers / Powder
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#503600]"></span>
+                      Form: Whole Fingers / Powder
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#503600]"></span> Region: Nizamabad, India
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#503600]"></span>
+                      Region: Nizamabad, India
                     </li>
                   </ul>
                 </div>
                 <img
                   className="absolute right-0 bottom-0 w-1/2 h-full object-cover opacity-80 mix-blend-multiply"
-                  src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600"
+                  alt="Vibrant orange turmeric powder and fresh turmeric roots"
+                  src="/products/turmeric.jpg"
                 />
               </div>
 
@@ -212,7 +242,8 @@ const RiceSpices = () => {
                 <div className="w-1/3 aspect-square rounded-full overflow-hidden border-4 border-[#eeeee9]">
                   <img
                     className="w-full h-full object-cover"
-                    src="https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=400"
+                    alt="Dried cumin seeds close up"
+                    src="/products/cumin.jpg"
                   />
                 </div>
                 <div>
@@ -269,7 +300,8 @@ const RiceSpices = () => {
                 <div className="aspect-square bg-[#eeeee9] rounded-3xl overflow-hidden relative">
                   <img
                     className="w-full h-full object-cover"
-                    src="https://images.unsplash.com/photo-1494412574643-35d324698420?w=800"
+                    alt="modern shipping containers in a tidy port"
+                    src="/products/logistics-port.jpg"
                   />
                   <div className="absolute top-8 right-8 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-lg max-w-[200px]">
                     <span className="material-symbols-outlined text-[#00450d] text-4xl mb-4">thermostat</span>
@@ -288,7 +320,9 @@ const RiceSpices = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg text-[#00450d] mb-2">Export Grade Quality</h4>
-                      <p className="text-[#41493e] leading-relaxed text-sm">Every batch of rice and spice undergoes rigorous multi-point testing for pesticide residues and moisture content in ISO-certified labs.</p>
+                      <p className="text-[#41493e] leading-relaxed text-sm">
+                        Every batch of rice and spice undergoes rigorous multi-point testing for pesticide residues and moisture content in ISO-certified labs.
+                      </p>
                     </div>
                   </div>
 
@@ -298,7 +332,9 @@ const RiceSpices = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg text-[#00450d] mb-2">Global Logistics Status</h4>
-                      <p className="text-[#41493e] leading-relaxed text-sm">Real-time tracking and optimized routing ensure your bulk cargo maintains its freshness from the warehouse to your port of entry.</p>
+                      <p className="text-[#41493e] leading-relaxed text-sm">
+                        Real-time tracking and optimized routing ensure your bulk cargo maintains its freshness from the warehouse to your port of entry.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -312,16 +348,24 @@ const RiceSpices = () => {
           <div className="max-w-7xl mx-auto px-8">
             <div className="bg-[#1b5e20] rounded-[2rem] p-12 md:p-20 text-center relative overflow-hidden">
               <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+                <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px'}}></div>
               </div>
               <div className="relative z-10 max-w-2xl mx-auto">
                 <h2 className="font-headline text-4xl md:text-5xl font-bold text-white mb-6">Scale Your Supply Chain</h2>
-                <p className="text-[#90d689] text-lg mb-10">Partner with AgroFeed for reliable, high-volume sourcing of the world's finest rice and spices. Request our current inventory and specification sheets.</p>
+                <p className="text-[#90d689] text-lg mb-10">
+                  Partner with The Global Agrarian for reliable, high-volume sourcing of the world's finest rice and spices. Request our current inventory and specification sheets.
+                </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Link to="/contact" className="bg-white text-[#00450d] px-10 py-5 rounded font-bold hover:bg-[#fafaf5] transition-all">
+                  <Link
+                    to="/contact"
+                    className="bg-white text-[#00450d] px-10 py-5 rounded-md font-bold hover:bg-[#fafaf5] transition-all"
+                  >
                     Request Wholesale Catalog
                   </Link>
-                  <Link to="/contact" className="bg-transparent text-white border border-white/30 px-10 py-5 rounded font-bold hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                  <Link
+                    to="/contact"
+                    className="bg-transparent text-white border border-white/30 px-10 py-5 rounded-md font-bold hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                  >
                     Contact Export Desk
                     <span className="material-symbols-outlined">mail</span>
                   </Link>
@@ -332,25 +376,7 @@ const RiceSpices = () => {
         </section>
       </main>
 
-
       <Footer />
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@300;400;500;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-        
-        .font-headline {
-          font-family: 'Manrope', sans-serif;
-        }
-        
-        .font-body, .font-sans {
-          font-family: 'Inter', sans-serif;
-        }
-        
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-      `}</style>
     </div>
   );
 };
