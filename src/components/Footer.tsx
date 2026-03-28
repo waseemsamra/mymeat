@@ -51,7 +51,7 @@ const Footer = () => {
           <h4 className="text-white font-medium mb-6">Resources</h4>
           <ul className="space-y-4">
             <li>
-              <Link to="#" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
+              <Link to="/trade-policy" className="text-stone-400 hover:text-white transition-colors hover:underline decoration-[#91d78a] underline-offset-4">
                 Trade Terms
               </Link>
             </li>
