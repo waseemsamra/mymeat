@@ -2,52 +2,51 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
-// Hardcoded product data with local images from /public/products folder
-// Version v2 - cache busting
+// Hardcoded product data with ORIGINAL Google image URLs from the design
 const allProductsData = {
-  version: "1.0.1",
+  version: "2.0.0",
   lastUpdated: "2026-03-28T00:00:00Z",
   categories: [
     {
       id: "rice-spices",
       name: "Rice & Spices",
       description: "Sourcing long-grain Basmati, Jasmine, and rare heritage spices directly from cooperatives across South Asia and the Mediterranean.",
-      image: "/products/rice-spices.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBdN0SrBKiupRypRIjULnr7H-SblA_rxRpkWjC_nd6WnOQ_Y1Kegti5vM-i7R2YP0NU1G_Yw3q5TRtFBhWS3vAzZ1gJ8TFF3C7k77o4uUSU_R9VT7AuaPUHkpOSoC-lasT3iLQR3mqIXkcbdqh2em1QYKtwNvJy5svomarJfACANGKFwDlTn5txrR_KMFY5tgWk9M3B1rZVJiEBgvmVPoLqDFy7q5p7FCZhjXc7dZwcdMZct_cNnC159F6Djb09YJ0b3vUUMlStbtNC",
       link: "/products/rice-spices"
     },
     {
       id: "fruits-vegetables",
       name: "Fruits & Vegetables",
       description: "Seasonal harvests and year-round staples maintained through precision temperature-controlled logistics from farm gate to port.",
-      image: "/products/fruits-vegetables.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAo0d70kTv10KQt4lGcoHkg3m2EkjRh3lDH-uZVXS7D-jF-uIc61UgSArYkqZGDHLPf-54vbF7tmh1Zk63JiSeyujbUoH3jyey-6i_fwchdbnTW8gFZL97LMll03PHCGP11MBzRUQR52PMA3aeupJOdbDb2vwU_pxhBhvfHTx9iMXFbP8-eN8MEOvVILhQ7hms467DyLQs5iGO27U6lvlGbd6uUlOcWA6We4pJbnNSP-VBPiYkJKCZlRxtk8lSuXTAs9WXxbAxOBkCS",
       link: "/products/fruits-vegetables"
     },
     {
       id: "nuts-flavors",
       name: "Nuts & Flavors",
       description: "High-yield almonds, cashews, and botanical extracts tailored for large-scale food manufacturing and gourmet retail bulk buy.",
-      image: "/products/nuts-flavors.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCrwzR-leSSvZX3CG_UZPHYNBSBm2pBWQR2fr8OcAjMiVLo5zSYdXTGzww2hL6ntc83Je96R9136KXNd4GHoi7oIH1iIqXV10HVxa2TJSwOwGToRmqilidN1En3iC66nYHEE3Tu7fKQllPt_rjQIo11e7xqh0ztMQ8D4dZc0tM8VFMMYI6S5Hstu6-qVL1ztGGtliv6ktTZdKxeJ6r4np02GT8QI9tVSfI7uJtlTbesIDe6VL6mvpYfvgZ6R_Y4kyLp9osRw65lNEy8",
       link: "/products/nuts-flavors"
     },
     {
       id: "canned-goods",
       name: "Canned Foods",
       description: "Advanced preservation techniques that lock in peak-season nutrition for long-haul stability and inventory resilience.",
-      image: "/products/canned-goods.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCDQvufqxhkWwWvekOXLrmkvNSHYfHTCz12rrNHeP5rEmQSL5z5_wqjyBlOtN8gY2HTnIy_dz2B0-JLiBxtjoy8ZncA9W5AyB4YK2WbwypxS9XRTGp96hcVwv15RWNLfignZ6SMTcZPe-4LqOa2PuB9gT7NHeOMqCexQ-dqsi1fndpj98cRcJY7mo_BApEKA2Zq5Tm7Ut4G1MzkrrN9kKXQ6Scb80nY6c2lH4zAqFfLzMEfXHfGnvhrOvg23c9uktwfBisY7X8PnrXU",
       link: "/products/canned-goods"
     },
     {
       id: "meat-seafood",
       name: "Meat & Seafood",
       description: "Sustainably sourced protein from certified ethical producers, adhering to rigorous cold-chain protocols for global export.",
-      image: "/products/meat-seafood.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAHXzUno08u0qCj7T_7touDJQjikNhc-JwvzRBo8XtCWSNHx1_ekh3Hap57tB_hG1Z-IK8w_L7QTuP37kYScdpAkywxFcY48EXhQv2rJUmmvdCV43kutpWxYNjcBvACJHtTmfNzBhR1aJ7qsGAvP-HIZ-OnL4mhuzTzdjuuhZW2278oIOxO9_SB7U0mS1o53ZUE9_Dtf3RsRBeFwN8wGSNC1fTNRFJlclCr9dmj6GgyvUaKmkx--vXMbs6uAXz6RF-8ZDOyOKP_UkrK",
       link: "/products/meat-seafood"
     },
     {
       id: "bakery-products",
       name: "Bakery Products",
       description: "Par-baked and artisanal grain solutions designed for high-volume hospitality and international distribution networks.",
-      image: "/products/bakery-products.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCPEDhPFux9IdR308wElrMdG7RzhTEy9eVzMFwxL89shvlI3Xz0K2eazE7_HxUOs9dqkufvi6xTtLAJn2TZVqw68wu7CG-UAuqQUEkTPTygIEGyre7z_fbXK2-r4xJy_znUcbIHyTKKRsmgJfTi8KoR5BRRQfP0kKS_YIHorRZqcjo8TQD2g3CPoZ5fZLd9ZFm39EW4_lcHRmBkh4faytlLzIFA-RnT9Gqb61aodWuJ14Si8OJy9B4Y-GjvJEDe_eASmZhhJs3CA7xi",
       link: "/products/bakery"
     }
   ],
@@ -56,21 +55,21 @@ const allProductsData = {
       id: "alphonso-mango",
       name: "Alphonso Mangoes",
       description: "Ratnagiri's finest, hand-picked for peak sweetness and fiber-less texture.",
-      image: "/products/alphonso-mango.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAWGy4rNk35uVp4ByzXQ6FYqgeXgnpD1RQSdzh_XUrIfA2JnPXQNscUhWvrZ1hZ6YkKAg0j6lh3bg_YHnaovElNncSvP-4R6RzRllhWV1SSbT9opWx0gqaNaom0cGlfvwR88qW7TXkhJnEfkkfGPMGIyiB3a4hkseN4C_sq7x0RaiVXu5resOHaXcoscb5iPlv5mgYaySKbbSz5Pp4bbM17dZaQRXUU9XT3Kfed9ak4Jld7CS-qBrM0AIBlUByv7OPdh3AGrM6uKpDQ",
       origin: "India"
     },
     {
       id: "saffron",
       name: "Spanish Saffron",
       description: "Grade 1 Aromatic saffron threads from the fields of La Mancha, Spain.",
-      image: "/products/saffron.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBmDcaLCxc4GvWaW6W9Ygu2bnsf0X81bTtj57tNwUIai9sh5a3cxLnH-4y1Ss-JXJCdaVzCM7_0N2NUsPNiyUz2n31Hx7V6TX05yi9tbukewFcrWm5XQKCE-PSYOvrBove7SvO8Lxmf-MDu2uraaWGYTaY_SANYe4XLA2hIGDmxZsXGREwXQT_5nB0LnqLvkv88JBjVEEe7HyBUQOTw3HJ56V7lpnkTXjh1FiGUT9MZ5jtPiAcA5Ik7Di2PR-k-w1-NgPKghDtoJ3vh",
       origin: "Spain"
     },
     {
       id: "wagyu",
       name: "Wagyu Ribeye",
       description: "Japanese A5 certified Ribeye with exquisite marbling and buttery texture.",
-      image: "/products/wagyu.jpg?v=2",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAv8wLG5n83MafNaQ7RnhZigp_Ia0ohewGVvERCBY2vQ51VnbP36v-UlkwU4iPHc-1r8zSte2QGuUo3BIjelG6R8JtMUmh121UOz7qnSf8dxqrtYUFKYh0oDXSwUODCHYVZoPIecMudNav5ZB8mvBKQBJUNMazUh775eUqgTaQRUXAZHsEPVqmzygXgNmAM6vmEJsYmo6lCquOaZgNh8vr7DsiH85sh6QuiJoQstXeoZa7w3CVvcocCbqVSNmR3fSjmmuKCcxHEy4a1",
       origin: "Japan"
     }
   ]
@@ -117,7 +116,7 @@ const AllProducts = () => {
                 <img
                   alt="Premium fresh organic vegetables"
                   className="w-full h-full object-cover"
-                  src="/products/fruits-vegetables.jpg?v=2"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsQ9qjbVQCFrmAjjWrtWEI_G27QrCmF-hBBscXeIavEeZ6t-mmoR09a4E96AsorZk9txMpSEmAkVDDJXENBINFWkDzTWCz2B_z98DbWii4xuTKdsATdtYBz_W1Xz4prpL8f_IUmDIBA1wNMWOfq9LI1H3X5jZ90th55BW0txZ8Id3g4DpcEU-ah1H_jcZIZUmSxYrM2_RxnEFOeETJZ4h051yzbx9et5GTJzO65w9MFpTZLxiyMHZOQ5EqZBTaP6Ujs4NU55xvs8ut"
                 />
               </div>
               <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#fdcdbc] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
@@ -289,7 +288,7 @@ const AllProducts = () => {
                 <img
                   alt="Shipping containers port"
                   className="rounded-2xl editorial-shadow relative z-10 w-full object-cover aspect-square"
-                  src="/products/meat-seafood.jpg?v=2"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfukKl_yTavSVb4YSpBGSBBzv7NuhTj35K_3bNqNQw3Zbr2zAbkxFjgo8tAtf1V6otPNlQqnReSsQm_YiIUDOXRE5mkJoSWXDxJFu1NiUr6URP9kUK5MlESjy2I-Em36NVPVpjp_2HMdhUtPKV6ezUpXJXUQh3zS_CRtbytE9GEbSVf_02xyRXQc8g8j5G2mcb5_7LvrdZFglOFRLfNGbfjHkIhrmdy5hCEHpo95ymSZIF2BCvoj7B1EqtOBCtiSwyQV5x1_-vwOB2"
                 />
                 {/* Floating Badge */}
                 <div className="absolute -bottom-8 -left-8 bg-white p-6 editorial-shadow rounded-xl z-20 flex items-center gap-4">
