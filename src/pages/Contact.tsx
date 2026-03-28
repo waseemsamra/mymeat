@@ -155,7 +155,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-sans text-xs uppercase tracking-widest text-[#717a6d] mb-1">Phone</div>
-                        <div className="font-headline font-bold text-[#1a1c19]">+31 10 123 4567</div>
+                        <div className="font-headline font-bold text-[#1a1c19]">+971 54 786 2225</div>
                       </div>
                     </div>
 
@@ -165,7 +165,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-sans text-xs uppercase tracking-widest text-[#717a6d] mb-1">Email</div>
-                        <div className="font-headline font-bold text-[#1a1c19]">trade@agrofeed.global</div>
+                        <div className="font-headline font-bold text-[#1a1c19]">info@gluflink.co</div>
                       </div>
                     </div>
 
