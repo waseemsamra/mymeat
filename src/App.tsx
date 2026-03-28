@@ -26,6 +26,7 @@ import FruitsVegetables from './pages/FruitsVegetables';
 import CannedGoods from './pages/CannedGoods';
 import NutsFlavors from './pages/NutsFlavors';
 import BakeryProducts from './pages/BakeryProducts';
+import AllProducts from './pages/AllProducts';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
@@ -77,6 +78,7 @@ function App() {
               <Route path="/products/canned-goods" element={<CannedGoods />} />
               <Route path="/products/nuts-flavors" element={<NutsFlavors />} />
               <Route path="/products/bakery" element={<BakeryProducts />} />
+              <Route path="/all-products" element={<AllProducts />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/categories/:categoryId" element={
                 <>

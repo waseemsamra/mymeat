@@ -275,7 +275,16 @@ const Home = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-8">
               <h2 className="font-headline text-4xl md:text-5xl font-bold tracking-tight text-[#00450d]">The Portfolios</h2>
-              <p className="max-w-md text-[#41493e] leading-relaxed">Six distinct categories, sourced with surgical precision from the world's most fertile regions.</p>
+              <div className="flex flex-col items-start gap-4">
+                <p className="max-w-md text-[#41493e] leading-relaxed">Six distinct categories, sourced with surgical precision from the world's most fertile regions.</p>
+                <Link
+                  to="/all-products"
+                  className="inline-flex items-center gap-2 bg-[#00450d] text-white px-6 py-3 rounded-md font-semibold text-sm hover:bg-[#1b5e20] transition-all group"
+                >
+                  View All Products
+                  <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </Link>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
               {/* Render portfolios from API - show first 4 active items */}

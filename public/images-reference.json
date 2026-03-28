@@ -1,0 +1,35 @@
+{
+  "description": "Product images reference - using Unsplash URLs for hardcoded data",
+  "images": {
+    "categoryImages": {
+      "riceSpices": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
+      "fruitsVegetables": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800",
+      "nutsFlavors": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
+      "cannedGoods": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
+      "meatSeafood": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
+      "bakeryProducts": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800"
+    },
+    "productImages": {
+      "basmati": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600",
+      "jasmine": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600",
+      "saffron": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "blackPepper": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "alphonsoMango": "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
+      "kishuMandarin": "https://images.unsplash.com/photo-1582979512210-99b6a53385f9?w=600",
+      "babyCorn": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "almonds": "https://images.unsplash.com/photo-1508061253366-f7da158b6d49?w=600",
+      "cashews": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "pistachios": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "cannedTomatoes": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "cannedCorn": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "cannedMushrooms": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "wagyu": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "salmon": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "lamb": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "sourdough": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "croissants": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
+      "ciabatta": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600"
+    }
+  },
+  "note": "Images are loaded from Unsplash URLs. For production, download and host locally in /public folder."
+}
