@@ -6,176 +6,234 @@ const Quality = () => {
   return (
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
       <Navigation />
-      
+
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="relative h-[870px] flex items-center overflow-hidden">
+        <section className="relative h-[819px] flex items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
-              alt="Quality Control Laboratory"
               className="w-full h-full object-cover"
-              src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=1920"
+              alt="clean high-tech laboratory setting"
+              src="/products/quality-hero.jpg"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1a1c19]/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00450d]/90 to-[#00450d]/40"></div>
           </div>
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
-            <div className="max-w-3xl">
-              <span className="text-[#ffdeac] uppercase tracking-[0.2em] font-bold text-xs mb-4 block">Quality Assurance</span>
-              <h1 className="text-white font-headline font-extrabold text-5xl md:text-7xl leading-[1.1] mb-8 tracking-tighter">
-                Uncompromising Quality: From <span className="text-[#acf4a4]">Farm to Port</span>
+          <div className="container mx-auto px-8 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="max-w-2xl">
+              <span className="inline-block px-3 py-1 bg-[#ffdeac] text-[#281900] text-[0.7rem] font-bold tracking-widest uppercase mb-6 rounded-sm">
+                Verification Excellence
+              </span>
+              <h1 className="font-headline text-5xl md:text-7xl font-extrabold text-white leading-[1.1] tracking-tight mb-8">
+                Uncompromising Standards: Global Food Safety & Compliance
               </h1>
-              <p className="text-white/80 text-xl max-w-xl leading-relaxed font-light mb-10">
-                Every shipment undergoes rigorous multi-point inspection to ensure it meets the highest international standards for safety, freshness, and excellence.
+              <p className="text-lg md:text-xl text-white/90 font-light leading-relaxed max-w-xl">
+                Our commitment to quality is the cornerstone of our global export operations, ensuring every shipment meets the world's most rigorous health and safety requirements.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/contact" className="bg-[#00450d] text-white px-8 py-4 rounded font-bold text-lg hover:bg-[#1b5e20] transition-all">
-                  Request Quality Report
-                </Link>
-                <Link to="/services" className="border border-white/30 text-white backdrop-blur-sm px-8 py-4 rounded font-bold text-lg hover:bg-white/10 transition-all">
-                  View Certifications
-                </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust Signals */}
+        <section className="py-12 bg-[#f4f4ef]">
+          <div className="container mx-auto px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div className="flex flex-col items-center">
+                <span className="text-4xl font-headline font-bold text-[#00450d] mb-2">100%</span>
+                <span className="text-xs font-label uppercase tracking-widest text-[#41493e] font-semibold">Export Compliance Rate</span>
+              </div>
+              <div className="flex flex-col items-center border-x-0 md:border-x border-[#c0c9bb]/30">
+                <span className="text-4xl font-headline font-bold text-[#00450d] mb-2">Zero</span>
+                <span className="text-xs font-label uppercase tracking-widest text-[#41493e] font-semibold">Batch Rejections in 2023</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-4xl font-headline font-bold text-[#00450d] mb-2">45+</span>
+                <span className="text-xs font-label uppercase tracking-widest text-[#41493e] font-semibold">Verified Jurisdictions</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quality Promise Section */}
-        <section className="py-32 bg-[#fafaf5]">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="max-w-3xl mb-16">
-              <span className="text-[#00450d] font-sans font-bold uppercase tracking-widest text-xs mb-4 block">Our Commitment</span>
-              <h2 className="font-headline font-extrabold text-4xl text-[#1a1c19] mb-6">The Quality Promise</h2>
-              <p className="text-[#41493e] text-lg leading-relaxed">
-                Quality is not an afterthought—it's woven into every step of our supply chain. From the moment a crop is identified for harvest to the final container seal, we maintain an unbroken chain of quality assurance.
-              </p>
+        {/* Global Certifications Grid */}
+        <section className="py-24 bg-[#fafaf5]">
+          <div className="container mx-auto px-8">
+            <div className="mb-16">
+              <h2 className="font-headline text-3xl font-bold text-[#1a1c19] tracking-tight mb-4">Global Certifications</h2>
+              <div className="w-12 h-1 bg-[#00450d]"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-[#ffffff] p-8 rounded-xl editorial-shadow">
-                <span className="material-symbols-outlined w-6 h-6">verified_user</span>
-                <h3 className="font-headline font-bold text-xl mb-4">100% Traceability</h3>
-                <p className="text-[#41493e] text-sm leading-relaxed">Every batch is tracked from origin farm through final delivery with complete documentation and chain of custody records.</p>
-              </div>
-
-              <div className="bg-[#ffffff] p-8 rounded-xl editorial-shadow">
-                <span className="material-symbols-outlined w-6 h-6">security</span>
-                <h3 className="font-headline font-bold text-xl mb-4">Zero Compromise</h3>
-                <p className="text-[#41493e] text-sm leading-relaxed">We reject any shipment that doesn't meet our stringent quality parameters, ensuring only excellence reaches your facility.</p>
-              </div>
-
-              <div className="bg-[#ffffff] p-8 rounded-xl editorial-shadow">
-                <span className="material-symbols-outlined w-6 h-6">workspace_premium</span>
-                <h3 className="font-headline font-bold text-xl mb-4">Certified Excellence</h3>
-                <p className="text-[#41493e] text-sm leading-relaxed">Our partners hold internationally recognized certifications including Global GAP, BRCGS, HACCP, and ISO 22000.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Multi-Point Inspection Process */}
-        <section className="py-32 bg-[#f4f4ef]">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-20">
-              <span className="text-[#00450d] font-sans font-bold uppercase tracking-widest text-xs mb-4 block">Inspection Protocol</span>
-              <h2 className="font-headline font-extrabold text-4xl text-[#1a1c19] mb-6">Multi-Point Quality Inspection</h2>
-              <p className="text-[#41493e] text-lg max-w-2xl mx-auto">
-                Our five-stage inspection process ensures every product meets specifications before, during, and after transit.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-              {[
-                {
-                  icon: "fact_check",
-                  step: '01',
-                  title: 'Pre-Harvest',
-                  description: 'Soil analysis, crop health assessment, and maturity testing at origin farms.'
-                },
-                {
-                  icon: "microscope",
-                  step: '02',
-                  title: 'Laboratory Testing',
-                  description: 'Comprehensive lab analysis for pesticides, heavy metals, and microbial content.'
-                },
-                {
-                  icon: "check_circle",
-                  step: '03',
-                  title: 'Pre-Shipment',
-                  description: 'Final visual inspection, packaging integrity check, and temperature verification.'
-                },
-                {
-                  icon: "local_shipping",
-                  step: '04',
-                  title: 'In-Transit',
-                  description: 'Real-time monitoring of temperature, humidity, and ethylene levels during transit.'
-                },
-                {
-                  icon: "workspace_premium",
-                  step: '05',
-                  title: 'Destination Audit',
-                  description: 'Final quality verification upon arrival with comprehensive documentation handover.'
-                }
-              ].map((stage) => (
-                <div key={stage.step} className="bg-[#ffffff] p-6 rounded-xl editorial-shadow text-center relative group hover:bg-[#fafaf5] transition-all">
-                  <div className="text-[6rem] font-black text-[#1a1c19]/5 absolute -top-8 -left-4 pointer-events-none">{stage.step}</div>
-                  <div className="relative z-10">
-                    <div className="bg-[#00450d]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#00450d] transition-colors">
-                      <span className="material-symbols-outlined w-8 h-8">{stage.icon}</span>
-                    </div>
-                    <h3 className="font-headline font-bold text-lg mb-2">{stage.title}</h3>
-                    <p className="text-[#41493e] text-sm leading-relaxed">{stage.description}</p>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* HACCP */}
+              <div className="bg-[#ffffff] p-8 group hover:bg-[#fafaf5] transition-all duration-300">
+                <div className="w-16 h-16 bg-[#eeeee9] mb-6 flex items-center justify-center rounded-lg">
+                  <span className="material-symbols-outlined text-3xl text-[#00450d]">verified_user</span>
                 </div>
-              ))}
+                <h3 className="font-headline text-xl font-bold text-[#1a1c19] mb-3">HACCP</h3>
+                <p className="text-[#41493e] text-sm leading-relaxed mb-6">
+                  Hazard Analysis Critical Control Point (HACCP) is an internationally recognized method of identifying and managing food safety related risk.
+                </p>
+                <span className="text-[0.65rem] font-bold text-[#00450d] uppercase tracking-tighter">Status: Active Renewal</span>
+              </div>
+
+              {/* ISO 22000 */}
+              <div className="bg-[#ffffff] p-8 group hover:bg-[#fafaf5] transition-all duration-300">
+                <div className="w-16 h-16 bg-[#eeeee9] mb-6 flex items-center justify-center rounded-lg">
+                  <span className="material-symbols-outlined text-3xl text-[#00450d]">gavel</span>
+                </div>
+                <h3 className="font-headline text-xl font-bold text-[#1a1c19] mb-3">ISO 22000</h3>
+                <p className="text-[#41493e] text-sm leading-relaxed mb-6">
+                  International standard that specifies requirements for a food safety management system where an organization in the food chain needs to demonstrate its ability.
+                </p>
+                <span className="text-[0.65rem] font-bold text-[#00450d] uppercase tracking-tighter">Global Gold Standard</span>
+              </div>
+
+              {/* Global GAP */}
+              <div className="bg-[#ffffff] p-8 group hover:bg-[#fafaf5] transition-all duration-300">
+                <div className="w-16 h-16 bg-[#eeeee9] mb-6 flex items-center justify-center rounded-lg">
+                  <span className="material-symbols-outlined text-3xl text-[#00450d]">public</span>
+                </div>
+                <h3 className="font-headline text-xl font-bold text-[#1a1c19] mb-3">Global GAP</h3>
+                <p className="text-[#41493e] text-sm leading-relaxed mb-6">
+                  Good Agricultural Practices ensuring that food is grown with the highest standards of safety, sustainability, and worker welfare.
+                </p>
+                <span className="text-[0.65rem] font-bold text-[#00450d] uppercase tracking-tighter">Verified Farm Network</span>
+              </div>
+
+              {/* BRCGS */}
+              <div className="bg-[#ffffff] p-8 group hover:bg-[#fafaf5] transition-all duration-300">
+                <div className="w-16 h-16 bg-[#eeeee9] mb-6 flex items-center justify-center rounded-lg">
+                  <span className="material-symbols-outlined text-3xl text-[#00450d]">security</span>
+                </div>
+                <h3 className="font-headline text-xl font-bold text-[#1a1c19] mb-3">BRCGS</h3>
+                <p className="text-[#41493e] text-sm leading-relaxed mb-6">
+                  Brand Reputation through Compliance Global Standard (BRCGS) provides a framework to manage product safety, integrity, and quality.
+                </p>
+                <span className="text-[0.65rem] font-bold text-[#00450d] uppercase tracking-tighter">Supply Chain Security</span>
+              </div>
+
+              {/* MSC */}
+              <div className="bg-[#ffffff] p-8 group hover:bg-[#fafaf5] transition-all duration-300">
+                <div className="w-16 h-16 bg-[#eeeee9] mb-6 flex items-center justify-center rounded-lg">
+                  <span className="material-symbols-outlined text-3xl text-[#00450d]">water_drop</span>
+                </div>
+                <h3 className="font-headline text-xl font-bold text-[#1a1c19] mb-3">MSC</h3>
+                <p className="text-[#41493e] text-sm leading-relaxed mb-6">
+                  The Marine Stewardship Council (MSC) fishery standard measures the sustainability of wild-capture fisheries.
+                </p>
+                <span className="text-[0.65rem] font-bold text-[#00450d] uppercase tracking-tighter">Aquatic Excellence</span>
+              </div>
+
+              {/* Halal/Kosher */}
+              <div className="bg-[#ffffff] p-8 group hover:bg-[#fafaf5] transition-all duration-300">
+                <div className="w-16 h-16 bg-[#eeeee9] mb-6 flex items-center justify-center rounded-lg">
+                  <span className="material-symbols-outlined text-3xl text-[#00450d]">star</span>
+                </div>
+                <h3 className="font-headline text-xl font-bold text-[#1a1c19] mb-3">Halal/Kosher</h3>
+                <p className="text-[#41493e] text-sm leading-relaxed mb-6">
+                  Adherence to religious dietary laws, including source inspection and specialized handling protocols for global markets.
+                </p>
+                <span className="text-[0.65rem] font-bold text-[#00450d] uppercase tracking-tighter">Religious Compliance</span>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Certifications Section */}
-        <section className="py-32 bg-[#fafaf5]">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="flex flex-col md:flex-row gap-16 items-center">
-              <div className="w-full md:w-1/2">
+        {/* The Traceability Protocol (Visual Timeline) */}
+        <section className="py-24 bg-[#f4f4ef] overflow-hidden">
+          <div className="container mx-auto px-8 relative">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+              <div className="max-w-2xl">
+                <h2 className="font-headline text-4xl font-bold text-[#1a1c19] tracking-tight mb-6">The Traceability Protocol</h2>
+                <p className="text-[#41493e] text-lg">
+                  Our 'Seed to Shelf' tracking system provides absolute visibility across every node of the supply chain.
+                </p>
+              </div>
+              <div className="hidden lg:block">
                 <img
-                  alt="Quality Certifications"
-                  className="rounded-xl shadow-2xl"
-                  src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=800"
+                  className="w-64 h-40 object-cover rounded-lg rotate-3 shadow-xl"
+                  alt="industrial logistics warehouse"
+                  src="/products/quality-warehouse.jpg"
                 />
               </div>
-              <div className="w-full md:w-1/2">
-                <span className="text-[#00450d] font-sans font-bold uppercase tracking-widest text-xs mb-4 block">Global Standards</span>
-                <h2 className="font-headline font-extrabold text-4xl text-[#1a1c19] mb-8">Internationally Recognized Certifications</h2>
-                <p className="text-[#41493e] text-lg mb-12 leading-relaxed">
-                  Our commitment to excellence is backed by internationally recognized certifications that validate our processes, facilities, and products.
-                </p>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-[#1b5e20] p-3 rounded-lg">
-                      <span className="material-symbols-outlined w-12 h-12">language</span>
-                    </div>
-                    <div>
-                      <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">Global GAP Certified</h4>
-                      <p className="text-[#41493e] text-sm">Good Agricultural Practices certification ensuring safe and sustainable agricultural production.</p>
-                    </div>
+            </div>
+
+            <div className="relative mt-20">
+              {/* Progress Line */}
+              <div className="absolute top-0 left-8 md:left-1/2 bottom-0 w-0.5 bg-[#c0c9bb]/30 -translate-x-1/2 hidden md:block"></div>
+
+              <div className="space-y-24">
+                {/* Step 1 */}
+                <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                  <div className="md:text-right">
+                    <span className="inline-block px-3 py-1 bg-[#00450d]/10 text-[#00450d] text-[0.65rem] font-bold uppercase tracking-widest mb-4">Phase 01</span>
+                    <h4 className="font-headline text-2xl font-bold text-[#1a1c19] mb-4">Farm-Level Audits</h4>
+                    <p className="text-[#41493e] leading-relaxed">
+                      Regular unannounced inspections at our source farms ensure cultivation practices meet GAP and sustainability requirements before harvest.
+                    </p>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="bg-[#1b5e20] p-3 rounded-lg">
-                      <span className="material-symbols-outlined w-6 h-6">security</span>
-                    </div>
-                    <div>
-                      <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">BRCGS Food Safety</h4>
-                      <p className="text-[#41493e] text-sm">British Retail Consortium Global Standards for food safety and quality management.</p>
-                    </div>
+                  <div className="relative">
+                    <div className="absolute top-1/2 left-[-3rem] md:left-[-3.25rem] w-6 h-6 bg-[#00450d] rounded-full z-10 border-4 border-[#f4f4ef] hidden md:block"></div>
+                    <img
+                      className="w-full h-64 object-cover rounded-xl shadow-lg"
+                      alt="aerial view of vast green cultivated farm fields"
+                      src="/products/quality-farm.jpg"
+                    />
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="bg-[#1b5e20] p-3 rounded-lg">
-                      <span className="material-symbols-outlined w-6 h-6">fact_check</span>
-                    </div>
-                    <div>
-                      <h4 className="font-headline font-bold text-lg text-[#00450d] mb-2">HACCP Certified</h4>
-                      <p className="text-[#41493e] text-sm">Hazard Analysis Critical Control Point certification for food safety management.</p>
-                    </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                  <div className="order-2 md:order-1 relative">
+                    <div className="absolute top-1/2 right-[-3rem] md:right-[-3.25rem] w-6 h-6 bg-[#00450d] rounded-full z-10 border-4 border-[#f4f4ef] hidden md:block"></div>
+                    <img
+                      className="w-full h-64 object-cover rounded-xl shadow-lg"
+                      alt="close up of a modern digital temperature monitoring device"
+                      src="/products/quality-monitoring.jpg"
+                    />
+                  </div>
+                  <div className="order-1 md:order-2">
+                    <span className="inline-block px-3 py-1 bg-[#00450d]/10 text-[#00450d] text-[0.65rem] font-bold uppercase tracking-widest mb-4">Phase 02</span>
+                    <h4 className="font-headline text-2xl font-bold text-[#1a1c19] mb-4">In-Transit Cold-Chain Monitoring</h4>
+                    <p className="text-[#41493e] leading-relaxed">
+                      Real-time IoT sensors monitor temperature, humidity, and atmospheric conditions to maintain produce integrity during every mile of the journey.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                  <div className="md:text-right">
+                    <span className="inline-block px-3 py-1 bg-[#00450d]/10 text-[#00450d] text-[0.65rem] font-bold uppercase tracking-widest mb-4">Phase 03</span>
+                    <h4 className="font-headline text-2xl font-bold text-[#1a1c19] mb-4">Batch Testing & Lab Analysis</h4>
+                    <p className="text-[#41493e] leading-relaxed">
+                      Representative samples from every batch undergo chemical, microbial, and sensory analysis in certified laboratories before consolidation.
+                    </p>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute top-1/2 left-[-3rem] md:left-[-3.25rem] w-6 h-6 bg-[#00450d] rounded-full z-10 border-4 border-[#f4f4ef] hidden md:block"></div>
+                    <img
+                      className="w-full h-64 object-cover rounded-xl shadow-lg"
+                      alt="scientific professional in protective gear working with produce samples"
+                      src="/products/quality-lab.jpg"
+                    />
+                  </div>
+                </div>
+
+                {/* Step 4 */}
+                <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                  <div className="order-2 md:order-1 relative">
+                    <div className="absolute top-1/2 right-[-3rem] md:right-[-3.25rem] w-6 h-6 bg-[#00450d] rounded-full z-10 border-4 border-[#f4f4ef] hidden md:block"></div>
+                    <img
+                      className="w-full h-64 object-cover rounded-xl shadow-lg"
+                      alt="stamped official documents and certifications"
+                      src="/products/quality-documents.jpg"
+                    />
+                  </div>
+                  <div className="order-1 md:order-2">
+                    <span className="inline-block px-3 py-1 bg-[#00450d]/10 text-[#00450d] text-[0.65rem] font-bold uppercase tracking-widest mb-4">Phase 04</span>
+                    <h4 className="font-headline text-2xl font-bold text-[#1a1c19] mb-4">Final Export Clearance</h4>
+                    <p className="text-[#41493e] leading-relaxed">
+                      A final documentation review by our compliance desk ensures phytosanitary certificates and customs declarations are 100% accurate.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -183,78 +241,61 @@ const Quality = () => {
           </div>
         </section>
 
-        {/* Quality Metrics Section */}
-        <section className="py-32 bg-[#2f312e] text-white">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-20">
-              <h2 className="font-headline font-extrabold text-4xl mb-6">Quality Performance Metrics</h2>
-              <p className="text-stone-400 text-lg max-w-2xl mx-auto">
-                Our commitment to excellence is measured and tracked across every shipment. Here's how we perform.
-              </p>
-            </div>
+        {/* Third-Party Verification */}
+        <section className="py-24 bg-[#fafaf5] overflow-hidden">
+          <div className="container mx-auto px-8">
+            <div className="bg-[#1b5e20] text-white p-12 md:p-20 rounded-xl relative overflow-hidden flex flex-col md:flex-row gap-12 items-center">
+              <div className="absolute top-0 right-0 w-1/3 h-full bg-white/5 -skew-x-12 transform translate-x-20"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {[
-                {
-                  icon: "trending_up",
-                  metric: '99.7%',
-                  label: 'Quality Acceptance Rate',
-                  description: 'Shipments meeting all quality specifications'
-                },
-                {
-                  icon: "schedule",
-                  metric: '<24h',
-                  label: 'Lab Testing Turnaround',
-                  description: 'Average time from sample to results'
-                },
-                {
-                  icon: "check_circle",
-                  metric: '100%',
-                  label: 'Traceability Coverage',
-                  description: 'Complete farm-to-port documentation'
-                },
-                {
-                  icon: "workspace_premium",
-                  metric: '15+',
-                  label: 'Years Excellence',
-                  description: 'Continuous quality improvement journey'
-                }
-              ].map((stat) => (
-                <div key={stat.label} className="bg-stone-800/50 p-8 rounded-2xl border border-stone-700 text-center">
-                  <span className="material-symbols-outlined text-[#ffba38] w-12 h-12 mb-6 mx-auto">{stat.icon}</span>
-                  <div className="text-4xl font-black text-white mb-2">{stat.metric}</div>
-                  <div className="text-[#91d78a] font-bold text-sm uppercase tracking-widest mb-2">{stat.label}</div>
-                  <p className="text-stone-400 text-sm">{stat.description}</p>
+              <div className="relative z-10 md:w-2/3">
+                <h2 className="font-headline text-3xl md:text-4xl font-bold mb-6">Unbiased Third-Party Verification</h2>
+                <p className="text-white/80 text-lg leading-relaxed mb-8">
+                  We partner with independent global leaders in testing, inspection, and certification. Our collaboration with laboratories like <span className="text-white font-bold">SGS</span> and <span className="text-white font-bold italic">Eurofins</span> ensures that our quality reports are unbiased, scientific, and globally accepted.
+                </p>
+                <div className="flex flex-wrap gap-12 opacity-60 grayscale brightness-200">
+                  <div className="text-2xl font-bold">SGS</div>
+                  <div className="text-2xl font-bold italic">eurofins</div>
+                  <div className="text-2xl font-bold tracking-tighter">INTERTEK</div>
                 </div>
-              ))}
+              </div>
+
+              <div className="md:w-1/3 relative z-10">
+                <div className="bg-white/10 glass-effect p-8 border border-white/20 rounded-lg">
+                  <span className="material-symbols-outlined text-4xl mb-4">policy</span>
+                  <h4 className="font-headline font-bold text-xl mb-2">Transparency Protocol</h4>
+                  <p className="text-sm text-white/70">
+                    Access live third-party audit reports via our client portal at any stage of the shipping process.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Quality Assurance CTA */}
-        <section className="py-32 bg-[#fafaf5]">
-          <div className="max-w-5xl mx-auto px-8">
-            <div className="bg-[#00450d] rounded-[2rem] p-16 relative overflow-hidden text-center">
-              <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="grid grid-cols-12 gap-4 h-full">
-                  {[...Array(12)].map((_, i) => (
-                    <div key={i} className="border-r border-white"></div>
-                  ))}
-                </div>
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-white mb-8">Ready to Experience Quality Excellence?</h2>
-                <p className="text-[#90d689] text-xl mb-12 max-w-2xl mx-auto">
-                  Partner with us and benefit from our uncompromising commitment to quality at every stage of your supply chain.
+        {/* Compliance Pack CTA */}
+        <section className="py-24 bg-[#f4f4ef]">
+          <div className="container mx-auto px-8">
+            <div className="max-w-4xl mx-auto bg-white border border-[#c0c9bb]/30 p-12 md:p-16 flex flex-col md:flex-row items-center justify-between gap-12">
+              <div className="text-center md:text-left">
+                <h2 className="font-headline text-3xl font-bold text-[#1a1c19] mb-4">Request our Full Compliance Portfolio</h2>
+                <p className="text-[#41493e] max-w-md">
+                  Detailed certifications, laboratory protocols, and region-specific compliance documentation ready for your review.
                 </p>
-                <div className="flex flex-col md:flex-row gap-6 justify-center">
-                  <Link to="/contact" className="bg-[#ffdeac] text-white px-12 py-5 rounded font-headline font-extrabold text-lg hover:bg-[#ffba38] transition-all shadow-xl">
-                    Request Quality Documentation
-                  </Link>
-                  <Link to="/contact" className="bg-transparent border-2 border-white/30 text-white px-12 py-5 rounded font-headline font-extrabold text-lg hover:bg-white/10 transition-all">
-                    Schedule Facility Audit
-                  </Link>
-                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  to="/contact"
+                  className="bg-[#00450d] text-white px-8 py-4 rounded-md font-bold text-sm tracking-wide transition-all transform hover:scale-105 active:scale-95 shadow-md flex items-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-lg">download</span>
+                  Download PDF Pack
+                </Link>
+                <Link
+                  to="/contact"
+                  className="bg-transparent border border-[#00450d] text-[#00450d] px-8 py-4 rounded-md font-bold text-sm tracking-wide transition-all hover:bg-[#00450d]/5"
+                >
+                  Enquire for Documentation
+                </Link>
               </div>
             </div>
           </div>
@@ -262,27 +303,6 @@ const Quality = () => {
       </main>
 
       <Footer />
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-        
-        .font-headline {
-          font-family: 'Manrope', sans-serif;
-        }
-        
-        .font-body, .font-sans {
-          font-family: 'Inter', sans-serif;
-        }
-        
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .editorial-shadow {
-          box-shadow: 0 20px 40px rgba(26, 28, 25, 0.06);
-        }
-      `}</style>
     </div>
   );
 };
