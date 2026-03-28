@@ -1,35 +1,47 @@
 {
-  "description": "Product images reference - using Unsplash URLs for hardcoded data",
-  "images": {
-    "categoryImages": {
-      "riceSpices": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      "fruitsVegetables": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800",
-      "nutsFlavors": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      "cannedGoods": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      "meatSeafood": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      "bakeryProducts": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800"
+  "description": "Product images reference - Local images stored in /public/products folder",
+  "lastUpdated": "2026-03-28",
+  "categoryImages": {
+    "riceSpices": "/products/rice-spices.jpg",
+    "fruitsVegetables": "/products/fruits-vegetables.jpg",
+    "nutsFlavors": "/products/nuts-flavors.jpg",
+    "cannedGoods": "/products/canned-goods.jpg",
+    "meatSeafood": "/products/meat-seafood.jpg",
+    "bakeryProducts": "/products/bakery-products.jpg"
+  },
+  "productImages": {
+    "riceSpices": {
+      "basmati": "/products/rice-basmati.jpg",
+      "jasmine": "/products/rice-jasmine.jpg",
+      "saffron": "/products/saffron.jpg",
+      "blackPepper": "/products/black-pepper.jpg"
     },
-    "productImages": {
-      "basmati": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600",
-      "jasmine": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600",
-      "saffron": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "blackPepper": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "alphonsoMango": "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
-      "kishuMandarin": "https://images.unsplash.com/photo-1582979512210-99b6a53385f9?w=600",
-      "babyCorn": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "almonds": "https://images.unsplash.com/photo-1508061253366-f7da158b6d49?w=600",
-      "cashews": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "pistachios": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "cannedTomatoes": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "cannedCorn": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "cannedMushrooms": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "wagyu": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "salmon": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "lamb": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "sourdough": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "croissants": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-      "ciabatta": "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600"
+    "fruitsVegetables": {
+      "alphonsoMango": "/products/alphonso-mango.jpg",
+      "kishuMandarin": "/products/kishu-mandarin.jpg",
+      "babyCorn": "/products/baby-corn.jpg"
+    },
+    "nutsFlavors": {
+      "almonds": "/products/almonds.jpg",
+      "cashews": "/products/cashews.jpg",
+      "pistachios": "/products/pistachios.jpg"
+    },
+    "cannedGoods": {
+      "cannedTomatoes": "/products/canned-tomatoes.jpg",
+      "cannedCorn": "/products/canned-corn.jpg",
+      "cannedMushrooms": "/products/canned-mushrooms.jpg"
+    },
+    "meatSeafood": {
+      "wagyu": "/products/wagyu.jpg",
+      "salmon": "/products/salmon.jpg",
+      "lamb": "/products/lamb.jpg"
+    },
+    "bakeryProducts": {
+      "sourdough": "/products/sourdough.jpg",
+      "croissants": "/products/croissants.jpg",
+      "ciabatta": "/products/ciabatta.jpg"
     }
   },
-  "note": "Images are loaded from Unsplash URLs. For production, download and host locally in /public folder."
+  "totalImages": 25,
+  "note": "All images are stored locally in /public/products folder. Update data/all-products.json and src/pages/AllProducts.tsx when adding new images."
 }

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 
-// Hardcoded product data - in production this would come from an API or database
+// Hardcoded product data with local images from /public/products folder
 const allProductsData = {
   version: "1.0.0",
   lastUpdated: "2026-03-28T00:00:00Z",
@@ -11,315 +11,66 @@ const allProductsData = {
       id: "rice-spices",
       name: "Rice & Spices",
       description: "Sourcing long-grain Basmati, Jasmine, and rare heritage spices directly from cooperatives across South Asia and the Mediterranean.",
-      image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      products: [
-        {
-          id: "aged-basmati",
-          name: "Aged Basmati Rice",
-          origin: "Punjab Region, India",
-          description: "Premium 2-year aged Basmati with exceptional grain length and aromatic profile",
-          image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600",
-          specifications: {
-            grainLength: "8.4mm+",
-            aroma: "Nutty & Floral",
-            aging: "24 months"
-          },
-          moq: "10 MT",
-          packaging: "25kg/50kg bags"
-        },
-        {
-          id: "jasmine-rice",
-          name: "Thai Jasmine Rice",
-          origin: "Thailand",
-          description: "Fragrant Hom Mali rice with soft texture and subtle pandan aroma",
-          image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600",
-          specifications: {
-            grainLength: "7.2mm",
-            aroma: "Pandan & Floral",
-            type: "Hom Mali 105"
-          },
-          moq: "15 MT",
-          packaging: "5kg/10kg/25kg bags"
-        },
-        {
-          id: "saffron",
-          name: "Spanish Saffron Grade 1",
-          origin: "La Mancha, Spain",
-          description: "Premium Grade 1 saffron threads with intense color and aroma",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "Category I",
-            color: "250+ ISO",
-            aroma: "Safranal >30"
-          },
-          moq: "5 kg",
-          packaging: "100g/500g sealed"
-        },
-        {
-          id: "black-pepper",
-          name: "Tellicherry Black Pepper",
-          origin: "Kerala, India",
-          description: "Large grade black pepper with bold flavor and citrus notes",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "Tellicherry Garbled",
-            size: "4.5mm+",
-            astacol: "400+"
-          },
-          moq: "5 MT",
-          packaging: "25kg jute bags"
-        }
-      ]
+      image: "/products/rice-spices.jpg",
+      link: "/products/rice-spices"
     },
     {
       id: "fruits-vegetables",
       name: "Fruits & Vegetables",
       description: "Seasonal harvests and year-round staples maintained through precision temperature-controlled logistics from farm gate to port.",
-      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800",
-      products: [
-        {
-          id: "alphonso-mango",
-          name: "Alphonso Mangoes",
-          origin: "Ratnagiri, India",
-          description: "Hand-picked premium Alphonso with fiber-less texture and rich sweetness",
-          image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
-          specifications: {
-            variety: "Hapus/Alphonso",
-            season: "April-June",
-            brix: "18-22%"
-          },
-          moq: "5 MT",
-          packaging: "4-layer corrugated boxes"
-        },
-        {
-          id: "kishu-mandarin",
-          name: "Kishu Mandarin Oranges",
-          origin: "Ehime, Japan",
-          description: "Seedless, easy-peel citrus with exceptional sweetness",
-          image: "https://images.unsplash.com/photo-1582979512210-99b6a53385f9?w=600",
-          specifications: {
-            variety: "Kishu",
-            size: "S-M",
-            brix: "12-14%"
-          },
-          moq: "3 MT",
-          packaging: "5kg cartons"
-        },
-        {
-          id: "baby-corn",
-          name: "Fresh Baby Corn",
-          origin: "Thailand",
-          description: "Tender baby corn harvested at peak freshness for premium markets",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            length: "6-8cm",
-            grade: "Class I",
-            coldChain: "Required"
-          },
-          moq: "2 MT",
-          packaging: "5kg vacuum packs"
-        }
-      ]
+      image: "/products/fruits-vegetables.jpg",
+      link: "/products/fruits-vegetables"
     },
     {
       id: "nuts-flavors",
       name: "Nuts & Flavors",
       description: "High-yield almonds, cashews, and botanical extracts tailored for large-scale food manufacturing and gourmet retail bulk buy.",
-      image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      products: [
-        {
-          id: "california-almonds",
-          name: "California Almonds",
-          origin: "California, USA",
-          description: "Premium Nonpareil almonds with uniform size and clean taste",
-          image: "https://images.unsplash.com/photo-1508061253366-f7da158b6d49?w=600",
-          specifications: {
-            variety: "Nonpareil",
-            size: "23-25 count/oz",
-            grade: "Extra No. 1"
-          },
-          moq: "10 MT",
-          packaging: "25lb vacuum bags"
-        },
-        {
-          id: "vietnam-cashews",
-          name: "Vietnam Cashews W320",
-          origin: "Dong Nai, Vietnam",
-          description: "Whole white cashews with crisp texture and buttery flavor",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "W320",
-            type: "Whole White",
-            moisture: "<5%"
-          },
-          moq: "5 MT",
-          packaging: "25kg nitrogen flush"
-        },
-        {
-          id: "pistachios",
-          name: "Iranian Pistachios",
-          origin: "Kerman, Iran",
-          description: "Naturally opened Akbari pistachios with rich flavor",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            variety: "Akbari",
-            size: "28-30 count/oz",
-            openShell: "98%+"
-          },
-          moq: "5 MT",
-          packaging: "10kg vacuum bags"
-        }
-      ]
+      image: "/products/nuts-flavors.jpg",
+      link: "/products/nuts-flavors"
     },
     {
       id: "canned-goods",
       name: "Canned Foods",
       description: "Advanced preservation techniques that lock in peak-season nutrition for long-haul stability and inventory resilience.",
-      image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      products: [
-        {
-          id: "canned-tomatoes",
-          name: "Italian San Marzano Tomatoes",
-          origin: "Campania, Italy",
-          description: "DOP certified whole peeled tomatoes in rich juice",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            variety: "San Marzano DOP",
-            brix: "4.5-5.5",
-            ph: "4.2-4.4"
-          },
-          moq: "1000 cartons",
-          packaging: "400g/800g cans"
-        },
-        {
-          id: "canned-corn",
-          name: "Sweet Corn Kernels",
-          origin: "Thailand",
-          description: "Premium sweet corn in brine, harvested at peak ripeness",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "Class A",
-            brix: "14-16%",
-            color: "Golden Yellow"
-          },
-          moq: "500 cartons",
-          packaging: "425g/3kg cans"
-        },
-        {
-          id: "canned-mushrooms",
-          name: "Button Mushrooms",
-          origin: "China",
-          description: "Whole button mushrooms in brine, firm texture",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "Whole A",
-            size: "22-28mm",
-            ph: "3.8-4.2"
-          },
-          moq: "500 cartons",
-          packaging: "400g/3kg cans"
-        }
-      ]
+      image: "/products/canned-goods.jpg",
+      link: "/products/canned-goods"
     },
     {
       id: "meat-seafood",
       name: "Meat & Seafood",
       description: "Sustainably sourced protein from certified ethical producers, adhering to rigorous cold-chain protocols for global export.",
-      image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      products: [
-        {
-          id: "wagyu-ribeye",
-          name: "Japanese A5 Wagyu Ribeye",
-          origin: "Miyazaki, Japan",
-          description: "Premium A5 certified ribeye with exceptional marbling",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "A5 BMS 10-12",
-            cut: "Ribeye Roll",
-            aging: "28 days"
-          },
-          moq: "100 kg",
-          packaging: "Vacuum sealed, frozen"
-        },
-        {
-          id: "atlantic-salmon",
-          name: "Norwegian Atlantic Salmon",
-          origin: "Norway",
-          description: "Fresh ASC certified salmon fillets, premium grade",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            grade: "Superior",
-            fat: "16-18%",
-            certification: "ASC"
-          },
-          moq: "500 kg",
-          packaging: "MAP fresh, iced"
-        },
-        {
-          id: "lamb-carcass",
-          name: "New Zealand Lamb Carcass",
-          origin: "New Zealand",
-          description: "Grass-fed lamb carcass, Halal certified",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            weight: "16-20kg",
-            grade: "Prime",
-            certification: "Halal"
-          },
-          moq: "50 carcasses",
-          packaging: "Frozen whole"
-        }
-      ]
+      image: "/products/meat-seafood.jpg",
+      link: "/products/meat-seafood"
     },
     {
       id: "bakery-products",
       name: "Bakery Products",
       description: "Par-baked and artisanal grain solutions designed for high-volume hospitality and international distribution networks.",
-      image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=800",
-      products: [
-        {
-          id: "sourdough-loaf",
-          name: "Artisan Sourdough Loaves",
-          origin: "France",
-          description: "Traditional long-fermentation sourdough, par-baked",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            weight: "500g",
-            fermentation: "48 hours",
-            shelfLife: "12 months frozen"
-          },
-          moq: "2000 units",
-          packaging: "Individually wrapped"
-        },
-        {
-          id: "croissants",
-          name: "French Butter Croissants",
-          origin: "France",
-          description: "Pure butter croissants, ready-to-bake frozen",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            butter: "AOP Charentes",
-            layers: "27 folds",
-            weight: "65g"
-          },
-          moq: "5000 units",
-          packaging: "Tray packed frozen"
-        },
-        {
-          id: "ciabatta",
-          name: "Italian Ciabatta Rolls",
-          origin: "Italy",
-          description: "Authentic high-hydration ciabatta with open crumb",
-          image: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?w=600",
-          specifications: {
-            hydration: "80%",
-            weight: "80g",
-            type: "Par-baked"
-          },
-          moq: "3000 units",
-          packaging: "Bulk frozen"
-        }
-      ]
+      image: "/products/bakery-products.jpg",
+      link: "/products/bakery"
+    }
+  ],
+  newArrivals: [
+    {
+      id: "alphonso-mango",
+      name: "Alphonso Mangoes",
+      description: "Ratnagiri's finest, hand-picked for peak sweetness and fiber-less texture.",
+      image: "/products/alphonso-mango.jpg",
+      origin: "India"
+    },
+    {
+      id: "saffron",
+      name: "Spanish Saffron",
+      description: "Grade 1 Aromatic saffron threads from the fields of La Mancha, Spain.",
+      image: "/products/saffron.jpg",
+      origin: "Spain"
+    },
+    {
+      id: "wagyu",
+      name: "Wagyu Ribeye",
+      description: "Japanese A5 certified Ribeye with exquisite marbling and buttery texture.",
+      image: "/products/wagyu.jpg",
+      origin: "Japan"
     }
   ]
 };
@@ -329,135 +80,262 @@ const AllProducts = () => {
     <div className="bg-[#fafaf5] min-h-screen font-sans antialiased">
       <Navigation />
 
-      <main className="pt-20">
+      <main className="pt-24">
         {/* Hero Section */}
-        <section className="bg-[#00450d] py-20">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="max-w-3xl">
-              <span className="inline-block px-3 py-1 bg-[#ffdeac] text-[#604100] font-sans text-[0.75rem] uppercase tracking-widest rounded-sm mb-6">
-                Complete Portfolio
+        <section className="relative px-8 py-20 lg:py-32 overflow-hidden bg-[#fafaf5]">
+          <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 z-10">
+              <span className="inline-block px-3 py-1 bg-[#ffdeac] text-[#281900] text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-6">
+                Curated Global Supply
               </span>
-              <h1 className="font-headline text-4xl md:text-6xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
-                All Products
+              <h1 className="font-headline font-extrabold text-5xl lg:text-7xl text-[#00450d] leading-[1.1] tracking-tight mb-8">
+                The Harvest of Nations, <br/>
+                <span className="text-[#7a5649]">Orchestrated for Scale.</span>
               </h1>
-              <p className="text-white/90 text-lg leading-relaxed max-w-2xl">
-                Explore our complete range of premium agricultural commodities, sourced from the world's most fertile regions with uncompromising traceability.
+              <p className="text-lg lg:text-xl text-[#41493e] max-w-2xl leading-relaxed mb-10">
+                Bridging the gap between artisanal heritage and industrial demand. We curate the world's most resilient supply chains to deliver premium fresh food commodities with uncompromising traceability and B2B precision.
               </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/contact"
+                  className="px-8 py-4 bg-[#00450d] text-white rounded-md font-semibold text-lg hover:bg-[#1b5e20] transition-all flex items-center gap-2 group"
+                >
+                  Initiate Bulk Inquiry
+                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </Link>
+                <Link
+                  to="/about"
+                  className="px-8 py-4 bg-transparent border border-[#c0c9bb] text-[#00450d] rounded-md font-semibold text-lg hover:bg-[#f4f4ef] transition-all"
+                >
+                  Download Full Portfolio
+                </Link>
+              </div>
+            </div>
+            <div className="lg:col-span-5 relative">
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden editorial-shadow relative z-10 scale-105">
+                <img
+                  alt="Premium fresh organic vegetables"
+                  className="w-full h-full object-cover"
+                  src="/products/fruits-vegetables.jpg"
+                />
+              </div>
+              <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#fdcdbc] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+              <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#acf4a4] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
             </div>
           </div>
         </section>
 
-        {/* Products by Category */}
-        {allProductsData.categories.map((category, categoryIndex) => (
-          <section key={category.id} className={`py-20 ${categoryIndex % 2 === 0 ? 'bg-[#fafaf5]' : 'bg-[#eeeee9]'}`}>
-            <div className="max-w-7xl mx-auto px-8">
-              {/* Category Header */}
-              <div className="mb-12">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="h-1 w-12 bg-[#00450d]"></div>
-                  <h2 className="font-headline text-3xl font-bold text-[#00450d]">{category.name}</h2>
-                </div>
-                <p className="text-[#41493e] text-lg max-w-3xl">{category.description}</p>
-              </div>
-
-              {/* Products Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {category.products.map((product) => (
-                  <div
-                    key={product.id}
-                    className="bg-white rounded-xl overflow-hidden editorial-shadow group hover:shadow-2xl transition-all duration-300"
-                  >
-                    {/* Product Image */}
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-[#00450d] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                          Bulk Available
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="p-6">
-                      <h3 className="font-headline text-xl font-bold text-[#00450d] mb-2">
-                        {product.name}
-                      </h3>
-                      <p className="text-[#41493e] text-sm mb-4 line-clamp-2">
-                        {product.description}
-                      </p>
-
-                      {/* Origin Badge */}
-                      <div className="flex items-center gap-2 mb-4">
-                        <span className="material-symbols-outlined text-[#00450d] text-sm">public</span>
-                        <span className="text-sm text-[#41493e]">{product.origin}</span>
-                      </div>
-
-                      {/* Specifications */}
-                      <div className="border-t border-[#c0c9bb] pt-4 mb-4">
-                        <div className="space-y-2">
-                          {Object.entries(product.specifications).map(([key, value]) => (
-                            <div key={key} className="flex justify-between text-sm">
-                              <span className="text-[#41493e] capitalize">{key}</span>
-                              <span className="text-[#1a1c19] font-semibold">{value}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* MOQ & Packaging */}
-                      <div className="flex justify-between text-xs text-[#41493e] mb-4">
-                        <div>
-                          <span className="font-semibold">MOQ:</span> {product.moq}
-                        </div>
-                        <div className="text-right">
-                          <span className="font-semibold">Packaging:</span> {product.packaging}
-                        </div>
-                      </div>
-
-                      {/* Action Button */}
-                      <Link
-                        to="/contact"
-                        className="w-full py-3 bg-[#00450d] text-white rounded font-semibold text-sm hover:bg-[#1b5e20] transition-colors flex items-center justify-center gap-2"
-                      >
-                        Enquire for Bulk
-                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                      </Link>
+        {/* New Arrivals Section */}
+        <section className="px-8 py-20 bg-[#fafaf5]">
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="mb-12">
+              <h2 className="font-headline text-3xl lg:text-4xl font-extrabold text-[#00450d] mb-2 tracking-tight">New Arrivals</h2>
+              <div className="h-1 w-20 bg-[#7a5649] rounded-full"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {allProductsData.newArrivals.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-[#ffffff] rounded-xl overflow-hidden editorial-shadow group"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      src={product.image}
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-[#7a5649] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                        New
+                      </span>
                     </div>
                   </div>
-                ))}
+                  <div className="p-6">
+                    <h3 className="font-headline text-xl font-bold text-[#00450d] mb-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-[#41493e] text-sm mb-6">
+                      {product.description}
+                    </p>
+                    <Link
+                      to="/contact"
+                      className="w-full py-3 bg-[#00450d] text-white rounded font-semibold text-sm hover:bg-[#1b5e20] transition-colors"
+                    >
+                      Enquire for Bulk
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Category Grid Section */}
+        <section className="px-8 py-20 bg-[#eeeee9]">
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+              <div className="max-w-2xl">
+                <h2 className="font-headline text-3xl lg:text-4xl font-extrabold text-[#00450d] mb-4 tracking-tight">
+                  Our Curated Portfolios
+                </h2>
+                <p className="text-[#41493e] text-lg">
+                  Explore our six core commodity pillars, each managed by dedicated procurement specialists and verified for international B2B standards.
+                </p>
               </div>
             </div>
-          </section>
-        ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {allProductsData.categories.map((category) => (
+                <div
+                  key={category.id}
+                  className="group relative overflow-hidden bg-[#ffffff] rounded-xl p-8 transition-all hover:bg-[#fafaf5] duration-500"
+                >
+                  <div className="aspect-video mb-8 overflow-hidden rounded-lg">
+                    <img
+                      alt={category.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      src={category.image}
+                    />
+                  </div>
+                  <h3 className="font-headline text-2xl font-bold text-[#00450d] mb-3">
+                    {category.name}
+                  </h3>
+                  <p className="text-[#41493e] mb-6 leading-relaxed">
+                    {category.description}
+                  </p>
+                  <Link
+                    to={category.link || "/products"}
+                    className="inline-flex items-center text-[#00450d] font-bold uppercase text-xs tracking-widest hover:gap-3 transition-all"
+                  >
+                    Explore Category
+                    <span className="material-symbols-outlined ml-2 text-sm">trending_flat</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        {/* CTA Section */}
-        <section className="py-20 bg-[#1b5e20]">
-          <div className="max-w-7xl mx-auto px-8 text-center">
-            <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-white mb-6">
-              Need a Custom Sourcing Solution?
+        {/* Value Propositions Section */}
+        <section className="px-8 py-24 bg-[#fafaf5] overflow-hidden relative">
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+              <div>
+                <h2 className="font-headline text-4xl font-extrabold text-[#00450d] mb-12 leading-tight">
+                  The Infrastructure <br/>
+                  <span className="text-[#7a5649]">of Quality.</span>
+                </h2>
+                <div className="space-y-12">
+                  {/* Pillar 1 */}
+                  <div className="flex gap-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#1b5e20] rounded-lg flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#acf4a4]">verified</span>
+                    </div>
+                    <div>
+                      <h4 className="font-headline text-xl font-bold text-[#00450d] mb-2">
+                        Global Compliance
+                      </h4>
+                      <p className="text-[#41493e]">
+                        Every shipment is backed by HACCP and GAP certifications, ensuring full adherence to international phytosanitary standards.
+                      </p>
+                    </div>
+                  </div>
+                  {/* Pillar 2 */}
+                  <div className="flex gap-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#1b5e20] rounded-lg flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#acf4a4]">ac_unit</span>
+                    </div>
+                    <div>
+                      <h4 className="font-headline text-xl font-bold text-[#00450d] mb-2">
+                        Cold-Chain Mastery
+                      </h4>
+                      <p className="text-[#41493e]">
+                        Real-time IoT tracking for every container. Maintain the harvest's vital temperature from field to warehouse.
+                      </p>
+                    </div>
+                  </div>
+                  {/* Pillar 3 */}
+                  <div className="flex gap-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#1b5e20] rounded-lg flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#acf4a4]">inventory_2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-headline text-xl font-bold text-[#00450d] mb-2">
+                        Bulk Precision
+                      </h4>
+                      <p className="text-[#41493e]">
+                        Scalable procurement structures designed for enterprise-level demands without compromising on artisanal quality.
+                      </p>
+                    </div>
+                  </div>
+                  {/* Pillar 4 */}
+                  <div className="flex gap-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#1b5e20] rounded-lg flex items-center justify-center">
+                      <span className="material-symbols-outlined text-[#acf4a4]">history_edu</span>
+                    </div>
+                    <div>
+                      <h4 className="font-headline text-xl font-bold text-[#00450d] mb-2">
+                        Seed-to-Shelf Traceability
+                      </h4>
+                      <p className="text-[#41493e]">
+                        Digital documentation for every batch, providing total transparency on origin, harvest date, and logistics milestones.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="relative hidden lg:block">
+                <div className="absolute inset-0 bg-[#1b5e20]/5 -rotate-3 rounded-2xl"></div>
+                <img
+                  alt="Shipping containers port"
+                  className="rounded-2xl editorial-shadow relative z-10 w-full object-cover aspect-square"
+                  src="/products/meat-seafood.jpg"
+                />
+                {/* Floating Badge */}
+                <div className="absolute -bottom-8 -left-8 bg-white p-6 editorial-shadow rounded-xl z-20 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-[#ffdeac] flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#503600]">public</span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#41493e]">
+                      Global Logistics Status
+                    </p>
+                    <p className="font-headline font-bold text-[#00450d]">
+                      Active: 142 Ports Reachable
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Engagement Section */}
+        <section className="px-8 py-20 bg-[#1b5e20] relative">
+          <div className="max-w-screen-2xl mx-auto text-center relative z-10">
+            <h2 className="font-headline text-4xl md:text-5xl font-extrabold text-[#ffffff] mb-6 tracking-tight">
+              Ready to Scale Your Sourcing?
             </h2>
-            <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8">
-              Our procurement specialists can architect a supply chain tailored to your specific volume and quality requirements.
+            <p className="text-[#002203] text-xl max-w-2xl mx-auto mb-12 opacity-90">
+              Our procurement specialists are ready to architect a supply solution tailored to your volume and quality requirements.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link
                 to="/contact"
-                className="px-8 py-4 bg-white text-[#00450d] rounded-md font-bold text-lg hover:bg-[#fafaf5] transition-all editorial-shadow"
+                className="w-full sm:w-auto px-10 py-5 bg-white text-[#00450d] rounded-md font-bold text-lg hover:bg-[#fafaf5] transition-all editorial-shadow active:scale-95"
               >
-                Request Custom Quote
+                Initiate Bulk Inquiry
               </Link>
               <Link
                 to="/procurement"
-                className="px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-md font-bold text-lg hover:bg-white/10 transition-all"
+                className="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-[#00450d]/20 text-white rounded-md font-bold text-lg hover:bg-[#00450d]/10 transition-all active:scale-95"
               >
-                Learn About Procurement
+                Request Custom Quote
               </Link>
             </div>
           </div>
+          {/* Organic shape background elements */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00450d]/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#acf4a4]/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
         </section>
       </main>
 
