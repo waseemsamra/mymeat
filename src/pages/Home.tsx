@@ -443,7 +443,7 @@ const Home = () => {
                   <img
                     alt="Nuts"
                     className="w-full h-full object-cover rounded-xl"
-                    src="/products/home-nuts-flavors.jpg"
+                    src="/products/home-nuts-hero.jpg"
                   />
                 </div>
               </div>
