@@ -105,7 +105,7 @@ const Navigation = () => {
             {/* Dropdown Menu */}
             <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
               <div className="py-2">
-                <Link to="/services" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
+                <Link to="/logistics" className="block px-4 py-2 text-sm text-stone-700 hover:bg-[#f4f4ef] hover:text-[#00450d] transition-colors">
                   <span className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#00450d]"></span>
                     Global Logistics
