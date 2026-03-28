@@ -28,6 +28,7 @@ import NutsFlavors from './pages/NutsFlavors';
 import BakeryProducts from './pages/BakeryProducts';
 import AllProducts from './pages/AllProducts';
 import GlobalLogistics from './pages/GlobalLogistics';
+import VendorLogin from './pages/VendorLogin';
 import NewAdminDashboard from './pages/NewAdminDashboard';
 import './App.css';
 
@@ -94,6 +95,7 @@ function App() {
               <Route path="/logistics" element={<GlobalLogistics />} />
               <Route path="/sourcing" element={<Sourcing />} />
               <Route path="/procurement" element={<ProcurementCenter />} />
+              <Route path="/vendor-login" element={<VendorLogin />} />
               <Route path="/contact" element={<Contact />} />
 
               {/* Admin route - NewAdminDashboard handles auth internally */}

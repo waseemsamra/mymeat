@@ -154,6 +154,12 @@ const Navigation = () => {
             <span className="material-symbols-outlined text-sm">admin_panel_settings</span>
             Admin
           </Link>
+
+          {/* Vendor Login Button */}
+          <Link to="/vendor-login" className="hidden md:flex items-center gap-2 bg-[#00450d] text-white px-4 py-2.5 rounded-md hover:bg-[#1b5e20] transition-all duration-300 font-headline font-semibold text-sm">
+            <span className="material-symbols-outlined text-sm">storefront</span>
+            Partner
+          </Link>
         </div>
       </div>
 
