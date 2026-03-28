@@ -96,6 +96,7 @@ function App() {
               <Route path="/logistics" element={<GlobalLogistics />} />
               <Route path="/sourcing" element={<Sourcing />} />
               <Route path="/procurement" element={<ProcurementCenter />} />
+              <Route path="/trade-policy" element={<TradePolicy />} />
               <Route path="/vendor-login" element={<VendorLogin />} />
               <Route path="/contact" element={<Contact />} />
 
