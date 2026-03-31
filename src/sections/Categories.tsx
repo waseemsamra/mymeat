@@ -181,7 +181,7 @@ const CategoriesSection = () => {
             Shop by <span className="text-gradient">Category</span>
           </h2>
           <p className="categories-subtitle text-gray-600 text-lg">
-            Browse our premium animal feed products organized by category
+            Browse our premium food products organized by category
             for easy navigation and selection.
           </p>
         </div>

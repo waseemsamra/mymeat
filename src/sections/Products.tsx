@@ -210,7 +210,7 @@ const Products = () => {
             Explore Our <span className="text-gradient">Product Range</span>
           </h2>
           <p className="products-subtitle text-gray-600 text-lg">
-            Discover our comprehensive selection of premium animal feed products,
+            Discover our comprehensive selection of premium food products,
             carefully crafted to meet the nutritional needs of your livestock.
           </p>
         </div>

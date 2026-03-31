@@ -38,7 +38,7 @@ const DEFAULT_ADMIN: StoredUser = {
 const DEFAULT_CMS_DATA = {
   hero: {
     badge: 'Premium Quality Feed',
-    title: 'Premium Animal Feed Products',
+    title: 'Premium Food Products',
     subtitle: 'High-quality hay, alfalfa, straw, and grain products for your livestock needs.',
     primaryButtonText: 'Explore Products',
     secondaryButtonText: 'Contact Us',
@@ -47,7 +47,7 @@ const DEFAULT_CMS_DATA = {
   about: {
     badge: 'About Us',
     title: 'Why Choose Our Products?',
-    subtitle: 'We provide the highest quality animal feed products sourced from sustainable farms.',
+    subtitle: 'We provide the highest quality food products sourced from sustainable farms.',
     features: [
       {
         id: '1',

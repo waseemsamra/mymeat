@@ -11,7 +11,7 @@ const Hero = () => {
   // Static data - always shows
   const heroData = {
     badge: 'Premium Quality Feed',
-    title: 'Premium Animal Feed Products',
+    title: 'Top Food Supplier in UAE and Globally',
     subtitle: 'High-quality hay, alfalfa, straw, and grain products for your livestock needs.',
     primaryButtonText: 'Explore Products',
     secondaryButtonText: 'Contact Us',

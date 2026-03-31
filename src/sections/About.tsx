@@ -13,7 +13,7 @@ const About = () => {
   const aboutData = {
     badge: 'About Us',
     title: 'Why Choose Our Products?',
-    subtitle: 'We provide the highest quality animal feed products sourced from sustainable farms.',
+    subtitle: 'We provide the highest quality food products sourced from sustainable farms.',
     features: [
       { icon: Sprout, title: 'Sustainable Farming', description: 'Eco-friendly practices that protect the environment.', image: '/about-sustainable.jpg' },
       { icon: Award, title: 'Premium Quality', description: 'Rigorous quality control ensures highest grade nutrients.', image: '/about-quality.jpg' },

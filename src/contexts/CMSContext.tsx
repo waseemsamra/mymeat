@@ -75,7 +75,7 @@ const CMSContext = createContext<CMSContextType | undefined>(undefined);
 const defaultCMSData: CMSData = {
   hero: {
     badge: 'Premium Quality Feed',
-    title: 'Premium Animal Feed Products',
+    title: 'Premium Food Products',
     subtitle: 'High-quality hay, alfalfa, straw, and grain products for your livestock needs.',
     primaryButtonText: 'Explore Products',
     secondaryButtonText: 'Contact Us',
@@ -84,7 +84,7 @@ const defaultCMSData: CMSData = {
   about: {
     badge: 'About Us',
     title: 'Why Choose Our Products?',
-    subtitle: 'We provide the highest quality animal feed products sourced from sustainable farms.',
+    subtitle: 'We provide the highest quality food products sourced from sustainable farms.',
     features: [],
     stats: [],
   },
