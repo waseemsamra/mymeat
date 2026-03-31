@@ -156,7 +156,7 @@ const Navigation = () => {
             />
           </div>
 
-          <Link to="/procurement" className="bg-[#00450d] text-white px-6 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 font-headline font-semibold text-sm">
+          <Link to="/procurement" className="hidden md:block bg-[#00450d] text-white px-6 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 font-headline font-semibold text-sm">
             Enquire Now
           </Link>
 
