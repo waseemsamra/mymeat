@@ -15,13 +15,21 @@ const Navigation = () => {
           Gulf Link
         </Link>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden p-2 text-[#00450d]"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-6">
+          {/* Vendor Login Button - Desktop */}
+          <Link to="/vendor-login" className="hidden md:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
+            <span className="material-symbols-outlined text-sm">storefront</span>
+            Partner
+          </Link>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-2 text-[#00450d]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8 font-headline font-semibold tracking-tight">
