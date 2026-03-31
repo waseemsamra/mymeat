@@ -15,23 +15,7 @@ const Navigation = () => {
           Gulf Link
         </Link>
 
-        <div className="flex items-center gap-6">
-          {/* Vendor Login Button - Desktop */}
-          <Link to="/vendor-login" className="hidden md:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
-            <span className="material-symbols-outlined text-sm">storefront</span>
-            Partner
-          </Link>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden p-2 text-[#00450d]"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Desktop Menu */}
+        {/* Desktop Menu - Center */}
         <div className="hidden md:flex items-center gap-8 font-headline font-semibold tracking-tight">
           {/* Home */}
           <Link to="/" className={`text-stone-600 hover:text-[#00450d] transition-colors ${isActive('/') ? 'text-[#00450d] border-b-2 border-[#00450d] pb-1' : ''}`}>
@@ -164,21 +148,30 @@ const Navigation = () => {
             />
           </div>
 
+          {/* Enquire Now - Desktop */}
           <Link to="/procurement" className="hidden md:block bg-[#00450d] text-white px-6 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 font-headline font-semibold text-sm">
             Enquire Now
           </Link>
 
-          {/* Vendor Login Button */}
-          <Link to="/vendor-login" className="hidden md:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
+          {/* Partner - Desktop */}
+          <Link to="/vendor-login" className="hidden lg:flex items-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20">
             <span className="material-symbols-outlined text-sm">storefront</span>
             Partner
           </Link>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-2 text-[#00450d]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-stone-100/10 px-4 py-4 max-h-[80vh] overflow-y-auto">
+        <div className="md:hidden lg:hidden bg-white border-t border-stone-100/10 px-4 py-4 max-h-[80vh] overflow-y-auto">
           <div className="flex flex-col gap-4">
             {/* Home */}
             <Link
@@ -299,14 +292,6 @@ const Navigation = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Enquire Now
-            </Link>
-            <Link
-              to="/vendor-login"
-              className="flex items-center justify-center gap-2 bg-[#fafaf5] text-[#00450d] px-4 py-2.5 rounded-md hover:bg-[#f4f4ef] transition-all duration-300 font-headline font-semibold text-sm border border-[#00450d]/20"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <span className="material-symbols-outlined text-sm">storefront</span>
-              Partner
             </Link>
           </div>
         </div>
