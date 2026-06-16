@@ -1,793 +1,391 @@
 import { Link } from 'react-router-dom';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
+import { useEffect, useState } from 'react';
 
-const Home = () => {
+const beefProducts = [
+  {
+    src: '/heritage-prime/heritage-dry-aged-ribeye.jpg',
+    alt: 'Close up photography of a thick-cut bone-in dry-aged ribeye steak.',
+    tag: 'Prime Grade',
+    title: 'Heritage Dry-Aged Ribeye',
+    description: 'Bone-in, 45-day salt aged, pasture raised.',
+    price: '$89.00'
+  },
+  {
+    src: '/heritage-prime/heritage-tomahawk.jpg',
+    alt: 'A massive Tomahawk steak with a long, clean bone.',
+    title: 'Heritage Tomahawk',
+    description: 'The centerpiece cut, weighing 1.2kg minimum.',
+    price: '$145.00'
+  },
+  {
+    src: '/heritage-prime/center-cut-filet.jpg',
+    alt: 'Two pristine beef filet mignon cuts tied with butcher twine.',
+    title: 'Center-Cut Filet',
+    description: 'Lean, tender, and meticulously trimmed.',
+    price: '$62.00'
+  }
+];
+
+const lambProducts = [
+  {
+    src: '/heritage-prime/frenched-rack-lamb.jpg',
+    alt: 'A Frenched lamb rack featuring clean, white ribs and deep pink meat.',
+    title: 'Frenched Rack of Lamb',
+    description: '8-bone rack, meticulously cleaned and trimmed.',
+    price: '$54.00'
+  },
+  {
+    src: '/heritage-prime/heritage-loin-chops.jpg',
+    alt: 'A cluster of thick-cut lamb loin chops resting on a slate surface.',
+    title: 'Heritage Loin Chops',
+    description: 'The T-bone of lamb, tender and flavorful.',
+    price: '$42.00'
+  },
+  {
+    src: '/heritage-prime/heritage-lamb-shanks.jpg',
+    alt: 'Two large lamb shanks, raw and bone-in.',
+    title: 'Heritage Lamb Shanks',
+    description: 'Perfect for slow-braising and depth of flavor.',
+    price: '$36.00'
+  }
+];
+
+const muttonProducts = [
+  {
+    src: '/heritage-prime/aged-mutton-shoulder.jpg',
+    alt: 'A whole bone-in mutton shoulder.',
+    title: 'Aged Mutton Shoulder',
+    description: 'Rich, gamey flavor profiles, aged for 21 days.',
+    price: '$48.00'
+  },
+  {
+    src: '/heritage-prime/heritage-leg-mutton.jpg',
+    alt: 'A leg of mutton, bone-in, with a clean trim.',
+    title: 'Heritage Leg of Mutton',
+    description: 'The classic roasting cut for a traditional feast.',
+    price: '$75.00'
+  }
+];
+
+const processedProducts = [
+  {
+    src: '/heritage-prime/aged-beef-sausage.jpg',
+    alt: 'A variety of dry-aged artisanal sausages hanging in a curing room.',
+    title: 'Aged Beef Sausage',
+    description: 'Infused with black truffle and sea salt.',
+    price: '$28.00 / kg'
+  },
+  {
+    src: '/heritage-prime/heritage-brined-brisket.jpg',
+    alt: 'A perfectly brined beef brisket.',
+    title: 'Heritage Brined Brisket',
+    description: '14-day brine with signature spice blend.',
+    price: '$45.00 / kg'
+  },
+  {
+    src: '/heritage-prime/archive-charcuterie.jpg',
+    alt: 'Thinly sliced heritage charcuterie arranged on a luxury marble serving board.',
+    title: 'The Archive Charcuterie',
+    description: 'A rotating selection of our finest cured meats.',
+    price: '$32.00 / Selection'
+  }
+];
+
+const ProductCard = ({ product }: { product: (typeof beefProducts)[number] }) => (
+  <div className="min-w-[320px] md:min-w-[400px] group">
+    <div className="aspect-[4/5] overflow-hidden mb-6 bg-[#f3f4f5] relative">
+      {product.tag && (
+        <div className="absolute top-4 right-4 bg-[#00178d] text-white text-[10px] font-label uppercase tracking-widest px-3 py-1">
+          {product.tag}
+        </div>
+      )}
+      <img
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        alt={product.alt}
+        src={product.src}
+      />
+    </div>
+    <div className="px-2">
+      <h3 className="font-display text-2xl mb-2">{product.title}</h3>
+      <p className="text-[#5a403c] font-label text-sm mb-4">{product.description}</p>
+      <div className="flex justify-between items-center">
+        <span className="font-display text-xl">{product.price}</span>
+        <Link
+          to="/contact"
+          className="font-label text-xs uppercase tracking-widest border-b border-[#610006] text-[#610006] pb-1 hover:text-[#831718] transition-colors"
+        >
+          Add to Bag
+        </Link>
+      </div>
+    </div>
+  </div>
+);
+
+const ProcessedProductCard = ({ product }: { product: (typeof processedProducts)[number] }) => (
+  <div className="bg-white p-10 flex flex-col items-center text-center">
+    <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-4 border-[#edeeef]">
+      <img className="w-full h-full object-cover" alt={product.alt} src={product.src} />
+    </div>
+    <h3 className="font-display text-2xl mb-2">{product.title}</h3>
+    <p className="text-sm text-[#5a403c] mb-6 italic">{product.description}</p>
+    <span className="font-display text-lg mb-4">{product.price}</span>
+    <Link
+      to="/contact"
+      className="primary-gradient text-white px-6 py-2 text-xs uppercase tracking-widest rounded-sm"
+    >
+      Add to Bag
+    </Link>
+  </div>
+);
+
+const CollectionHeader = ({ eyebrow, title }: { eyebrow: string; title: string }) => (
+  <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+    <div>
+      <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
+        {eyebrow}
+      </span>
+      <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">{title}</h2>
+    </div>
+    <div className="flex gap-4">
+      <button
+        type="button"
+        className="w-12 h-12 border border-[#8e706b]/20 flex items-center justify-center rounded-full hover:bg-[#610006] hover:text-white transition-all"
+      >
+        <span className="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button
+        type="button"
+        className="w-12 h-12 border border-[#8e706b]/20 flex items-center justify-center rounded-full hover:bg-[#610006] hover:text-white transition-all"
+      >
+        <span className="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </div>
+);
+
+const HeritageHome = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="bg-[#fafaf5] font-body text-on-surface antialiased">
-      <Navigation />
+    <div className="bg-[#f8f9fa] font-body text-[#191c1d] overflow-x-hidden">
+      <nav className={`fixed top-0 w-full z-50 glass-nav ${isScrolled ? 'shadow-sm' : ''}`}>
+        <div className="flex justify-between items-center px-6 md:px-12 py-6 w-full max-w-[1920px] mx-auto">
+          <Link to="/" className="font-display text-2xl font-bold tracking-tighter text-[#610006]">
+            HERITAGE PRIME
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/about" className="text-[#610006] font-bold border-b-2 border-[#610006] pb-1 font-label uppercase tracking-widest text-xs">
+              Journal
+            </Link>
+            <Link to="/quality" className="text-[#40484f] font-label uppercase tracking-widest text-xs hover:text-[#610006] transition-colors duration-300">
+              Aging Guide
+            </Link>
+            <Link to="/logistics" className="text-[#40484f] font-label uppercase tracking-widest text-xs hover:text-[#610006] transition-colors duration-300">
+              Wholesale
+            </Link>
+            <Link to="/contact" className="text-[#40484f] font-label uppercase tracking-widest text-xs hover:text-[#610006] transition-colors duration-300">
+              Support
+            </Link>
+          </div>
+          <div className="flex items-center gap-6">
+            <span className="material-symbols-outlined cursor-pointer hover:text-[#610006]">search</span>
+            <Link
+              to="/contact"
+              className="primary-gradient text-white px-6 py-2.5 font-label text-sm uppercase tracking-widest rounded-sm transition-all active:scale-95"
+            >
+              Order Now
+            </Link>
+          </div>
+        </div>
+      </nav>
 
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="relative h-[870px] overflow-hidden flex items-center">
-          <div className="absolute inset-0 z-0">
+      <main className="pt-24">
+        <section className="relative h-[921px] w-full overflow-hidden">
+          <div className="h-full relative">
+            <div className="hero-slide absolute inset-0 opacity-100 flex items-center">
+              <div className="absolute inset-0 bg-black/30 z-10"></div>
+              <img
+                className="absolute inset-0 w-full h-full object-cover"
+                alt="A macro shot of a raw, heavily marbled wagyu ribeye steak resting on a dark basalt stone slab."
+                src="/heritage-prime/hero-beef.jpg"
+              />
+              <div className="relative z-20 px-6 md:px-24 max-w-4xl">
+                <span className="text-[#ffdad6] bg-[#610006] px-3 py-1 font-label text-xs uppercase tracking-[0.2em] mb-6 inline-block">
+                  The Beef Collection
+                </span>
+                <h1 className="font-display text-6xl md:text-8xl text-white mb-6 leading-none -tracking-[0.03em]">
+                  A Legacy of
+                  <br />
+                  Dry-Aged Excellence
+                </h1>
+                <p className="text-white/80 text-xl font-display italic mb-10 max-w-xl">
+                  Curated cuts from grass-fed cattle, aged for 45 days in our climate-controlled salt chambers for unparalleled depth of flavor.
+                </p>
+                <Link
+                  to="/contact"
+                  className="primary-gradient text-white px-10 py-4 font-label text-sm uppercase tracking-widest rounded-sm"
+                >
+                  Shop The Collection
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-24 px-6 md:px-12 bg-[#f8f9fa]">
+          <CollectionHeader eyebrow="Master Selections" title="The Beef Collection" />
+          <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+            {beefProducts.map(product => (
+              <ProductCard key={product.title} product={product} />
+            ))}
+          </div>
+        </section>
+
+        <section className="h-[614px] bg-stone-900 flex items-center relative overflow-hidden">
+          <img
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            alt="A wide view of a professional climate-controlled meat aging room."
+            src="/heritage-prime/aging-room.jpg"
+          />
+          <div className="relative z-10 px-6 md:px-24">
+            <h3 className="font-display text-4xl md:text-5xl text-white mb-6">The Science of Maturity</h3>
+            <p className="text-white/70 max-w-md mb-8">
+              Our proprietary salt-brick aging process reduces moisture while concentrating proteins, resulting in a buttery texture and nutty finish.
+            </p>
+            <Link
+              to="/quality"
+              className="border border-white/30 text-white px-8 py-3 font-label text-xs uppercase tracking-widest hover:bg-white hover:text-stone-900 transition-all"
+            >
+              Explore Our Labs
+            </Link>
+          </div>
+        </section>
+
+        <section className="py-24 px-6 md:px-12 bg-[#f3f4f5]">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+            <div>
+              <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
+                Pasture Raised
+              </span>
+              <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">The Lamb Selection</h2>
+            </div>
+          </div>
+          <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+            {lambProducts.map(product => (
+              <ProductCard key={product.title} product={product} />
+            ))}
+          </div>
+        </section>
+
+        <section className="py-24 px-6 md:px-12 bg-[#f8f9fa]">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+            <div>
+              <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
+                The Vintage Cut
+              </span>
+              <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">The Mutton Archive</h2>
+            </div>
+          </div>
+          <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+            {muttonProducts.map(product => (
+              <ProductCard key={product.title} product={product} />
+            ))}
+          </div>
+        </section>
+
+        <section className="py-24 px-6 md:px-12 bg-white">
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
+              Further Craftsmanship
+            </span>
+            <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em] mb-6">Artisanal Processed Products</h2>
+            <p className="text-[#5a403c]">
+              Beyond the cut, our master butchers apply centuries-old curing and brining techniques to create our value-added signatures.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-[#8e706b]/10">
+            {processedProducts.map(product => (
+              <ProcessedProductCard key={product.title} product={product} />
+            ))}
+          </div>
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-2">
+          <div className="bg-[#610006] text-white p-12 md:p-24 flex flex-col justify-center">
+            <span className="font-label text-xs uppercase tracking-widest opacity-60 mb-6">Partnerships</span>
+            <h2 className="font-display text-4xl md:text-5xl mb-8 leading-tight">
+              Wholesale Logistics for Modern Gastronomy
+            </h2>
+            <p className="text-white/70 mb-10 text-lg">
+              Direct integration for Michelin-starred kitchens and luxury hospitality groups. We provide bespoke aging timelines and custom fabrication.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/contact"
+                className="bg-white text-[#610006] px-8 py-3 font-label text-xs uppercase tracking-widest hover:bg-white/90 transition-all"
+              >
+                Wholesale Inquiry
+              </Link>
+              <Link
+                to="/logistics"
+                className="border border-white/20 text-white px-8 py-3 font-label text-xs uppercase tracking-widest hover:bg-white/10 transition-all"
+              >
+                View Logistics Hub
+              </Link>
+            </div>
+          </div>
+          <div className="relative min-h-[400px]">
             <img
-              alt="Fresh Global Produce"
-              className="w-full h-full object-cover brightness-75 scale-105"
-              src="/products/home-hero.jpg"
+              className="absolute inset-0 w-full h-full object-cover"
+              alt="A modern, clean delivery truck parked outside a high-end restaurant at dusk."
+              src="/heritage-prime/wholesale-logistics.jpg"
             />
-          </div>
-          <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
-            <div className="max-w-2xl bg-white/10 backdrop-blur-md p-10 rounded-xl border border-white/20">
-              <span className="inline-block text-[#ffdeac] font-headline font-bold tracking-[0.2em] text-xs mb-4 uppercase">
-                Direct from Source
-              </span>
-              <h1 className="text-5xl md:text-7xl font-headline font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
-                Curation of the <br/><span className="text-[#acf4a4]">Earth's Finest.</span>
-              </h1>
-              <p className="text-white/90 text-lg mb-8 max-w-lg leading-relaxed">
-                We bridge the gap between global growers and premium distributors with a focus on seasonal integrity and logistical excellence.
-              </p>
-              <div className="flex gap-4">
-                <Link
-                  to="/all-products"
-                  className="bg-[#00450d] text-white px-8 py-4 rounded-md font-headline font-bold text-base hover:bg-[#1b5e20] transition-all"
-                >
-                  View Catalog
-                </Link>
-                <Link
-                  to="/logistics"
-                  className="bg-white/10 text-white border border-white/30 px-8 py-4 rounded-md font-headline font-bold text-base hover:bg-white/20 transition-all"
-                >
-                  Our Logistics
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Pagination Indicator */}
-          <div className="absolute bottom-12 right-12 flex gap-4 items-center">
-            <div className="w-12 h-1 bg-[#00450d]"></div>
-            <div className="w-8 h-1 bg-white/30"></div>
-            <div className="w-8 h-1 bg-white/30"></div>
-            <span className="text-white font-headline font-bold text-sm ml-4">01 / 03</span>
-          </div>
-        </section>
-
-        {/* Our Curated Portfolios Section */}
-        <section className="py-24 bg-[#fafaf5]">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div>
-                <span className="text-[#00450d] font-label font-bold tracking-[0.2em] text-xs mb-2 uppercase block">
-                  The Global Selection
-                </span>
-                <h2 className="text-4xl md:text-5xl font-headline font-bold text-on-surface">
-                  Our Curated Portfolios
-                </h2>
-                <div className="mt-4 h-1.5 w-24 bg-[#00450d]"></div>
-              </div>
-              <Link
-                to="/all-products"
-                className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm border-b-2 border-[#1b5e20]/20 hover:border-[#00450d] transition-all pb-1 group"
-              >
-                Explore Full Range
-                <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
-              </Link>
-            </div>
-
-            {/* Desktop Grid - Hidden on Mobile */}
-            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Rice & Spices */}
-              <Link
-                to="/products/rice-spices"
-                className="group bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow transition-all hover:-translate-y-1"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    alt="Rice & Spices"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="/products/home-rice-spices.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="text-white text-2xl font-headline font-bold">Rice & Spices</h3>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-[#41493e] text-sm mb-6 leading-relaxed">
-                    Aromatic long-grain basmati, rare whole spices, and export-grade pantry essentials sourced from volcanic soils.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
-                    Explore Category
-                    <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              {/* Fruits & Vegetables */}
-              <Link
-                to="/products/fruits-vegetables"
-                className="group bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow transition-all hover:-translate-y-1"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    alt="Fruits & Vegetables"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="/products/home-fruits-vegetables.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="text-white text-2xl font-headline font-bold">Fruits & Vegetables</h3>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-[#41493e] text-sm mb-6 leading-relaxed">
-                    24-hour farm-to-shipping logistics for seasonal produce, curated for brix levels and flavor profile integrity.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
-                    Explore Category
-                    <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              {/* Nuts & Flavors */}
-              <Link
-                to="/products/nuts-flavors"
-                className="group bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow transition-all hover:-translate-y-1"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    alt="Nuts & Flavors"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="/products/home-nuts-hero.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="text-white text-2xl font-headline font-bold">Nuts & Flavors</h3>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-[#41493e] text-sm mb-6 leading-relaxed">
-                    Macadamias, walnuts, and rare flavors. Sustainably sourced and handled with precision for maximum oil retention.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
-                    Explore Category
-                    <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              {/* Canned Foods */}
-              <Link
-                to="/products/canned-goods"
-                className="group bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow transition-all hover:-translate-y-1"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    alt="Canned Foods"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="/products/home-canned-foods.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="text-white text-2xl font-headline font-bold">Canned Foods</h3>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-[#41493e] text-sm mb-6 leading-relaxed">
-                    Preserving freshness through advanced canning techniques. Grade-A legumes, vegetables, and fruit preserves.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
-                    Explore Category
-                    <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              {/* Meat & Seafood */}
-              <Link
-                to="/products/meat-seafood"
-                className="group bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow transition-all hover:-translate-y-1"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    alt="Meat & Seafood"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="/products/home-meat-seafood.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="text-white text-2xl font-headline font-bold">Meat & Seafood</h3>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-[#41493e] text-sm mb-6 leading-relaxed">
-                    Pasture-raised cuts and sustainable oceanic catch, supported by an unbroken temperature-controlled cold chain.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
-                    Explore Category
-                    <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              {/* Bakery Products */}
-              <Link
-                to="/products/bakery"
-                className="group bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow transition-all hover:-translate-y-1"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    alt="Bakery Products"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src="/products/home-bakery.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-6">
-                    <h3 className="text-white text-2xl font-headline font-bold">Bakery Products</h3>
-                  </div>
-                </div>
-                <div className="p-8">
-                  <p className="text-[#41493e] text-sm mb-6 leading-relaxed">
-                    Par-baked solutions and artisanal flours. High-stability products designed for global food service consistency.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm group/btn">
-                    Explore Category
-                    <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-            </div>
-
-            {/* Mobile Horizontal Carousel - Visible only on mobile */}
-            <div className="md:hidden flex gap-4 overflow-x-auto hide-scrollbar pb-4 -mx-4 px-4">
-              <Link
-                to="/products/rice-spices"
-                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    alt="Rice & Spices"
-                    className="w-full h-full object-cover"
-                    src="/products/home-rice-spices.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-white text-xl font-headline font-bold">Rice & Spices</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
-                    Aromatic long-grain basmati, rare whole spices, and export-grade pantry essentials.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
-                    Explore
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link
-                to="/products/fruits-vegetables"
-                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    alt="Fruits & Vegetables"
-                    className="w-full h-full object-cover"
-                    src="/products/home-fruits-vegetables.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-white text-xl font-headline font-bold">Fruits & Vegetables</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
-                    24-hour farm-to-shipping logistics for seasonal produce.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
-                    Explore
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link
-                to="/products/nuts-flavors"
-                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    alt="Nuts & Flavors"
-                    className="w-full h-full object-cover"
-                    src="/products/home-nuts-hero.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-white text-xl font-headline font-bold">Nuts & Flavors</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
-                    Macadamias, walnuts, and rare flavors.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
-                    Explore
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link
-                to="/products/canned-goods"
-                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    alt="Canned Foods"
-                    className="w-full h-full object-cover"
-                    src="/products/home-canned-foods.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-white text-xl font-headline font-bold">Canned Foods</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
-                    Preserving freshness through advanced canning techniques.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
-                    Explore
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link
-                to="/products/meat-seafood"
-                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    alt="Meat & Seafood"
-                    className="w-full h-full object-cover"
-                    src="/products/home-meat-seafood.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-white text-xl font-headline font-bold">Meat & Seafood</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
-                    Pasture-raised cuts and sustainable oceanic catch.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
-                    Explore
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-
-              <Link
-                to="/products/bakery"
-                className="min-w-[280px] bg-[#ffffff] rounded-2xl overflow-hidden editorial-shadow flex-shrink-0"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    alt="Bakery Products"
-                    className="w-full h-full object-cover"
-                    src="/products/home-bakery.jpg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <h3 className="text-white text-xl font-headline font-bold">Bakery Products</h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-[#41493e] text-sm mb-4 leading-relaxed line-clamp-2">
-                    Par-baked solutions and artisanal flours.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-[#00450d] font-headline font-bold text-sm">
-                    Explore
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Product Categories: Horizontal Scrollers */}
-        <section className="py-24 space-y-32 bg-[#fafaf5]">
-          {/* Category: Rice & Spices */}
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="flex justify-between items-end mb-12">
-              <div>
-                <span className="text-[#7a5649] font-label font-bold tracking-widest text-xs uppercase mb-2 block">
-                  Pantry Essentials
-                </span>
-                <h2 className="text-4xl font-headline font-bold text-on-surface">Rice & Spices</h2>
-              </div>
-              <Link
-                to="/products/rice-spices"
-                className="text-[#00450d] font-headline font-bold text-sm border-b-2 border-[#1b5e20]/20 hover:border-[#00450d] transition-all pb-1"
-              >
-                Explore Full Range
-              </Link>
-            </div>
-
-            <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8 -mx-4 px-4">
-              {/* Product Card - Basmati */}
-              <div className="min-w-[300px] flex-shrink-0 group cursor-pointer">
-                <div className="aspect-[4/5] bg-[#eeeee9] overflow-hidden rounded-xl mb-6 relative">
-                  <img
-                    alt="Basmati Rice"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/products/home-basmati.jpg"
-                  />
-                  <div className="absolute top-4 right-4 bg-[#ffdeac] px-3 py-1 rounded-full">
-                    <span className="text-[10px] font-bold text-[#281900] uppercase">Export Grade</span>
-                  </div>
-                </div>
-                <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Premium Basmati</h3>
-                <p className="text-[#41493e] text-sm mb-4">Aromatic extra-long grain, aged 2 years.</p>
-                <Link
-                  to="/contact"
-                  className="w-full py-3 border border-[#c0c9bb] text-[#00450d] font-bold text-sm rounded-md hover:bg-[#00450d] hover:text-white transition-all"
-                >
-                  Enquire Now
-                </Link>
-              </div>
-
-              {/* Product Card - Spices */}
-              <div className="min-w-[300px] flex-shrink-0 group cursor-pointer">
-                <div className="aspect-[4/5] bg-[#eeeee9] overflow-hidden rounded-xl mb-6 relative">
-                  <img
-                    alt="Whole Spices"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/products/home-spices.jpg"
-                  />
-                </div>
-                <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Artisan Spice Mix</h3>
-                <p className="text-[#41493e] text-sm mb-4">Direct sourced, non-irradiated organic spices.</p>
-                <Link
-                  to="/contact"
-                  className="w-full py-3 border border-[#c0c9bb] text-[#00450d] font-bold text-sm rounded-md hover:bg-[#00450d] hover:text-white transition-all"
-                >
-                  Enquire Now
-                </Link>
-              </div>
-
-              {/* Product Card - Cumin */}
-              <div className="min-w-[300px] flex-shrink-0 group cursor-pointer">
-                <div className="aspect-[4/5] bg-[#eeeee9] overflow-hidden rounded-xl mb-6 relative">
-                  <img
-                    alt="Cumin Seeds"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src="/products/home-cumin.jpg"
-                  />
-                </div>
-                <h3 className="text-xl font-headline font-bold text-on-surface mb-2">Toasted Cumin</h3>
-                <p className="text-[#41493e] text-sm mb-4">High oil content, volcanic soil grown.</p>
-                <Link
-                  to="/contact"
-                  className="w-full py-3 border border-[#c0c9bb] text-[#00450d] font-bold text-sm rounded-md hover:bg-[#00450d] hover:text-white transition-all"
-                >
-                  Enquire Now
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Category: Fruits & Vegetables (Asymmetric Layout) */}
-          <div className="bg-[#f4f4ef] py-24">
-            <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row gap-16">
-              <div className="w-full md:w-1/3">
-                <span className="text-[#00450d] font-label font-bold tracking-widest text-xs uppercase mb-2 block">
-                  The Fresh Harvest
-                </span>
-                <h2 className="text-4xl font-headline font-bold text-on-surface mb-6">
-                  Fruits & Vegetables
-                </h2>
-                <p className="text-[#41493e] leading-relaxed mb-8">
-                  We pride ourselves on 24-hour farm-to-shipping logistics. Our seasonal produce is selected for flavor profiles, brix levels, and visual perfection.
-                </p>
-                <ul className="space-y-4 mb-10">
-                  <li className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-[#00450d]" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
-                    <span className="text-on-surface font-medium">Global GAP Certified</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-[#00450d]" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
-                    <span className="text-on-surface font-medium">Temperature Controlled Transit</span>
-                  </li>
-                </ul>
-                <Link
-                  to="/contact"
-                  className="bg-[#7a5649] text-white px-8 py-3 rounded-md font-headline font-bold text-sm hover:bg-[#603f33] transition-all"
-                >
-                  Enquire for Seasonal List
-                </Link>
-              </div>
-
-              <div className="w-full md:w-2/3 grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="h-64 rounded-xl overflow-hidden relative group">
-                    <img
-                      alt="Avocados"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                      src="/products/home-avocados.jpg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 to-transparent flex items-end p-4">
-                      <span className="text-white font-headline font-bold">Avocados</span>
-                    </div>
-                  </div>
-                  <div className="h-96 rounded-xl overflow-hidden relative group">
-                    <img
-                      alt="Carrots"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                      src="/products/home-carrots.jpg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 to-transparent flex items-end p-4">
-                      <span className="text-white font-headline font-bold">Root Vegetables</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4 pt-8">
-                  <div className="h-96 rounded-xl overflow-hidden relative group">
-                    <img
-                      alt="Citrus"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                      src="/products/home-citrus.jpg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 to-transparent flex items-end p-4">
-                      <span className="text-white font-headline font-bold">Citrus Varieties</span>
-                    </div>
-                  </div>
-                  <div className="h-64 rounded-xl overflow-hidden relative group">
-                    <img
-                      alt="Tropical"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                      src="/products/home-tropical.jpg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#00450d]/60 to-transparent flex items-end p-4">
-                      <span className="text-white font-headline font-bold">Exotic Fruits</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bento Grid: Nuts, Flavors & Seafood */}
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-auto md:h-[600px]">
-              {/* Meat & Seafood - Large Card */}
-              <div className="md:col-span-2 md:row-span-2 bg-[#ffffff] rounded-2xl overflow-hidden group relative editorial-shadow p-10 flex flex-col justify-between">
-                <div>
-                  <span className="text-[#503600] font-label font-bold tracking-widest text-xs uppercase mb-2 block">
-                    Oceanic Selection
-                  </span>
-                  <h3 className="text-3xl font-headline font-bold text-on-surface mb-4">
-                    Meat & Seafood
-                  </h3>
-                  <p className="text-[#41493e] max-w-sm">
-                    From deep-sea catch to premium pasture-raised cuts, our protein logistics are secondary to none.
-                  </p>
-                </div>
-                <div className="relative h-64 mt-6 overflow-hidden rounded-lg">
-                  <img
-                    alt="Seafood"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                    src="/products/home-seafood-bento.jpg"
-                  />
-                </div>
-                <Link
-                  to="/contact"
-                  className="mt-6 bg-[#00450d] text-white py-4 rounded-md font-bold transition-all hover:bg-[#1b5e20]"
-                >
-                  Enquire for Wholesale
-                </Link>
-              </div>
-
-              {/* Nuts & Flavors */}
-              <div className="md:col-span-2 bg-[#7a5649]/10 rounded-2xl overflow-hidden flex items-center p-8 border border-[#7a5649]/20">
-                <div className="w-1/2">
-                  <h3 className="text-2xl font-headline font-bold text-[#7a5649] mb-2">Nuts & Flavors</h3>
-                  <p className="text-[#41493e] text-sm mb-4">Macadamias, Walnuts, and Vanilla Beans.</p>
-                  <Link
-                    to="/products/nuts-flavors"
-                    className="text-[#7a5649] font-bold text-sm underline underline-offset-4"
-                  >
-                    Browse Collection
-                  </Link>
-                </div>
-                <div className="w-1/2 h-full">
-                  <img
-                    alt="Nuts"
-                    className="w-full h-full object-cover rounded-xl"
-                    src="/products/home-nuts-hero.jpg"
-                  />
-                </div>
-              </div>
-
-              {/* Bakery Products */}
-              <div className="md:col-span-1 bg-[#e3e3de] rounded-2xl p-6 flex flex-col justify-center text-center">
-                <span className="material-symbols-outlined text-4xl text-[#00450d] mb-4">bakery_dining</span>
-                <h4 className="font-headline font-bold mb-2">Bakery Products</h4>
-                <p className="text-xs text-[#41493e] mb-4">Par-baked and artisanal flours.</p>
-                <Link
-                  to="/products/bakery"
-                  className="text-[#00450d] font-bold text-xs uppercase tracking-widest"
-                >
-                  Enquire
-                </Link>
-              </div>
-
-              {/* Canned Foods */}
-              <div className="md:col-span-1 bg-[#1b5e20] rounded-2xl p-6 flex flex-col justify-center text-center">
-                <span className="material-symbols-outlined text-4xl text-[#90d689] mb-4">inventory_2</span>
-                <h4 className="font-headline font-bold text-white mb-2">Canned Foods</h4>
-                <p className="text-xs text-white/70 mb-4">Preserving freshness for the long haul.</p>
-                <Link
-                  to="/products/canned-goods"
-                  className="text-[#acf4a4] font-bold text-xs uppercase tracking-widest"
-                >
-                  Enquire
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Services Section */}
-        <section className="py-32 bg-[#2f312e] text-white">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="mb-20 text-center max-w-3xl mx-auto">
-              <span className="text-[#acf4a4] font-label font-bold tracking-[0.3em] text-xs uppercase mb-4 block">
-                Our Operations
-              </span>
-              <h2 className="text-4xl md:text-5xl font-headline font-extrabold mb-6">
-                Expert Logistics, Global Reach.
-              </h2>
-              <div className="h-1 w-24 bg-[#503600] mx-auto"></div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {/* Service 1 - Global Logistics */}
-              <div className="group">
-                <div className="mb-8 overflow-hidden rounded-xl h-48">
-                  <img
-                    alt="Global Logistics"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                    src="/products/home-service-logistics.jpg"
-                  />
-                </div>
-                <h3 className="text-2xl font-headline font-bold mb-4 flex items-center gap-3">
-                  <span className="material-symbols-outlined text-[#acf4a4]">public</span>
-                  Global Logistics
-                </h3>
-                <p className="text-white/60 leading-relaxed mb-6">
-                  Multimodal transportation networks ensuring your produce arrives with optimal freshness, regardless of the destination.
-                </p>
-                <Link
-                  to="/logistics"
-                  className="text-[#ffba38] font-bold text-sm hover:text-white transition-colors"
-                >
-                  Learn more about our fleet →
-                </Link>
-              </div>
-
-              {/* Service 2 - Quality Control */}
-              <div className="group">
-                <div className="mb-8 overflow-hidden rounded-xl h-48">
-                  <img
-                    alt="Quality Control"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                    src="/products/home-service-quality.jpg"
-                  />
-                </div>
-                <h3 className="text-2xl font-headline font-bold mb-4 flex items-center gap-3">
-                  <span className="material-symbols-outlined text-[#acf4a4]">verified</span>
-                  Quality Control
-                </h3>
-                <p className="text-white/60 leading-relaxed mb-6">
-                  Three-stage inspection process covering farm harvest, container loading, and port arrival for guaranteed standards.
-                </p>
-                <Link
-                  to="/quality"
-                  className="text-[#ffba38] font-bold text-sm hover:text-white transition-colors"
-                >
-                  Our certification standards →
-                </Link>
-              </div>
-
-              {/* Service 3 - Custom Sourcing */}
-              <div className="group">
-                <div className="mb-8 overflow-hidden rounded-xl h-48">
-                  <img
-                    alt="Custom Sourcing"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                    src="/products/home-service-sourcing.jpg"
-                  />
-                </div>
-                <h3 className="text-2xl font-headline font-bold mb-4 flex items-center gap-3">
-                  <span className="material-symbols-outlined text-[#acf4a4]">handshake</span>
-                  Custom Sourcing
-                </h3>
-                <p className="text-white/60 leading-relaxed mb-6">
-                  Need something rare? Our network of boutique global farmers can be mobilized for your specific contractual requirements.
-                </p>
-                <Link
-                  to="/sourcing"
-                  className="text-[#ffba38] font-bold text-sm hover:text-white transition-colors"
-                >
-                  Start a custom request →
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-24 bg-[#fafaf5]">
-          <div className="max-w-5xl mx-auto px-8">
-            <div className="bg-[#00450d] p-12 md:p-20 rounded-[2rem] text-center relative overflow-hidden">
-              {/* Decorative background element */}
-              <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#1b5e20] rounded-full opacity-50"></div>
-
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-5xl font-headline font-extrabold text-white mb-6">
-                  Ready to expand your <br/>supply chain?
-                </h2>
-                <p className="text-[#90d689] text-lg mb-10 max-w-xl mx-auto">
-                  Connect with our trade experts for a tailored quote and logistics plan for your business.
-                </p>
-                <div className="flex flex-col md:flex-row gap-4 justify-center">
-                  <Link
-                    to="/contact"
-                    className="bg-[#ffdeac] text-[#281900] px-10 py-4 rounded-md font-headline font-bold text-lg hover:bg-[#ffba38] transition-all"
-                  >
-                    Request a Quote
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="bg-transparent border-2 border-white/30 text-white px-10 py-4 rounded-md font-headline font-bold text-lg hover:bg-white/10 transition-all"
-                  >
-                    Talk to Sales
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
       </main>
 
-      <Footer />
-
-      <style>{`
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .editorial-shadow {
-          box-shadow: 0 20px 40px rgba(26, 28, 25, 0.06);
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
+      <footer className="bg-neutral-950 py-20 px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-end w-full">
+        <div className="space-y-12">
+          <div className="font-display text-3xl text-neutral-50 tracking-tighter">HERITAGE PRIME</div>
+          <p className="font-display italic text-neutral-400 max-w-xs">
+            Dedicated to the preservation of artisanal butchery and the elevation of protein quality through science and heritage.
+          </p>
+          <div className="flex flex-wrap gap-8">
+            <Link to="/about" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
+              Provenance
+            </Link>
+            <Link to="/logistics" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
+              Wholesale Logistics
+            </Link>
+            <Link to="/quality" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
+              Technical Guides
+            </Link>
+            <Link to="/contact" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
+              Privacy Ledger
+            </Link>
+          </div>
+        </div>
+        <div className="text-right flex flex-col items-end gap-12">
+          <div className="flex gap-6">
+            <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">language</span>
+            <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">mail</span>
+            <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">location_on</span>
+          </div>
+          <p className="text-neutral-600 text-[10px] tracking-widest uppercase">© 2024 Heritage Prime. The Artisanal Authority.</p>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default Home;
+export default HeritageHome;

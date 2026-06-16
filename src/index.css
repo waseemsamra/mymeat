@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Work+Sans:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -45,6 +47,49 @@
   body {
     @apply bg-white text-dark font-sans antialiased;
     overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: Newsreader, serif;
+  }
+
+  .font-body,
+  .font-label {
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hero-slide {
+    transition: opacity 0.8s ease-in-out;
+  }
+
+  .glass-nav {
+    background: rgba(248, 249, 250, 0.8);
+    backdrop-filter: blur(24px);
+  }
+
+  .primary-gradient {
+    background: linear-gradient(135deg, #610006 0%, #831718 100%);
+  }
+
+  .tonal-layer {
+    background: #f3f4f5;
   }
 }
 
