@@ -75,6 +75,28 @@
     scrollbar-width: none;
   }
 
+  .carousel-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 25%);
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  @media (min-width: 40rem) and (max-width: 63.99rem) {
+    .carousel-grid {
+      grid-auto-columns: calc((100% - 1.5rem) / 2);
+    }
+  }
+
+  @media (max-width: 39.99rem) {
+    .carousel-grid {
+      grid-auto-columns: 82%;
+      gap: 1rem;
+    }
+  }
+
   .hero-slide {
     transition: opacity 0.8s ease-in-out;
   }

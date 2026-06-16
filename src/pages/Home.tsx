@@ -23,6 +23,13 @@ const beefProducts = [
     title: 'Center-Cut Filet',
     description: 'Lean, tender, and meticulously trimmed.',
     price: '$62.00'
+  },
+  {
+    src: '/products/wagyu.jpg',
+    alt: 'A premium wagyu cut with fine marbling.',
+    title: 'Wagyu Striploin',
+    description: 'Fine marbling, premium dry-aged finish.',
+    price: '$118.00'
   }
 ];
 
@@ -47,6 +54,13 @@ const lambProducts = [
     title: 'Heritage Lamb Shanks',
     description: 'Perfect for slow-braising and depth of flavor.',
     price: '$36.00'
+  },
+  {
+    src: '/products/lamb-specialty.jpg',
+    alt: 'A chef-selected lamb specialty cut.',
+    title: 'Lamb Specialty Cut',
+    description: 'Selected for roasting, grilling, and premium service.',
+    price: '$58.00'
   }
 ];
 
@@ -64,6 +78,13 @@ const muttonProducts = [
     title: 'Heritage Leg of Mutton',
     description: 'The classic roasting cut for a traditional feast.',
     price: '$75.00'
+  },
+  {
+    src: '/products/meat-seafood.jpg',
+    alt: 'A premium butcher-style meat display.',
+    title: 'Heritage Mutton Roast',
+    description: 'A slow-roast cut with deep traditional flavor.',
+    price: '$68.00'
   }
 ];
 
@@ -88,12 +109,19 @@ const processedProducts = [
     title: 'The Archive Charcuterie',
     description: 'A rotating selection of our finest cured meats.',
     price: '$32.00 / Selection'
+  },
+  {
+    src: '/products/canned-corned-beef.jpg',
+    alt: 'A prepared corned beef product.',
+    title: 'Smoked Corned Beef',
+    description: 'Slow-smoked, seasoned, and sliced for service.',
+    price: '$38.00 / kg'
   }
 ];
 
 const ProductCard = ({ product }: { product: (typeof beefProducts)[number] }) => (
-  <div className="min-w-[320px] md:min-w-[400px] group">
-    <div className="aspect-[4/5] overflow-hidden mb-6 bg-[#f3f4f5] relative">
+  <div className="group">
+    <div className="aspect-[2/1] overflow-hidden mb-6 bg-[#f3f4f5] relative">
       {product.tag && (
         <div className="absolute top-4 right-4 bg-[#00178d] text-white text-[10px] font-label uppercase tracking-widest px-3 py-1">
           {product.tag}
@@ -123,7 +151,7 @@ const ProductCard = ({ product }: { product: (typeof beefProducts)[number] }) =>
 
 const ProcessedProductCard = ({ product }: { product: (typeof processedProducts)[number] }) => (
   <div className="bg-white p-10 flex flex-col items-center text-center">
-    <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-4 border-[#edeeef]">
+    <div className="w-24 h-24 rounded-full overflow-hidden mb-8 border-4 border-[#edeeef]">
       <img className="w-full h-full object-cover" alt={product.alt} src={product.src} />
     </div>
     <h3 className="font-display text-2xl mb-2">{product.title}</h3>
@@ -244,7 +272,7 @@ const HeritageHome = () => {
 
         <section className="py-24 px-6 md:px-12 bg-[#f8f9fa]">
           <CollectionHeader eyebrow="Master Selections" title="The Beef Collection" />
-          <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+          <div className="carousel-grid hide-scrollbar pb-8">
             {beefProducts.map(product => (
               <ProductCard key={product.title} product={product} />
             ))}
@@ -280,7 +308,7 @@ const HeritageHome = () => {
               <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">The Lamb Selection</h2>
             </div>
           </div>
-          <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+          <div className="carousel-grid hide-scrollbar pb-8">
             {lambProducts.map(product => (
               <ProductCard key={product.title} product={product} />
             ))}
@@ -296,7 +324,7 @@ const HeritageHome = () => {
               <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">The Mutton Archive</h2>
             </div>
           </div>
-          <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-8">
+          <div className="carousel-grid hide-scrollbar pb-8">
             {muttonProducts.map(product => (
               <ProductCard key={product.title} product={product} />
             ))}
@@ -313,7 +341,7 @@ const HeritageHome = () => {
               Beyond the cut, our master butchers apply centuries-old curing and brining techniques to create our value-added signatures.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-[#8e706b]/10">
+          <div className="carousel-grid hide-scrollbar pb-8 bg-[#8e706b]/10">
             {processedProducts.map(product => (
               <ProcessedProductCard key={product.title} product={product} />
             ))}
@@ -344,7 +372,7 @@ const HeritageHome = () => {
               </Link>
             </div>
           </div>
-          <div className="relative min-h-[400px]">
+          <div className="relative min-h-[200px]">
             <img
               className="absolute inset-0 w-full h-full object-cover"
               alt="A modern, clean delivery truck parked outside a high-end restaurant at dusk."
