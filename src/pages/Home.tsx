@@ -1,419 +1,296 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
-const beefProducts = [
-  {
-    src: '/heritage-prime/heritage-dry-aged-ribeye.jpg',
-    alt: 'Close up photography of a thick-cut bone-in dry-aged ribeye steak.',
-    tag: 'Prime Grade',
-    title: 'Heritage Dry-Aged Ribeye',
-    description: 'Bone-in, 45-day salt aged, pasture raised.',
-    price: '$89.00'
-  },
-  {
-    src: '/heritage-prime/heritage-tomahawk.jpg',
-    alt: 'A massive Tomahawk steak with a long, clean bone.',
-    title: 'Heritage Tomahawk',
-    description: 'The centerpiece cut, weighing 1.2kg minimum.',
-    price: '$145.00'
-  },
-  {
-    src: '/heritage-prime/center-cut-filet.jpg',
-    alt: 'Two pristine beef filet mignon cuts tied with butcher twine.',
-    title: 'Center-Cut Filet',
-    description: 'Lean, tender, and meticulously trimmed.',
-    price: '$62.00'
-  },
-  {
-    src: '/products/wagyu.jpg',
-    alt: 'A premium wagyu cut with fine marbling.',
-    title: 'Wagyu Striploin',
-    description: 'Fine marbling, premium dry-aged finish.',
-    price: '$118.00'
-  }
-];
-
-const lambProducts = [
-  {
-    src: '/heritage-prime/frenched-rack-lamb.jpg',
-    alt: 'A Frenched lamb rack featuring clean, white ribs and deep pink meat.',
-    title: 'Frenched Rack of Lamb',
-    description: '8-bone rack, meticulously cleaned and trimmed.',
-    price: '$54.00'
-  },
-  {
-    src: '/heritage-prime/heritage-loin-chops.jpg',
-    alt: 'A cluster of thick-cut lamb loin chops resting on a slate surface.',
-    title: 'Heritage Loin Chops',
-    description: 'The T-bone of lamb, tender and flavorful.',
-    price: '$42.00'
-  },
-  {
-    src: '/heritage-prime/heritage-lamb-shanks.jpg',
-    alt: 'Two large lamb shanks, raw and bone-in.',
-    title: 'Heritage Lamb Shanks',
-    description: 'Perfect for slow-braising and depth of flavor.',
-    price: '$36.00'
-  },
-  {
-    src: '/products/lamb-specialty.jpg',
-    alt: 'A chef-selected lamb specialty cut.',
-    title: 'Lamb Specialty Cut',
-    description: 'Selected for roasting, grilling, and premium service.',
-    price: '$58.00'
-  }
-];
-
-const muttonProducts = [
-  {
-    src: '/heritage-prime/aged-mutton-shoulder.jpg',
-    alt: 'A whole bone-in mutton shoulder.',
-    title: 'Aged Mutton Shoulder',
-    description: 'Rich, gamey flavor profiles, aged for 21 days.',
-    price: '$48.00'
-  },
-  {
-    src: '/heritage-prime/heritage-leg-mutton.jpg',
-    alt: 'A leg of mutton, bone-in, with a clean trim.',
-    title: 'Heritage Leg of Mutton',
-    description: 'The classic roasting cut for a traditional feast.',
-    price: '$75.00'
-  },
-  {
-    src: '/products/meat-seafood.jpg',
-    alt: 'A premium butcher-style meat display.',
-    title: 'Heritage Mutton Roast',
-    description: 'A slow-roast cut with deep traditional flavor.',
-    price: '$68.00'
-  }
-];
-
-const processedProducts = [
-  {
-    src: '/heritage-prime/aged-beef-sausage.jpg',
-    alt: 'A variety of dry-aged artisanal sausages hanging in a curing room.',
-    title: 'Aged Beef Sausage',
-    description: 'Infused with black truffle and sea salt.',
-    price: '$28.00 / kg'
-  },
-  {
-    src: '/heritage-prime/heritage-brined-brisket.jpg',
-    alt: 'A perfectly brined beef brisket.',
-    title: 'Heritage Brined Brisket',
-    description: '14-day brine with signature spice blend.',
-    price: '$45.00 / kg'
-  },
-  {
-    src: '/heritage-prime/archive-charcuterie.jpg',
-    alt: 'Thinly sliced heritage charcuterie arranged on a luxury marble serving board.',
-    title: 'The Archive Charcuterie',
-    description: 'A rotating selection of our finest cured meats.',
-    price: '$32.00 / Selection'
-  },
-  {
-    src: '/products/canned-corned-beef.jpg',
-    alt: 'A prepared corned beef product.',
-    title: 'Smoked Corned Beef',
-    description: 'Slow-smoked, seasoned, and sliced for service.',
-    price: '$38.00 / kg'
-  }
-];
-
-const ProductCard = ({ product }: { product: (typeof beefProducts)[number] }) => (
-  <div className="group">
-    <div className="aspect-[2/1] overflow-hidden mb-6 bg-[#f3f4f5] relative">
-      {product.tag && (
-        <div className="absolute top-4 right-4 bg-[#00178d] text-white text-[10px] font-label uppercase tracking-widest px-3 py-1">
-          {product.tag}
-        </div>
-      )}
-      <img
-        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-        alt={product.alt}
-        src={product.src}
-      />
-    </div>
-    <div className="px-2">
-      <h3 className="font-display text-2xl mb-2">{product.title}</h3>
-      <p className="text-[#5a403c] font-label text-sm mb-4">{product.description}</p>
-      <div className="flex justify-between items-center">
-        <span className="font-display text-xl">{product.price}</span>
-        <Link
-          to="/contact"
-          className="font-label text-xs uppercase tracking-widest border-b border-[#610006] text-[#610006] pb-1 hover:text-[#831718] transition-colors"
-        >
-          Add to Bag
-        </Link>
-      </div>
-    </div>
-  </div>
-);
-
-const ProcessedProductCard = ({ product }: { product: (typeof processedProducts)[number] }) => (
-  <div className="bg-white p-10 flex flex-col items-center text-center">
-    <div className="w-24 h-24 rounded-full overflow-hidden mb-8 border-4 border-[#edeeef]">
-      <img className="w-full h-full object-cover" alt={product.alt} src={product.src} />
-    </div>
-    <h3 className="font-display text-2xl mb-2">{product.title}</h3>
-    <p className="text-sm text-[#5a403c] mb-6 italic">{product.description}</p>
-    <span className="font-display text-lg mb-4">{product.price}</span>
-    <Link
-      to="/contact"
-      className="primary-gradient text-white px-6 py-2 text-xs uppercase tracking-widest rounded-sm"
-    >
-      Add to Bag
-    </Link>
-  </div>
-);
-
-const CollectionHeader = ({ eyebrow, title }: { eyebrow: string; title: string }) => (
-  <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-    <div>
-      <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
-        {eyebrow}
-      </span>
-      <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">{title}</h2>
-    </div>
-    <div className="flex gap-4">
-      <button
-        type="button"
-        className="w-12 h-12 border border-[#8e706b]/20 flex items-center justify-center rounded-full hover:bg-[#610006] hover:text-white transition-all"
-      >
-        <span className="material-symbols-outlined">chevron_left</span>
-      </button>
-      <button
-        type="button"
-        className="w-12 h-12 border border-[#8e706b]/20 flex items-center justify-center rounded-full hover:bg-[#610006] hover:text-white transition-all"
-      >
-        <span className="material-symbols-outlined">chevron_right</span>
-      </button>
-    </div>
-  </div>
-);
-
-const HeritageHome = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+const Home = () => {
+  useEffect(() => {}, []);
 
   return (
-    <div className="bg-[#f8f9fa] font-body text-[#191c1d] overflow-x-hidden">
-      <nav className={`fixed top-0 w-full z-50 glass-nav ${isScrolled ? 'shadow-sm' : ''}`}>
-        <div className="flex justify-between items-center px-6 md:px-12 py-6 w-full max-w-[1920px] mx-auto">
-          <Link to="/" className="font-display text-2xl font-bold tracking-tighter text-[#610006]">
-            HERITAGE PRIME
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/about" className="text-[#610006] font-bold border-b-2 border-[#610006] pb-1 font-label uppercase tracking-widest text-xs">
-              Journal
-            </Link>
-            <Link to="/quality" className="text-[#40484f] font-label uppercase tracking-widest text-xs hover:text-[#610006] transition-colors duration-300">
-              Aging Guide
-            </Link>
-            <Link to="/logistics" className="text-[#40484f] font-label uppercase tracking-widest text-xs hover:text-[#610006] transition-colors duration-300">
-              Wholesale
-            </Link>
-            <Link to="/contact" className="text-[#40484f] font-label uppercase tracking-widest text-xs hover:text-[#610006] transition-colors duration-300">
-              Support
-            </Link>
-          </div>
-          <div className="flex items-center gap-6">
-            <span className="material-symbols-outlined cursor-pointer hover:text-[#610006]">search</span>
-            <Link
-              to="/contact"
-              className="primary-gradient text-white px-6 py-2.5 font-label text-sm uppercase tracking-widest rounded-sm transition-all active:scale-95"
-            >
-              Order Now
-            </Link>
+    <div className="bg-[#f8f9fa] text-[#191c1d] font-body overflow-x-hidden selection:bg-[#610006]/20">
+      <Header />
+
+      <header id="heritage" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+<img
+              className="w-full h-full object-cover"
+              alt="A macro cinematic shot of a raw, premium wagyu beef ribeye with exceptional marbling."
+              src="/heritage-prime/hero-beef.jpg"
+            />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#191c1d] via-[#191c1d]/60 to-transparent"></div>
+        </div>
+        <div className="container mx-auto px-8 md:px-12 relative z-10 grid md:grid-cols-2 gap-12">
+          <div className="flex flex-col justify-center">
+            <span className="text-[#610006] font-body text-sm uppercase tracking-[0.3em] mb-4 block">Est. 1974</span>
+            <h1 className="font-display text-6xl md:text-8xl font-bold text-white leading-tight -tracking-widest mb-6">
+              Global <br />
+              Purveyors <br />
+              of <span className="italic text-[#ffb3ac]">Exceptional</span> Protein
+            </h1>
+            <p className="text-white/80 font-body text-xl max-w-lg mb-10 leading-relaxed">
+              Wahat Al Zaad Meat bridges the gap between the world's most pristine pastures and the global wholesale market through uncompromising precision and artisanal standards.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a href="/catalog" className="bg-[#610006] text-white px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest flex items-center gap-3 hover:bg-[#831718] transition-all hover:-translate-y-1 shadow-xl">
+                Explore Catalog
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </a>
+              <a href="/sourcing" className="bg-[#f3f4f5]/20 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all">
+                Our Sourcing
+              </a>
+            </div>
           </div>
         </div>
-      </nav>
+      </header>
 
-      <main className="pt-24">
-        <section className="relative h-[921px] w-full overflow-hidden">
-          <div className="h-full relative">
-            <div className="hero-slide absolute inset-0 opacity-100 flex items-center">
-              <div className="absolute inset-0 bg-black/30 z-10"></div>
-              <img
-                className="absolute inset-0 w-full h-full object-cover"
-                alt="A macro shot of a raw, heavily marbled wagyu ribeye steak resting on a dark basalt stone slab."
-                src="/heritage-prime/hero-beef.jpg"
-              />
-              <div className="relative z-20 px-6 md:px-24 max-w-4xl">
-                <span className="text-[#ffdad6] bg-[#610006] px-3 py-1 font-label text-xs uppercase tracking-[0.2em] mb-6 inline-block">
-                  The Beef Collection
-                </span>
-                <h1 className="font-display text-6xl md:text-8xl text-white mb-6 leading-none -tracking-[0.03em]">
-                  A Legacy of
-                  <br />
-                  Dry-Aged Excellence
-                </h1>
-                <p className="text-white/80 text-xl font-display italic mb-10 max-w-xl">
-                  Curated cuts from grass-fed cattle, aged for 45 days in our climate-controlled salt chambers for unparalleled depth of flavor.
+      <section className="py-32 bg-[#f8f9fa]">
+        <div className="container mx-auto px-8 md:px-12">
+          <div className="flex flex-col md:flex-row gap-24 items-center">
+            <div className="md:w-1/2 relative">
+              <div className="absolute -top-12 -left-12 w-48 h-48 bg-[#e7e8e9] rounded-full -z-10 opacity-50"></div>
+              <div className="relative overflow-hidden rounded-lg shadow-2xl">
+<img
+                   className="w-full grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105"
+                   alt="Mutton cuts and carcasses in a professional butchery facility."
+                   src="/heritage-prime/aged-mutton-shoulder.jpg"
+                 />
+              </div>
+            </div>
+            <div className="md:w-1/2">
+              <span className="text-[#610006] font-body text-sm uppercase tracking-widest mb-2 block">Our Foundations</span>
+              <h2 className="font-display text-5xl font-bold mb-8 text-[#191c1d]">A Legacy of Precision</h2>
+              <div className="space-y-6 text-[#5a403c] text-lg font-body leading-relaxed">
+                <p>
+                  For over five decades, Wahat Al Zaad Meat has stood as the definitive benchmark in global protein procurement. What began as a specialized regional butchery has evolved into a sophisticated international network spanning four continents.
                 </p>
-                <Link
-                  to="/contact"
-                  className="primary-gradient text-white px-10 py-4 font-label text-sm uppercase tracking-widest rounded-sm"
-                >
-                  Shop The Collection
-                </Link>
+                <p>
+                  Our commitment to "Precision in Every Cut" is our operational mandate. From rigorous farm-gate audits to cold-chain logistics that never falter, we ensure that the integrity of the product remains absolute from pasture to professional kitchen.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-8 mt-12">
+                <div className="border-l-4 border-[#610006] pl-6">
+                  <div className="text-4xl font-display font-bold text-[#610006]">50+</div>
+                  <div className="text-[#5a403c] text-sm uppercase tracking-widest mt-1">Years of Heritage</div>
+                </div>
+                <div className="border-l-4 border-[#610006] pl-6">
+                  <div className="text-4xl font-display font-bold text-[#610006]">32</div>
+                  <div className="text-[#5a403c] text-sm uppercase tracking-widest mt-1">Global Trade Routes</div>
+                </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-24 px-6 md:px-12 bg-[#f8f9fa]">
-          <CollectionHeader eyebrow="Master Selections" title="The Beef Collection" />
-          <div className="carousel-grid hide-scrollbar pb-8">
-            {beefProducts.map(product => (
-              <ProductCard key={product.title} product={product} />
-            ))}
+      <section id="divisions" className="py-32 bg-[#f3f4f5]">
+        <div className="container mx-auto px-8 md:px-12">
+          <div className="text-center mb-20">
+            <span className="text-[#610006] font-body text-sm uppercase tracking-widest mb-4 block">Strategic Architecture</span>
+            <h2 className="font-display text-5xl font-bold text-[#191c1d]">Operational Divisions</h2>
           </div>
-        </section>
-
-        <section className="h-[614px] bg-stone-900 flex items-center relative overflow-hidden">
-          <img
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
-            alt="A wide view of a professional climate-controlled meat aging room."
-            src="/heritage-prime/aging-room.jpg"
-          />
-          <div className="relative z-10 px-6 md:px-24">
-            <h3 className="font-display text-4xl md:text-5xl text-white mb-6">The Science of Maturity</h3>
-            <p className="text-white/70 max-w-md mb-8">
-              Our proprietary salt-brick aging process reduces moisture while concentrating proteins, resulting in a buttery texture and nutty finish.
-            </p>
-            <Link
-              to="/quality"
-              className="border border-white/30 text-white px-8 py-3 font-label text-xs uppercase tracking-widest hover:bg-white hover:text-stone-900 transition-all"
-            >
-              Explore Our Labs
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+            <div className="md:col-span-8 bg-white p-10 group relative overflow-hidden transition-all hover:bg-[#e1e3e4]">
+              <div className="relative z-10">
+                <span className="material-symbols-outlined text-[#610006] text-4xl mb-6">public</span>
+                <h3 className="text-3xl font-bold mb-4">Global Import &amp; Export</h3>
+                <p className="text-[#5a403c] max-w-md">Seamless global logistics managing complex trade routes and supply chain transparency across major protein markets.</p>
+              </div>
+              <div className="absolute bottom-0 right-0 w-1/3 h-full opacity-10 group-hover:opacity-20 transition-opacity">
+                <span className="material-symbols-outlined text-[15rem] absolute -bottom-10 -right-10">shop</span>
+              </div>
+            </div>
+            <div className="md:col-span-4 bg-[#610006] text-white p-10 relative overflow-hidden group">
+              <div className="relative z-10">
+                <span className="material-symbols-outlined text-[#ff9086] text-4xl mb-6">storefront</span>
+                <h3 className="text-3xl font-bold mb-4">Wholesale Distribution</h3>
+                <p className="text-white/80">Primary supply partner for high-volume retail and luxury hospitality sectors worldwide.</p>
+              </div>
+              <div className="absolute inset-0 bg-[#831718] opacity-0 group-hover:opacity-20 transition-opacity"></div>
+            </div>
+            <div className="md:col-span-4 bg-[#e1e3e4] p-10 group transition-all">
+              <span className="material-symbols-outlined text-[#610006] text-4xl mb-6">content_cut</span>
+              <h3 className="text-3xl font-bold mb-4">Custom Butchery</h3>
+              <p className="text-[#5a403c]">Precision cutting and portioning services tailored to exact client specifications and menu requirements.</p>
+            </div>
+            <div className="md:col-span-8 bg-white p-10 flex items-center gap-12 group transition-all hover:shadow-xl">
+              <div className="flex-1">
+                <span className="material-symbols-outlined text-[#610006] text-4xl mb-6">insights</span>
+                <h3 className="text-3xl font-bold mb-4">Technical Consultation</h3>
+                <p className="text-[#5a403c]">Strategic procurement advice, market trend analysis, and yield optimization for enterprise partners.</p>
+              </div>
+              <div className="hidden lg:block w-48 h-48 bg-[#e7e8e9] rounded-full overflow-hidden flex-shrink-0">
+                <img
+                  className="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
+                  alt="Professional technical charts and market analysis data on a tablet."
+                  src="/heritage-prime/aged-mutton-shoulder.jpg"
+                />
+              </div>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-24 px-6 md:px-12 bg-[#f3f4f5]">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+      <section id="catalog" className="py-32 bg-[#f8f9fa]">
+        <div className="container mx-auto px-8 md:px-12">
+          <div className="flex justify-between items-end mb-16">
             <div>
-              <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
-                Pasture Raised
-              </span>
-              <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">The Lamb Selection</h2>
+              <span className="text-[#610006] font-body text-sm uppercase tracking-widest mb-4 block">Stock Integrity</span>
+              <h2 className="font-display text-5xl font-bold">Technical Catalog</h2>
+            </div>
+            <div className="hidden md:block">
+              <p className="text-[#5a403c] max-w-xs text-right">Live inventory status for professional procurement agents.</p>
             </div>
           </div>
-          <div className="carousel-grid hide-scrollbar pb-8">
-            {lambProducts.map(product => (
-              <ProductCard key={product.title} product={product} />
-            ))}
+          <div className="bg-white shadow-sm overflow-hidden rounded-sm">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#191c1d] text-white font-body text-sm uppercase tracking-widest">
+                  <th className="p-6">Category</th>
+                  <th className="p-6">Primary Origin</th>
+                  <th className="p-6">Grading Standard</th>
+                  <th className="p-6">Age Profile</th>
+                  <th className="p-6">Availability</th>
+                </tr>
+              </thead>
+              <tbody className="font-body">
+<CatalogRow
+                   title="Black Angus Beef"
+                   origin="Australia / USA"
+                   badge="Prime Reserve"
+                   badgeClass="bg-[#0025c8] text-white"
+                   age="18-24 Months"
+                   availability="High Stock"
+                   image="/products/beef-ribeye.jpg"
+                 />
+<CatalogRow
+                   title="Grass-Fed Lamb"
+                   origin="New Zealand"
+                   badge="A-Grade Export"
+                   badgeClass="bg-[#610006] text-white"
+                   age="Under 12 Months"
+                   availability="In Transit"
+                   image="/products/lamb-specialty.jpg"
+                 />
+<CatalogRow
+                   title="Heritage Mutton"
+                   origin="Global Sourcing"
+                   badge="Select Choice"
+                   badgeClass="bg-[#575f67] text-white"
+                   age="24-36 Months"
+                   availability="Seasonal"
+                   image="/heritage-prime/aged-mutton-shoulder.jpg"
+                 />
+              </tbody>
+            </table>
           </div>
-        </section>
+          <div className="mt-8 flex justify-center">
+            <a href="#contact" className="text-[#610006] font-bold uppercase tracking-[0.2em] text-sm flex items-center gap-2 hover:gap-4 transition-all group">
+              Download Full Technical Specification (PDF)
+              <span className="material-symbols-outlined">download</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
-        <section className="py-24 px-6 md:px-12 bg-[#f8f9fa]">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+      <section id="quality" className="py-32 bg-[#191c1d] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#610006] rounded-full blur-[120px]"></div>
+        </div>
+        <div className="container mx-auto px-8 md:px-12 relative z-10">
+          <div className="grid md:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
-                The Vintage Cut
-              </span>
-              <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em]">The Mutton Archive</h2>
+              <span className="text-[#ffb3ac] font-body text-sm uppercase tracking-widest mb-4 block">Biosecurity &amp; Standards</span>
+              <h2 className="font-display text-5xl font-bold mb-10 leading-tight">Uncompromising <br />Quality Controls</h2>
+              <p className="text-white/70 text-lg mb-12 leading-relaxed font-body">
+                Our facilities operate at the highest tier of global safety standards. Traceability is embedded in our DNA, with every individual pallet tracked from the farm through to our distribution hubs via proprietary blockchain logistics.
+              </p>
+              <div className="grid grid-cols-2 gap-6">
+                <QualityCard icon="verified_user" title="HACCP" label="Certified Safety" />
+                <QualityCard icon="language" title="ISO 22000" label="Global Logistics" />
+                <QualityCard icon="folded_hands" title="HALAL" label="Ritual Integrity" />
+                <QualityCard icon="biotech" title="TRACE" label="Bio-Security" />
+              </div>
+            </div>
+            <div className="relative">
+              <img
+                className="w-full rounded-lg shadow-2xl"
+                alt="A clinical food safety laboratory with testing equipment and a scientist checking meat quality samples."
+                src="/products/quality-lab.jpg"
+              />
+              <div className="absolute -bottom-10 -right-10 bg-[#610006] p-12 hidden lg:block">
+                <div className="text-center">
+                  <div className="text-5xl font-display font-bold">100%</div>
+                  <div className="text-[10px] uppercase tracking-widest mt-2 opacity-70">Batch Traceability</div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="carousel-grid hide-scrollbar pb-8">
-            {muttonProducts.map(product => (
-              <ProductCard key={product.title} product={product} />
-            ))}
-          </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-24 px-6 md:px-12 bg-white">
-          <div className="text-center max-w-2xl mx-auto mb-20">
-            <span className="text-[#610006] font-label text-xs uppercase tracking-[0.3em] block mb-4">
-              Further Craftsmanship
-            </span>
-            <h2 className="font-display text-5xl md:text-6xl -tracking-[0.02em] mb-6">Artisanal Processed Products</h2>
-            <p className="text-[#5a403c]">
-              Beyond the cut, our master butchers apply centuries-old curing and brining techniques to create our value-added signatures.
-            </p>
-          </div>
-          <div className="carousel-grid hide-scrollbar pb-8 bg-[#8e706b]/10">
-            {processedProducts.map(product => (
-              <ProcessedProductCard key={product.title} product={product} />
-            ))}
-          </div>
-        </section>
-
-        <section className="grid grid-cols-1 md:grid-cols-2">
-          <div className="bg-[#610006] text-white p-12 md:p-24 flex flex-col justify-center">
-            <span className="font-label text-xs uppercase tracking-widest opacity-60 mb-6">Partnerships</span>
-            <h2 className="font-display text-4xl md:text-5xl mb-8 leading-tight">
-              Wholesale Logistics for Modern Gastronomy
-            </h2>
-            <p className="text-white/70 mb-10 text-lg">
-              Direct integration for Michelin-starred kitchens and luxury hospitality groups. We provide bespoke aging timelines and custom fabrication.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/contact"
-                className="bg-white text-[#610006] px-8 py-3 font-label text-xs uppercase tracking-widest hover:bg-white/90 transition-all"
-              >
-                Wholesale Inquiry
-              </Link>
-              <Link
-                to="/logistics"
-                className="border border-white/20 text-white px-8 py-3 font-label text-xs uppercase tracking-widest hover:bg-white/10 transition-all"
-              >
-                View Logistics Hub
-              </Link>
-            </div>
-          </div>
-          <div className="relative min-h-[200px]">
-            <img
-              className="absolute inset-0 w-full h-full object-cover"
-              alt="A modern, clean delivery truck parked outside a high-end restaurant at dusk."
-              src="/heritage-prime/wholesale-logistics.jpg"
-            />
-          </div>
-        </section>
-      </main>
-
-      <footer className="bg-neutral-950 py-20 px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-end w-full">
-        <div className="space-y-12">
-          <div className="font-display text-3xl text-neutral-50 tracking-tighter">HERITAGE PRIME</div>
-          <p className="font-display italic text-neutral-400 max-w-xs">
-            Dedicated to the preservation of artisanal butchery and the elevation of protein quality through science and heritage.
+      <section id="contact" className="py-32 bg-[#e7e8e9] relative overflow-hidden">
+        <div className="container mx-auto px-8 md:px-12 text-center relative z-10">
+          <h2 className="font-display text-5xl md:text-7xl font-bold mb-8 text-[#191c1d]">Initiate Your Partnership</h2>
+          <p className="text-[#5a403c] text-xl max-w-2xl mx-auto mb-16 leading-relaxed">
+            Connect with our procurement specialist team to discuss large-volume contracts, custom specifications, and international distribution agreements.
           </p>
-          <div className="flex flex-wrap gap-8">
-            <Link to="/about" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
-              Provenance
-            </Link>
-            <Link to="/logistics" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
-              Wholesale Logistics
-            </Link>
-            <Link to="/quality" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
-              Technical Guides
-            </Link>
-            <Link to="/contact" className="text-neutral-500 uppercase text-[10px] tracking-[0.2em] hover:text-red-500 transition-colors">
-              Privacy Ledger
-            </Link>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+            <a className="hero-gradient text-white px-12 py-6 rounded-sm font-bold uppercase tracking-widest flex items-center gap-4 hover:shadow-2xl transition-all hover:-translate-y-1" href="mailto:wholesale@wazmeat.com">
+              Request Wholesale Account
+              <span className="material-symbols-outlined">mail</span>
+            </a>
+            <a className="bg-white text-[#610006] border-2 border-[#610006]/10 px-12 py-6 rounded-sm font-bold uppercase tracking-widest hover:bg-[#f8f9fa] transition-all" href="#contact">
+              Speak with Logistics
+            </a>
           </div>
         </div>
-        <div className="text-right flex flex-col items-end gap-12">
-          <div className="flex gap-6">
-            <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">language</span>
-            <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">mail</span>
-            <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">location_on</span>
-          </div>
-          <p className="text-neutral-600 text-[10px] tracking-widest uppercase">© 2024 Heritage Prime. The Artisanal Authority.</p>
-        </div>
-      </footer>
+      </section>
+
+      <Footer />
     </div>
   );
 };
 
-export default HeritageHome;
+const CatalogRow = ({
+  title,
+  origin,
+  badge,
+  badgeClass,
+  age,
+  availability,
+  image
+}: {
+  title: string;
+  origin: string;
+  badge: string;
+  badgeClass: string;
+  age: string;
+  availability: string;
+  image: string;
+}) => (
+  <tr className="border-b border-[#edeeef] hover:bg-[#f3f4f5] transition-colors group">
+    <td className="p-6 font-bold flex items-center gap-4">
+      <div className="w-12 h-12 bg-[#e7e8e9] rounded overflow-hidden">
+        <img className="w-full h-full object-cover grayscale group-hover:grayscale-0" alt={title} src={image} />
+      </div>
+      {title}
+    </td>
+    <td className="p-6 text-[#5a403c]">{origin}</td>
+    <td className="p-6">
+      <span className={`provenance-badge px-4 py-1 text-xs font-bold uppercase tracking-tighter ${badgeClass}`}>{badge}</span>
+    </td>
+    <td className="p-6 text-[#5a403c]">{age}</td>
+    <td className="p-6 text-[#610006] font-bold">{availability}</td>
+  </tr>
+);
+
+const QualityCard = ({ icon, title, label }: { icon: string; title: string; label: string }) => (
+  <div className="flex items-center gap-4 bg-white/5 p-6 rounded-sm border border-white/10 group hover:border-[#610006] transition-all">
+    <span className="material-symbols-outlined text-[#ffb3ac] text-3xl">{icon}</span>
+    <div>
+      <div className="font-bold">{title}</div>
+      <div className="text-xs text-white/50 uppercase tracking-widest">{label}</div>
+    </div>
+  </div>
+);
+
+export default Home;

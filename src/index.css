@@ -51,14 +51,18 @@
 }
 
 @layer components {
-  .font-display {
-    font-family: Newsreader, serif;
-  }
+   .font-display {
+     font-family: Newsreader, serif;
+   }
 
-  .font-body,
-  .font-label {
-    font-family: 'Work Sans', sans-serif;
-  }
+   .font-headline {
+     font-family: Newsreader, serif;
+   }
+
+   .font-body,
+   .font-label {
+     font-family: 'Work Sans', sans-serif;
+   }
 
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
@@ -71,6 +75,15 @@
   }
 
   .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { 
+    display: none; 
+  }
+
+  .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
@@ -108,6 +121,49 @@
 
   .primary-gradient {
     background: linear-gradient(135deg, #610006 0%, #831718 100%);
+  }
+
+  .premium-gradient {
+    background: linear-gradient(135deg, #610006 0%, #831718 100%);
+  }
+
+.signature-gradient {
+     background: linear-gradient(135deg, #610006 0%, #831718 100%);
+   }
+
+   .provenance-ledger-line {
+     width: 2px;
+     background: linear-gradient(to bottom, transparent, #8e706b 20%, #8e706b 80%, transparent);
+   }
+
+   .primary-gradient-cta {
+    background: linear-gradient(135deg, #610006 0%, #831718 100%);
+  }
+
+.text-editorial-kicker {
+     letter-spacing: 0.1em;
+     text-transform: uppercase;
+   }
+
+   .text-label-md {
+     font-size: 0.875rem;
+     font-weight: 500;
+   }
+
+   .editorial-kerning {
+     letter-spacing: -0.02em;
+   }
+
+   .no-scrollbar::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .provenance-badge {
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, rgba(97, 0, 6, 0.9) 0%, rgba(131, 23, 24, 0.7) 100%);
   }
 
   .tonal-layer {
