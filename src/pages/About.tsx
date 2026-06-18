@@ -18,10 +18,10 @@ const certifications = [
 ];
 
 const divisions = [
-  { title: 'Retail', href: '/retail', description: 'Bringing premium artisanal cuts directly to the consumer table.' },
-  { title: 'Wholesale', href: '/wholesale', description: 'Supplying the nation\'s leading hospitality and food service entities.' },
-  { title: 'Production', href: '/production', description: 'World-class facilities for fresh and deli meat processing.' },
-  { title: 'International', href: '/contact', description: 'Global import and export logistics of quality Halaal products.' }
+  { title: 'Retail', href: '/retail-beef-mutton-lamb-dubai', description: 'Premium beef, mutton and lamb retail in Dubai.' },
+  { title: 'Wholesale', href: '/beef-mutton-lamb-wholesale-dubai', description: 'Wholesale beef, mutton and lamb supplier Dubai.' },
+  { title: 'Production', href: '/meat-production-facility-dubai', description: 'Dubai meat production facility for beef and lamb.' },
+  { title: 'International', href: '/contact-wholesale-dubai', description: 'Global beef logistics from Dubai to worldwide.' }
 ];
 
 const About = () => {
@@ -33,19 +33,18 @@ const About = () => {
         <section className="relative h-[819px] flex items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
 <img
-               className="w-full h-full object-cover grayscale-[0.2] contrast-125"
-               alt="A master artisan butcher slicing a premium cut of dry-aged beef."
-               src="/products/about-hero.jpg"
-             />
+                className="w-full h-full object-cover grayscale-[0.2] contrast-125"
+                alt="Master artisan butcher at Wahat Al Zaad Meat Dubai processing premium beef."
+                src="/heritage-prime/aging-room.jpg"
+              />
             <div className="absolute inset-0 bg-gradient-to-r from-[#610006]/60 to-transparent"></div>
           </div>
           <div className="relative z-10 px-8 md:px-16 max-w-4xl">
-            <span className="editorial-kicker text-white font-bold text-sm mb-4 block">Est. 1970</span>
-            <h1 className="font-display text-6xl md:text-7xl text-white leading-tight tracking-tight mb-8">
-              A Legacy of <br />
-              Precision &amp; Passion <br />
-              <span className="italic">Since 1970</span>
-            </h1>
+            <span className="editorial-kicker text-white font-bold text-sm mb-4 block">Dubai Beef Wholesale Since 1970</span>
+<h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+               <span className="block">Premium Beef, Mutton & Lamb</span>
+               <span className="block text-2xl md:text-3xl font-normal text-[#ffb3ac] mt-2">Wholesale Supplier • Dubai, UAE</span>
+             </h1>
             <div className="h-1 w-24 bg-[#ff9086]"></div>
           </div>
         </section>
@@ -118,10 +117,10 @@ const About = () => {
         <section className="py-24 bg-[#e1e3e4] overflow-hidden relative">
           <div className="absolute right-0 top-0 w-1/3 h-full opacity-10 pointer-events-none">
 <img
-               className="w-full h-full object-cover"
-               alt="Professional stainless steel butcher tools on a white marble slab."
-               src="/products/about-sustainable.jpg"
-             />
+                className="w-full h-full object-cover"
+                alt="Professional stainless steel butcher tools on a white marble slab."
+                src="/heritage-prime/hero-tomahawk.jpg"
+              />
           </div>
           <div className="px-8 md:px-24 relative z-10">
             <span className="editorial-kicker text-[#610006] font-bold text-xs mb-4 block">World of Excellence</span>

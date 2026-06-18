@@ -4,6 +4,7 @@ import Header from '../components/Header';
 
 const Wholesale = () => {
   useEffect(() => {
+    document.title = "Wholesale Meat Supplier Dubai – Beef, Mutton & Lamb | UAE Delivery";
     const observerOptions = {
       threshold: 0.1
     };
@@ -37,19 +38,19 @@ const Wholesale = () => {
         <section className="relative h-[870px] flex items-center overflow-hidden bg-surface-container-low">
           <div className="container mx-auto px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-primary-new font-bold text-editorial-kicker text-sm block">Wholesale Division</span>
-              <h1 className="text-6xl md:text-8xl font-serif italic font-black text-on-surface leading-none tracking-tighter">
-                Precision Sourcing <br/>
-                <span className="text-primary-container">for the Culinary Elite.</span>
+              <span className="text-primary font-bold text-sm block mb-4">Wholesale Division</span>
+              <h1 className="text-5xl md:text-7xl font-display font-bold text-on-surface leading-tight mb-6">
+                <span className="block">Precision Sourcing</span>
+                <span className="block text-2xl md:text-3xl font-normal text-primary mt-2">for the Culinary Elite</span>
               </h1>
-              <p className="max-w-xl text-lg text-on-surface-variant font-body leading-relaxed">
+              <p className="max-w-xl text-on-surface-variant font-body text-sm md:text-base mb-10 leading-relaxed font-light">
                 Supplying Michelin-starred kitchens and global hospitality leaders with a logistics framework as disciplined as their craft. From custom aging to clinical portioning.
               </p>
               <div className="flex items-center gap-6 pt-4">
-                <a href="/contact" className="primary-gradient-cta text-on-primary px-8 py-4 rounded-md font-bold text-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                  Establish Partnership
-                </a>
-                <a href="/contact" className="flex items-center gap-2 font-bold text-primary-new group">
+<a href="/contact-wholesale-dubai" className="primary-gradient-cta text-on-primary px-8 py-4 rounded-md font-bold text-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                 Establish Partnership
+               </a>
+               <a href="/beef-ribeye-technical-specs" className="flex items-center gap-2 font-bold text-primary-new group">
                   Technical Catalog <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
                 </a>
               </div>
@@ -114,7 +115,7 @@ const Wholesale = () => {
           <div className="container mx-auto px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="aspect-[4/5] bg-surface-container-highest overflow-hidden">
-                <img alt="Cold Chain Logistics" className="w-full h-full object-cover" src="/products/shipping-port.jpg"/>
+                <img alt="Cold Chain Logistics Dubai Beef Wholesale" className="w-full h-full object-cover" src="/heritage-prime/wholesale-logistics.jpg"/>
               </div>
               <div className="absolute -right-8 bottom-12 bg-tertiary text-on-tertiary p-6 shadow-2xl max-w-xs">
                 <div className="flex items-center gap-2 mb-2">
@@ -142,7 +143,7 @@ const Wholesale = () => {
                   <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Temperature Breakage</span>
                 </div>
               </div>
-              <a href="/contact" className="border-b-2 border-primary-new text-primary-new font-bold py-2 hover:bg-primary-new hover:text-on-primary px-4 transition-all">
+<a href="/contact-wholesale-dubai" className="border-b-2 border-primary-new text-primary-new font-bold py-2 hover:bg-primary-new hover:text-on-primary px-4 transition-all">
                 Review Distribution Map
               </a>
             </div>
@@ -231,7 +232,7 @@ const Wholesale = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase text-slate-400">Direct Line</p>
-                    <p className="text-lg font-bold">+1 (800) B2B-PRO-CUTS</p>
+                    <p className="text-lg font-bold">+971 56 191 0177</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -240,7 +241,7 @@ const Wholesale = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase text-slate-400">Email Portal</p>
-                    <p className="text-lg font-bold">concierge@artisanalauthority.com</p>
+                    <p className="text-lg font-bold">wholesale@wazmeat.com</p>
                   </div>
                 </div>
               </div>

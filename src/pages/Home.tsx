@@ -3,7 +3,9 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 const Home = () => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    document.title = "Wahat Al Zaad Meat | Premium Beef, Mutton & Lamb Wholesale Dubai";
+  }, []);
 
   return (
     <div className="bg-[#f8f9fa] text-[#191c1d] font-body overflow-x-hidden selection:bg-[#610006]/20">
@@ -13,29 +15,28 @@ const Home = () => {
         <div className="absolute inset-0 z-0">
 <img
               className="w-full h-full object-cover"
-              alt="A macro cinematic shot of a raw, premium wagyu beef ribeye with exceptional marbling."
+              alt="Premium beef, mutton and lamb cuts from Wahat Al Zaad Meat, Dubai wholesale supplier"
               src="/heritage-prime/hero-beef.jpg"
             />
           <div className="absolute inset-0 bg-gradient-to-r from-[#191c1d] via-[#191c1d]/60 to-transparent"></div>
         </div>
         <div className="container mx-auto px-8 md:px-12 relative z-10 grid md:grid-cols-2 gap-12">
           <div className="flex flex-col justify-center">
-            <span className="text-[#610006] font-body text-sm uppercase tracking-[0.3em] mb-4 block">Est. 1974</span>
-            <h1 className="font-display text-6xl md:text-8xl font-bold text-white leading-tight -tracking-widest mb-6">
-              Global <br />
-              Purveyors <br />
-              of <span className="italic text-[#ffb3ac]">Exceptional</span> Protein
-            </h1>
-            <p className="text-white/80 font-body text-xl max-w-lg mb-10 leading-relaxed">
-              Wahat Al Zaad Meat bridges the gap between the world's most pristine pastures and the global wholesale market through uncompromising precision and artisanal standards.
-            </p>
+            <span className="text-white font-body text-sm uppercase tracking-[0.3em] mb-4 block">Premium Meat Purveyors</span>
+<h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+               <span className="block">Premium Beef, Mutton & Lamb</span>
+               <span className="block text-2xl md:text-3xl font-normal text-[#ffb3ac] mt-2">Wholesale Supplier • Dubai, UAE</span>
+             </h1>
+<p className="text-white/80 font-body text-sm md:text-base max-w-lg mb-10 leading-relaxed">
+               Wahat Al Zaad Meat - Dubai's premier source for premium beef, mutton and lamb. Global procurement from Australia, Pakistan, India and South Africa. USDA Prime, halal certified, delivered fresh.
+             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="/catalog" className="bg-[#610006] text-white px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest flex items-center gap-3 hover:bg-[#831718] transition-all hover:-translate-y-1 shadow-xl">
-                Explore Catalog
+              <a href="/beef-mutton-lamb-catalog-dubai" className="bg-[#610006] text-white px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest flex items-center gap-3 hover:bg-[#831718] transition-all hover:-translate-y-1 shadow-xl">
+                Explore Beef Catalog
                 <span className="material-symbols-outlined">arrow_forward</span>
               </a>
-              <a href="/sourcing" className="bg-[#f3f4f5]/20 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all">
-                Our Sourcing
+              <a href="/global-beef-sourcing-australia-pakistan-india" className="bg-[#f3f4f5]/20 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all">
+                Global Sourcing
               </a>
             </div>
           </div>
@@ -133,11 +134,11 @@ const Home = () => {
         <div className="container mx-auto px-8 md:px-12">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <span className="text-[#610006] font-body text-sm uppercase tracking-widest mb-4 block">Stock Integrity</span>
+              <span className="text-[#610006] font-body text-sm uppercase tracking-widest mb-4 block">Premium Beef, Mutton & Lamb</span>
               <h2 className="font-display text-5xl font-bold">Technical Catalog</h2>
             </div>
             <div className="hidden md:block">
-              <p className="text-[#5a403c] max-w-xs text-right">Live inventory status for professional procurement agents.</p>
+              <p className="text-[#5a403c] max-w-xs text-right">Live wholesale inventory of beef, mutton and lamb from Dubai.</p>
             </div>
           </div>
           <div className="bg-white shadow-sm overflow-hidden rounded-sm">
@@ -153,32 +154,32 @@ const Home = () => {
               </thead>
               <tbody className="font-body">
 <CatalogRow
-                   title="Black Angus Beef"
-                   origin="Australia / USA"
-                   badge="Prime Reserve"
-                   badgeClass="bg-[#0025c8] text-white"
-                   age="18-24 Months"
-                   availability="High Stock"
-                   image="/products/beef-ribeye.jpg"
-                 />
+                    title="Pakistan Beef"
+                    origin="Pakistan"
+                    badge="Prime Reserve"
+                    badgeClass="bg-[#0025c8] text-white"
+                    age="18-24 Months"
+                    availability="High Stock"
+                    image="/heritage-prime/heritage-dry-aged-ribeye.jpg"
+                  />
 <CatalogRow
-                   title="Grass-Fed Lamb"
-                   origin="New Zealand"
-                   badge="A-Grade Export"
-                   badgeClass="bg-[#610006] text-white"
-                   age="Under 12 Months"
-                   availability="In Transit"
-                   image="/products/lamb-specialty.jpg"
-                 />
+                    title="Grass-Fed Lamb"
+                    origin="Australia"
+                    badge="A-Grade Export"
+                    badgeClass="bg-[#610006] text-white"
+                    age="Under 12 Months"
+                    availability="In Transit"
+                    image="/heritage-prime/frenched-rack-lamb.jpg"
+                  />
 <CatalogRow
-                   title="Heritage Mutton"
-                   origin="Global Sourcing"
-                   badge="Select Choice"
-                   badgeClass="bg-[#575f67] text-white"
-                   age="24-36 Months"
-                   availability="Seasonal"
-                   image="/heritage-prime/aged-mutton-shoulder.jpg"
-                 />
+                    title="African Mutton"
+                    origin="Global Sourcing"
+                    badge="Select Choice"
+                    badgeClass="bg-[#575f67] text-white"
+                    age="12 Months"
+                    availability="High Stock"
+                    image="/heritage-prime/aged-mutton-shoulder.jpg"
+                  />
               </tbody>
             </table>
           </div>
@@ -214,7 +215,7 @@ const Home = () => {
               <img
                 className="w-full rounded-lg shadow-2xl"
                 alt="A clinical food safety laboratory with testing equipment and a scientist checking meat quality samples."
-                src="/products/quality-lab.jpg"
+                src="/heritage-prime/archive-charcuterie.jpg"
               />
               <div className="absolute -bottom-10 -right-10 bg-[#610006] p-12 hidden lg:block">
                 <div className="text-center">

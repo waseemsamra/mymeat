@@ -38,17 +38,18 @@ const Contact = () => {
         <section className="relative pt-24 pb-32 px-8 overflow-hidden bg-[#f3f4f5]">
           <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
             <div className="z-10">
-              <span className="text-primary text-editorial-kicker uppercase text-xs mb-4 block">Communication Portal</span>
-              <h1 className="font-display text-6xl lg:text-8xl text-[#191c1d] leading-tight tracking-tighter mb-8">
-                The Connection Point: <br/><span className="italic text-primary-container">Expertise on Demand</span>
+              <span className="text-primary text-sm uppercase tracking-[0.2em] font-bold mb-4 block">Dubai Beef, Mutton & Lamb Wholesale</span>
+              <h1 className="font-display text-5xl lg:text-7xl text-on-surface leading-tight mb-6">
+                <span className="block">Contact: Wahat Al Zaad Meat</span>
+                <span className="block text-2xl lg:text-3xl font-normal text-primary mt-2">Premium Meat Supplier Dubai UAE</span>
               </h1>
-              <p className="font-body text-xl text-[#5a403c] max-w-xl leading-relaxed">
-                Whether you are a master chef seeking technical specifications or a retail customer inquiring about our heritage breeds, our specialists are ready to assist.
+              <p className="font-body text-sm md:text-base text-on-surface-variant max-w-xl leading-relaxed">
+                Wahat Al Zaad Meat - Dubai's premier beef, mutton and lamb wholesale supplier. Contact us for USDA Prime halal certified meat sourcing.
               </p>
             </div>
             <div className="relative hidden lg:block">
               <div className="aspect-[4/5] bg-[#e7e8e9] relative overflow-hidden rounded-xl shadow-2xl">
-                <img className="w-full h-full object-cover" alt="Professional master butcher holding a chef's knife next to a marble slab." src="/products/about-hero.jpg"/>
+                <img className="w-full h-full object-cover" alt="Professional master butcher holding a chef's knife next to a marble slab." src="/heritage-prime/heritage-dry-aged-ribeye.jpg"/>
               </div>
               <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
             </div>
@@ -78,7 +79,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="relative">
                     <label className="text-[10px] uppercase font-bold text-[#610006] tracking-widest mb-1 block">Email Address</label>
-                    <input className="w-full bg-[#e7e8e9] border-b-2 border-[#e3beb8]/30 px-0 py-3 text-[#191c1d] placeholder:text-[#8e706b]/50 transition-all border-x-0 border-t-0 focus:border-[#610006] focus:ring-0 outline-none" placeholder="direct@authority.com" type="email"/>
+                    <input className="w-full bg-[#e7e8e9] border-b-2 border-[#e3beb8]/30 px-0 py-3 text-[#191c1d] placeholder:text-[#8e706b]/50 transition-all border-x-0 border-t-0 focus:border-[#610006] focus:ring-0 outline-none" placeholder="direct@wazmeat.com" type="email"/>
                   </div>
                   <div className="relative">
                     <label className="text-[10px] uppercase font-bold text-[#610006] tracking-widest mb-1 block">Organization</label>
@@ -181,27 +182,24 @@ const Contact = () => {
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
               <div>
                 <span className="text-label-sm text-primary uppercase text-xs mb-2 block tracking-[0.3em]">Geospatial Presence</span>
-                <h2 className="font-display text-5xl text-[#191c1d]">The Heritage Map</h2>
+                <h2 className="font-display text-5xl text-on-surface">The Map</h2>
               </div>
               <div className="text-right">
                 <p className="font-body font-bold text-[#191c1d]">Global Headquarters</p>
                 <p className="font-body text-sm text-[#5a403c]">Dubai, UAE</p>
               </div>
             </div>
-            <div className="h-[500px] w-full rounded-2xl overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl group">
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#610006]/20 to-transparent pointer-events-none"></div>
-              <img className="w-full h-full object-cover" alt="Aerial map view of Dubai industrial district with red marker." src="/products/shipping-port.jpg"/>
-              <div className="absolute bottom-8 left-8 z-20 bg-white/90 backdrop-blur-md p-6 rounded-lg max-w-xs shadow-xl border border-[#e3beb8]/10 group-hover:-translate-y-1 transition-transform">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#610006] flex items-center justify-center rounded-lg text-white shrink-0">
-                    <span className="material-symbols-outlined">location_on</span>
-                  </div>
-                  <div>
-                    <p className="font-display text-lg text-[#610006] leading-tight">Master Facility A-01</p>
-                    <p className="font-body text-[11px] text-[#5a403c] mt-1">ISO 22000 Certified Production &amp; Global Distribution Hub</p>
-                  </div>
-                </div>
-              </div>
+            <div className="h-[500px] w-full rounded-2xl overflow-hidden relative shadow-2xl group">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d361062.8901919603!2d55.17327137456963!3d25.14054072122059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f4340de9e5a3b%3A0x2a8d7b9b9b9b9b9b!2sDubai%2C%20UAE!5e0!3m2!1sen!2sae!4v1718710000000"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Wahat Al Zaad Meat Dubai Location"
+              />
             </div>
           </div>
         </section>

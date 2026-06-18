@@ -162,6 +162,14 @@
     clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
   }
 
+  .cta-gradient {
+    background: linear-gradient(135deg, #610006 0%, #831718 100%);
+  }
+
+  .tech-grid-border {
+    border-bottom: 2px solid rgba(142, 112, 107, 0.15);
+  }
+
   .hero-gradient {
     background: linear-gradient(135deg, rgba(97, 0, 6, 0.9) 0%, rgba(131, 23, 24, 0.7) 100%);
   }
@@ -287,8 +295,17 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4d8b00;
+  background: #610006;
   border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #460004;
+}
+
+::selection {
+  background: rgba(97, 0, 6, 0.2);
+  color: #1a1a1a;
 }
 
 ::-webkit-scrollbar-thumb:hover {

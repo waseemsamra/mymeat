@@ -9,12 +9,11 @@ const Divisions = () => (
     <main className="pt-32 pb-20">
         <header className="max-w-7xl mx-auto px-12 mb-24 flex flex-col md:flex-row items-end gap-12">
           <div className="md:w-2/3">
-            <span className="text-[#610006] font-bold uppercase tracking-[0.3em] text-xs mb-4 block">Operational Excellence</span>
-            <h1 className="font-display text-6xl md:text-8xl text-[#191c1d] tracking-tighter leading-[0.9] mb-8">
-              Our Operational <br />
-              <span className="italic text-[#610006]">Divisions</span>
-            </h1>
-            <p className="font-body text-xl text-[#40484f] leading-relaxed max-w-2xl">
+            <span className="text-primary font-bold uppercase tracking-[0.3em] text-sm mb-4 block">Operational Excellence</span>
+<h1 className="font-display text-5xl md:text-7xl text-on-surface font-bold leading-tight mb-6">
+               Our Operational <span className="italic text-primary block mt-2">Divisions</span>
+             </h1>
+            <p className="font-body text-sm md:text-base text-on-surface-variant leading-relaxed max-w-2xl">
               WAZ Meat operates as a vertically integrated ecosystem, ensuring that the legacy of artisanal butchery is preserved through modern precision and an uncompromising commitment to global quality standards.
             </p>
           </div>
@@ -36,10 +35,10 @@ const Divisions = () => (
           <div className="md:col-span-8 group division-card relative bg-[#f3f4f5] overflow-hidden min-h-[500px] flex flex-col justify-end p-12">
             <div className="absolute inset-0 z-0">
 <img
-                 alt="Retail Division"
-                 className="division-image w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-                 src="/products/meat-seafood.jpg"
-               />
+                  alt="Retail Division Dubai Beef"
+                  className="division-image w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                  src="/heritage-prime/heritage-dry-aged-ribeye.jpg"
+                />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             </div>
             <div className="relative z-10 text-white">
@@ -51,9 +50,9 @@ const Divisions = () => (
               <p className="max-w-md text-white/80 mb-8 font-body leading-relaxed">
                 Redefining the neighborhood butcher through a luxury lens. Our retail spaces combine traditional craft with an editorial shopping experience.
               </p>
-              <Link to="/contact" className="bg-white text-[#610006] px-8 py-3 font-bold text-sm tracking-widest flex items-center gap-2 group-hover:bg-[#610006] group-hover:text-white transition-all active:opacity-80 active:scale-95">
-                VIEW DETAILS <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
+<Link to="/retail-beef-mutton-lamb-dubai" className="bg-white text-[#610006] px-8 py-3 font-bold text-sm tracking-widest flex items-center gap-2 group-hover:bg-[#610006] group-hover:text-white transition-all active:opacity-80 active:scale-95">
+                 VIEW DETAILS <span className="material-symbols-outlined text-sm">arrow_forward</span>
+               </Link>
             </div>
           </div>
 
@@ -67,9 +66,9 @@ const Divisions = () => (
             </div>
             <div className="pt-8">
               <div className="text-xs uppercase tracking-widest text-[#610006] font-bold mb-4 group-hover:text-[#ffb3ac]">Partner Portal Access</div>
-              <Link to="/contact" className="inline-flex items-center gap-2 text-[#191c1d] font-bold border-b border-[#191c1d]/20 group-hover:text-white group-hover:border-white transition-all active:opacity-80 active:scale-95">
-                Contact Division
-              </Link>
+<Link to="/contact-wholesale-dubai" className="inline-flex items-center gap-2 text-[#191c1d] font-bold border-b border-[#191c1d]/20 group-hover:text-white group-hover:border-white transition-all active:opacity-80 active:scale-95">
+                 Contact Division
+               </Link>
             </div>
           </div>
 
@@ -87,9 +86,9 @@ const Divisions = () => (
             </div>
             <div className="mt-auto">
               <span className="inline-block px-3 py-1 bg-[#f3f4f5] text-[10px] font-bold uppercase tracking-widest mb-4">ISO-9001 Certified</span>
-              <Link to="/contact" className="w-full py-4 border border-[#610006] text-[#610006] font-bold text-xs tracking-widest hover:bg-[#610006] hover:text-white transition-all active:opacity-80 active:scale-95">
-                VIRTUAL TOUR
-              </Link>
+<Link to="/meat-production-facility-dubai" className="w-full py-4 border border-[#610006] text-[#610006] font-bold text-xs tracking-widest hover:bg-[#610006] hover:text-white transition-all active:opacity-80 active:scale-95">
+                 VIRTUAL TOUR
+               </Link>
             </div>
           </div>
 
@@ -123,9 +122,9 @@ const Divisions = () => (
             <p className="text-sm text-[#40484f] leading-relaxed font-body mb-8">
               Artisanal processed goods, charcuterie, and fine food curation for boutique retailers.
             </p>
-            <Link to="/contact" className="text-[#610006] font-bold text-xs uppercase tracking-widest border-b border-[#610006]/30 hover:border-[#610006] transition-all active:opacity-80 active:scale-95">
-              Explore Catalog
-            </Link>
+<Link to="/beef-mutton-lamb-catalog-dubai" className="text-[#610006] font-bold text-xs uppercase tracking-widest border-b border-[#610006]/30 hover:border-[#610006] transition-all active:opacity-80 active:scale-95">
+               Explore Catalog
+             </Link>
           </div>
         </section>
       </main>

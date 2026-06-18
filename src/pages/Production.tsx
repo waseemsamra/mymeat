@@ -23,7 +23,6 @@ const Production = () => {
       observer.observe(el);
     });
 
-    // Hover animation for icons
     const icons = document.querySelectorAll('.material-symbols-outlined');
     icons.forEach(icon => {
       icon.addEventListener('mouseenter', () => {
@@ -39,64 +38,17 @@ const Production = () => {
     <div className="bg-surface text-on-surface antialiased">
       <Header />
 
-      {/* SideNavBar */}
-      <aside className="hidden lg:flex flex-col py-8 gap-4 h-screen w-72 fixed left-0 top-20 bg-surface-container-low z-40">
-        <div className="px-8 mb-8">
-          <h2 className="font-serif text-lg text-primary">The Butcher's Atlas</h2>
-          <p className="font-sans uppercase tracking-widest text-[10px] text-slate-500">Technical Specifications</p>
-        </div>
-        <nav className="flex-1 space-y-1">
-          <a className="group flex items-center px-8 py-3 bg-white text-primary font-bold border-l-4 border-primary transition-all duration-200" href="#hero">
-            <span className="material-symbols-outlined mr-3">restaurant_menu</span>
-            <span className="font-sans uppercase tracking-widest text-xs">All Cuts</span>
-          </a>
-          <a className="group flex items-center px-8 py-3 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200" href="#facilities">
-            <span className="material-symbols-outlined mr-3">kebab_dining</span>
-            <span className="font-sans uppercase tracking-widest text-xs">Prime Ribs</span>
-          </a>
-          <a className="group flex items-center px-8 py-3 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200" href="#science">
-            <span className="material-symbols-outlined mr-3">lunch_dining</span>
-            <span className="font-sans uppercase tracking-widest text-xs">Leg & Loin</span>
-          </a>
-          <a className="group flex items-center px-8 py-3 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200" href="#quality">
-            <span className="material-symbols-outlined mr-3">set_meal</span>
-            <span className="font-sans uppercase tracking-widest text-xs">Shoulder</span>
-          </a>
-          <a className="group flex items-center px-8 py-3 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200" href="#">
-            <span className="material-symbols-outlined mr-3">layers</span>
-            <span className="font-sans uppercase tracking-widest text-xs">Offal</span>
-          </a>
-          <a className="group flex items-center px-8 py-3 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200" href="#">
-            <span className="material-symbols-outlined mr-3">precision_manufacturing</span>
-            <span className="font-sans uppercase tracking-widest text-xs">Custom Prep</span>
-          </a>
-        </nav>
-        <div className="px-8 pt-4 border-t border-outline/10">
-          <button className="w-full py-3 bg-primary text-white font-sans uppercase tracking-widest text-[10px] rounded-md shadow-lg hover:-translate-y-1 transition-transform">Download Specs</button>
-          <div className="mt-6 flex flex-col gap-3">
-            <a className="flex items-center text-slate-500 text-[10px] uppercase tracking-widest hover:text-primary transition-colors" href="#">
-              <span className="material-symbols-outlined text-sm mr-2">business_center</span>
-              Wholesale Portal
-            </a>
-            <a className="flex items-center text-slate-500 text-[10px] uppercase tracking-widest hover:text-primary transition-colors" href="#">
-              <span className="material-symbols-outlined text-sm mr-2">help_center</span>
-              Support
-            </a>
-          </div>
-        </div>
-      </aside>
-
-      <main className="lg:pl-72 pt-20">
+      <main className="pt-20">
         {/* Hero Section */}
         <section className="relative min-h-[921px] flex items-center overflow-hidden bg-surface" id="hero">
           <div className="container mx-auto px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7">
-              <span className="label-md text-primary font-bold uppercase tracking-[0.2em] mb-4 block">Professional Production Infrastructure</span>
-              <h1 className="font-display text-7xl md:text-8xl text-on-surface font-extrabold tracking-tighter leading-[0.9] mb-8">
-                Where <span className="italic text-primary">Tradition</span><br/>Meets Technology.
+              <span className="label-md text-primary font-bold uppercase tracking-[0.2em] mb-4 block">Dubai Beef Processing Facility</span>
+              <h1 className="font-display text-5xl md:text-7xl text-on-surface font-bold leading-tight mb-6">
+                Premium Beef, Mutton & Lamb <span className="block text-2xl md:text-3xl font-normal text-primary mt-2">Processing in Dubai</span>
               </h1>
-              <p className="text-lg text-slate-600 max-w-xl mb-10 leading-relaxed font-body">
-                Our facility represents the pinnacle of artisanal processing. We combine heritage dry-aging techniques with clinical-grade biosecurity protocols and technical precision.
+              <p className="text-on-surface-variant font-body text-sm md:text-base max-w-xl mb-10 leading-relaxed">
+                Our Dubai facility processes premium beef, mutton and lamb from Australia, Pakistan, India and South Africa with clinical biosecurity protocols and technical precision.
               </p>
               <div className="flex flex-wrap gap-4">
                 <button className="bg-gradient-to-br from-primary to-primary-container px-8 py-4 text-white font-bold rounded-md flex items-center group">
@@ -172,7 +124,6 @@ const Production = () => {
                 <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                   Modular fabrication lines designed for zero cross-contamination. Every surface is non-porous antimicrobial surgical steel.
                 </p>
-                <img className="w-full h-48 object-cover rounded shadow-inner opacity-80 group-hover:opacity-100 transition-opacity" alt="Industrial tools laid out on a steel surface." src="/heritage-prime/archive-charcuterie.jpg"/>
               </div>
               <div className="md:col-span-7 bg-surface-container-highest rounded-lg overflow-hidden relative">
                 <div className="p-8 h-full flex flex-col justify-center">
@@ -256,7 +207,7 @@ const Production = () => {
             <p className="text-white/70 max-w-xl mx-auto mb-12 text-lg leading-relaxed">
               Wholesale partners are invited to witness our protocols in person. We maintain an open-book policy for all technical specifications.
             </p>
-            <Link to="/contact" className="bg-white text-primary px-12 py-5 font-bold rounded shadow-2xl hover:scale-105 transition-transform inline-block">
+            <Link to="/contact-wholesale-dubai" className="bg-white text-primary px-12 py-5 font-bold rounded shadow-2xl hover:scale-105 transition-transform inline-block">
               Schedule Technical Tour
             </Link>
           </div>

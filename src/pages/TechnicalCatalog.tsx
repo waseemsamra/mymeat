@@ -34,16 +34,17 @@ const TechnicalCatalog = () => {
       <Header />
 
       <main className="pt-24 pb-20">
-        {/* Hero Section: Clinical Precision meets Artisanal Heritage */}
+        {/* Hero Section: Clinical Precision meets Artisanal Standards */}
         <section className="relative px-8 py-24 mb-12 px-12">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
             <div className="md:col-span-7">
-              <span className="text-[#610006] font-bold tracking-widest text-sm uppercase mb-4 block">Institutional Standards</span>
-              <h1 className="font-display text-6xl md:text-8xl text-[#191c1d] tracking-tight leading-[0.9] mb-8">
-                The Technical <br/><span className="italic">Atlases</span>
+              <span className="text-primary font-bold tracking-[0.2em] text-sm uppercase mb-4 block">Technical Beef Catalog Dubai</span>
+              <h1 className="font-display text-5xl md:text-7xl text-on-surface tracking-tight leading-tight mb-6">
+                <span className="block">The Technical</span>
+                <span className="block text-2xl md:text-3xl font-normal text-primary mt-2">Beef, Mutton & Lamb Atlases</span>
               </h1>
-              <p className="text-[#5a403c] text-xl max-w-xl font-body leading-relaxed">
-                A rigorous taxonomical directory of heritage proteins. Engineered for master butchers and culinary architects who demand exactitude in marbling scores, skeletal architecture, and dry-aging chemistry.
+              <p className="text-on-surface-variant font-body text-sm md:text-base max-w-xl leading-relaxed">
+                Dubai's premier technical catalog of beef, mutton and lamb. USDA Prime, HACCP certified, with full specification data for professional kitchens.
               </p>
             </div>
             <div className="md:col-span-5 relative">
@@ -89,7 +90,7 @@ const TechnicalCatalog = () => {
                   </a>
                 </div>
                 <div className="md:w-1/2 relative overflow-hidden">
-                  <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Raw, perfectly marbled Prime Wagyu ribeye steak on dark slate butcher block." src="/products/beef-ribeye.jpg"/>
+                  <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Raw, perfectly marbled Prime Wagyu ribeye steak on dark slate butcher block." src="/heritage-prime/heritage-dry-aged-ribeye.jpg"/>
                 </div>
               </div>
             </div>
@@ -160,7 +161,7 @@ const TechnicalCatalog = () => {
               </div>
               <div className="flex-1 bg-white/5 rounded-lg overflow-hidden relative border border-white/10 min-h-[300px]">
                 <div className="absolute inset-0 opacity-40 grayscale contrast-125">
-                  <img className="w-full h-full object-cover" alt="World Map showing global sourcing locations" src="/products/logistics-map.jpg"/>
+                  <img className="w-full h-full object-cover" alt="World Map showing global sourcing locations" src="/heritage-prime/hero-beef.jpg"/>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-24 h-24 border border-[#ffb3ac]/30 rounded-full flex items-center justify-center animate-pulse">

@@ -37,19 +37,19 @@ const Quality = () => {
         <section className="relative h-[921px] overflow-hidden flex items-center bg-[#f3f4f5]">
           <div className="absolute inset-0 z-0">
 <img
-               className="w-full h-full object-cover opacity-90 scale-105"
-               alt="A high-end cinematic photo of a professional butcher in a pristine, white-tiled artisanal facility."
-               src="/products/quality-hero.jpg"
-             />
+                className="w-full h-full object-cover opacity-90 scale-105"
+                alt="A high-end cinematic photo of a professional butcher in a pristine, white-tiled artisanal facility."
+                src="/heritage-prime/hero-beef.jpg"
+              />
             <div className="absolute inset-0 bg-gradient-to-r from-[#f8f9fa] via-[#f8f9fa]/40 to-transparent"></div>
           </div>
           <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12">
             <div className="max-w-2xl">
-              <span className="font-body text-sm uppercase tracking-[0.3em] text-[#610006] font-bold mb-4 block">Uncompromising Protocols</span>
-              <h1 className="font-display text-6xl md:text-8xl editorial-kerning font-bold text-[#191c1d] mb-8 leading-[0.95]">
-                The Standard of <span className="italic text-[#610006]">Excellence.</span>
-              </h1>
-              <p className="font-body text-xl text-[#5a403c] mb-12 leading-relaxed max-w-lg">
+              <span className="font-body text-sm uppercase tracking-[0.3em] text-primary font-bold mb-4 block">Uncompromising Protocols</span>
+<h1 className="font-display text-5xl md:text-7xl font-bold text-on-surface mb-6 leading-tight">
+                 The Standard of <span className="italic text-primary block mt-2">Excellence.</span>
+               </h1>
+               <p className="font-body text-sm md:text-base text-on-surface-variant mb-12 leading-relaxed max-w-lg">
                 Where artisanal craft meets clinical precision. Our facility operates at the intersection of biological safety and culinary artistry.
               </p>
               <div className="flex items-center gap-6">
@@ -237,12 +237,12 @@ const Quality = () => {
               Access our full laboratory reports, certification documentation, and audit trail data via our secure partner portal.
             </p>
             <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-              <button className="bg-white text-[#610006] px-12 py-5 rounded-md font-bold text-lg hover:bg-[#f3f4f5] transition-colors w-full md:w-auto">
-                Download Quality Specs (PDF)
-              </button>
-              <button className="border border-white px-12 py-5 rounded-md font-bold text-lg hover:bg-white/10 transition-colors w-full md:w-auto">
-                Contact Compliance Officer
-              </button>
+<button className="bg-white text-[#610006] px-12 py-5 rounded-md font-bold text-lg hover:bg-[#f3f4f5] transition-colors w-full md:w-auto" onClick={() => window.location.href = '/contact-wholesale-dubai'}>
+                 Download Quality Specs (PDF)
+               </button>
+               <button className="border border-white px-12 py-5 rounded-md font-bold text-lg hover:bg-white/10 transition-colors w-full md:w-auto" onClick={() => window.location.href = '/contact-wholesale-dubai'}>
+                 Contact Compliance Officer
+               </button>
             </div>
           </div>
         </section>

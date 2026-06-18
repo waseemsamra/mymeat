@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-const Retail = () => (
+const Retail = () => {
+  useEffect(() => {
+    document.title = "Dubai Retail Butcher Shop – Premium Beef & Mutton | WAZ Meat";
+  }, []);
+  return (
   <div className="bg-[#f8f9fa] text-[#191c1d] font-body overflow-x-hidden selection:bg-[#831718] selection:text-white">
     <Header />
 
@@ -10,20 +15,21 @@ const Retail = () => (
       <section className="relative min-h-[870px] flex items-center overflow-hidden bg-[#f8f9fa]">
         <div className="container mx-auto px-8 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           <div className="max-w-2xl">
-            <span className="font-body uppercase tracking-[0.3em] text-[#610006] font-bold text-sm mb-4 block">Retail Excellence</span>
-            <h1 className="text-7xl lg:text-8xl font-display italic tracking-tighter leading-[0.9] text-[#610006] mb-8">
-              The Neighborhood Butcher, <span className="block">Reimagined.</span>
-            </h1>
-            <p className="text-xl text-[#5a403c] font-light mb-10 max-w-lg leading-relaxed">
-              Experience the precision of a wholesale cut in the warmth of your local store. Wahat Al Zaad Meat brings dry-aged mastery directly to your table.
+            <span className="font-body uppercase tracking-[0.3em] text-[#610006] font-bold text-sm mb-4 block">Dubai Beef, Mutton & Lamb Retail</span>
+<h1 className="text-5xl md:text-7xl font-display leading-tight text-primary mb-6">
+               <span className="block font-bold">Premium Beef & Mutton,</span>
+               <span className="block text-2xl md:text-3xl font-normal text-secondary mt-2">Reimagined in Dubai</span>
+             </h1>
+            <p className="text-on-surface-variant font-body text-sm md:text-base mb-10 max-w-lg leading-relaxed font-light">
+              Wahat Al Zaad Meat brings USDA Prime halal certified beef, mutton and lamb directly to Dubai consumers. Visit our Meat Library for premium cuts.
             </p>
             <div className="flex flex-wrap gap-6">
-              <Link to="/contact" className="px-10 py-5 premium-gradient text-white rounded-md shadow-lg shadow-[#610006]/20 hover:-translate-y-1 transition-all duration-300 font-medium tracking-wide">
-                Visit The Meat Library
-              </Link>
-              <Link to="/contact" className="px-10 py-5 border-b-2 border-[#610006] text-[#610006] font-bold hover:bg-[#610006]/5 transition-all">
-                Find a Retailer
-              </Link>
+<Link to="/contact-wholesale-dubai" className="px-10 py-5 premium-gradient text-white rounded-md shadow-lg shadow-[#610006]/20 hover:-translate-y-1 transition-all duration-300 font-medium tracking-wide">
+                 Visit The Meat Library
+               </Link>
+               <Link to="/beef-mutton-lamb-wholesale-dubai" className="px-10 py-5 border-b-2 border-[#610006] text-[#610006] font-bold hover:bg-[#610006]/5 transition-all">
+                 Find a Retailer
+               </Link>
             </div>
           </div>
           <div className="relative hidden lg:block">
@@ -34,10 +40,10 @@ const Retail = () => (
               <span className="provenance-badge mb-4 inline-block">Grade: Prime A1</span>
               <h4 className="font-display text-2xl text-[#610006] leading-none">Dry-Aged Ribeye</h4>
               <p className="text-xs text-slate-500 mt-2 font-medium">Himalayan Salt-Aged for 45 Days</p>
-              <div className="mt-4 flex justify-between items-end">
-                <span className="text-[#610006] font-bold text-xl font-display italic">$78.00/kg</span>
-                <span className="material-symbols-outlined text-[#610006]">arrow_outward</span>
-              </div>
+<div className="mt-4 flex justify-between items-end">
+                 <span></span>
+                 <span className="material-symbols-outlined text-[#610006]">arrow_outward</span>
+               </div>
             </div>
           </div>
         </div>
@@ -76,8 +82,8 @@ const Retail = () => (
             </div>
             <div className="col-span-12 lg:col-span-7 flex gap-4 md:gap-8 justify-end">
               <div className="w-1/2 pt-16">
-                <img className="w-full aspect-[3/4] object-cover rounded-sm shadow-lg mb-8" alt="A master butcher carving a prime side of beef." src="/products/beef-ribeye.jpg"/>
-                <img className="w-full aspect-square object-cover rounded-sm shadow-lg" alt="Artisanal meat cuts arranged on a marble slab." src="/products/wagyu.jpg"/>
+                <img className="w-full aspect-[3/4] object-cover rounded-sm shadow-lg mb-8" alt="Premium beef Tomahawk steak, Dubai retail selection." src="/heritage-prime/heritage-tomahawk.jpg"/>
+                <img className="w-full aspect-square object-cover rounded-sm shadow-lg" alt="Artisanal beef cuts arranged on a marble slab, Dubai retail." src="/heritage-prime/aged-mutton-shoulder.jpg"/>
               </div>
               <div className="w-1/2">
                 <img className="w-full aspect-[2/3] object-cover rounded-sm shadow-xl" alt="Luxury butcher shop exterior at dusk." src="/heritage-prime/archive-charcuterie.jpg"/>
@@ -105,9 +111,9 @@ const Retail = () => (
               <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="A thick-cut Tomahawk steak on a dark slate background." src="/heritage-prime/heritage-tomahawk.jpg"/>
               <div className="absolute inset-0 bg-gradient-to-t from-[#610006]/80 via-transparent to-transparent flex flex-col justify-end p-10 text-white">
                 <span className="provenance-badge w-fit mb-4">Master Selection</span>
-                <h3 className="text-4xl font-display italic mb-2">Heritage Tomahawk</h3>
+                <h3 className="text-4xl font-display italic mb-2">WAZ Tomahawk</h3>
                 <p className="text-sm text-slate-300 max-w-sm mb-6">Aged on the bone for 60 days in our signature salt-brick chamber.</p>
-                <Link to="/contact" className="w-fit flex items-center gap-2 font-bold uppercase tracking-widest text-xs">Order Selection <span className="material-symbols-outlined text-sm">trending_flat</span></Link>
+                <Link to="/contact-wholesale-dubai" className="w-fit flex items-center gap-2 font-bold uppercase tracking-widest text-xs">Order Selection <span className="material-symbols-outlined text-sm">trending_flat</span></Link>
               </div>
             </div>
             <div className="md:col-span-2 md:row-span-1 group relative overflow-hidden bg-[#f3f4f5] rounded-lg">
@@ -115,23 +121,23 @@ const Retail = () => (
               <div className="absolute inset-0 bg-black/20 group-hover:bg-[#610006]/20 transition-all duration-300"></div>
               <div className="absolute top-6 left-6">
                 <h4 className="text-2xl font-display text-white drop-shadow-md">Lollipop Lamb Chops</h4>
-              </div>
-              <div className="absolute bottom-6 right-6">
-                <span className="text-white font-bold bg-[#610006] px-4 py-2 rounded-sm">$45.00/lb</span>
-              </div>
+</div>
+               <div className="absolute bottom-6 right-6">
+                 <span className="text-white font-bold bg-[#610006] px-4 py-2 rounded-sm">From AED 190/kg</span>
+               </div>
             </div>
             <div className="md:col-span-1 md:row-span-1 group relative overflow-hidden bg-[#f3f4f5] rounded-lg">
               <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Premium beef carpaccio." src="/heritage-prime/aged-beef-sausage.jpg"/>
               <div className="absolute inset-0 flex items-center justify-center bg-[#610006]/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Link to="/contact" className="bg-white text-[#610006] px-6 py-2 font-bold uppercase text-[10px] tracking-widest">View Details</Link>
+<Link to="/contact-wholesale-dubai" className="bg-white text-[#610006] px-6 py-2 font-bold uppercase text-[10px] tracking-widest">View Details</Link>
+                </div>
               </div>
-            </div>
-            <div className="md:col-span-1 md:row-span-1 group relative overflow-hidden bg-[#f3f4f5] rounded-lg">
-              <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Mutton neck fillet." src="/heritage-prime/aged-mutton-shoulder.jpg"/>
-              <div className="absolute inset-0 flex items-center justify-center bg-[#610006]/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Link to="/contact" className="bg-white text-[#610006] px-6 py-2 font-bold uppercase text-[10px] tracking-widest">View Details</Link>
+              <div className="md:col-span-1 md:row-span-1 group relative overflow-hidden bg-[#f3f4f5] rounded-lg">
+               <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Mutton shoulder, Dubai retail." src="/heritage-prime/heritage-lamb-shanks.jpg"/>
+               <div className="absolute inset-0 flex items-center justify-center bg-[#610006]/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                 <Link to="/contact-wholesale-dubai" className="bg-white text-[#610006] px-6 py-2 font-bold uppercase text-[10px] tracking-widest">View Details</Link>
+               </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
@@ -141,7 +147,7 @@ const Retail = () => (
           <div className="bg-[#f8f9fa] shadow-2xl overflow-hidden rounded-xl flex flex-col lg:flex-row">
             <div className="lg:w-1/3 p-12 lg:p-16">
               <span className="text-[#610006] font-bold uppercase tracking-widest text-xs">Our Locations</span>
-              <h2 className="text-5xl font-display text-[#610006] mt-4 leading-tight">Find Your <br />Local Butcher</h2>
+              <h2 className="text-5xl font-display text-[#610006] mt-4 leading-tight">Find Your <br />Dubai Butcher</h2>
               <div className="mt-12 space-y-8">
                 <div className="relative">
                   <label className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mb-2 block">Zip or City</label>
@@ -149,9 +155,9 @@ const Retail = () => (
                   <span className="material-symbols-outlined absolute right-0 bottom-3 text-slate-400">near_me</span>
                 </div>
                 <div className="space-y-4 max-h-64 overflow-y-auto custom-scrollbar pr-4">
-                  <LocationCard title="The Marble Arch Library" address="42 Heritage Way, W1 London" status="Open Until 9:00 PM" active />
-                  <LocationCard title="The Brooklyn Forge" address="112 Hudson St, Brooklyn, NY" status="1.2 miles away" />
-                  <LocationCard title="The Sydney Cut" address="88 George St, The Rocks" status="3.5 miles away" />
+                  <LocationCard title="The WAZ Meat Shop" address="Business Bay, Dubai" status="Open Until 9:00 PM" active />
+<LocationCard title="WAZ Premium Cuts" address="Al Quoz Industrial Area, Dubai" status="2.5 miles away" />
+                   <LocationCard title="Al Barsha WAZ" address="Al Barsha, Dubai" status="3.5 miles away" />
                 </div>
               </div>
             </div>
@@ -163,7 +169,7 @@ const Retail = () => (
                   <span className="material-symbols-outlined text-white text-xs" style={{fontVariationSettings: "'FILL' 1"}}>location_on</span>
                 </div>
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-white px-4 py-2 shadow-xl rounded-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  <p className="text-xs font-bold text-[#610006]">The Marble Arch Library</p>
+                  <p className="text-xs font-bold text-[#610006]">The WAZ Meat Shop</p>
                 </div>
               </div>
             </div>
@@ -179,7 +185,7 @@ const Retail = () => (
           </p>
           <div className="flex flex-col md:flex-row justify-center gap-4">
             <input className="bg-white/10 border-white/20 text-white placeholder:text-white/40 px-8 py-4 rounded-sm min-w-[320px] focus:ring-1 focus:ring-white/50 focus:border-white/50" placeholder="Your Professional Email" type="email" />
-            <Link to="/contact" className="bg-white text-[#610006] font-bold px-10 py-4 uppercase tracking-[0.2em] text-xs hover:bg-slate-100 transition-colors">Join The Guild</Link>
+            <Link to="/contact-wholesale-dubai" className="bg-white text-[#610006] font-bold px-10 py-4 uppercase tracking-[0.2em] text-xs hover:bg-slate-100 transition-colors">Join The Guild</Link>
           </div>
         </div>
       </section>
@@ -188,6 +194,7 @@ const Retail = () => (
     <Footer />
   </div>
 );
+};
 
 const LocationCard = ({ title, address, status, active = false }: { title: string; address: string; status: string; active?: boolean }) => (
   <div className={`p-4 border-l-4 ${active ? 'bg-[#f3f4f5] border-[#610006]' : 'border-transparent hover:bg-slate-50 transition-colors cursor-pointer'}`}>

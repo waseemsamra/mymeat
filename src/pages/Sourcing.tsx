@@ -30,17 +30,18 @@ const Sourcing = () => {
       {/* Hero Section */}
       <section className="relative h-[921px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#610006]/40 to-transparent z-10"></div>
-          <div className="w-full h-full bg-cover bg-center" style={{backgroundImage: "url('/products/beef-ribeye.jpg')"}}></div>
+<div className="absolute inset-0 bg-gradient-to-r from-[#610006]/40 to-transparent z-10"></div>
+           <div className="w-full h-full bg-cover bg-center" style={{backgroundImage: "url('/heritage-prime/hero-beef.jpg')"}}></div>
         </div>
         <div className="relative z-20 px-12 md:px-24 w-full max-w-7xl">
           <div className="space-y-4">
-            <p className="font-sans text-[#ffb3ac] uppercase tracking-[0.3em] text-sm font-bold">The Art of Origin</p>
-            <h1 className="text-6xl md:text-8xl text-white font-black leading-tight tracking-tighter max-w-4xl">
-              The Source of <span className="italic font-light">Excellence.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-stone-200 max-w-2xl font-light italic opacity-90">
-              A global network curated by master butchers, committed to the absolute pinnacle of ethical husbandry and regional distinction.
+            <p className="font-body text-white uppercase tracking-[0.3em] text-sm font-bold">Dubai Beef Wholesale</p>
+<h1 className="font-display text-5xl md:text-7xl text-white font-bold leading-tight tracking-tighter mb-6">
+               <span className="block">Global Beef, Mutton & Lamb Sourcing</span>
+               <span className="block text-2xl md:text-3xl font-normal text-white mt-2">Australia, Pakistan, India, South Africa</span>
+             </h1>
+             <p className="font-body text-sm md:text-base text-stone-200 max-w-2xl mb-12 leading-relaxed">
+              Wahat Al Zaad Meat sources premium beef, mutton and lamb from Australia, Pakistan, India and South Africa for Dubai wholesale distribution.
             </p>
           </div>
         </div>
@@ -77,7 +78,7 @@ const Sourcing = () => {
             <h2 className="text-4xl font-serif italic text-[#191c1d]">Our Strategic Hubs</h2>
           </div>
           <div className="relative aspect-video w-full bg-white/50 overflow-hidden border border-[#e3beb8]/20 group">
-            <img className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 transition-all duration-700" alt="World map showing global sourcing locations with strategic hubs highlighted." src="/products/logistics-map.jpg"/>
+            <img className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 transition-all duration-700" alt="World map showing global sourcing locations with strategic hubs highlighted." src="/heritage-prime/hero-beef.jpg"/>
             <div className="absolute top-[50%] left-[25%] flex flex-col items-center">
               <div className="w-4 h-4 bg-[#610006] rounded-full animate-ping absolute"></div>
               <div className="w-4 h-4 bg-[#610006] rounded-full relative z-10"></div>
@@ -85,7 +86,7 @@ const Sourcing = () => {
             </div>
             <div className="absolute top-[45%] left-[55%] flex flex-col items-center">
               <div className="w-4 h-4 bg-[#610006] rounded-full relative z-10"></div>
-              <span className="mt-2 font-sans text-[10px] font-bold uppercase tracking-widest bg-white px-2 py-1 shadow-sm">Pakistan & India</span>
+              <span className="mt-2 font-sans text-[10px] font-bold uppercase tracking-widest bg-white px-2 py-1 shadow-sm">Pakistan & India. Beef & Mutton</span>
             </div>
             <div className="absolute top-[65%] left-[50%] flex flex-col items-center">
               <div className="w-4 h-4 bg-[#610006] rounded-full relative z-10"></div>
@@ -107,7 +108,7 @@ const Sourcing = () => {
             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
               <span className="material-symbols-outlined text-9xl">restaurant</span>
             </div>
-            <span className="provenance-badge mb-6 inline-block bg-[#0025c8] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Mutton & Lamb Specialists</span>
+            <span className="provenance-badge mb-6 inline-block bg-[#0025c8] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Beef & Mutton</span>
             <h3 className="text-3xl font-black text-[#610006] mb-4 tracking-tighter uppercase">Pakistan & India</h3>
             <p className="text-[#5a403c] leading-relaxed mb-8">
               Home to some of the world's most aromatic and lean mutton profiles. Our partners utilize traditional free-grazing husbandry in the Punjab and Northern Highlands, resulting in a unique flavor intensity favored for high-end culinary applications.
@@ -123,7 +124,7 @@ const Sourcing = () => {
             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
               <span className="material-symbols-outlined text-9xl">eco</span>
             </div>
-            <span className="provenance-badge mb-6 inline-block bg-[#0025c8] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Karoo & Grass-Fed Beef</span>
+            <span className="provenance-badge mb-6 inline-block bg-[#0025c8] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Grass-Fed Beef</span>
             <h3 className="text-3xl font-black text-[#610006] mb-4 tracking-tighter uppercase">Africa & South Africa</h3>
             <p className="text-[#5a403c] leading-relaxed mb-8">
               Renowned for the legendary Karoo Lamb, these regions offer a distinct herbaceous flavor profile. Our focus remains on extensive grass-fed cattle systems that prioritize animal welfare and environmental stewardship.
@@ -139,7 +140,7 @@ const Sourcing = () => {
             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
               <span className="material-symbols-outlined text-9xl">architecture</span>
             </div>
-            <span className="provenance-badge mb-6 inline-block bg-[#0025c8] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Premium Wagyu & Lamb</span>
+            <span className="provenance-badge mb-6 inline-block bg-[#0025c8] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Premium Beef & Lamb</span>
             <h3 className="text-3xl font-black text-[#610006] mb-4 tracking-tighter uppercase">Australia</h3>
             <p className="text-[#5a403c] leading-relaxed mb-8">
               Australia stands as the benchmark for strict biosecurity and systematic grading. Our Australian supply chain delivers consistent BMS 7+ Wagyu and premium export-grade lamb, defined by surgical precision in processing.
