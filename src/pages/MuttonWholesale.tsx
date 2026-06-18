@@ -68,6 +68,10 @@ const MuttonWholesale = () => {
                 <a href="#inventory" className="bg-secondary-container text-on-secondary-fixed-variant px-8 py-4 rounded-lg font-bold text-lg hover:bg-surface-container-highest transition-all">
                   View Pricing Table
                 </a>
+                <a href="https://wa.me/971585842800" target="_blank" rel="noopener noreferrer" className="bg-green-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-600 transition-all flex items-center gap-2">
+                  <span className="material-symbols-outlined">whatsapp</span>
+                  WhatsApp Wholesale Desk
+                </a>
               </div>
               <div className="mt-16 flex flex-wrap gap-8 opacity-80">
                 <div className="flex items-center gap-3">
@@ -354,16 +358,16 @@ const MuttonWholesale = () => {
                   </div>
                   <div>
                     <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Direct Sales Hotline</div>
-                    <div className="text-2xl font-bold">+971 4 000 0000</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6 group">
-                  <div className="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
-                    <span className="material-symbols-outlined text-3xl">chat</span>
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">WhatsApp Bulk Orders</div>
-                    <div className="text-2xl font-bold">+971 50 000 0000</div>
+<div className="text-2xl font-bold">+971 56 191 0177</div>
+                   </div>
+                 </div>
+                 <div className="flex items-center gap-6 group">
+                   <div className="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                     <span className="material-symbols-outlined text-3xl">chat</span>
+                   </div>
+                   <div>
+                     <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">WhatsApp Bulk Orders</div>
+                     <div className="text-2xl font-bold">+971 56 191 0177</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-6 group">

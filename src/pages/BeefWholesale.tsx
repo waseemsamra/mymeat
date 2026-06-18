@@ -42,6 +42,10 @@ const BeefWholesale = () => {
               <div className="flex flex-wrap gap-4 mb-12">
                 <a href="#pricing" className="bg-gradient-to-br from-[#610006] to-[#831718] text-on-primary px-8 py-4 rounded-lg font-bold shadow-xl hover:translate-y-[-4px] transition-all duration-300">View Beef Pricing Table</a>
                 <button className="bg-surface-container-highest text-on-surface px-8 py-4 rounded-lg font-bold border border-outline-variant/10 hover:bg-surface-container-high transition-all">Request Bulk Quote</button>
+                <a href="https://wa.me/971585842800" target="_blank" rel="noopener noreferrer" className="bg-green-500 text-white px-8 py-4 rounded-lg font-bold shadow-xl hover:translate-y-[-4px] transition-all duration-300 flex items-center gap-2">
+                  <span className="material-symbols-outlined">whatsapp</span>
+                  WhatsApp Wholesale Desk
+                </a>
               </div>
               <div className="flex flex-wrap gap-x-8 gap-y-6 pt-8 border-t border-outline-variant/20">
                 <div className="flex items-center gap-2">
