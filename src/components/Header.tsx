@@ -12,15 +12,15 @@ const Header = () => {
     <header className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-stone-100/10">
       <div className="flex justify-between items-center px-4 sm:px-8 py-4 max-w-screen-2xl mx-auto">
 <Link to="/" className="text-2xl font-bold tracking-tighter text-[#610006] font-serif italic">
-             Wahat Al Zaad Meat
+             Marahib Food Stuff
            </Link>
 
         {/* Desktop Menu - Center */}
         <nav className="hidden md:flex items-center gap-8 font-sans font-semibold tracking-tight">
           {/* About Us */}
           <Link 
-            to="/about-wahat-al-zaad-meat-dubai" 
-            className={`text-stone-600 hover:text-[#610006] transition-colors ${isActive('/about-wahat-al-zaad-meat-dubai') ? activeClass : ''}`}
+            to="/about-marahib-food-stuff" 
+            className={`text-stone-600 hover:text-[#610006] transition-colors ${isActive('/about-marahib-food-stuff') ? activeClass : ''}`}
           >
             About Us
           </Link>
@@ -83,7 +83,7 @@ const Header = () => {
         <div className="flex items-center gap-6">
           <a href="tel:+971561910177" className="hidden md:block bg-[#610006] text-white px-6 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 font-sans font-semibold text-sm border border-[#610006]/20">
             <span className="material-symbols-outlined text-sm mr-1">call</span>
-            +971 56 191 0177
+            +971 50 2778726
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -102,7 +102,7 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-stone-100/10 px-4 py-4 max-h-[80vh] overflow-y-auto">
           <div className="flex flex-col gap-4 font-sans font-semibold">
-            <Link to="/about-wahat-al-zaad-meat-dubai" className={`text-stone-600 hover:text-[#610006] ${isActive('/about-wahat-al-zaad-meat-dubai') ? 'text-[#610006]' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to="/about-marahib-food-stuff" className={`text-stone-600 hover:text-[#610006] ${isActive('/about-marahib-food-stuff') ? 'text-[#610006]' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
               About Us
             </Link>
             
@@ -149,7 +149,7 @@ const Header = () => {
             
             <a href="tel:+971561910177" className="bg-[#610006] text-white px-6 py-2.5 rounded-md text-center flex items-center justify-center gap-1">
               <span className="material-symbols-outlined text-sm">call</span>
-              +971 56 191 0177
+              +971 50 2778726
             </a>
           </div>
         </div>

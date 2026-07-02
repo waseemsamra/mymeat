@@ -349,7 +349,7 @@ const BeefWholesale = () => {
               </button>
             </div>
             <div className="mt-12 text-on-primary-container/60 font-body">
-              <p>Direct Inquiries: +971 56 191 0177 | sales@wazmeat.com</p>
+              <p>Direct Inquiries: +971 50 2778726 | sales@marahibfoods.com</p>
             </div>
           </div>
         </section>

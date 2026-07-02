@@ -41,7 +41,7 @@ const Sourcing = () => {
                <span className="block text-2xl md:text-3xl font-normal text-white mt-2">Australia, Pakistan, India, South Africa</span>
              </h1>
              <p className="font-body text-sm md:text-base text-stone-200 max-w-2xl mb-12 leading-relaxed">
-              Wahat Al Zaad Meat sources premium beef, mutton and lamb from Australia, Pakistan, India and South Africa for Dubai wholesale distribution.
+              Marahib Food Stuff sources premium beef, mutton and lamb from Australia, Pakistan, India and South Africa for Dubai wholesale distribution.
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ const Sourcing = () => {
           </div>
           <div className="md:col-span-7 space-y-6">
             <p className="text-xl text-[#191c1d] leading-relaxed font-body">
-              At Wahat Al Zaad Meat, we don't just source meat; we curate heritage. Our global procurement strategy is rooted in the principle of <strong>Geographical Integrity</strong>. We believe the environment, the climate, and the traditional knowledge of local herdsmen are the true architects of flavor.
+              At Marahib Food Stuff, we don't just source meat; we curate heritage. Our global procurement strategy is rooted in the principle of <strong>Geographical Integrity</strong>. We believe the environment, the climate, and the traditional knowledge of local herdsmen are the true architects of flavor.
             </p>
             <p className="text-[#5a403c] leading-relaxed">
               From the karoo scrublands of South Africa to the pristine pastures of Southern Australia, each region is selected for its specific biosecurity standards and commitment to master-butcher quality. Every cut that enters our wholesale chain carries a digital fingerprint of its provenance, ensuring full transparency from pasture to plate.

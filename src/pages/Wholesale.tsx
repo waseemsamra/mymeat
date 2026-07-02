@@ -232,7 +232,7 @@ const Wholesale = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase text-slate-400">Direct Line</p>
-                    <p className="text-lg font-bold">+971 56 191 0177</p>
+                    <p className="text-lg font-bold">+971 50 2778726</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -241,7 +241,7 @@ const Wholesale = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase text-slate-400">Email Portal</p>
-                    <p className="text-lg font-bold">wholesale@wazmeat.com</p>
+                    <p className="text-lg font-bold">wholesale@marahibfoods.com</p>
                   </div>
                 </div>
               </div>

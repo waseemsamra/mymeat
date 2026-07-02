@@ -358,7 +358,7 @@ const MuttonWholesale = () => {
                   </div>
                   <div>
                     <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Direct Sales Hotline</div>
-<div className="text-2xl font-bold">+971 56 191 0177</div>
+<div className="text-2xl font-bold">+971 50 2778726</div>
                    </div>
                  </div>
                  <div className="flex items-center gap-6 group">
@@ -367,7 +367,7 @@ const MuttonWholesale = () => {
                    </div>
                    <div>
                      <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">WhatsApp Bulk Orders</div>
-                     <div className="text-2xl font-bold">+971 56 191 0177</div>
+                     <div className="text-2xl font-bold">+971 50 2778726</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-6 group">
@@ -376,7 +376,7 @@ const MuttonWholesale = () => {
                   </div>
                   <div>
                     <div className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Technical Inquiries</div>
-                    <div className="text-2xl font-bold">supply@wazmeat.com</div>
+                    <div className="text-2xl font-bold">supply@marahibfoods.com</div>
                   </div>
                 </div>
               </div>

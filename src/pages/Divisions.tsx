@@ -14,7 +14,7 @@ const Divisions = () => (
                Our Operational <span className="italic text-primary block mt-2">Divisions</span>
              </h1>
             <p className="font-body text-sm md:text-base text-on-surface-variant leading-relaxed max-w-2xl">
-              WAZ Meat operates as a vertically integrated ecosystem, ensuring that the legacy of artisanal butchery is preserved through modern precision and an uncompromising commitment to global quality standards.
+              Marahib Food Stuff operates as a vertically integrated ecosystem, ensuring that the legacy of artisanal butchery is preserved through modern precision and an uncompromising commitment to global quality standards.
             </p>
           </div>
           <div className="md:w-1/3 pb-4">

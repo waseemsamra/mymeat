@@ -34,7 +34,7 @@ const TechnicalSpecs = () => {
               <span className="block text-2xl md:text-3xl font-normal text-primary mt-2">Technical Specifications</span>
             </h1>
             <p className="font-body text-sm md:text-base text-on-surface-variant max-w-xl leading-relaxed">
-              Premium beef ribeye technical specifications from Wahat Al Zaad Meat, Dubai. USDA Prime, HACCP certified, 45-day Himalayan salt aging.
+              Premium beef ribeye technical specifications from Marahib Food Stuff, Dubai. USDA Prime, HACCP certified, 45-day Himalayan salt aging.
             </p>
           </div>
           <div className="md:w-2/5 aspect-[4/5] relative overflow-hidden rounded-lg shadow-2xl">

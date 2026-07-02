@@ -40,11 +40,11 @@ const Contact = () => {
             <div className="z-10">
               <span className="text-primary text-sm uppercase tracking-[0.2em] font-bold mb-4 block">Dubai Beef, Mutton & Lamb Wholesale</span>
               <h1 className="font-display text-5xl lg:text-7xl text-on-surface leading-tight mb-6">
-                <span className="block">Contact: Wahat Al Zaad Meat</span>
+                <span className="block">Contact: Marahib Food Stuff</span>
                 <span className="block text-2xl lg:text-3xl font-normal text-primary mt-2">Premium Meat Supplier Dubai UAE</span>
               </h1>
               <p className="font-body text-sm md:text-base text-on-surface-variant max-w-xl leading-relaxed">
-                Wahat Al Zaad Meat - Dubai's premier beef, mutton and lamb wholesale supplier. Contact us for USDA Prime halal certified meat sourcing.
+                Marahib Food Stuff - Dubai's premier beef, mutton and lamb wholesale supplier. Contact us for USDA Prime halal certified meat sourcing.
               </p>
             </div>
             <div className="relative hidden lg:block">
@@ -79,7 +79,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="relative">
                     <label className="text-[10px] uppercase font-bold text-[#610006] tracking-widest mb-1 block">Email Address</label>
-                    <input className="w-full bg-[#e7e8e9] border-b-2 border-[#e3beb8]/30 px-0 py-3 text-[#191c1d] placeholder:text-[#8e706b]/50 transition-all border-x-0 border-t-0 focus:border-[#610006] focus:ring-0 outline-none" placeholder="direct@wazmeat.com" type="email"/>
+                    <input className="w-full bg-[#e7e8e9] border-b-2 border-[#e3beb8]/30 px-0 py-3 text-[#191c1d] placeholder:text-[#8e706b]/50 transition-all border-x-0 border-t-0 focus:border-[#610006] focus:ring-0 outline-none" placeholder="direct@marahibfoods.com" type="email"/>
                   </div>
                   <div className="relative">
                     <label className="text-[10px] uppercase font-bold text-[#610006] tracking-widest mb-1 block">Organization</label>
@@ -118,9 +118,9 @@ const Contact = () => {
                     <div className="flex justify-between items-end">
                       <div>
                         <p className="font-display text-lg">The Wholesale Hub</p>
-                        <p className="font-body text-xs opacity-60">wholesale@wazmeat.com</p>
+                        <p className="font-body text-xs opacity-60">wholesale@marahibfoods.com</p>
                       </div>
-                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 56 191 0177</span>
+                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 50 2778726</span>
                     </div>
                   </div>
                   {/* Retail Boutique */}
@@ -129,9 +129,9 @@ const Contact = () => {
                     <div className="flex justify-between items-end">
                       <div>
                         <p className="font-display text-lg">The Retail Boutique</p>
-                        <p className="font-body text-xs opacity-60">retail@wazmeat.com</p>
+                        <p className="font-body text-xs opacity-60">retail@marahibfoods.com</p>
                       </div>
-                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 56 191 0177</span>
+                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 50 2778726</span>
                     </div>
                   </div>
                   {/* International Desk */}
@@ -140,9 +140,9 @@ const Contact = () => {
                     <div className="flex justify-between items-end">
                       <div>
                         <p className="font-display text-lg">The International Desk</p>
-                        <p className="font-body text-xs opacity-60">international@wazmeat.com</p>
+                        <p className="font-body text-xs opacity-60">international@marahibfoods.com</p>
                       </div>
-                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 56 191 0177</span>
+                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 50 2778726</span>
                     </div>
                   </div>
                   {/* Operational Facilities */}
@@ -151,9 +151,9 @@ const Contact = () => {
                     <div className="flex justify-between items-end">
                       <div>
                         <p className="font-display text-lg">Operational Facilities</p>
-                        <p className="font-body text-xs opacity-60">operations@wazmeat.com</p>
+                        <p className="font-body text-xs opacity-60">operations@marahibfoods.com</p>
                       </div>
-                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 56 191 0177</span>
+                      <span className="font-body text-sm font-medium text-[#f8f9fa]">+971 50 2778726</span>
                     </div>
                   </div>
                 </div>
@@ -165,7 +165,7 @@ const Contact = () => {
                   <span className="material-symbols-outlined text-4xl mb-4">verified</span>
                   <h3 className="font-display text-xl mb-2">Provenance Registry</h3>
                   <p className="font-body text-xs opacity-80 leading-relaxed">
-                    Every shipment is registered under our proprietary Wahat Al Zaad Meat protocol. Scan your QR code to verify technical heritage.
+                    Every shipment is registered under our proprietary Marahib Food Stuff protocol. Scan your QR code to verify technical heritage.
                   </p>
                 </div>
                 <div className="absolute -right-10 -top-10 opacity-10 rotate-12">
@@ -198,7 +198,7 @@ const Contact = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Wahat Al Zaad Meat Dubai Location"
+                title="Marahib Food Stuff Dubai Location"
               />
             </div>
           </div>

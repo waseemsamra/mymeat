@@ -24,7 +24,7 @@ function App() {
         <Route path="/mutton-wholesale-dubai" element={<MuttonWholesale />} />
         <Route path="/beef-mutton-lamb-wholesale-dubai" element={<Wholesale />} />
         <Route path="/divisions" element={<Divisions />} />
-        <Route path="/about-wahat-al-zaad-meat-dubai" element={<About />} />
+        <Route path="/about-marahib-food-stuff" element={<About />} />
         <Route path="/retail-beef-mutton-lamb-dubai" element={<Retail />} />
         <Route path="/meat-production-facility-dubai" element={<Production />} />
         <Route path="/beef-quality-certification-haccp" element={<Quality />} />

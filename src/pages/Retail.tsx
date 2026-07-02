@@ -5,7 +5,7 @@ import Header from '../components/Header';
 
 const Retail = () => {
   useEffect(() => {
-    document.title = "Dubai Retail Butcher Shop – Premium Beef & Mutton | WAZ Meat";
+    document.title = "Dubai Retail Butcher Shop – Premium Beef & Mutton | Marahib Food Stuff";
   }, []);
   return (
   <div className="bg-[#f8f9fa] text-[#191c1d] font-body overflow-x-hidden selection:bg-[#831718] selection:text-white">
@@ -21,7 +21,7 @@ const Retail = () => {
                <span className="block text-2xl md:text-3xl font-normal text-secondary mt-2">Reimagined in Dubai</span>
              </h1>
             <p className="text-on-surface-variant font-body text-sm md:text-base mb-10 max-w-lg leading-relaxed font-light">
-              Wahat Al Zaad Meat brings USDA Prime halal certified beef, mutton and lamb directly to Dubai consumers. Visit our Meat Library for premium cuts.
+              Marahib Food Stuff brings USDA Prime halal certified beef, mutton and lamb directly to Dubai consumers. Visit our Meat Library for premium cuts.
             </p>
             <div className="flex flex-wrap gap-6">
 <Link to="/contact-wholesale-dubai" className="px-10 py-5 premium-gradient text-white rounded-md shadow-lg shadow-[#610006]/20 hover:-translate-y-1 transition-all duration-300 font-medium tracking-wide">
@@ -111,7 +111,7 @@ const Retail = () => {
               <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="A thick-cut Tomahawk steak on a dark slate background." src="/heritage-prime/heritage-tomahawk.jpg"/>
               <div className="absolute inset-0 bg-gradient-to-t from-[#610006]/80 via-transparent to-transparent flex flex-col justify-end p-10 text-white">
                 <span className="provenance-badge w-fit mb-4">Master Selection</span>
-                <h3 className="text-4xl font-display italic mb-2">WAZ Tomahawk</h3>
+                <h3 className="text-4xl font-display italic mb-2">Marahib Tomahawk</h3>
                 <p className="text-sm text-slate-300 max-w-sm mb-6">Aged on the bone for 60 days in our signature salt-brick chamber.</p>
                 <Link to="/contact-wholesale-dubai" className="w-fit flex items-center gap-2 font-bold uppercase tracking-widest text-xs">Order Selection <span className="material-symbols-outlined text-sm">trending_flat</span></Link>
               </div>
@@ -155,9 +155,9 @@ const Retail = () => {
                   <span className="material-symbols-outlined absolute right-0 bottom-3 text-slate-400">near_me</span>
                 </div>
                 <div className="space-y-4 max-h-64 overflow-y-auto custom-scrollbar pr-4">
-                  <LocationCard title="The WAZ Meat Shop" address="Business Bay, Dubai" status="Open Until 9:00 PM" active />
-<LocationCard title="WAZ Premium Cuts" address="Al Quoz Industrial Area, Dubai" status="2.5 miles away" />
-                   <LocationCard title="Al Barsha WAZ" address="Al Barsha, Dubai" status="3.5 miles away" />
+                  <LocationCard title="The Marahib Shop" address="Business Bay, Dubai" status="Open Until 9:00 PM" active />
+<LocationCard title="Marahib Premium Cuts" address="Al Quoz Industrial Area, Dubai" status="2.5 miles away" />
+                   <LocationCard title="Al Barsha Marahib" address="Al Barsha, Dubai" status="3.5 miles away" />
                 </div>
               </div>
             </div>
@@ -169,7 +169,7 @@ const Retail = () => {
                   <span className="material-symbols-outlined text-white text-xs" style={{fontVariationSettings: "'FILL' 1"}}>location_on</span>
                 </div>
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-white px-4 py-2 shadow-xl rounded-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  <p className="text-xs font-bold text-[#610006]">The WAZ Meat Shop</p>
+                  <p className="text-xs font-bold text-[#610006]">The Marahib Shop</p>
                 </div>
               </div>
             </div>

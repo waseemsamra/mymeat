@@ -34,7 +34,7 @@ const About = () => {
           <div className="absolute inset-0 z-0">
 <img
                 className="w-full h-full object-cover grayscale-[0.2] contrast-125"
-                alt="Master artisan butcher at Wahat Al Zaad Meat Dubai processing premium beef."
+                alt="Master artisan butcher at Marahib Food Stuff Dubai processing premium beef."
                 src="/heritage-prime/aging-room.jpg"
               />
             <div className="absolute inset-0 bg-gradient-to-r from-[#610006]/60 to-transparent"></div>
@@ -57,7 +57,7 @@ const About = () => {
               <h2 className="font-display text-4xl md:text-5xl text-[#191c1d] mb-6">The Beginning of Excellence</h2>
               <div className="space-y-6 text-[#5a403c] font-body leading-relaxed">
                 <p>In 1970, Shafie and Sara Sonday opened the doors of their humble meat business for the first time. What began as a local labor of love in a single butchery has evolved into an international authority in the meat industry.</p>
-                <p>Today, Wahat Al Zaad Meat stands as a family-owned and long-established supplier of quality Halaal products. We have grown into a powerhouse with a staff complement exceeding 900 people, each carrying forward the 53-year legacy of uncompromised quality.</p>
+                <p>Today, Marahib Food Stuff stands as a family-owned and long-established supplier of quality Halaal products. We have grown into a powerhouse with a staff complement exceeding 900 people, each carrying forward the 53-year legacy of uncompromised quality.</p>
                 <p>Wholesalers and retailers globally experience our passion firsthand—a passion that began with a singular desire: to build a company that treats butchery as the high art it truly is.</p>
               </div>
             </div>
@@ -96,7 +96,7 @@ const About = () => {
               <span className="editorial-kicker text-[#610006] font-bold text-xs mb-4 block">Global Standards</span>
               <h2 className="font-display text-4xl md:text-5xl text-[#191c1d]">Uncompromising Certifications</h2>
               <p className="mt-6 text-[#5a403c] font-body">
-                WAZ Meat is a proud B-BBEE level 1 contributor. We maintain the highest international food safety standards to ensure every product is worthy of the authority we represent.
+                Marahib Food Stuff is a proud B-BBEE level 1 contributor. We maintain the highest international food safety standards to ensure every product is worthy of the authority we represent.
               </p>
             </div>
             <div className="hidden lg:block h-px flex-grow bg-[#e3beb8]/30 mb-4 mx-8"></div>
@@ -144,7 +144,7 @@ const About = () => {
             </div>
             <h2 className="font-display text-4xl md:text-5xl mb-8 italic">Family Owned, Professionally Driven</h2>
             <p className="font-body text-xl leading-relaxed opacity-90">
-              "Our passion began with a desire to build a well-run company that never compromises on quality. Fifty years later, that family-first commitment remains the backbone of WAZ Meat."
+              "Our passion began with a desire to build a well-run company that never compromises on quality. Fifty years later, that family-first commitment remains the backbone of Marahib Food Stuff."
             </p>
             <div className="mt-12">
               <p className="font-display text-2xl">— The Sonday Family</p>

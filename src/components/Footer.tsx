@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => (
   <footer className="bg-neutral-950 py-20 px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-end w-full">
     <div className="space-y-12">
-      <div className="font-display text-3xl text-neutral-50 tracking-tighter">Wahat Al Zaad Meat</div>
+      <div className="font-display text-3xl text-neutral-50 tracking-tighter">Marahib Food Stuff</div>
 <p className="font-display italic text-neutral-400 max-w-xs">
           Premium wholesale importers of beef, mutton and lamb. Based in Dubai, sourcing globally from Australia, Pakistan, India and South Africa.
         </p>
@@ -14,7 +14,7 @@ const Footer = () => (
           </div>
           <div className="flex items-center gap-2 text-neutral-400">
             <span className="material-symbols-outlined text-sm">phone</span>
-            <span>+971 56 191 0177</span>
+            <span>+971 50 2778726</span>
           </div>
         </div>
       <div className="flex flex-wrap gap-8">
@@ -44,7 +44,7 @@ const Footer = () => (
         <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">mail</span>
         <span className="material-symbols-outlined text-neutral-400 hover:text-red-600 cursor-pointer">location_on</span>
       </div>
-      <p className="text-neutral-600 text-[10px] tracking-widest uppercase">© 2024 Wahat Al Zaad Meat - Beef, Mutton & Lamb Wholesale Dubai.</p>
+      <p className="text-neutral-600 text-[10px] tracking-widest uppercase">© 2024 Marahib Food Stuff - Beef, Mutton & Lamb Wholesale Dubai.</p>
     </div>
   </footer>
 );

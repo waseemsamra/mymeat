@@ -147,7 +147,7 @@ const Quality = () => {
               <div className="aspect-[4/5] bg-[#e7e8e9] rounded-sm overflow-hidden shadow-2xl relative">
 <img
                    className="w-full h-full object-cover"
-                   alt="A macro photograph of the WAZ Meat dry-aging room."
+                   alt="A macro photograph of the Marahib Food Stuff dry-aging room."
                    src="/heritage-prime/aging-room.jpg"
                  />
                 <div className="absolute bottom-10 left-10 bg-white/90 backdrop-blur p-8 max-w-xs shadow-lg border-l-4 border-[#610006]">

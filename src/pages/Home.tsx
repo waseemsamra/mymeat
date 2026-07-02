@@ -4,7 +4,7 @@ import Header from '../components/Header';
 
 const Home = () => {
   useEffect(() => {
-    document.title = "Wahat Al Zaad Meat | Premium Beef, Mutton & Lamb Wholesale Dubai";
+    document.title = "Marahib Food Stuff | Premium Beef, Mutton & Lamb Wholesale Dubai";
   }, []);
 
   return (
@@ -15,7 +15,7 @@ const Home = () => {
         <div className="absolute inset-0 z-0">
 <img
               className="w-full h-full object-cover"
-              alt="Premium beef, mutton and lamb cuts from Wahat Al Zaad Meat, Dubai wholesale supplier"
+              alt="Premium beef, mutton and lamb cuts from Marahib Food Stuff, Dubai wholesale supplier"
               src="/heritage-prime/hero-beef.jpg"
             />
           <div className="absolute inset-0 bg-gradient-to-r from-[#191c1d] via-[#191c1d]/60 to-transparent"></div>
@@ -28,7 +28,7 @@ const Home = () => {
                <span className="block text-2xl md:text-3xl font-normal text-[#ffb3ac] mt-2">Wholesale Supplier • Dubai, UAE</span>
              </h1>
 <p className="text-white/80 font-body text-sm md:text-base max-w-lg mb-10 leading-relaxed">
-               Wahat Al Zaad Meat - Dubai's premier source for premium beef, mutton and lamb. Global procurement from Australia, Pakistan, India and South Africa. USDA Prime, halal certified, delivered fresh.
+               Marahib Food Stuff - Dubai's premier source for premium beef, mutton and lamb. Global procurement from Australia, Pakistan, India and South Africa. USDA Prime, halal certified, delivered fresh.
              </p>
             <div className="flex flex-wrap gap-4">
               <a href="/beef-mutton-lamb-catalog-dubai" className="bg-[#610006] text-white px-10 py-5 rounded-md font-body font-bold text-sm uppercase tracking-widest flex items-center gap-3 hover:bg-[#831718] transition-all hover:-translate-y-1 shadow-xl">
@@ -61,7 +61,7 @@ const Home = () => {
               <h2 className="font-display text-5xl font-bold mb-8 text-[#191c1d]">A Legacy of Precision</h2>
               <div className="space-y-6 text-[#5a403c] text-lg font-body leading-relaxed">
                 <p>
-                  For over five decades, Wahat Al Zaad Meat has stood as the definitive benchmark in global protein procurement. What began as a specialized regional butchery has evolved into a sophisticated international network spanning four continents.
+                  For over five decades, Marahib Food Stuff has stood as the definitive benchmark in global protein procurement. What began as a specialized regional butchery has evolved into a sophisticated international network spanning four continents.
                 </p>
                 <p>
                   Our commitment to "Precision in Every Cut" is our operational mandate. From rigorous farm-gate audits to cold-chain logistics that never falter, we ensure that the integrity of the product remains absolute from pasture to professional kitchen.
@@ -235,7 +235,7 @@ const Home = () => {
             Connect with our procurement specialist team to discuss large-volume contracts, custom specifications, and international distribution agreements.
           </p>
           <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-            <a className="hero-gradient text-white px-12 py-6 rounded-sm font-bold uppercase tracking-widest flex items-center gap-4 hover:shadow-2xl transition-all hover:-translate-y-1" href="mailto:wholesale@wazmeat.com">
+            <a className="hero-gradient text-white px-12 py-6 rounded-sm font-bold uppercase tracking-widest flex items-center gap-4 hover:shadow-2xl transition-all hover:-translate-y-1" href="mailto:wholesale@marahibfoods.com">
               Request Wholesale Account
               <span className="material-symbols-outlined">mail</span>
             </a>
