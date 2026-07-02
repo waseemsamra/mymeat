@@ -40,7 +40,7 @@ const About = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-[#610006]/60 to-transparent"></div>
           </div>
           <div className="relative z-10 px-8 md:px-16 max-w-4xl">
-            <span className="editorial-kicker text-white font-bold text-sm mb-4 block">Dubai Beef Wholesale Since 1970</span>
+            <span className="editorial-kicker text-white font-bold text-sm mb-4 block">Dubai Beef Wholesale Since 2010</span>
 <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
                <span className="block">Premium Beef, Mutton & Lamb</span>
                <span className="block text-2xl md:text-3xl font-normal text-[#ffb3ac] mt-2">Wholesale Supplier • Dubai, UAE</span>
@@ -56,8 +56,8 @@ const About = () => {
               <span className="editorial-kicker text-[#610006] font-bold text-xs mb-4 block">The Founding Story</span>
               <h2 className="font-display text-4xl md:text-5xl text-[#191c1d] mb-6">The Beginning of Excellence</h2>
               <div className="space-y-6 text-[#5a403c] font-body leading-relaxed">
-                <p>In 1970, Shafie and Sara Sonday opened the doors of their humble meat business for the first time. What began as a local labor of love in a single butchery has evolved into an international authority in the meat industry.</p>
-                <p>Today, Marahib Food Stuff stands as a family-owned and long-established supplier of quality Halaal products. We have grown into a powerhouse with a staff complement exceeding 900 people, each carrying forward the 53-year legacy of uncompromised quality.</p>
+                <p>In 2010, the Owner of Marahib foods opened the doors of their humble meat business for the first time. What began as a local labor of love in a single butchery has evolved into an international authority in the meat industry.</p>
+                <p>Today, Marahib Food Stuff stands as a family-owned and long-established supplier of quality Halaal products. We have grown into a powerhouse with a staff complement exceeding 900 people, each carrying forward the 16-year legacy of uncompromised quality.</p>
                 <p>Wholesalers and retailers globally experience our passion firsthand—a passion that began with a singular desire: to build a company that treats butchery as the high art it truly is.</p>
               </div>
             </div>
@@ -67,7 +67,7 @@ const About = () => {
               <div className="absolute inset-0 bg-[#e1e3e4] -translate-x-6 translate-y-6"></div>
               <img
                 className="relative z-10 w-full h-full object-cover"
-                alt="A vintage-style black and white portrait of a traditional butcher shop front from the 1970s."
+                alt="A vintage-style black and white portrait of a traditional butcher shop front from the 2010s."
                 src="/heritage-prime/aging-room.jpg"
               />
             </div>
@@ -147,7 +147,7 @@ const About = () => {
               "Our passion began with a desire to build a well-run company that never compromises on quality. Fifty years later, that family-first commitment remains the backbone of Marahib Food Stuff."
             </p>
             <div className="mt-12">
-              <p className="font-display text-2xl">— The Sonday Family</p>
+              <p className="font-display text-2xl">— Marahib Management</p>
               <p className="editorial-kicker text-[#ff9086] text-xs mt-2">Guardians of the Legacy</p>
             </div>
           </div>

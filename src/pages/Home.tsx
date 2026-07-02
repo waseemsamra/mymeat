@@ -61,7 +61,7 @@ const Home = () => {
               <h2 className="font-display text-5xl font-bold mb-8 text-[#191c1d]">A Legacy of Precision</h2>
               <div className="space-y-6 text-[#5a403c] text-lg font-body leading-relaxed">
                 <p>
-                  For over five decades, Marahib Food Stuff has stood as the definitive benchmark in global protein procurement. What began as a specialized regional butchery has evolved into a sophisticated international network spanning four continents.
+                  For over a decade and a half, Marahib Food Stuff has stood as the definitive benchmark in global protein procurement. What began as a specialized regional butchery has evolved into a sophisticated international network spanning four continents.
                 </p>
                 <p>
                   Our commitment to "Precision in Every Cut" is our operational mandate. From rigorous farm-gate audits to cold-chain logistics that never falter, we ensure that the integrity of the product remains absolute from pasture to professional kitchen.
